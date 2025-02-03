@@ -61,3 +61,7 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# Changes from GDBobby
+.vscode/
+*.bak
+UserSettings/
