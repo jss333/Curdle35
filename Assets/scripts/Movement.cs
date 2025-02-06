@@ -7,6 +7,7 @@ public class Movement : MonoBehaviour{
         Diagonal,
         Straight,
         L_Shape,
+        Free,
 
         SIZE
     }

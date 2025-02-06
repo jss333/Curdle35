@@ -25,82 +25,27 @@ public class TilemapClick : MonoBehaviour
         }
     }
 
-    public void OnClick(Vector3 sourcePos, Movement.Type movementType){
-            Vector3Int sourceTilePos = tilemap.WorldToCell(sourcePos);
-            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3Int tilePosition = tilemap.WorldToCell(mouseWorldPos);
-            Debug.Log("source - tile pos : " + sourceTilePos + ':' + tilePosition);
-
-            int yDiff = sourceTilePos.y - tilePosition.y;
-            int xDiff = sourceTilePos.x - tilePosition.x;
-            
-            RemovePath();
-
-            
-
-
-            Vector3Int vecStart = Vector3Int.zero;
-            Vector3Int vecEnd = Vector3Int.zero;
-            if(yDiff > xDiff){
-                if(sourceTilePos.y > tilePosition.y){
-                    sourceTilePos.y -= 1;
-                }
-                else if(sourceTilePos.y < tilePosition.y){
-                    sourceTilePos.y += 1;
-                }
-                vecStart.y = Math.Min(sourceTilePos.y, tilePosition.y);
-                vecEnd.y = Math.Max(sourceTilePos.y, tilePosition.y);
-
-                vecStart.x = Math.Min(sourceTilePos.x, tilePosition.x);
-                vecEnd.x = Math.Max(sourceTilePos.x, tilePosition.x);
-
-                for(; vecStart.y < vecEnd.y; vecStart.y++){
-                    for(; vecStart.x < vecEnd.x; vecStart.x++){
-                        TileBase tile = tilemap.GetTile<TileBase>(vecStart);
-                        if (tile != null)  // Check if a tile exists at that position
-                        {
-                            TileData.Type tileType = dataFromTiles[tile].type;
-
-                            //Debug.Log("Clicked on tile at: " + tilePosition + " with type : " + tileType.ToString());
-                            movementTilemap.SetTile(vecStart, selectedTile);
-                            drawnTiles.Add(vecStart);
-                        }
-                    }
-                }
-            }
-            else{
-                if(sourceTilePos.x > tilePosition.x){
-                    sourceTilePos.x -= 1;
-                }
-                else if (sourceTilePos.x < tilePosition.x){
-                    sourceTilePos.x += 1;
-                }
-                vecStart.y = Math.Min(sourceTilePos.y, tilePosition.y);
-                vecEnd.y = Math.Max(sourceTilePos.y, tilePosition.y);
-
-                vecStart.x = Math.Min(sourceTilePos.x, tilePosition.x);
-                vecEnd.x = Math.Max(sourceTilePos.x, tilePosition.x);
-
-                for(; vecStart.x < vecEnd.x; vecStart.x++){
-                    for(; vecStart.y < vecEnd.y; vecStart.y++){
-                        TileBase tile = tilemap.GetTile<TileBase>(vecStart);
-                        if (tile != null)  // Check if a tile exists at that position
-                        {
-                            TileData.Type tileType = dataFromTiles[tile].type;
-
-                            //Debug.Log("Clicked on tile at: " + tilePosition + " with type : " + tileType.ToString());
-                            movementTilemap.SetTile(vecStart, selectedTile);
-                            drawnTiles.Add(vecStart);
-                        }
-                    }
-                }
-            }
-
-
-
-
+    public void OnClick(){
     }
-    public void RemovePath(){
+
+    public bool CheckIfMovementPossible(Vector3 mouseWorldPos){
+        Vector3Int tilePosition = tilemap.WorldToCell(mouseWorldPos);
+        
+        TileBase tile = movementTilemap.GetTile<TileBase>(tilePosition);
+        return tile != null;
+    }
+    public void ActivateMovementTile(Vector3Int tilePos){
+        TileBase tile = tilemap.GetTile<TileBase>(tilePos);
+        if (tile != null)  // Check if a tile exists at that position
+        {
+            TileData.Type tileType = dataFromTiles[tile].type;
+
+            //Debug.Log("Clicked on tile at: " + tilePosition + " with type : " + tileType.ToString());
+            movementTilemap.SetTile(tilePos, selectedTile);
+            drawnTiles.Add(tilePos);
+        }
+    }
+    public void ClearMovement(){
         foreach(Vector3Int tile in drawnTiles){
             movementTilemap.SetTile(tile, null);
         }

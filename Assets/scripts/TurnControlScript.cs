@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Tilemaps;
 
 [System.Serializable]
 public class UnitActors
@@ -17,6 +19,7 @@ public class TurnControlScript : MonoBehaviour
 
     [SerializeField] private int playerCount = 2;
     [SerializeField] private int actorCount = 5; 
+    [SerializeField] private TilemapClick tmClick;
 
     bool finishedUpdatingTurn = false;
 
@@ -68,6 +71,44 @@ public class TurnControlScript : MonoBehaviour
     void Update()
     {
         
+        bool lmbDown = Input.GetMouseButtonDown(0);
+        bool rmbDown = Input.GetMouseButtonDown(1);
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorldPos.z = 0.0f;
+        
+        if(players[currentPlayer].actors[currentActor].showMovement){
+            if(lmbDown){
+
+                Debug.Log("checking if movement possible : " + mouseWorldPos);
+                if(tmClick.CheckIfMovementPossible(mouseWorldPos)){
+                    Debug.Log("movment was possible");
+                    players[currentPlayer].actors[currentActor].MoveTo(mouseWorldPos);
+                }
+                else{
+                    Debug.Log("failed to move");
+                }
+            }
+            if(rmbDown){
+                players[currentPlayer].actors[currentActor].showMovement = false;
+                tmClick.ClearMovement();
+            }
+
+        }
+        else{
+            if(lmbDown){
+                //Debug.Log("mouse button down while controlled actor is not showing movement");
+                //try to select a creature
+                for(int i = 0; i < players[currentPlayer].actors.Length; i++){
+                    Bounds spriteBounds = players[currentPlayer].actors[i].GetComponent<SpriteRenderer>().bounds;
+                    //Debug.Log("sprite bounds : mouse pos - " + spriteBounds + " - " + mouseWorldPos);
+                    if(spriteBounds.Contains(mouseWorldPos)){
+                        Debug.Log("selected new actor : " + i);
+                        currentActor = i;
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     void TurnPreparationUpdate(){
@@ -80,6 +121,15 @@ public class TurnControlScript : MonoBehaviour
                     currentPlayer = 0;
                     finishedUpdatingTurn = true;
                 }
+            }
+        }
+    }
+
+    [SerializeField] public void ShowMovementOnControlledActor(){
+        if(currentPlayer >= 0 && currentPlayer < players.Length){
+            if(currentActor >= 0 && currentActor < players[currentPlayer].actors.Length){
+                Debug.Log("showing movement path for player[" + currentPlayer + "] and actor [" + currentActor + "]");
+                players[currentPlayer].actors[currentActor].CalculatePossibleDestinations();
             }
         }
     }
