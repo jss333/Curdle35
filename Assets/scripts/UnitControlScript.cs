@@ -11,23 +11,36 @@ public class UnitController : MonoBehaviour
     public bool moving = false;
     [SerializeField] const float speed = 1.0f;
 
-    [SerializeField] public bool showMovement = false;
+    public bool showMovement = false;
+    
 
     public int startingAP = 10;
     public int remainingAP = 10;
 
     public int movability = 3;
 
-    public Tilemap tilemap;
-    public Tilemap movementUIMap;
+    static public Tilemap tilemap;
 
-    public TilemapClick tmClick;
+    public TilemapManager tmManager;
+
+    public int abilityCount = 0; //set this from derived class
+
+    public int showingAbility = -1;
+
+    public string[] abilityNames;
+
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public virtual void Start()
     {
-        
+        tmManager.SetOccupancy(this);
+        if(abilityCount > 0){
+            abilityNames = new string[abilityCount];
+        }
+        else{
+            abilityNames = null;
+        }
     }
 
     // Update is called once per frame
@@ -39,6 +52,7 @@ public class UnitController : MonoBehaviour
             if(distance < (speed * Time.deltaTime)){
                 transform.position = destinationPos;
                 moving = false;
+                tmManager.SetOccupancy(this);
             }
             else{
                 direction /= distance;
@@ -47,10 +61,8 @@ public class UnitController : MonoBehaviour
         }
     }
 
-    void TurnUpdate(){
-    }
-
     public void MoveTo(Vector3 dest){
+        tmManager.RemoveOccupancy(this);
         destinationPos.x = Mathf.Floor(dest.x) + 0.5f;
         destinationPos.y = Mathf.Floor(dest.y) + 0.5f;
         destinationPos.z = transform.position.z;
@@ -62,7 +74,7 @@ public class UnitController : MonoBehaviour
         showMovement = true;
 
         Vector3Int myTilePos = tilemap.WorldToCell(transform.position);
-        tmClick.ClearMovement();
+        tmManager.ClearMovement();
         switch(movementType){
             case Movement.Type.Straight:{
                     //need to do both y and X, like a cross
@@ -71,7 +83,7 @@ public class UnitController : MonoBehaviour
                         int rightBound = horizontalPath.x + remainingAP;
                         horizontalPath.x -= remainingAP;
                         for(; horizontalPath.x < rightBound; horizontalPath.x++){
-                            tmClick.ActivateMovementTile(horizontalPath);
+                            tmManager.ActivateMovementTile(horizontalPath);
                         }
                     }
                     {
@@ -79,7 +91,7 @@ public class UnitController : MonoBehaviour
                         int highBound = verticalPath.y + remainingAP;
                         verticalPath.y -= remainingAP;
                         for(; verticalPath.y < highBound; verticalPath.y++){
-                            tmClick.ActivateMovementTile(verticalPath);
+                            tmManager.ActivateMovementTile(verticalPath);
                         }
                     }
                 break;
@@ -96,7 +108,7 @@ public class UnitController : MonoBehaviour
                         Debug.Log("offset iter : " + offsets);
                         if(((Math.Abs(offsets.x) + Math.Abs(offsets.y)) <= movability) && !(offsets.x == 0 && offsets.y == 0)){
                             Debug.Log("activating tile : " + offsets);
-                            tmClick.ActivateMovementTile(myTilePos + offsets);
+                            tmManager.ActivateMovementTile(myTilePos + offsets);
                         }
                     }
                 }
@@ -108,5 +120,41 @@ public class UnitController : MonoBehaviour
     }
     public virtual bool TurnControlUpdate(){
         return remainingAP == 0;
+    }
+
+    //id do an array of function pointers here in C++, just gonna handtype it for now. im assuming the max ability count is 3
+    public virtual void ShowRangeForAbility0(){
+        Debug.Log("attempting to show range for ability[" + 0 + "] that hasn't been overridden");
+    }
+    public virtual void PerformAbility0(Vector3Int mouseTilePos){
+        showingAbility = -1;
+        if(abilityCount < 1){
+            Debug.Log("attempting to use ability[" + 0 + "] that hasn't been overridden");
+        }
+    }    
+    public virtual void ShowRangeForAbility1(){
+        if(abilityCount < 2){
+            Debug.Log("attempting to show range for ability[" + 1 + "] that hasn't been overridden");
+        }
+
+    }
+    public virtual void PerformAbility1(Vector3Int mouseTilePos){
+        showingAbility = -1;
+        if(abilityCount < 2){
+            Debug.Log("attempting to use ability[" + 1 + "] that hasn't been overridden");
+        }
+    }
+    public virtual void ShowRangeForAbility2(){
+        if(abilityCount < 3){
+            Debug.Log("attempting to show range for ability[" + 2 + "] that hasn't been overridden");
+        }
+
+    }
+    public virtual void PerformAbility2(Vector3Int mouseTilePos){
+        showingAbility = -1;
+        if(abilityCount < 3){
+            Debug.Log("attempting to use ability[" + 2 + "] that hasn't been overridden");
+        }
+
     }
 }

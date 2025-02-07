@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 public class TileData : ScriptableObject
 {
     public TileBase[] tiles;
-        public enum Type{
+    public enum Type{
         None,
         Water,
         Grass,
@@ -21,7 +21,7 @@ public class TileData : ScriptableObject
         Corruption1, //mod of Corruption0, still temporary?
         Corruption2,
     }
-    private List<UnitController> occupants = new List<UnitController>();
+    public List<UnitController> occupants = new List<UnitController>();
     public Type type;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

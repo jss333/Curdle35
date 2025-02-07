@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,7 +20,8 @@ public class TurnControlScript : MonoBehaviour
 
     [SerializeField] private int playerCount = 2;
     [SerializeField] private int actorCount = 5; 
-    [SerializeField] private TilemapClick tmClick;
+    [SerializeField] private TilemapManager tmManager;
+    [SerializeField] public UIBridge uiBridge;
 
     bool finishedUpdatingTurn = false;
 
@@ -57,12 +59,66 @@ public class TurnControlScript : MonoBehaviour
         {
             if (players[i] == null)
             {
-                players[i] = new UnitActors();
+                Debug.Log("player " + i + " was invalid");
             }
 
             if (players[i].actors == null || players[i].actors.Length != actorCount)
             {
-                players[i].actors = new UnitController[actorCount];
+                Debug.Log("player " + i + " has invalid actors");
+            }
+        }
+        if(uiBridge == null){
+            Debug.Log("uiBridge wasn't set ub turn control script");
+        }
+    }
+
+    void SwitchActor(int whichPlayer, int whichActor){
+        if(currentPlayer < 0 || currentPlayer > players.Length){
+            Debug.Log("trying to swap to an invalid player : " + whichPlayer);
+        }
+        else{
+            if(whichActor < 0 || whichActor >= players[currentPlayer].actors.Length){
+                Debug.Log("trying to swap to an invalid actor : " + whichActor);
+            }
+            else{
+                currentPlayer = whichPlayer;
+                currentActor = whichActor;
+
+                UnitController tempUnit = players[currentPlayer].actors[currentActor];
+
+                //if i could do a god damn array of objects in the unity editor i wouldnt have to fuck with this dog shit layout
+                //fucking unity
+                if(tempUnit.abilityCount >= 1){
+                    uiBridge.ability0_button.SetActive(true);
+                    TextMeshProUGUI tmpGUI0 = uiBridge.ability1_button.GetComponentInChildren<TextMeshProUGUI>();
+                    tmpGUI0.text = tempUnit.abilityNames[0];
+                    
+                    if(tempUnit.abilityCount >= 2){
+                        uiBridge.ability1_button.SetActive(true);
+                        TextMeshProUGUI tmpGUI1 = uiBridge.ability1_button.GetComponentInChildren<TextMeshProUGUI>();
+                        tmpGUI1.text = tempUnit.abilityNames[1];
+
+                        
+                        if(tempUnit.abilityCount >= 3){
+                            uiBridge.ability2_button.SetActive(true);
+                            TextMeshProUGUI tmpGUI2 = uiBridge.ability2_button.GetComponentInChildren<TextMeshProUGUI>();
+                            tmpGUI2.text = tempUnit.abilityNames[2];
+                        }
+                        else{
+                            uiBridge.ability2_button.SetActive(false);
+                        }
+                    }
+                    else{
+                        uiBridge.ability1_button.SetActive(false);
+                        uiBridge.ability2_button.SetActive(false);
+                    }
+                }
+                else{
+                    uiBridge.ability0_button.SetActive(false);
+                    uiBridge.ability1_button.SetActive(false);
+                    uiBridge.ability2_button.SetActive(false);
+                }
+                
             }
         }
     }
@@ -75,39 +131,65 @@ public class TurnControlScript : MonoBehaviour
         bool rmbDown = Input.GetMouseButtonDown(1);
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPos.z = 0.0f;
-        
-        if(players[currentPlayer].actors[currentActor].showMovement){
-            if(lmbDown){
+        Vector3Int mouseTilePos = tmManager.tilemap.WorldToCell(mouseWorldPos);
 
-                Debug.Log("checking if movement possible : " + mouseWorldPos);
-                if(tmClick.CheckIfMovementPossible(mouseWorldPos)){
-                    Debug.Log("movment was possible");
-                    players[currentPlayer].actors[currentActor].MoveTo(mouseWorldPos);
-                }
-                else{
-                    Debug.Log("failed to move");
-                }
+        UnitController unitCont = null;
+        if(currentPlayer >= 0 && currentPlayer < players.Length){
+            if(currentActor >= 0 && currentActor < players[currentPlayer].actors.Length){
+                unitCont = players[currentPlayer].actors[currentActor];
             }
-            if(rmbDown){
-                players[currentPlayer].actors[currentActor].showMovement = false;
-                tmClick.ClearMovement();
-            }
-
         }
-        else{
-            if(lmbDown){
-                //Debug.Log("mouse button down while controlled actor is not showing movement");
-                //try to select a creature
-                for(int i = 0; i < players[currentPlayer].actors.Length; i++){
-                    Bounds spriteBounds = players[currentPlayer].actors[i].GetComponent<SpriteRenderer>().bounds;
-                    //Debug.Log("sprite bounds : mouse pos - " + spriteBounds + " - " + mouseWorldPos);
-                    if(spriteBounds.Contains(mouseWorldPos)){
-                        Debug.Log("selected new actor : " + i);
-                        currentActor = i;
-                        break;
+        if(unitCont != null){
+            if(lmbDown) {
+                if(unitCont.showMovement) {
+                    Debug.Log("checking if movement possible : " + mouseWorldPos);
+                    if(tmManager.CheckIfMovementPossible(mouseWorldPos)){
+                        Debug.Log("movment was possible");
+                        unitCont.MoveTo(mouseWorldPos);
+                    }
+                    else{
+                        Debug.Log("failed to move");
+                    }
+                }
+                else if(unitCont.showingAbility >= 0){
+                    switch(unitCont.showingAbility){
+                        case 0:{
+                            unitCont.PerformAbility0(mouseTilePos);
+                            break;
+                        }
+                        case 1:{
+                            
+                            unitCont.PerformAbility1(mouseTilePos);
+                            break;
+                        }
+                        case 2:{
+
+                            unitCont.PerformAbility1(mouseTilePos);
+                            break;
+                        }
+                    }
+                }
+                else {
+                    //Debug.Log("mouse button down while controlled actor is not showing movement");
+                    //try to select a creature
+                    for(int i = 0; i < players[currentPlayer].actors.Length; i++){
+                        Bounds spriteBounds = players[currentPlayer].actors[i].GetComponent<SpriteRenderer>().bounds;
+                        //Debug.Log("sprite bounds : mouse pos - " + spriteBounds + " - " + mouseWorldPos);
+                        if(spriteBounds.Contains(mouseWorldPos)){
+                            Debug.Log("selected new actor : " + i);
+                            SwitchActor(currentPlayer, i);
+                            break;
+                        }
                     }
                 }
             }
+            else if(rmbDown){
+                players[currentPlayer].actors[currentActor].showMovement = false;
+                tmManager.ClearMovement();
+            }
+        }
+        else{
+            Debug.Log("controlled player or actor is nuLL? currentPlayer : currentActor -  " + currentPlayer + " : " + currentActor);
         }
     }
 
