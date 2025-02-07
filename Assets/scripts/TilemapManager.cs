@@ -6,7 +6,8 @@ using UnityEngine.Tilemaps;
 
 public class TilemapManager : MonoBehaviour
 {
-    [SerializeField] public TileBase selectedTile;
+    [SerializeField] public TileBase movementBaseTile;
+    [SerializeField] public TileBase starterTowerTile;
 
     public Tilemap movementTilemap;
     public Tilemap tilemap;  // Assign your Tilemap in the Inspector
@@ -17,8 +18,11 @@ public class TilemapManager : MonoBehaviour
     [SerializeField] private List<TileData> tileDatas;
     private Dictionary<TileBase, TileData> dataFromTiles;
 
+    private List<Vector3Int> occupancy; //shitty solution but the old tilebase was aggregrate for every tile of that type or something. this would be better as an array but an array would be signifcantly more complicated
+
     private void Awake(){
         dataFromTiles = new Dictionary<TileBase, TileData>();
+        occupancy = new List<Vector3Int>();
         foreach(var tileData in tileDatas){
             foreach(var tile in tileData.tiles){
                 dataFromTiles.Add(tile, tileData);
@@ -40,15 +44,16 @@ public class TilemapManager : MonoBehaviour
         TileBase tile = tilemap.GetTile<TileBase>(tilePos);
         if (tile != null)  // Check if a tile exists at that position
         {
-            if(dataFromTiles.TryGetValue(tile, out TileData outTile)){
-                if(outTile.occupants.Count > 0){
-                    return;
-                }
+            if(occupancy.Contains(tilePos)){
+                    Debug.Log("aborting activating movement because tile was occupied : " + tilePos);
             }
-            TileData.Type tileType = dataFromTiles[tile].type;
-
+            else{
+                occupancy.Add(tilePos);
+            }
+            
+            //TileData.Type tileType = dataFromTiles[tile].type;
             //Debug.Log("Clicked on tile at: " + tilePosition + " with type : " + tileType.ToString());
-            movementTilemap.SetTile(tilePos, selectedTile);
+            movementTilemap.SetTile(tilePos, movementBaseTile);
             drawnTiles.Add(tilePos);
         }
     }
@@ -58,33 +63,31 @@ public class TilemapManager : MonoBehaviour
         }
         drawnTiles.Clear();
     }
-    public void SetOccupancy(UnitController unit){
-        Vector3Int tilePosition = tilemap.WorldToCell(unit.transform.position);
+    public void SetOccupancy(Vector3 position){
+        Vector3Int tilePosition = tilemap.WorldToCell(position);
         
-        TileBase tile = movementTilemap.GetTile<TileBase>(tilePosition);
-        if(tile == null){
-            Debug.Log("FATAL ERROR : player is trying to set occupancy in a null tile");
+        if(occupancy.Contains(tilePosition)){
+                Debug.Log("aborting setting occupancy because tile was occupied : " + tilePosition);
         }
-        if(dataFromTiles.TryGetValue(tile, out TileData outTile)){
-            outTile.occupants.Add(unit);
+        else{
+            occupancy.Add(tilePosition);
         }
     }
-    public void RemoveOccupancy(UnitController unit){
-        Vector3Int tilePosition = tilemap.WorldToCell(unit.transform.position);
-        
-        TileBase tile = movementTilemap.GetTile<TileBase>(tilePosition);
-        if(dataFromTiles.TryGetValue(tile, out TileData outTile)){
-//#if DEBUG
-            if(!outTile.occupants.Contains(unit)){
-                Debug.Log("trying to remove an occupant that isn't occupying tile");
-            }
-            else{
-                outTile.occupants.Remove(unit);
-            }
-//#else
-            //outTile.occupants.Remove(unit);
-//#endif
+    public void RemoveOccupancy(Vector3 position){
+        Vector3Int tilePosition = tilemap.WorldToCell(position);
+        if(occupancy.Contains(tilePosition)){
+            occupancy.Remove(tilePosition);
         }
+        else{
+            Debug.Log("failed to remove occupancy, tile was not occupied");
+        }
+    }
+    public void PlaceTower(Vector3Int towerTilePos){
+        TileBase tile = movementTilemap.GetTile<TileBase>(towerTilePos);
+        if(tile != null){
+            towerMap.SetTile(towerTilePos, starterTowerTile);
+        }
+        ClearMovement();
     }
 
     void Update()

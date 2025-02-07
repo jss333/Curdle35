@@ -86,37 +86,12 @@ public class TurnControlScript : MonoBehaviour
 
                 UnitController tempUnit = players[currentPlayer].actors[currentActor];
 
-                //if i could do a god damn array of objects in the unity editor i wouldnt have to fuck with this dog shit layout
-                //fucking unity
-                if(tempUnit.abilityCount >= 1){
-                    uiBridge.ability0_button.SetActive(true);
-                    TextMeshProUGUI tmpGUI0 = uiBridge.ability1_button.GetComponentInChildren<TextMeshProUGUI>();
-                    tmpGUI0.text = tempUnit.abilityNames[0];
-                    
-                    if(tempUnit.abilityCount >= 2){
-                        uiBridge.ability1_button.SetActive(true);
-                        TextMeshProUGUI tmpGUI1 = uiBridge.ability1_button.GetComponentInChildren<TextMeshProUGUI>();
-                        tmpGUI1.text = tempUnit.abilityNames[1];
-
-                        
-                        if(tempUnit.abilityCount >= 3){
-                            uiBridge.ability2_button.SetActive(true);
-                            TextMeshProUGUI tmpGUI2 = uiBridge.ability2_button.GetComponentInChildren<TextMeshProUGUI>();
-                            tmpGUI2.text = tempUnit.abilityNames[2];
-                        }
-                        else{
-                            uiBridge.ability2_button.SetActive(false);
-                        }
-                    }
-                    else{
-                        uiBridge.ability1_button.SetActive(false);
-                        uiBridge.ability2_button.SetActive(false);
-                    }
+                for(int i = 0; i < tempUnit.abilityCount; i++){
+                    uiBridge.abilityTexts[i].SetText(tempUnit.abilityNames[i]);
+                    uiBridge.abilityButtons[i].SetActive(true);
                 }
-                else{
-                    uiBridge.ability0_button.SetActive(false);
-                    uiBridge.ability1_button.SetActive(false);
-                    uiBridge.ability2_button.SetActive(false);
+                for(int i = tempUnit.abilityCount; i < uiBridge.abilityButtons.Length; i++){
+                    uiBridge.abilityButtons[i].SetActive(false);
                 }
                 
             }
@@ -164,7 +139,7 @@ public class TurnControlScript : MonoBehaviour
                         }
                         case 2:{
 
-                            unitCont.PerformAbility1(mouseTilePos);
+                            unitCont.PerformAbility2(mouseTilePos);
                             break;
                         }
                     }
@@ -193,20 +168,6 @@ public class TurnControlScript : MonoBehaviour
         }
     }
 
-    void TurnPreparationUpdate(){
-        if(players[currentPlayer].actors[currentActor].TurnControlUpdate()){
-            currentActor++;
-            if(currentActor >= 5){
-                currentPlayer++;
-                currentActor = 0;
-                if(currentPlayer >= 2){
-                    currentPlayer = 0;
-                    finishedUpdatingTurn = true;
-                }
-            }
-        }
-    }
-
     [SerializeField] public void ShowMovementOnControlledActor(){
         if(currentPlayer >= 0 && currentPlayer < players.Length){
             if(currentActor >= 0 && currentActor < players[currentPlayer].actors.Length){
@@ -215,10 +176,16 @@ public class TurnControlScript : MonoBehaviour
             }
         }
     }
-
-
-    //this is when the turn finishes, all actions will be performed
-    void FinishTurn(){
-        
+    [SerializeField] public void ShowAbility0(){
+        Debug.Log("showing ability 0 path for player[" + currentPlayer + "] and actor [" + currentActor + "]");
+        players[currentPlayer].actors[currentActor].ShowRangeForAbility0();
+    }
+    [SerializeField] public void ShowAbility1(){
+        Debug.Log("showing ability 1 path for player[" + currentPlayer + "] and actor [" + currentActor + "]");
+        players[currentPlayer].actors[currentActor].ShowRangeForAbility1();
+    }
+    [SerializeField] public void ShowAbility2(){
+        Debug.Log("showing ability 2 path for player[" + currentPlayer + "] and actor [" + currentActor + "]");
+        players[currentPlayer].actors[currentActor].ShowRangeForAbility2();
     }
 }

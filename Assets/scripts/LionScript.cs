@@ -14,13 +14,17 @@ public class LionController : UnitController
         base.movability = 3;
         base.movementType = Movement.Type.Free;
         base.abilityCount = 1;
-    }
+
+        base.Start();
+        base.abilityNames[0] = "Place Tower";
+
+    } 
 
     //id do an array of function pointers here in C++, just gonna handtype it for now. im assuming the max ability count is 3
-    public void ShowRangeForAbility0(){
-
+    public override void ShowRangeForAbility0() {
+        Debug.Log("showing range for lion ability 0");
         tmManager.ClearMovement();
-        Vector3Int myTilePos = tilemap.WorldToCell(transform.position);
+        Vector3Int myTilePos = tmManager.tilemap.WorldToCell(transform.position);
         Vector3Int offset = Vector3Int.zero;
         offset.x = -1;
         tmManager.ActivateMovementTile(myTilePos + offset);
@@ -34,7 +38,8 @@ public class LionController : UnitController
 
         showingAbility = 0;
     }
-    public virtual void PerformAbility0(Vector3Int mouseTilePos){
+    public override void PerformAbility0(Vector3Int mouseTilePos){
+        tmManager.PlaceTower(mouseTilePos);
 
         showingAbility = -1;
     }

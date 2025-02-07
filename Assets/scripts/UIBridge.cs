@@ -1,9 +1,17 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class UIBridge : MonoBehaviour
 {
-    public GameObject ability0_button;
-    public GameObject ability1_button;
-    public GameObject ability2_button;
+
+    public GameObject[] abilityButtons;
+    public TextMeshProUGUI[] abilityTexts;
+
+    
+    void Start(){
+        for(int i = 0; i < abilityButtons.Length; i++){
+            abilityButtons[i].SetActive(false);
+        }
+    }
 }

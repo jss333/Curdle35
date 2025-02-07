@@ -19,8 +19,6 @@ public class UnitController : MonoBehaviour
 
     public int movability = 3;
 
-    static public Tilemap tilemap;
-
     public TilemapManager tmManager;
 
     public int abilityCount = 0; //set this from derived class
@@ -34,7 +32,7 @@ public class UnitController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public virtual void Start()
     {
-        tmManager.SetOccupancy(this);
+        tmManager.SetOccupancy(transform.position);
         if(abilityCount > 0){
             abilityNames = new string[abilityCount];
         }
@@ -52,7 +50,7 @@ public class UnitController : MonoBehaviour
             if(distance < (speed * Time.deltaTime)){
                 transform.position = destinationPos;
                 moving = false;
-                tmManager.SetOccupancy(this);
+                tmManager.SetOccupancy(transform.position);
             }
             else{
                 direction /= distance;
@@ -62,7 +60,8 @@ public class UnitController : MonoBehaviour
     }
 
     public void MoveTo(Vector3 dest){
-        tmManager.RemoveOccupancy(this);
+        tmManager.RemoveOccupancy(transform.position);
+        tmManager.ClearMovement();
         destinationPos.x = Mathf.Floor(dest.x) + 0.5f;
         destinationPos.y = Mathf.Floor(dest.y) + 0.5f;
         destinationPos.z = transform.position.z;
@@ -73,7 +72,7 @@ public class UnitController : MonoBehaviour
     public void CalculatePossibleDestinations(){
         showMovement = true;
 
-        Vector3Int myTilePos = tilemap.WorldToCell(transform.position);
+        Vector3Int myTilePos = tmManager.tilemap.WorldToCell(transform.position);
         tmManager.ClearMovement();
         switch(movementType){
             case Movement.Type.Straight:{
@@ -105,9 +104,9 @@ public class UnitController : MonoBehaviour
                 for(;offsets.x <= movability; offsets.x++){
                     offsets.y = -movability;
                     for(;offsets.y <= movability; offsets.y++){
-                        Debug.Log("offset iter : " + offsets);
+                        //Debug.Log("offset iter : " + offsets);
                         if(((Math.Abs(offsets.x) + Math.Abs(offsets.y)) <= movability) && !(offsets.x == 0 && offsets.y == 0)){
-                            Debug.Log("activating tile : " + offsets);
+                            //Debug.Log("activating tile : " + offsets);
                             tmManager.ActivateMovementTile(myTilePos + offsets);
                         }
                     }
