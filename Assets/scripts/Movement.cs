@@ -6,8 +6,10 @@ public class Movement : MonoBehaviour{
         None,
         Diagonal,
         Straight,
-        L_Shape,
+        Lion,
         Free,
+        Jaguar,
+        Hyena,
 
         SIZE
     }

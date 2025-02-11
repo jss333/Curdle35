@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class LionController : UnitController
+public class JaguarController : UnitController
 {
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -12,10 +12,8 @@ public class LionController : UnitController
     {
         base.team = Team.cats;
 
-        base.movementType = Movement.Type.Lion;
-
         base.movability = 3;
-        //base.movementType = Movement.Type.Free;
+        base.movementType = Movement.Type.Jaguar;
         base.abilityCount = 1;
 
         base.Start();
@@ -24,7 +22,7 @@ public class LionController : UnitController
     } 
 
     void PrecalculateMovementOffsets(){
-        movementOffsets = new Vector3Int[20];
+        movementOffsets = new Vector3Int[28];
 
         int currentIter = 0;
         Vector3Int placement = Vector3Int.zero;
@@ -35,21 +33,19 @@ public class LionController : UnitController
             movementOffsets[currentIter] = placement;
             currentIter++;
         }
-        //currentIter should be 6 right now
+        //currentIter should be 8 right now
         placement.x = 0;
 
-        for(placement.y = -3; placement.y <= 3; placement.y++){
+        for(placement.y = -4; placement.y <= 4; placement.y++){
             if(placement.y == 0){
                 continue;
             }
             movementOffsets[currentIter] = placement;
             currentIter++;
         }
-        //currentIter should be 12 right now
-        placement.x = -2;
-        placement.y = -2;
+        //currentIter should be 16 right now
         
-        for(placement.x = -2; placement.x <= 2; placement.x++){
+        for(placement.x = -3; placement.x <= 3; placement.x++){
             if(placement.x == 0){
                 continue;
             }

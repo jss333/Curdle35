@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -24,6 +25,8 @@ public class TurnControlScript : MonoBehaviour
     [SerializeField] public UIBridge uiBridge;
 
     bool finishedUpdatingTurn = false;
+
+    bool committedToAnAction = false;
 
     private void OnValidate()
     {
@@ -73,6 +76,10 @@ public class TurnControlScript : MonoBehaviour
     }
 
     void SwitchActor(int whichPlayer, int whichActor){
+        if(committedToAnAction){
+            Debug.Log("cant switch actor, commited to action");
+            return;
+        }
         if(currentPlayer < 0 || currentPlayer > players.Length){
             Debug.Log("trying to swap to an invalid player : " + whichPlayer);
         }
@@ -85,6 +92,7 @@ public class TurnControlScript : MonoBehaviour
                 currentActor = whichActor;
 
                 UnitController tempUnit = players[currentPlayer].actors[currentActor];
+                //uiBridge.ChangeFaceSprite(tempUnit.face_sprite);
 
                 for(int i = 0; i < tempUnit.abilityCount; i++){
                     uiBridge.abilityTexts[i].SetText(tempUnit.abilityNames[i]);
@@ -101,12 +109,20 @@ public class TurnControlScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(committedToAnAction){
+            if(!players[currentPlayer].actors[currentActor].moving){
+                committedToAnAction = false;
+            }
+            else{
+                return;
+            }
+        }
         
         bool lmbDown = Input.GetMouseButtonDown(0);
         bool rmbDown = Input.GetMouseButtonDown(1);
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPos.z = 0.0f;
-        Vector3Int mouseTilePos = tmManager.tilemap.WorldToCell(mouseWorldPos);
+        Vector3Int mouseTilePos = tmManager.tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(mouseWorldPos);
 
         UnitController unitCont = null;
         if(currentPlayer >= 0 && currentPlayer < players.Length){
@@ -120,6 +136,7 @@ public class TurnControlScript : MonoBehaviour
                     Debug.Log("checking if movement possible : " + mouseWorldPos);
                     if(tmManager.CheckIfMovementPossible(mouseWorldPos)){
                         Debug.Log("movment was possible");
+                        committedToAnAction = true;
                         unitCont.MoveTo(mouseWorldPos);
                     }
                     else{
@@ -129,7 +146,7 @@ public class TurnControlScript : MonoBehaviour
                 else if(unitCont.showingAbility >= 0){
                     switch(unitCont.showingAbility){
                         case 0:{
-                            unitCont.PerformAbility0(mouseTilePos);
+                            unitCont.PlaceTower(mouseTilePos);
                             break;
                         }
                         case 1:{
@@ -169,6 +186,9 @@ public class TurnControlScript : MonoBehaviour
     }
 
     [SerializeField] public void ShowMovementOnControlledActor(){
+        if(committedToAnAction){
+            return;
+        }
         if(currentPlayer >= 0 && currentPlayer < players.Length){
             if(currentActor >= 0 && currentActor < players[currentPlayer].actors.Length){
                 Debug.Log("showing movement path for player[" + currentPlayer + "] and actor [" + currentActor + "]");
@@ -176,15 +196,26 @@ public class TurnControlScript : MonoBehaviour
             }
         }
     }
-    [SerializeField] public void ShowAbility0(){
+    [SerializeField] public void ShowTowerPlacement(){
+        if(committedToAnAction){
+            return;
+        }
         Debug.Log("showing ability 0 path for player[" + currentPlayer + "] and actor [" + currentActor + "]");
-        players[currentPlayer].actors[currentActor].ShowRangeForAbility0();
+        if(!players[currentPlayer].actors[currentActor].moving){
+            players[currentPlayer].actors[currentActor].ShowTowerPlacement();
+        }
     }
     [SerializeField] public void ShowAbility1(){
+        if(committedToAnAction){
+            return;
+        }
         Debug.Log("showing ability 1 path for player[" + currentPlayer + "] and actor [" + currentActor + "]");
         players[currentPlayer].actors[currentActor].ShowRangeForAbility1();
     }
     [SerializeField] public void ShowAbility2(){
+        if(committedToAnAction){
+            return;
+        }
         Debug.Log("showing ability 2 path for player[" + currentPlayer + "] and actor [" + currentActor + "]");
         players[currentPlayer].actors[currentActor].ShowRangeForAbility2();
     }

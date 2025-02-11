@@ -9,20 +9,34 @@ public class TilemapManager : MonoBehaviour
     [SerializeField] public TileBase movementBaseTile;
     [SerializeField] public TileBase starterTowerTile;
 
-    public Tilemap movementTilemap;
-    public Tilemap tilemap;  // Assign your Tilemap in the Inspector
-    public Tilemap towerMap;
+
+    public enum MapType : int{
+        ground,
+        resource,
+        tower,
+        movement,
+
+        player,
+        occupant,
+
+        MAX_SIZE
+    }
+
+    public Tile[] groundTiles;
+
+
+    public Tilemap[] tilemapArray;
 
     List<Vector3Int> drawnTiles = new List<Vector3Int>();
 
     [SerializeField] private List<TileData> tileDatas;
     private Dictionary<TileBase, TileData> dataFromTiles;
 
-    private List<Vector3Int> occupancy; //shitty solution but the old tilebase was aggregrate for every tile of that type or something. this would be better as an array but an array would be signifcantly more complicated
+    private Dictionary<Vector3Int, UnitController.Team> occupancy; //shitty solution but the old tilebase was aggregrate for every tile of that type or something. this would be better as an array but an array would be signifcantly more complicated
 
     private void Awake(){
         dataFromTiles = new Dictionary<TileBase, TileData>();
-        occupancy = new List<Vector3Int>();
+        occupancy = new Dictionary<Vector3Int, UnitController.Team>();
         foreach(var tileData in tileDatas){
             foreach(var tile in tileData.tiles){
                 dataFromTiles.Add(tile, tileData);
@@ -35,47 +49,47 @@ public class TilemapManager : MonoBehaviour
     }
 
     public bool CheckIfMovementPossible(Vector3 mouseWorldPos){
-        Vector3Int tilePosition = tilemap.WorldToCell(mouseWorldPos);
+        Vector3Int tilePosition = tilemapArray[(int)MapType.ground].WorldToCell(mouseWorldPos);
         
-        TileBase tile = movementTilemap.GetTile<TileBase>(tilePosition);
+        TileBase tile = tilemapArray[(int)MapType.movement].GetTile<TileBase>(tilePosition);
         return tile != null;
     }
-    public void ActivateMovementTile(Vector3Int tilePos){
-        TileBase tile = tilemap.GetTile<TileBase>(tilePos);
+    public void ActivateMovementTile(Vector3Int tilePos, UnitController.Team team){
+        TileBase tile = tilemapArray[(int)MapType.ground].GetTile<TileBase>(tilePos);
         if (tile != null)  // Check if a tile exists at that position
         {
-            if(occupancy.Contains(tilePos)){
+            if(occupancy.TryGetValue(tilePos, out UnitController.Team occupantTeam)){
                     Debug.Log("aborting activating movement because tile was occupied : " + tilePos);
             }
             else{
-                occupancy.Add(tilePos);
+                occupancy.Add(tilePos, team);
             }
             
             //TileData.Type tileType = dataFromTiles[tile].type;
             //Debug.Log("Clicked on tile at: " + tilePosition + " with type : " + tileType.ToString());
-            movementTilemap.SetTile(tilePos, movementBaseTile);
+            tilemapArray[(int)MapType.movement].SetTile(tilePos, movementBaseTile);
             drawnTiles.Add(tilePos);
         }
     }
     public void ClearMovement(){
         foreach(Vector3Int tile in drawnTiles){
-            movementTilemap.SetTile(tile, null);
+            tilemapArray[(int)MapType.movement].SetTile(tile, null);
         }
         drawnTiles.Clear();
     }
-    public void SetOccupancy(Vector3 position){
-        Vector3Int tilePosition = tilemap.WorldToCell(position);
+    public void SetOccupancy(Vector3 position, UnitController.Team team){
+        Vector3Int tilePosition = tilemapArray[(int)MapType.ground].WorldToCell(position);
         
-        if(occupancy.Contains(tilePosition)){
+        if(occupancy.TryGetValue(tilePosition, out UnitController.Team occupantTeam)){
                 Debug.Log("aborting setting occupancy because tile was occupied : " + tilePosition);
         }
         else{
-            occupancy.Add(tilePosition);
+            occupancy.Add(tilePosition, team);
         }
     }
     public void RemoveOccupancy(Vector3 position){
-        Vector3Int tilePosition = tilemap.WorldToCell(position);
-        if(occupancy.Contains(tilePosition)){
+        Vector3Int tilePosition = tilemapArray[(int)MapType.ground].WorldToCell(position);
+        if(occupancy.TryGetValue(tilePosition, out UnitController.Team occupantTeam)){
             occupancy.Remove(tilePosition);
         }
         else{
@@ -83,9 +97,9 @@ public class TilemapManager : MonoBehaviour
         }
     }
     public void PlaceTower(Vector3Int towerTilePos){
-        TileBase tile = movementTilemap.GetTile<TileBase>(towerTilePos);
+        TileBase tile = tilemapArray[(int)MapType.ground].GetTile<TileBase>(towerTilePos);
         if(tile != null){
-            towerMap.SetTile(towerTilePos, starterTowerTile);
+            tilemapArray[(int)MapType.tower].SetTile(towerTilePos, starterTowerTile);
         }
         ClearMovement();
     }

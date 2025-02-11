@@ -1,0 +1,830 @@
+fileFormatVersion: 2
+guid: 2e8c0dfc4b6aa5748bc9aecf1b00e62e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4413031174467965592
+    second: Day_Night_Indicator_Animation_0
+  - first:
+      213: -5590551895518701109
+    second: Day_Night_Indicator_Animation_1
+  - first:
+      213: 6884758903551196921
+    second: Day_Night_Indicator_Animation_2
+  - first:
+      213: -1745091173821045159
+    second: Day_Night_Indicator_Animation_3
+  - first:
+      213: -7155614075951367069
+    second: Day_Night_Indicator_Animation_4
+  - first:
+      213: 625604417832275727
+    second: Day_Night_Indicator_Animation_5
+  - first:
+      213: 6235555607789116894
+    second: Day_Night_Indicator_Animation_6
+  - first:
+      213: 5910118719549468793
+    second: Day_Night_Indicator_Animation_7
+  - first:
+      213: 3253559932463064007
+    second: Day_Night_Indicator_Animation_8
+  - first:
+      213: 7624818135004468800
+    second: Day_Night_Indicator_Animation_9
+  - first:
+      213: -2521017535818607368
+    second: Day_Night_Indicator_Animation_10
+  - first:
+      213: 7815052433076152351
+    second: Day_Night_Indicator_Animation_11
+  - first:
+      213: -7843327308422618425
+    second: Day_Night_Indicator_Animation_12
+  - first:
+      213: 5900020248578265888
+    second: Day_Night_Indicator_Animation_13
+  - first:
+      213: -3648304578018546993
+    second: Day_Night_Indicator_Animation_14
+  - first:
+      213: 4709872992763183790
+    second: Day_Night_Indicator_Animation_15
+  - first:
+      213: -325060413659926343
+    second: Day_Night_Indicator_Animation_16
+  - first:
+      213: 5428708820126928035
+    second: Day_Night_Indicator_Animation_17
+  - first:
+      213: -5809821271024950289
+    second: Day_Night_Indicator_Animation_18
+  - first:
+      213: 5473796225667964808
+    second: Day_Night_Indicator_Animation_19
+  - first:
+      213: 583430328257802604
+    second: Day_Night_Indicator_Animation_20
+  - first:
+      213: -8604995397729339984
+    second: Day_Night_Indicator_Animation_21
+  - first:
+      213: 6726114086459063579
+    second: Day_Night_Indicator_Animation_22
+  - first:
+      213: -6650531728334723458
+    second: Day_Night_Indicator_Animation_23
+  - first:
+      213: -8877049241779767569
+    second: Day_Night_Indicator_Animation_24
+  - first:
+      213: 4547316926210009381
+    second: Day_Night_Indicator_Animation_25
+  - first:
+      213: 2228425376035200494
+    second: Day_Night_Indicator_Animation_26
+  - first:
+      213: -1373222090665341637
+    second: Day_Night_Indicator_Animation_27
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_0
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 1677
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89253e0d87c3e3d30800000000000000
+      internalID: 4413031174467965592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_1
+      rect:
+        serializedVersion: 2
+        x: 565
+        y: 1677
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc99839cbae5a62b0800000000000000
+      internalID: -5590551895518701109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_2
+      rect:
+        serializedVersion: 2
+        x: 1121
+        y: 1677
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fe706aeeb39b8f50800000000000000
+      internalID: 6884758903551196921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_3
+      rect:
+        serializedVersion: 2
+        x: 1677
+        y: 1677
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9562ab3c2d038c7e0800000000000000
+      internalID: -1745091173821045159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_4
+      rect:
+        serializedVersion: 2
+        x: 2233
+        y: 1677
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36c3225f8e622bc90800000000000000
+      internalID: -7155614075951367069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_5
+      rect:
+        serializedVersion: 2
+        x: 2789
+        y: 1677
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0fcec647e79ea800800000000000000
+      internalID: 625604417832275727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_6
+      rect:
+        serializedVersion: 2
+        x: 3345
+        y: 1677
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edd1773b9c4298650800000000000000
+      internalID: 6235555607789116894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_7
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 1121
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 970f12b89a5f40250800000000000000
+      internalID: 5910118719549468793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_8
+      rect:
+        serializedVersion: 2
+        x: 565
+        y: 1121
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c3a7ed3587f62d20800000000000000
+      internalID: 3253559932463064007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_9
+      rect:
+        serializedVersion: 2
+        x: 1121
+        y: 1121
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 046d5ed12bbc0d960800000000000000
+      internalID: 7624818135004468800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_10
+      rect:
+        serializedVersion: 2
+        x: 1677
+        y: 1121
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f4500978eb830dd0800000000000000
+      internalID: -2521017535818607368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_11
+      rect:
+        serializedVersion: 2
+        x: 2233
+        y: 1121
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f186e8e28c4a47c60800000000000000
+      internalID: 7815052433076152351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_12
+      rect:
+        serializedVersion: 2
+        x: 2789
+        y: 1121
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c269546e57e62390800000000000000
+      internalID: -7843327308422618425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_13
+      rect:
+        serializedVersion: 2
+        x: 3345
+        y: 1121
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0239e1c082511e150800000000000000
+      internalID: 5900020248578265888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_14
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 565
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcae5cad05e9e5dc0800000000000000
+      internalID: -3648304578018546993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_15
+      rect:
+        serializedVersion: 2
+        x: 565
+        y: 565
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea20bde6884dc5140800000000000000
+      internalID: 4709872992763183790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_16
+      rect:
+        serializedVersion: 2
+        x: 1121
+        y: 565
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b03249a6472d7bf0800000000000000
+      internalID: -325060413659926343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_17
+      rect:
+        serializedVersion: 2
+        x: 1677
+        y: 565
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ac02bcc8e5a65b40800000000000000
+      internalID: 5428708820126928035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_18
+      rect:
+        serializedVersion: 2
+        x: 2233
+        y: 565
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe3ac04f55e5f5fa0800000000000000
+      internalID: -5809821271024950289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_19
+      rect:
+        serializedVersion: 2
+        x: 2789
+        y: 565
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88f10d37aa4d6fb40800000000000000
+      internalID: 5473796225667964808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_20
+      rect:
+        serializedVersion: 2
+        x: 3345
+        y: 565
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c61fefadac2c81800800000000000000
+      internalID: 583430328257802604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_21
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 9
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b5b878e64ae49880800000000000000
+      internalID: -8604995397729339984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_22
+      rect:
+        serializedVersion: 2
+        x: 565
+        y: 9
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1db42a0025f75d50800000000000000
+      internalID: 6726114086459063579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_23
+      rect:
+        serializedVersion: 2
+        x: 1121
+        y: 9
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e76e42d01a094b3a0800000000000000
+      internalID: -6650531728334723458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_24
+      rect:
+        serializedVersion: 2
+        x: 1677
+        y: 9
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe6f01a4fb26ec480800000000000000
+      internalID: -8877049241779767569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_25
+      rect:
+        serializedVersion: 2
+        x: 2233
+        y: 9
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5296ed3d6a05b1f30800000000000000
+      internalID: 4547316926210009381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_26
+      rect:
+        serializedVersion: 2
+        x: 2789
+        y: 9
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eed5b03a215fcee10800000000000000
+      internalID: 2228425376035200494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Day_Night_Indicator_Animation_27
+      rect:
+        serializedVersion: 2
+        x: 3345
+        y: 9
+        width: 539
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3d4c20c8c551fce0800000000000000
+      internalID: -1373222090665341637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable: {}
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

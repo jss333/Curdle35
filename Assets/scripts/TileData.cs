@@ -9,17 +9,9 @@ public class TileData : ScriptableObject
     public TileBase[] tiles;
     public enum Type{
         None,
-        Water,
-        Grass,
-        Desert,
-        Dirt,
-        Mountain,
-        Tundra,
-        Forest,
-        Jungle,
-        Corruption0, //corruption needs to come last
-        Corruption1, //mod of Corruption0, still temporary?
-        Corruption2,
+        Lion,
+        Hyena,
+        Impassable,
     }
     public Type type;
 
