@@ -190,6 +190,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -822,7 +835,35 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Day_Night_Indicator_Animation_0: 4413031174467965592
+      Day_Night_Indicator_Animation_1: -5590551895518701109
+      Day_Night_Indicator_Animation_10: -2521017535818607368
+      Day_Night_Indicator_Animation_11: 7815052433076152351
+      Day_Night_Indicator_Animation_12: -7843327308422618425
+      Day_Night_Indicator_Animation_13: 5900020248578265888
+      Day_Night_Indicator_Animation_14: -3648304578018546993
+      Day_Night_Indicator_Animation_15: 4709872992763183790
+      Day_Night_Indicator_Animation_16: -325060413659926343
+      Day_Night_Indicator_Animation_17: 5428708820126928035
+      Day_Night_Indicator_Animation_18: -5809821271024950289
+      Day_Night_Indicator_Animation_19: 5473796225667964808
+      Day_Night_Indicator_Animation_2: 6884758903551196921
+      Day_Night_Indicator_Animation_20: 583430328257802604
+      Day_Night_Indicator_Animation_21: -8604995397729339984
+      Day_Night_Indicator_Animation_22: 6726114086459063579
+      Day_Night_Indicator_Animation_23: -6650531728334723458
+      Day_Night_Indicator_Animation_24: -8877049241779767569
+      Day_Night_Indicator_Animation_25: 4547316926210009381
+      Day_Night_Indicator_Animation_26: 2228425376035200494
+      Day_Night_Indicator_Animation_27: -1373222090665341637
+      Day_Night_Indicator_Animation_3: -1745091173821045159
+      Day_Night_Indicator_Animation_4: -7155614075951367069
+      Day_Night_Indicator_Animation_5: 625604417832275727
+      Day_Night_Indicator_Animation_6: 6235555607789116894
+      Day_Night_Indicator_Animation_7: 5910118719549468793
+      Day_Night_Indicator_Animation_8: 3253559932463064007
+      Day_Night_Indicator_Animation_9: 7624818135004468800
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
