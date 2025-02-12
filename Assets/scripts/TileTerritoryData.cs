@@ -3,13 +3,13 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 
-[CreateAssetMenu(fileName = "TileData", menuName = "Scriptable Objects/TileData")]
-public class TileData : ScriptableObject
+[CreateAssetMenu(fileName = "TileTerritoryData", menuName = "Scriptable Objects/TileTerritoryData")]
+public class TileTerritoryData : ScriptableObject
 {
     public TileBase[] tiles;
     public enum Type{
         None,
-        Lion,
+        Cats,
         Hyena,
         Impassable,
     }

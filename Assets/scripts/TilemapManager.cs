@@ -30,27 +30,42 @@ public class TilemapManager : MonoBehaviour
 
     List<Vector3Int> drawnTiles = new List<Vector3Int>();
 
-    [SerializeField] private List<TileData> tileDatas;
-    private Dictionary<TileBase, TileData> dataFromTiles;
+    [SerializeField] private List<TileTerritoryData> territoryTiles;
+    private Dictionary<TileBase, TileTerritoryData> dataFromTiles;
+
+    [SerializeField] private List<TileResourceData> resourceTiles;
+    private Dictionary<TileBase, TileResourceData> resourcesFromTiles;
 
     private Dictionary<Vector3Int, UnitController.Team> occupancy; //shitty solution but the old tilebase was aggregrate for every tile of that type or something. this would be better as an array but an array would be signifcantly more complicated
+
+    private Dictionary<UnitController.Team, int> team_scores = new Dictionary<UnitController.Team, int>();
 
     public Vector3Int hqTowerPosition;
     public List<Vector3Int> minorTowers = new List<Vector3Int>();
 
 
     private void Awake(){
-        dataFromTiles = new Dictionary<TileBase, TileData>();
+        dataFromTiles = new Dictionary<TileBase, TileTerritoryData>();
         occupancy = new Dictionary<Vector3Int, UnitController.Team>();
-        foreach(var tileData in tileDatas){
+        foreach(var tileData in territoryTiles){
             foreach(var tile in tileData.tiles){
                 dataFromTiles.Add(tile, tileData);
+            }
+        }
+
+        resourcesFromTiles = new Dictionary<TileBase, TileResourceData>();
+        foreach(var tileData in resourceTiles){
+            foreach(var tile in tileData.tiles){
+                resourcesFromTiles.Add(tile, tileData);
             }
         }
     }
 
     void Start()
     {
+
+        team_scores.Add(UnitController.Team.cats, 0);
+        team_scores.Add(UnitController.Team.hyena, 0);
 
         tilemapArray[(int)MapType.ground].ClearAllTiles();
         int[,] predefinedBoard = new int[,]
@@ -137,23 +152,52 @@ public class TilemapManager : MonoBehaviour
             drawnTiles.Add(tilePos);
         }
     }
-
-    //return -1 for empty tile(non traversable)
-    // 0 for neutral
-    // 1 for cats
-    // 2 for hyenas
-    public int CheckTileForHyenaSpawn(Vector3Int tilePos){
+    public TileTerritoryData.Type CheckTileForHyenaSpawn(Vector3Int tilePos){
         TileBase tile = tilemapArray[(int)MapType.ground].GetTile<TileBase>(tilePos);
         if(tile != null){
-            if(dataFromTiles.TryGetValue(tile, out TileData val)){
-                return (int)val.type;
-            }
-            else{
-                return -1;
+            if(dataFromTiles.TryGetValue(tile, out TileTerritoryData val)){
+                return val.type;
             }
         }
-        else{
-            return -1;
+        return TileTerritoryData.Type.None;
+    }
+
+    public void ClaimTile(Vector3Int tilePos, UnitController.Team team){
+        
+        TileBase groundTile = tilemapArray[(int)MapType.ground].GetTile<TileBase>(tilePos);
+        if(groundTile != null){
+            if(dataFromTiles.TryGetValue(groundTile, out TileTerritoryData tilesTeam)){
+                
+                UnitController.Team tileTeam;
+
+                if(tilesTeam.type == TileTerritoryData.Type.Cats){
+                    tileTeam = UnitController.Team.cats;
+                
+                }
+                else if(tilesTeam.type == TileTerritoryData.Type.Hyena){
+                    tileTeam = UnitController.Team.hyena;
+                }
+                else{
+                Debug.Log("tile is not on a valid team while trying to claim? : " + tilePos);
+                    return;
+                }
+                
+                if(team_scores.TryGetValue(UnitController.Team.cats, out int score)){
+                    TileBase resourceTile = tilemapArray[(int)MapType.resource].GetTile<TileBase>(tilePos);
+                    if (resourceTile != null)  // Check if a tile exists at that position
+                    {
+                        if(resourcesFromTiles.TryGetValue(resourceTile, out TileResourceData val)) {
+                            //val.score;
+                        }
+                    }  
+                }
+            }
+            else{
+                Debug.Log("tile is not on a valid team while trying to claim? : " + tilePos);
+                return;
+            }
+
+ 
         }
     }
 
