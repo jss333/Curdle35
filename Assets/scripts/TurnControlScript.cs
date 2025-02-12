@@ -147,7 +147,6 @@ public class TurnControlScript : MonoBehaviour
             }
         }
         else if(hyenaTurn){
-            //CreateSpawners();//
 
             SpawnHyenas();
 

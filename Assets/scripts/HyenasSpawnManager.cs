@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
+using UnityEngine.Tilemaps;
 
 
 public enum NextSpawnRateToIncrease
@@ -15,27 +16,84 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
     private HyenasSpawnPointAlgorithm spawnAlgorithm;
 
     [Header("Config params")]
+    [SerializeField] private TilemapManager tilemapManager;
     [SerializeField] private int startOuterSpawnRate = 3;
     [SerializeField] private int startInnerSpawnRate = 1;
     [SerializeField] private int minDistBetOuterSpawnPoints = 4;
     [SerializeField] private int minDistBetInnerSpawnPointAndHQ = 2;
     [SerializeField] private int corruptionNeededForSpawnRateIncrease = 80;
     [SerializeField] private NextSpawnRateToIncrease firstSpawnRateToIncrease = NextSpawnRateToIncrease.INNER_SPAWN_RATE;
-    //[SerializeField] public Tilemap spawnPointTilemap;
-    //[SerializeField] public TileBase spawnPointIndicatorTile;
 
     [Header("State")]
     [SerializeField] private int currentOuterSpawnRate;
     [SerializeField] private int currentInnerSpawnRate;
     [SerializeField] private NextSpawnRateToIncrease nextSpawnRateToIncrease;
 
+    // Game state
+    int[,] board;
+    int worldToArrayXOffset;
+    int worldToArrayYOffset;
 
-    void Start()
+    Tuple<int, int> hqPos;
+
+    public void InitializeInternalBoardRepresentationFromTilemap(Tilemap tilemap, Vector3Int hqPosWorld)
     {
-        // set up some fake state for testing
-        InitializeInternalBoardRepresentationFromPredefinedArray();
-        InitializeClaimedCells();
+        Vector3Int? leftmostTile = null;
+        Vector3Int? rightmostTile = null;
+        Vector3Int? bottommostTile = null;
+        Vector3Int? topmostTile = null;
 
+        BoundsInt bounds = tilemap.cellBounds;
+
+        foreach (Vector3Int pos in bounds.allPositionsWithin)
+        {
+            if (tilemap.HasTile(pos)) // Check if a tile exists at this position
+            {
+                // First found tile becomes initial reference
+                if (leftmostTile == null || pos.x < leftmostTile.Value.x) leftmostTile = pos;
+                if (rightmostTile == null || pos.x > rightmostTile.Value.x) rightmostTile = pos;
+                if (bottommostTile == null || pos.y < bottommostTile.Value.y) bottommostTile = pos;
+                if (topmostTile == null || pos.y > topmostTile.Value.y) topmostTile = pos;
+            }
+        }
+
+        int minX = leftmostTile.Value.x;
+        int maxX = rightmostTile.Value.x;
+        int width = maxX - minX + 1;
+        worldToArrayXOffset = Math.Abs(minX);
+
+        int minY = bottommostTile.Value.y;
+        int maxY = topmostTile.Value.y;
+        int hegith = maxY - minY + 1;
+        worldToArrayYOffset = Math.Abs(minY);
+
+        Debug.Log($"Determined min and max coordinates from tilemap = minX:{minX} maxX:{maxX} width:{width} --- minY:{minY} maxY:{maxY} height:{hegith}");
+
+        board = new int[width, hegith];
+
+        foreach (Vector3Int pos in bounds.allPositionsWithin)
+        {
+            if (tilemap.HasTile(pos))
+            {
+                board[pos.x + worldToArrayXOffset, pos.y + worldToArrayYOffset] = 1;
+            }
+            else
+            {
+                board[pos.x + worldToArrayXOffset, pos.y + worldToArrayYOffset] = -1;
+            }
+        }
+
+        hqPos = ConvertFromWorldPos(hqPosWorld);
+
+        Debug.Log($"Internal representation of world created 0-length:{board.GetLength(0)}   1-length:{board.GetLength(1)}");
+        LogUtils.Print2DArray(board);
+        Debug.Log($"HQ is positioned at {hqPosWorld} --> {hqPos}");
+
+        DoStart();
+    }
+
+    void DoStart()
+    {
         this.spawnAlgorithm = new HyenasSpawnPointAlgorithm(this, minDistBetInnerSpawnPointAndHQ);
         this.currentInnerSpawnRate = startInnerSpawnRate;
         this.currentOuterSpawnRate = startOuterSpawnRate;
@@ -73,11 +131,50 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
     }
 
 
+    public int[,] GetBoard()
+    {
+        return board;
+    }
+
+    public Tuple<int, int> GetHQCell()
+    {
+        return hqPos;
+    }
+
+    public bool IsClaimedByHyenas(Tuple<int, int> cell)
+    {
+        return tilemapManager.CheckTileForHyenaSpawn(ConvertFromTuple(cell)) == 2;
+    }
+
+    public bool IsClaimedByCats(Tuple<int, int> cell)
+    {
+        return tilemapManager.CheckTileForHyenaSpawn(ConvertFromTuple(cell)) == 1;
+    }
+
+    public bool HasHyena(Tuple<int, int> cell)
+    {
+        return false; //TODO
+    }
+
+    private Tuple<int, int> ConvertFromWorldPos(Vector3Int worldPos)
+    {
+        return Tuple.Create(worldPos.x + worldToArrayXOffset, worldPos.y + worldToArrayYOffset);
+    }
+
+    private Vector3Int ConvertFromTuple(Tuple<int, int> arrayPos)
+    {
+        Vector3Int worldPos = Vector3Int.zero;
+        worldPos.x = arrayPos.Item1 - worldToArrayXOffset;
+        worldPos.y = arrayPos.Item2 - worldToArrayYOffset;
+        return worldPos;
+    }
+
+
     // ================= FAKE STATE ====================
 
-    int[,] board;
-    HashSet<Tuple<int, int>> cellsClaimedByHyenas;
-    HashSet<Tuple<int, int>> cellsClaimedByCats;
+    //int[,] board;
+    //HashSet<Tuple<int, int>> cellsClaimedByHyenas;
+    //HashSet<Tuple<int, int>> cellsClaimedByCats;
 
     //private int[,] predefinedBoard = new int[,]
     //{
@@ -99,97 +196,55 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
     //    {-1,-1,-1,-1,1,1,2,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}
     //};
 
-    int[,] predefinedBoard = new int[,]
-    {
-        {-1,-1,-1, 1, 1, 1, 1, 1},
-        {-1, 1,-1, 1, 1,-1,-1, 1},
-        {-1, 1, 1, 1, 1, 1, 1, 1},
-        { 1, 1, 1, 1, 1, 1, 1,-1},
-        { 1, 1,-1, 1, 1, 1, 1,-1},
-        { 1, 1, 1, 1, 1, 1, 1, 1},
-        {-1, 1,-1, 1, 1,-1, 1, 1}
-    };
+    //int[,] predefinedBoard = new int[,]
+    //{
+    //    {-1,-1,-1, 1, 1, 1, 1, 1},
+    //    {-1, 1,-1, 1, 1,-1,-1, 1},
+    //    {-1, 1, 1, 1, 1, 1, 1, 1},
+    //    { 1, 1, 1, 1, 1, 1, 1,-1},
+    //    { 1, 1,-1, 1, 1, 1, 1,-1},
+    //    { 1, 1, 1, 1, 1, 1, 1, 1},
+    //    {-1, 1,-1, 1, 1,-1, 1, 1}
+    //};
 
-    void Print2DArray(int[,] array)
-    {
-        int rows = array.GetLength(0);
-        int cols = array.GetLength(1);
+    //void InitializeInternalBoardRepresentationFromPredefinedArray()
+    //{
+    //    Print2DArray(predefinedBoard);
 
-        string output = "";
-        for (int i = 0; i < rows; i++)
-        {
-            for (int j = 0; j < cols; j++)
-            {
-                output += array[i, j] + " ";
-            }
-            output += "\n"; // New line for rows
-        }
-        Debug.Log(output);
-    }
+    //    int boardHeight = predefinedBoard.GetLength(0);
+    //    int boardWidth = predefinedBoard.GetLength(1);
+    //    Debug.Log("board height: " + boardHeight + ", width: " + boardWidth);
 
-    void InitializeInternalBoardRepresentationFromPredefinedArray()
-    {
-        Print2DArray(predefinedBoard);
+    //    int numRows = boardWidth;
+    //    int numCols = boardHeight;
+    //    Debug.Log("internal representation num rows " + numRows + ", cols: " + numCols);
 
-        int boardHeight = predefinedBoard.GetLength(0);
-        int boardWidth = predefinedBoard.GetLength(1);
-        Debug.Log("board height: " + boardHeight + ", width: " + boardWidth);
+    //    board = new int[numRows, numCols];
 
-        int numRows = boardWidth;
-        int numCols = boardHeight;
-        Debug.Log("internal representation num rows " + numRows + ", cols: " + numCols);
+    //    for (int x = 0; x < numRows; x++)
+    //    {
+    //        for (int y = 0; y < numCols; y++)
+    //        {
+    //            board[x, y] = predefinedBoard[(boardHeight - 1) - y, x];
+    //        }
+    //    }
 
-        board = new int[numRows, numCols];
+    //    Print2DArray(board);
+    //}
 
-        for (int x = 0; x < numRows; x++)
-        {
-            for (int y = 0; y < numCols; y++)
-            {
-                board[x, y] = predefinedBoard[(boardHeight - 1) - y, x];
-            }
-        }
+    //void InitializeClaimedCells()
+    //{
+    //    cellsClaimedByHyenas = new HashSet<Tuple<int, int>>();
+    //    cellsClaimedByHyenas.Add(Tuple.Create(0, 2));
+    //    cellsClaimedByHyenas.Add(Tuple.Create(7, 1));
+    //    LogUtils.LogEnumerable("cells claimed by hyenas", cellsClaimedByHyenas);
 
-        Print2DArray(board);
-    }
-    
-    void InitializeClaimedCells()
-    {
-        cellsClaimedByHyenas = new HashSet<Tuple<int, int>>();
-        cellsClaimedByHyenas.Add(Tuple.Create(0, 2));
-        cellsClaimedByHyenas.Add(Tuple.Create(7, 1));
-        LogUtils.LogEnumerable("cells claimed by hyenas", cellsClaimedByHyenas);
-
-        cellsClaimedByCats = new HashSet<Tuple<int, int>>();
-        cellsClaimedByCats.Add(Tuple.Create(3, 2));
-        cellsClaimedByCats.Add(Tuple.Create(3, 1));
-        cellsClaimedByCats.Add(Tuple.Create(4, 1));
-        LogUtils.LogEnumerable("cells claimed by cats", cellsClaimedByCats);
-    }
-
-    public int[,] GetBoard()
-    {
-        return board;
-    }
-
-    public Tuple<int, int> GetHQCell()
-    {
-        return Tuple.Create(4, 3);
-    }
-
-    public bool IsClaimedByHyenas(Tuple<int, int> cell)
-    {
-        return cellsClaimedByHyenas.Contains(cell);
-    }
-
-    public bool IsClaimedByCats(Tuple<int, int> cell)
-    {
-        return cellsClaimedByCats.Contains(cell);
-    }
-
-    public bool HasHyena(Tuple<int, int> cell)
-    {
-        return false;
-    }
+    //    cellsClaimedByCats = new HashSet<Tuple<int, int>>();
+    //    cellsClaimedByCats.Add(Tuple.Create(3, 2));
+    //    cellsClaimedByCats.Add(Tuple.Create(3, 1));
+    //    cellsClaimedByCats.Add(Tuple.Create(4, 1));
+    //    LogUtils.LogEnumerable("cells claimed by cats", cellsClaimedByCats);
+    //}
 }
 
 public interface IGameStateProvider

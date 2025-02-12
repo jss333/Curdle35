@@ -9,6 +9,8 @@ public class TilemapManager : MonoBehaviour
     [SerializeField] public TileBase movementBaseTile;
     [SerializeField] public TileBase starterTowerTile;
 
+    [SerializeField] private HyenasSpawnManager hyenasSpawnManager;
+
 
     public enum MapType : int{
         ground,
@@ -123,6 +125,10 @@ public class TilemapManager : MonoBehaviour
                 break;
             }
         }
+
+        // After we're done creating the map we need to initialize the hyenasSpawnAlgorithm with the data from the same tilemap
+        // We also need to pass in the location of the HQ
+        hyenasSpawnManager.InitializeInternalBoardRepresentationFromTilemap(tilemapArray[(int)MapType.ground], checkTowerPosition);
     }
 
     public void OnClick(){

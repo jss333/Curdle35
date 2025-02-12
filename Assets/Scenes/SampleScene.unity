@@ -1137,6 +1137,60 @@ MonoBehaviour:
   panSpeed: 20
   minZoom: 1
   maxZoom: 10
+--- !u!1 &554228170
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 554228172}
+  - component: {fileID: 554228171}
+  m_Layer: 0
+  m_Name: HyenaSpawnManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &554228171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554228170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02e50e9378fe8d4da954c28efcf6aec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemapManager: {fileID: 1018166469}
+  startOuterSpawnRate: 3
+  startInnerSpawnRate: 1
+  minDistBetOuterSpawnPoints: 4
+  minDistBetInnerSpawnPointAndHQ: 2
+  corruptionNeededForSpawnRateIncrease: 80
+  firstSpawnRateToIncrease: 1
+  currentOuterSpawnRate: 0
+  currentInnerSpawnRate: 0
+  nextSpawnRateToIncrease: 0
+--- !u!4 &554228172
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554228170}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1498,6 +1552,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementBaseTile: {fileID: 11400000, guid: 97070a33132d98b4c8c7707816850c15, type: 2}
   starterTowerTile: {fileID: 11400000, guid: 976831fe615ee6a46ab1db401f24bbfa, type: 2}
+  hyenasSpawnManager: {fileID: 554228171}
   groundTiles:
   - {fileID: 11400000, guid: 82694da2319c29043862a68cfe30d516, type: 2}
   - {fileID: 11400000, guid: ba622c3cd18ed0b4bbc95759aefee636, type: 2}
@@ -4272,3 +4327,4 @@ SceneRoots:
   - {fileID: 151657709}
   - {fileID: 549722780}
   - {fileID: 846489660}
+  - {fileID: 554228172}
