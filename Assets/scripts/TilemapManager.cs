@@ -16,9 +16,6 @@ public class TilemapManager : MonoBehaviour
         tower,
         movement,
 
-        player,
-        occupant,
-
         MAX_SIZE
     }
 
@@ -37,6 +34,10 @@ public class TilemapManager : MonoBehaviour
     private Dictionary<TileBase, TileData> dataFromTiles;
 
     private Dictionary<Vector3Int, UnitController.Team> occupancy; //shitty solution but the old tilebase was aggregrate for every tile of that type or something. this would be better as an array but an array would be signifcantly more complicated
+
+    public Vector3Int hqTowerPosition;
+    public List<Vector3Int> minorTowers = new List<Vector3Int>();
+
 
     private void Awake(){
         dataFromTiles = new Dictionary<TileBase, TileData>();
@@ -91,7 +92,22 @@ public class TilemapManager : MonoBehaviour
             }
         }
 
+        Vector3Int checkTowerPosition = Vector3Int.zero;
 
+        bool foundHQTower = false;
+        for(checkTowerPosition.x = -rightSide; checkTowerPosition.x < rightSide; checkTowerPosition.x++){
+            for(checkTowerPosition.y = -bottomSide; checkTowerPosition.y < bottomSide; checkTowerPosition.y++){
+                TileBase tile = tilemapArray[(int)MapType.tower].GetTile(checkTowerPosition);
+                if(tile != null){
+                    hqTowerPosition = checkTowerPosition;
+                    foundHQTower = true;
+                    break;
+                }
+            }
+            if(foundHQTower){
+                break;
+            }
+        }
     }
 
     public void OnClick(){
@@ -121,6 +137,26 @@ public class TilemapManager : MonoBehaviour
             drawnTiles.Add(tilePos);
         }
     }
+
+    //return -1 for empty tile(non traversable)
+    // 0 for neutral
+    // 1 for cats
+    // 2 for hyenas
+    public int CheckTileForHyenaSpawn(Vector3Int tilePos){
+        TileBase tile = tilemapArray[(int)MapType.ground].GetTile<TileBase>(tilePos);
+        if(tile != null){
+            if(dataFromTiles.TryGetValue(tile, out TileData val)){
+                return (int)val.type;
+            }
+            else{
+                return -1;
+            }
+        }
+        else{
+            return -1;
+        }
+    }
+
     public void ClearMovement(){
         foreach(Vector3Int tile in drawnTiles){
             tilemapArray[(int)MapType.movement].SetTile(tile, null);
@@ -150,6 +186,7 @@ public class TilemapManager : MonoBehaviour
         TileBase tile = tilemapArray[(int)MapType.ground].GetTile<TileBase>(towerTilePos);
         if(tile != null){
             tilemapArray[(int)MapType.tower].SetTile(towerTilePos, starterTowerTile);
+            minorTowers.Add(towerTilePos);
         }
         ClearMovement();
     }
