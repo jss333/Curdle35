@@ -28,6 +28,7 @@ public class TurnControlScript : MonoBehaviour
     [SerializeField] private Sprite[] clock_sprites;
 
     [SerializeField] public List<HyenaController> hyenas = new List<HyenaController>();
+    //[SerializeField] public List<SpawnMarker> spawnMarkers = new List<SpawnMarker>();
     int currentHyena = 0;
 
     bool finishedUpdatingTurn = false;
@@ -89,7 +90,7 @@ public class TurnControlScript : MonoBehaviour
     }
 
     void SpawnHyenas(){
-        //james has a function allegedly
+        //james has a function
     }
 
     void MoveOneHyena(){
@@ -128,7 +129,10 @@ public class TurnControlScript : MonoBehaviour
                 turnChangeTime = 0.0f;
                 endTurn = false;
                 hyenaTurn = !hyenaTurn;
-                if(!hyenaTurn){
+                if(!hyenaTurn){ //morning start
+                    
+                    //CreateSpawnMarkers();
+
                     uiBridge.buttons[0].GetComponent<UnityEngine.UI.Image>().color = buttonEnabledColor;
                     uiBridge.buttons[1].GetComponent<UnityEngine.UI.Image>().color = buttonEnabledColor;
                     for(int i = 0; i < cats.Length; i++){
@@ -137,13 +141,19 @@ public class TurnControlScript : MonoBehaviour
                         cats[i].RefreshTurn();
                     }   
                 }
+                else{ //night start
+
+                }
             }
         }
         else if(hyenaTurn){
+            //CreateSpawners();//
+
             SpawnHyenas();
 
 
             if(currentHyena >= hyenas.Count){
+
                 endTurn = true;
             }
             else{
