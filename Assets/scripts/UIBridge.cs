@@ -6,19 +6,28 @@ using UnityEngine.UIElements;
 public class UIBridge : MonoBehaviour
 {
     public UnityEngine.UIElements.Image faceSprite;
-    public GameObject[] roster;
-    public GameObject[] abilityButtons;
+    public GameObject[] buttons;
+    public GameObject clock;
     public TextMeshProUGUI[] abilityTexts;
 
+
+    [System.Serializable]
+    public struct RosterSetup{
+        public GameObject cameraButton;
+        public GameObject moveImage;
+        public GameObject towerImage;
+    }
+
+    [SerializeField] public RosterSetup[] rosterUISetup;
+
     public UnityEngine.UIElements.Image face_image;
-    public GameObject faceObj;
+    public GameObject faceObj;    
+    private void OnEnable()
+    {
+    }
     
     void Start(){
         faceObj.SetActive(false);
-
-        for(int i = 0; i < abilityButtons.Length; i++){
-            abilityButtons[i].SetActive(false);
-        }
     }
 
     public void DisableFaceSprite(){

@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class UnitController : MonoBehaviour
 {
@@ -36,13 +33,12 @@ public class UnitController : MonoBehaviour
     public int showingAbility = -1;
 
 
-    public bool alreadyMoved = false;
+    public bool movedThisTurn = false;
     public string[] abilityNames;
 
     public Team team = Team.hyena;
 
     public Sprite face_sprite;
-
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -75,8 +71,16 @@ public class UnitController : MonoBehaviour
                 direction /= distance;
                 transform.position += speed * direction * Time.deltaTime;
             }
-            Vector3Int myTilePos = tmManager.tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(transform.position);
-            tmManager.tilemapArray[(int)TilemapManager.MapType.ground].SetTile(myTilePos, tmManager.groundTiles[(int)team]);
+            Vector3 fraction = transform.position;
+            fraction.x -= Mathf.Floor(fraction.x) + 0.5f;
+            fraction.y -= Mathf.Floor(fraction.y) + 0.5f;
+            fraction.x = Mathf.Abs(fraction.x);
+            fraction.y = Mathf.Abs(fraction.y);
+            if(fraction.x < 0.1f && fraction.y < 0.1f){
+                Vector3Int myTilePos = tmManager.tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(transform.position);
+                tmManager.tilemapArray[(int)TilemapManager.MapType.ground].SetTile(myTilePos, tmManager.groundTiles[(int)team]);
+            }
+
         }
     }
 
@@ -173,7 +177,7 @@ public class UnitController : MonoBehaviour
             }
         }
 
-        showTowerPlacement = false;
+        showTowerPlacement = true;
     }
     public void PlaceTower(Vector3Int mouseTilePos){
         tmManager.PlaceTower(mouseTilePos);

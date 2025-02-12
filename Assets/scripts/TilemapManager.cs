@@ -22,7 +22,11 @@ public class TilemapManager : MonoBehaviour
         MAX_SIZE
     }
 
+    int groundWidth;
+    int groundHeight;
+
     public Tile[] groundTiles;
+    public TileBase[] rockTiles;
 
 
     public Tilemap[] tilemapArray;
@@ -42,6 +46,52 @@ public class TilemapManager : MonoBehaviour
                 dataFromTiles.Add(tile, tileData);
             }
         }
+    }
+
+    void Start()
+    {
+
+        tilemapArray[(int)MapType.ground].ClearAllTiles();
+        int[,] predefinedBoard = new int[,]
+        {
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,-1,-1,-1},
+            {-1,-1,-1,-1,-1,-1,1,1,1,1,2,1,2,1,1,1,1,1,-1,-1,-1},
+            {-1,-1,-1,-1,1,1,1,1,1,1,1,1,2,1,1,1,3,3,-1,-1,-1},
+            {-1,-1,-1,-1,1,1,1,1,1,1,1,2,1,2,3,2,2,2,1,-1,-1},
+            {-1,-1,-1,1,1,1,1,-1,-1,2,1,2,2,2,1,2,1,1,1,3,-1},
+            {-1,-1,-1,-1,1,3,1,-1,-1,2,1,1,2,2,1,2,1,1,1,2,1},
+            {-1,-1,-1,-1,3,2,1,1,1,1,1,2,2,3,2,-1,-1,2,3,2,1},
+            {-1,-1,-1,1,1,1,1,1,1,2,2,1,2,2,3,-1,-1,2,1,1,-1},
+            {-1,-1,-1,-1,1,1,2,1,1,2,1,1,3,1,2,1,1,2,1,-1,-1},
+            {-1,2,1,2,2,3,2,1,1,2,2,1,1,2,1,1,3,-1,-1,-1,-1},
+            {-1,3,1,1,2,1,1,1,1,2,1,1,2,1,1,1,2,1,-1,-1,-1},
+            {-1,3,2,1,1,1,1,-1,-1,2,3,2,1,2,2,3,2,1,-1,-1,-1},
+            {1,1,1,1,1,1,2,2,1,2,2,3,1,1,2,1,1,-1,-1,-1,-1},
+            {-1,1,1,2,1,1,2,1,1,3,1,2,1,1,2,1,-1,-1,-1,-1,-1},
+            {-1,-1,-1,-1,1,1,2,2,1,1,2,1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+            {-1,-1,-1,-1,1,1,2,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}
+        };
+        groundHeight = predefinedBoard.GetLength(0);
+        groundWidth = predefinedBoard.GetLength(1);
+
+        Vector3Int placementPos = Vector3Int.zero;
+        placementPos.y = -groundHeight / 2;
+
+        int rightSide = groundHeight / 2;
+        int bottomSide = groundWidth / 2;
+
+        for(; placementPos.y < rightSide; placementPos.y++){
+            
+            for(placementPos.x = -bottomSide; placementPos.x < bottomSide; placementPos.x++){
+                if(predefinedBoard[placementPos.y + rightSide, placementPos.x + bottomSide] >= 0){
+                    Vector3Int tempPos = -placementPos;
+                    tempPos.x = -tempPos.x;
+                    tilemapArray[(int)MapType.ground].SetTile(-placementPos, groundTiles[(int)UnitController.Team.neutral]);
+                }
+            }
+        }
+
+
     }
 
     public void OnClick(){

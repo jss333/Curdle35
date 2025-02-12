@@ -4,15 +4,17 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class LionController : UnitController
+public class LionController : CatController
 {
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public override void Start()
     {
         base.team = Team.cats;
 
         base.movementType = Movement.Type.Lion;
+
+        base.canPlaceTower =  true;
 
         base.movability = 3;
         //base.movementType = Movement.Type.Free;

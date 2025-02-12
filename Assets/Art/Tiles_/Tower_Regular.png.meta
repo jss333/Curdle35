@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: 9689ae4d4322f71498e0a45714c353d1
+guid: b75d12e415f6fb94fac2e34a01410da5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4390033149433182506
-    second: Rock_1_0
-  - first:
-      213: -2515339362117706479
-    second: Rock_1_1
-  - first:
-      213: 4534554471996968086
-    second: Rock_1_2
+      213: 6738480177456192941
+    second: Tower_Regular_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -52,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 256
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -119,67 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Rock_1_0
+      name: Tower_Regular_0
       rect:
         serializedVersion: 2
-        x: 33
-        y: 117
-        width: 45
-        height: 40
+        x: 0
+        y: 1
+        width: 100
+        height: 227
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a297728d3e78cec30800000000000000
-      internalID: 4390033149433182506
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Rock_1_1
-      rect:
-        serializedVersion: 2
-        x: 72
-        y: 151
-        width: 31
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 11d9a6f4d28b71dd0800000000000000
-      internalID: -2515339362117706479
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Rock_1_2
-      rect:
-        serializedVersion: 2
-        x: 139
-        y: 70
-        width: 85
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 69cc9066449fdee30800000000000000
-      internalID: 4534554471996968086
+      spriteID: dad9947f404e38d50800000000000000
+      internalID: 6738480177456192941
       vertices: []
       indices: 
       edges: []
@@ -188,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 586cc25033704e348b84c47b50fe27d2
     internalID: 0
     vertices: []
     indices: 
@@ -198,9 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Rock_1_0: 4390033149433182506
-      Rock_1_1: -2515339362117706479
-      Rock_1_2: 4534554471996968086
+      Tower_Regular_0: 6738480177456192941
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
