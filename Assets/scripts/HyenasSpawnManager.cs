@@ -23,11 +23,14 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
     [SerializeField] private int minDistBetInnerSpawnPointAndHQ = 2;
     [SerializeField] private int corruptionNeededForSpawnRateIncrease = 80;
     [SerializeField] private NextSpawnRateToIncrease firstSpawnRateToIncrease = NextSpawnRateToIncrease.INNER_SPAWN_RATE;
+    [SerializeField] private GameObject spawnMarkerPrefab;
 
     [Header("State")]
     [SerializeField] private int currentOuterSpawnRate;
     [SerializeField] private int currentInnerSpawnRate;
     [SerializeField] private NextSpawnRateToIncrease nextSpawnRateToIncrease;
+
+    private List<GameObject> spawnMarkers = new List<GameObject>();
 
     // Game state
     int[,] board;
@@ -100,18 +103,24 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
         this.nextSpawnRateToIncrease = firstSpawnRateToIncrease;
 
         // Testing
-        GenerateNewSpawnPointsBasedOnSpawnRates();
-        IncreaseSpawnRate();
-        GenerateNewSpawnPointsBasedOnSpawnRates();
+        //GenerateNewSpawnPointsBasedOnSpawnRates();
+        //IncreaseSpawnRate();
+        //GenerateNewSpawnPointsBasedOnSpawnRates();
     }
 
     public void GenerateNewSpawnPointsBasedOnSpawnRates()
     {
-        HashSet<Tuple<int, int>> generatedOuterSpawnPoints = spawnAlgorithm.GenerateRandomOuterSpawnPoints(currentOuterSpawnRate, minDistBetOuterSpawnPoints);
-        LogUtils.LogEnumerable("generated outer spawn points", generatedOuterSpawnPoints);
+        HashSet<Tuple<int, int>> allSpawnPoints = spawnAlgorithm.GenerateRandomOuterSpawnPoints(currentOuterSpawnRate, minDistBetOuterSpawnPoints);
+        allSpawnPoints.UnionWith(spawnAlgorithm.GenerateRandomInnerSpawnPoints(currentInnerSpawnRate));
+        LogUtils.LogEnumerable("generated spawn points", allSpawnPoints);
 
-        HashSet<Tuple<int, int>> generatedInnerSpawnPoints = spawnAlgorithm.GenerateRandomInnerSpawnPoints(currentInnerSpawnRate);
-        LogUtils.LogEnumerable("generated inner spawn points", generatedInnerSpawnPoints);
+        foreach (Tuple<int, int> spawnPoint in allSpawnPoints)
+        {
+            Vector3Int worldPosition = ConvertFromTuple(spawnPoint);
+            //Debug.Log($"new spawn marker ${spawnPoint} -> ${worldPosition}");
+            GameObject spawnMarkerObj = Instantiate(spawnMarkerPrefab, worldPosition, Quaternion.identity, transform);
+            spawnMarkers.Add(spawnMarkerObj);
+        }
     }
 
     public void IncreaseSpawnRate()

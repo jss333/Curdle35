@@ -1173,6 +1173,7 @@ MonoBehaviour:
   minDistBetInnerSpawnPointAndHQ: 2
   corruptionNeededForSpawnRateIncrease: 80
   firstSpawnRateToIncrease: 1
+  spawnMarkerPrefab: {fileID: 1616397644916556126, guid: 63c7a06c4de387d4f9b001c9572db8b5, type: 3}
   currentOuterSpawnRate: 0
   currentInnerSpawnRate: 0
   nextSpawnRateToIncrease: 0
@@ -1228,7 +1229,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 00000000c3978d5233e8e13053e9691cbf2a1c5f1d871d03
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -1915,6 +1916,7 @@ MonoBehaviour:
   - {fileID: 1998659486}
   - {fileID: 1710883587}
   tmManager: {fileID: 1018166469}
+  hyenasSpawnManager: {fileID: 0}
   uiBridge: {fileID: 151657708}
   buttonDisabledColor: {r: 0, g: 0, b: 0, a: 0.64705884}
   buttonEnabledColor: {r: 1, g: 1, b: 1, a: 1}

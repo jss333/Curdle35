@@ -21,6 +21,7 @@ public class TurnControlScript : MonoBehaviour
     int currentCat = 0;
 
     [SerializeField] private TilemapManager tmManager;
+    [SerializeField] private HyenasSpawnManager hyenasSpawnManager;
     [SerializeField] public UIBridge uiBridge;
 
     [SerializeField] private Color buttonDisabledColor;
@@ -130,8 +131,9 @@ public class TurnControlScript : MonoBehaviour
                 endTurn = false;
                 hyenaTurn = !hyenaTurn;
                 if(!hyenaTurn){ //morning start
-                    
+
                     //CreateSpawnMarkers();
+                    hyenasSpawnManager.GenerateNewSpawnPointsBasedOnSpawnRates();
 
                     uiBridge.buttons[0].GetComponent<UnityEngine.UI.Image>().color = buttonEnabledColor;
                     uiBridge.buttons[1].GetComponent<UnityEngine.UI.Image>().color = buttonEnabledColor;
