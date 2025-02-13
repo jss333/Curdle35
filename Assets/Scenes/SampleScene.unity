@@ -1058,6 +1058,7 @@ MonoBehaviour:
   firstSpawnRateToIncrease: 1
   tilemapManager: {fileID: 1018166469}
   spawnMarkerPrefab: {fileID: 1616397644916556126, guid: 63c7a06c4de387d4f9b001c9572db8b5, type: 3}
+  dustCloudPrefab: {fileID: 3559880717918923000, guid: 604e125f86cf815418f2c712c55cb88d, type: 3}
   hyenaPrefab: {fileID: 8498424047850533199, guid: 27ad39ea9b96c094cb1a5c5b1b9765fb, type: 3}
   hyenasParent: {fileID: 1580702949}
   currentOuterSpawnRate: 0

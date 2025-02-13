@@ -14,7 +14,6 @@ public enum NextSpawnRateToIncrease
 public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
 {
     [Header("Config params")]
-    [SerializeField] private TilemapManager tilemapManager;
     [SerializeField] private int startOuterSpawnRate = 3;
     [SerializeField] private int startInnerSpawnRate = 1;
     [SerializeField] private int minDistBetOuterSpawnPoints = 4;
@@ -23,7 +22,9 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
     [SerializeField] private NextSpawnRateToIncrease firstSpawnRateToIncrease = NextSpawnRateToIncrease.INNER_SPAWN_RATE;
 
     [Header("References")]
+    [SerializeField] private TilemapManager tilemapManager;
     [SerializeField] private GameObject spawnMarkerPrefab;
+    [SerializeField] private GameObject dustCloudPrefab;
     [SerializeField] private GameObject hyenaPrefab;
     [SerializeField] private GameObject hyenasParent;
 
@@ -134,6 +135,7 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
         {
             Vector3 spawnMarkerPos = spawnMarker.transform.position;
             Destroy(spawnMarker);
+            GameObject dustCloudObj = Instantiate(dustCloudPrefab, spawnMarkerPos, Quaternion.identity, hyenasParent.transform);
             GameObject hyenaObj = Instantiate(hyenaPrefab, spawnMarkerPos, Quaternion.identity, hyenasParent.transform);
         }
 
