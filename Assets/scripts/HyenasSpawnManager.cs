@@ -152,12 +152,12 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
 
     public bool IsClaimedByHyenas(Tuple<int, int> cell)
     {
-        return tilemapManager.CheckTileForHyenaSpawn(ConvertFromTuple(cell)) == 2;
+        return tilemapManager.CheckTileForHyenaSpawn(ConvertFromTuple(cell)) == TileTerritoryData.Type.Hyena;
     }
 
     public bool IsClaimedByCats(Tuple<int, int> cell)
     {
-        return tilemapManager.CheckTileForHyenaSpawn(ConvertFromTuple(cell)) == 1;
+        return tilemapManager.CheckTileForHyenaSpawn(ConvertFromTuple(cell)) == TileTerritoryData.Type.Cats;
     }
 
     public bool HasHyena(Tuple<int, int> cell)

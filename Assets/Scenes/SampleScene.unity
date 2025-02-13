@@ -1916,7 +1916,7 @@ MonoBehaviour:
   - {fileID: 1998659486}
   - {fileID: 1710883587}
   tmManager: {fileID: 1018166469}
-  hyenasSpawnManager: {fileID: 0}
+  hyenasSpawnManager: {fileID: 554228171}
   uiBridge: {fileID: 151657708}
   buttonDisabledColor: {r: 0, g: 0, b: 0, a: 0.64705884}
   buttonEnabledColor: {r: 1, g: 1, b: 1, a: 1}
