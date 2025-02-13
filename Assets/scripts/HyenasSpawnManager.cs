@@ -24,7 +24,7 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
 
     [Header("References")]
     [SerializeField] private GameObject spawnMarkerPrefab;
-    [SerializeField] private GameObject hyenaPrefab;
+    [SerializeField] private HyenaController hyenaPrefab;
     [SerializeField] private GameObject hyenasParent;
 
     [Header("State")]
@@ -33,12 +33,7 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
     [SerializeField] private NextSpawnRateToIncrease nextSpawnRateToIncrease;
 
     private HyenasSpawnPointAlgorithm spawnAlgorithm;
-    private List<GameObject> spawnMarkers = new List<GameObject>();
-
-    // Game state
-    int[,] board;
-    int worldToArrayXOffset;
-    int worldToArrayYOffset;
+    public List<GameObject> spawnMarkers = new List<GameObject>();
 
     Tuple<int, int> hqPos;
 
@@ -66,34 +61,34 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
         int minX = leftmostTile.Value.x;
         int maxX = rightmostTile.Value.x;
         int width = maxX - minX + 1;
-        worldToArrayXOffset = Math.Abs(minX);
+        tilemapManager.worldToArrayXOffset = Math.Abs(minX);
 
         int minY = bottommostTile.Value.y;
         int maxY = topmostTile.Value.y;
         int hegith = maxY - minY + 1;
-        worldToArrayYOffset = Math.Abs(minY);
+        tilemapManager.worldToArrayYOffset = Math.Abs(minY);
 
-        Debug.Log($"Determined min and max coordinates from tilemap = minX:{minX} maxX:{maxX} width:{width} --- minY:{minY} maxY:{maxY} height:{hegith}");
+        //Debug.Log($"Determined min and max coordinates from tilemap = minX:{minX} maxX:{maxX} width:{width} --- minY:{minY} maxY:{maxY} height:{hegith}");
 
-        board = new int[width, hegith];
+        tilemapManager.board = new int[width, hegith];
 
         foreach (Vector3Int pos in bounds.allPositionsWithin)
         {
             if (tilemap.HasTile(pos))
             {
-                board[pos.x + worldToArrayXOffset, pos.y + worldToArrayYOffset] = 1;
+                tilemapManager.board[pos.x + tilemapManager.worldToArrayXOffset, pos.y + tilemapManager.worldToArrayYOffset] = 1;
             }
             else
             {
-                board[pos.x + worldToArrayXOffset, pos.y + worldToArrayYOffset] = -1;
+                tilemapManager.board[pos.x + tilemapManager.worldToArrayXOffset, pos.y + tilemapManager.worldToArrayYOffset] = -1;
             }
         }
 
         hqPos = ConvertFromWorldPos(hqPosWorld);
 
-        Debug.Log($"Internal representation of world created 0-length:{board.GetLength(0)}   1-length:{board.GetLength(1)}");
-        LogUtils.Print2DArray(board);
-        Debug.Log($"HQ is positioned at {hqPosWorld} --> {hqPos}");
+        //Debug.Log($"Internal representation of world created 0-length:{tilemapManager.board.GetLength(0)}   1-length:{tilemapManager.board.GetLength(1)}");
+        //LogUtils.Print2DArray(tilemapManager.board);
+        //Debug.Log($"HQ is positioned at {hqPosWorld} --> {hqPos}");
 
         DoStart();
     }
@@ -116,7 +111,7 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
     {
         HashSet<Tuple<int, int>> allSpawnPoints = spawnAlgorithm.GenerateRandomOuterSpawnPoints(currentOuterSpawnRate, minDistBetOuterSpawnPoints);
         allSpawnPoints.UnionWith(spawnAlgorithm.GenerateRandomInnerSpawnPoints(currentInnerSpawnRate));
-        LogUtils.LogEnumerable("generated spawn points", allSpawnPoints);
+        //LogUtils.LogEnumerable("generated spawn points", allSpawnPoints);
 
         foreach (Tuple<int, int> spawnPoint in allSpawnPoints)
         {
@@ -127,17 +122,20 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
         }
     }
 
-    public void SpawnHyenasAtSpawnPoints()
+    public List<HyenaController> SpawnHyenasAtSpawnPoints()
     {
-        Debug.Log("Spawning hyenas where the spawn markers are");
+        //Debug.Log("Spawning hyenas where the spawn markers are");
+
+        List<HyenaController> ret = new List<HyenaController>();
         foreach(GameObject spawnMarker in spawnMarkers)
         {
             Vector3 spawnMarkerPos = spawnMarker.transform.position;
             Destroy(spawnMarker);
-            GameObject hyenaObj = Instantiate(hyenaPrefab, spawnMarkerPos, Quaternion.identity, hyenasParent.transform);
+            ret.Add(Instantiate<HyenaController>(hyenaPrefab, spawnMarkerPos, Quaternion.identity, hyenasParent.transform));
         }
 
         spawnMarkers.Clear();
+        return ret;
     }
 
     public void IncreaseSpawnRate()
@@ -159,7 +157,7 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
 
     public int[,] GetBoard()
     {
-        return board;
+        return tilemapManager.board;
     }
 
     public Tuple<int, int> GetHQCell()
@@ -184,14 +182,14 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
 
     private Tuple<int, int> ConvertFromWorldPos(Vector3Int worldPos)
     {
-        return Tuple.Create(worldPos.x + worldToArrayXOffset, worldPos.y + worldToArrayYOffset);
+        return Tuple.Create(worldPos.x + tilemapManager.worldToArrayXOffset, worldPos.y + tilemapManager.worldToArrayYOffset);
     }
 
     private Vector3Int ConvertFromTuple(Tuple<int, int> arrayPos)
     {
         Vector3Int worldPos = Vector3Int.zero;
-        worldPos.x = arrayPos.Item1 - worldToArrayXOffset;
-        worldPos.y = arrayPos.Item2 - worldToArrayYOffset;
+        worldPos.x = arrayPos.Item1 - tilemapManager.worldToArrayXOffset;
+        worldPos.y = arrayPos.Item2 - tilemapManager.worldToArrayYOffset;
         return worldPos;
     }
 

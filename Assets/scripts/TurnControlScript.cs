@@ -29,7 +29,8 @@ public class TurnControlScript : MonoBehaviour
     [SerializeField] private Sprite[] clock_sprites;
 
     [SerializeField] public List<HyenaController> hyenas = new List<HyenaController>();
-    //[SerializeField] public List<SpawnMarker> spawnMarkers = new List<SpawnMarker>();
+    [SerializeField] public List<Vector3Int> minorTowers = new List<Vector3Int>();
+
     int currentHyena = 0;
 
     bool finishedUpdatingTurn = false;
@@ -37,8 +38,11 @@ public class TurnControlScript : MonoBehaviour
     bool committedToAnAction = false;
 
     bool hyenaTurn = false;
+    bool spawnedHyenasThisTurn = false;
     bool endTurn = false;
     float turnChangeTime = 0.0f;
+
+    public GridManager gridManager;
 
     private void OnValidate()
     {
@@ -50,6 +54,10 @@ public class TurnControlScript : MonoBehaviour
         if(uiBridge == null){
             Debug.Log("uiBridge wasn't set ub turn control script");
         }
+        gridManager = new GridManager();
+        gridManager.tmManager = tmManager;
+        gridManager.bounds = tmManager.tilemapArray[(int)TilemapManager.MapType.ground].cellBounds;
+        gridManager.Initialize();
     }
 
     public void SwitchActor(int whichCat){
@@ -85,6 +93,7 @@ public class TurnControlScript : MonoBehaviour
                 uiBridge.buttons[1].GetComponent<UnityEngine.UI.Image>().color = buttonEnabledColor;
             }
 
+            uiBridge.buttons[1].SetActive(cats[currentCat].canPlaceTower);
         }
         
         
@@ -92,30 +101,56 @@ public class TurnControlScript : MonoBehaviour
 
     void SpawnHyenas(){
 
-        hyenasSpawnManager.SpawnHyenasAtSpawnPoints();
+        var returnedHyenas = hyenasSpawnManager.SpawnHyenasAtSpawnPoints();
+        foreach(HyenaController hy in returnedHyenas){
+            tmManager.TryClaimTile(hy.transform.position, hy.team);
+            hyenas.Add(hy);
+            
+        }
+        returnedHyenas.Clear();
     }
 
     void MoveOneHyena(){
         HyenaController controlledHyena = hyenas[currentHyena];
 
-        Vector3Int mvPos = Vector3Int.zero; //most valuable position
-        //check value for each cat with A*
-        //check value for each tower with A*
-        //multiply tower values by some amount wit hdistance
-        //multiply cat values by some amount iwth distance
-        //put the A* functions into tilemapmanager
+        if(!controlledHyena.moving){
+            Debug.Log("hyena was not moving");
+            Vector3Int tempPos = tmManager.tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(controlledHyena.transform.position);
 
+            controlledHyena.movementPath = gridManager.DetermineOptimalPath(tempPos);
+            if(controlledHyena.movementPath != null){
+                Debug.Log("created path, length - values - " + controlledHyena.movementPath.Count);
+                for(int i = 0; i < controlledHyena.movementPath.Count; i++){
+                    Debug.Log(i + " : " + controlledHyena.movementPath[i]);
+                }
 
+                controlledHyena.moving = true;
+            }
+            else{
+                controlledHyena.movedThisTurn = true;
+            }
 
-        controlledHyena.MoveTo(tmManager.tilemapArray[(int)TilemapManager.MapType.ground].CellToWorld(mvPos));
+            if(controlledHyena.movedThisTurn){
+                currentHyena++;
+            }
+        }
+        else{
+            Debug.Log("hyena was moving");
+        }
+        
 
-        currentHyena++;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        foreach(var cat in cats){
+            tmManager.TryClaimTile(cat.transform.position, cat.team);
+        }
+        foreach(var hyena in hyenas){
+            tmManager.TryClaimTile(hyena.transform.position, hyena.team);
+        }
+
         if(endTurn){
             turnChangeTime += Time.deltaTime;
             int clockSpriteIter = Mathf.FloorToInt(turnChangeTime * 14.0f);
@@ -140,18 +175,27 @@ public class TurnControlScript : MonoBehaviour
                     uiBridge.buttons[1].GetComponent<UnityEngine.UI.Image>().color = buttonEnabledColor;
                     for(int i = 0; i < cats.Length; i++){
                         uiBridge.rosterUISetup[i].moveImage.GetComponent<UnityEngine.UI.Image>().color = buttonEnabledColor;
-                        uiBridge.rosterUISetup[i].towerImage.GetComponent<UnityEngine.UI.Image>().color = buttonEnabledColor;
+                        if(cats[i].canPlaceTower){
+                            uiBridge.rosterUISetup[i].towerImage.GetComponent<UnityEngine.UI.Image>().color = buttonEnabledColor;
+                        }
                         cats[i].RefreshTurn();
                     }   
                 }
                 else{ //night start
-
+                    foreach(var hyena in hyenas){
+                        hyena.movedThisTurn = false;
+                    }
+                    spawnedHyenasThisTurn = false;
                 }
             }
         }
         else if(hyenaTurn){
 
-            SpawnHyenas();
+            if(!spawnedHyenasThisTurn){
+                SpawnHyenas();
+                spawnedHyenasThisTurn = true;
+            }
+
 
 
             if(currentHyena >= hyenas.Count){
@@ -189,9 +233,9 @@ public class TurnControlScript : MonoBehaviour
             if(catCont != null){
                 if(lmbDown) {
                     if(catCont.showMovement) {
-                        Debug.Log("checking if movement possible : " + mouseWorldPos);
+                        //Debug.Log("checking if movement possible : " + mouseWorldPos);
                         if(tmManager.CheckIfMovementPossible(mouseWorldPos)){
-                            Debug.Log("movment was possible");
+                            //Debug.Log("movment was possible");
                             committedToAnAction = true;
                             catCont.MoveTo(mouseWorldPos);
                             catCont.DisableMovement();
@@ -200,11 +244,12 @@ public class TurnControlScript : MonoBehaviour
                             //uiBridge.buttons[0]. = new Color(0.2f, 0.2f, 0.2f, 1.0f);
                         }
                         else{
-                            Debug.Log("failed to move");
+                            //Debug.Log("failed to move");
                         }
                     }
                     else if(catCont.showTowerPlacement){
                         catCont.PlaceTower(mouseTilePos);
+                        minorTowers.Add(mouseTilePos);
                         //uiBridge.abilityButtons[0];
                         catCont.DisablePlaceTower();
                         uiBridge.rosterUISetup[currentCat].towerImage.GetComponent<UnityEngine.UI.Image>().color = buttonDisabledColor;
@@ -232,7 +277,7 @@ public class TurnControlScript : MonoBehaviour
                 }
             }
             else{
-                Debug.Log("controlled player or actor is nuLL? currentPlayer : currentActor -  " + currentCat);
+                //Debug.Log("controlled player or actor is nuLL? currentCat -  " + currentCat);
             }
         }
     }
@@ -258,18 +303,20 @@ public class TurnControlScript : MonoBehaviour
             if(cats[currentCat].movedThisTurn){
                 return;
             }
-            Debug.Log("showing movement path for player[" + currentCat + "]");
+            //Debug.Log("showing movement path for player[" + currentCat + "]");
             cats[currentCat].CalculatePossibleDestinations();
         }
         
     }
     [SerializeField] public void ShowTowerPlacement(){
-        Debug.Log("attempting showing tower placement for player[" + currentCat + "]");
-        if(committedToAnAction || cats[currentCat].placedTowerThisTurn){
-            return;
-        }
-        if(!cats[currentCat].moving){
-            cats[currentCat].ShowTowerPlacement();
+        if(cats[currentCat].canPlaceTower){
+            //Debug.Log("attempting showing tower placement for player[" + currentCat + "]");
+            if(committedToAnAction || cats[currentCat].placedTowerThisTurn){
+                return;
+            }
+            if(!cats[currentCat].moving){
+                cats[currentCat].ShowTowerPlacement();
+            }
         }
     }
 }

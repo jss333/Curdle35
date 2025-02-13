@@ -45,22 +45,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c769834ae4a244dab70a7274a0ac1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementType: 2
+  movementType: 6
   moving: 0
-  speed: 1
+  speed: 3
   showMovement: 0
   movementOffsets: []
-  startingAP: 10
-  remainingAP: 10
-  movability: 3
   tmManager: {fileID: 0}
-  abilityCount: 0
   showTowerPlacement: 0
-  showingAbility: -1
   movedThisTurn: 0
-  abilityNames: []
   team: 2
   face_sprite: {fileID: 0}
+  movementPath: []
 --- !u!212 &4467367992622042526
 SpriteRenderer:
   m_ObjectHideFlags: 0

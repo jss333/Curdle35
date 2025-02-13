@@ -8,9 +8,7 @@ public class TilemapManager : MonoBehaviour
 {
     [SerializeField] public TileBase movementBaseTile;
     [SerializeField] public TileBase starterTowerTile;
-
     [SerializeField] private HyenasSpawnManager hyenasSpawnManager;
-
 
     public enum MapType : int{
         ground,
@@ -45,6 +43,11 @@ public class TilemapManager : MonoBehaviour
     public Vector3Int hqTowerPosition;
     public List<Vector3Int> minorTowers = new List<Vector3Int>();
 
+    public int[,] board;
+    public int worldToArrayXOffset;
+    public int worldToArrayYOffset;
+    
+    public BoundsInt groundBounds;
 
     private void Awake(){
         dataFromTiles = new Dictionary<TileBase, TileTerritoryData>();
@@ -108,6 +111,7 @@ public class TilemapManager : MonoBehaviour
                 }
             }
         }
+        groundBounds = tilemapArray[(int)MapType.ground].cellBounds;
 
         Vector3Int checkTowerPosition = Vector3Int.zero;
 
@@ -146,7 +150,7 @@ public class TilemapManager : MonoBehaviour
         if (tile != null)  // Check if a tile exists at that position
         {
             if(occupancy.TryGetValue(tilePos, out UnitController.Team occupantTeam)){
-                    Debug.Log("aborting activating movement because tile was occupied : " + tilePos);
+                    //Debug.Log("aborting activating movement because tile was occupied : " + tilePos);
             }
             else{
                 occupancy.Add(tilePos, team);
@@ -168,17 +172,20 @@ public class TilemapManager : MonoBehaviour
         return TileTerritoryData.Type.None;
     }
 
-    public void TryClaimTile(Vector3 myPos, UnitController.Team team){
-        
+    public void TryClaimTile(Vector3 transformPos, UnitController.Team team){
+
+        Debug.Log("attempting to claim tile");
+        Vector3 myPos = transformPos;
         myPos.x -= Mathf.Floor(myPos.x) + 0.5f;
         myPos.y -= Mathf.Floor(myPos.y) + 0.5f;
         myPos.x = Mathf.Abs(myPos.x);
         myPos.y = Mathf.Abs(myPos.y);
         if(myPos.x > 0.1f && myPos.y > 0.1f){
+            Debug.Log("failed to claim, not in the center of the tile");
             return;
         }
-        Vector3Int tilePos = tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(myPos);
-        tilemapArray[(int)TilemapManager.MapType.ground].SetTile(tilePos, groundTiles[(int)team]);
+        Vector3Int tilePos = tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(transformPos);
+        tilemapArray[(int)MapType.ground].SetTile(tilePos, groundTiles[(int)team]);
         
         TileBase groundTile = tilemapArray[(int)MapType.ground].GetTile<TileBase>(tilePos);
         if(groundTile != null){
@@ -237,7 +244,7 @@ public class TilemapManager : MonoBehaviour
         Vector3Int tilePosition = tilemapArray[(int)MapType.ground].WorldToCell(position);
         
         if(occupancy.TryGetValue(tilePosition, out UnitController.Team occupantTeam)){
-                Debug.Log("aborting setting occupancy because tile was occupied : " + tilePosition);
+                //Debug.Log("aborting setting occupancy because tile was occupied : " + tilePosition);
         }
         else{
             occupancy.Add(tilePosition, team);

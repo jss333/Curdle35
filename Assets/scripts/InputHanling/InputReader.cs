@@ -59,7 +59,7 @@ public class InputReader : MonoBehaviour, InputActions.IGameplayActions
 
     public void OnCameraZoom(InputAction.CallbackContext context)
     {
-        Debug.Log($"OnCameraZoomIn: {context.ReadValue<Vector2>()}");
+        //Debug.Log($"OnCameraZoomIn: {context.ReadValue<Vector2>()}");
         OnMouseZoom?.Invoke(context.ReadValue<Vector2>().y);
     }
 }

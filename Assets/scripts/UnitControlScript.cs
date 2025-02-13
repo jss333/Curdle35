@@ -42,7 +42,7 @@ public class UnitController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         if(moving){
             Vector3 direction = destinationPos - transform.position;
