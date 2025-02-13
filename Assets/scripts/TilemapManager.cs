@@ -168,7 +168,17 @@ public class TilemapManager : MonoBehaviour
         return TileTerritoryData.Type.None;
     }
 
-    public void ClaimTile(Vector3Int tilePos, UnitController.Team team){
+    public void TryClaimTile(Vector3 myPos, UnitController.Team team){
+        
+        myPos.x -= Mathf.Floor(myPos.x) + 0.5f;
+        myPos.y -= Mathf.Floor(myPos.y) + 0.5f;
+        myPos.x = Mathf.Abs(myPos.x);
+        myPos.y = Mathf.Abs(myPos.y);
+        if(myPos.x > 0.1f && myPos.y > 0.1f){
+            return;
+        }
+        Vector3Int tilePos = tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(myPos);
+        tilemapArray[(int)TilemapManager.MapType.ground].SetTile(tilePos, groundTiles[(int)team]);
         
         TileBase groundTile = tilemapArray[(int)MapType.ground].GetTile<TileBase>(tilePos);
         if(groundTile != null){
@@ -183,20 +193,30 @@ public class TilemapManager : MonoBehaviour
                 else if(tilesTeam.type == TileTerritoryData.Type.Hyena){
                     tileTeam = UnitController.Team.hyena;
                 }
+                else if(tilesTeam.type == TileTerritoryData.Type.None){
+                    tileTeam = UnitController.Team.neutral;
+                }
                 else{
-                Debug.Log("tile is not on a valid team while trying to claim? : " + tilePos);
+                    Debug.Log("territory tile is not on a valid team while trying to claim? : " + tilePos);
+                    return;
+                }
+                if(tileTeam == team){
                     return;
                 }
                 
-                if(team_scores.TryGetValue(UnitController.Team.cats, out int score)){
-                    TileBase resourceTile = tilemapArray[(int)MapType.resource].GetTile<TileBase>(tilePos);
-                    if (resourceTile != null)  // Check if a tile exists at that position
-                    {
-                        if(resourcesFromTiles.TryGetValue(resourceTile, out TileResourceData val)) {
-                            //val.score;
+
+                //if(team_scores.TryGetValue(UnitController.Team.cats, out int score)){
+                TileBase resourceTile = tilemapArray[(int)MapType.resource].GetTile<TileBase>(tilePos);
+                if (resourceTile != null)  // Check if a tile exists at that position
+                {
+                    if(resourcesFromTiles.TryGetValue(resourceTile, out TileResourceData resTile)) {
+                        team_scores[team] += resTile.score;
+                        if(tileTeam != UnitController.Team.neutral){
+                            team_scores[tileTeam] -= resTile.score;
                         }
-                    }  
+                    }
                 }
+                //}
             }
             else{
                 Debug.Log("tile is not on a valid team while trying to claim? : " + tilePos);

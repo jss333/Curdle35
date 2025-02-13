@@ -11,17 +11,10 @@ public class LionController : CatController
     public override void Start()
     {
         base.team = Team.cats;
-
         base.movementType = Movement.Type.Lion;
-
         base.canPlaceTower =  true;
 
-        base.movability = 3;
-        //base.movementType = Movement.Type.Free;
-        base.abilityCount = 1;
-
         base.Start();
-        base.abilityNames[0] = "Place Tower";
         PrecalculateMovementOffsets();
     } 
 

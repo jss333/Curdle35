@@ -17,12 +17,7 @@ public class CatController : UnitController
     {
         base.team = Team.cats;
 
-        base.movability = 3;
-        //base.movementType = Movement.Type.Free;
-        base.abilityCount = 1;
-
         base.Start();
-        base.abilityNames[0] = "Place Tower";
     }
 
     public void RefreshTurn(){

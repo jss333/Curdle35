@@ -10,13 +10,9 @@ public class JaguarController : CatController
         base.team = Team.cats;
 
         base.canPlaceTower = false;
-
-        base.movability = 3;
         base.movementType = Movement.Type.Jaguar;
-        base.abilityCount = 1;
 
         base.Start();
-        base.abilityNames[0] = "Place Tower";
         PrecalculateMovementOffsets();
     } 
 
