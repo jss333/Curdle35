@@ -11,12 +11,6 @@ public class HyenaController : UnitController
     public override void Start() 
     {
         base.team = Team.hyena;
-
-        base.movability = 3;
-        //base.movementType = Movement.Type.Free;
-        base.abilityCount = 1;
-
         base.Start();
-        base.abilityNames[0] = "Place Tower";
     }
 }
