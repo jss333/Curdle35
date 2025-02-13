@@ -117,12 +117,12 @@ public class TurnControlScript : MonoBehaviour
             Debug.Log("hyena was not moving");
             Vector3Int tempPos = tmManager.tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(controlledHyena.transform.position);
 
-            controlledHyena.movementPath = gridManager.DetermineOptimalPath(tempPos);
+            controlledHyena.movementPath = gridManager.DetermineOptimalPath(tempPos, 3);
             if(controlledHyena.movementPath != null){
-                Debug.Log("created path, length - values - " + controlledHyena.movementPath.Count);
-                for(int i = 0; i < controlledHyena.movementPath.Count; i++){
-                    Debug.Log(i + " : " + controlledHyena.movementPath[i]);
-                }
+                //Debug.Log("created path, length - values - " + controlledHyena.movementPath.Count);
+                //for(int i = 0; i < controlledHyena.movementPath.Count; i++){
+                   // Debug.Log(i + " : " + controlledHyena.movementPath[i]);
+                //}
 
                 controlledHyena.moving = true;
             }

@@ -29,7 +29,7 @@ public class GridManager
         }
         astar = new Astar(spots, bounds.size.x, bounds.size.y);
     }
-    public List<Vector3Int> DetermineOptimalPath(Vector3Int startTile)
+    public List<Vector3Int> DetermineOptimalPath(Vector3Int startTile, int pathLength)
     {
 
         List<Spot> tempPath = new List<Spot>();
@@ -46,11 +46,30 @@ public class GridManager
             }
         }
         if(path != null){
-            List<Vector3Int> ret = new List<Vector3Int>();
+            List<Vector3Int> preParsedPath = new List<Vector3Int>();
             foreach(var sp in path){
-                ret.Add(new Vector3Int(sp.X, sp.Y, 0));
+                preParsedPath.Add(new Vector3Int(sp.X, sp.Y, 0));
             }
-            Debug.Log("pathing length : " + ret.Count);
+            Debug.Log("pathing length : " + preParsedPath.Count);
+
+            int currentTileCount = 0;
+            Vector3Int begin = preParsedPath[0];
+            Vector3Int end = preParsedPath[1];
+
+
+            //breaking up path here
+            List<Vector3Int> ret = new List<Vector3Int>();
+            for(int i = 0; i < (preParsedPath.Count - 1); i++){
+                begin = preParsedPath[i];
+                end = preParsedPath[i + 1];
+
+
+
+                currentTileCount++;
+                if(currentTileCount == pathLength){
+                    break;
+                }
+            }
 
             return ret;
         }

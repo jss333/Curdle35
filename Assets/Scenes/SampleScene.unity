@@ -1058,12 +1058,13 @@ MonoBehaviour:
   firstSpawnRateToIncrease: 1
   tilemapManager: {fileID: 1018166469}
   spawnMarkerPrefab: {fileID: 1616397644916556126, guid: 63c7a06c4de387d4f9b001c9572db8b5, type: 3}
+  hyenaPrefab: {fileID: 1978274572935740118, guid: 27ad39ea9b96c094cb1a5c5b1b9765fb, type: 3}
   dustCloudPrefab: {fileID: 3559880717918923000, guid: 604e125f86cf815418f2c712c55cb88d, type: 3}
-  hyenaPrefab: {fileID: 8498424047850533199, guid: 27ad39ea9b96c094cb1a5c5b1b9765fb, type: 3}
-  hyenasParent: {fileID: 1580702949}
+  hyenasParent: {fileID: 783442190}
   currentOuterSpawnRate: 0
   currentInnerSpawnRate: 0
   nextSpawnRateToIncrease: 0
+  spawnMarkers: []
 --- !u!4 &554228172
 Transform:
   m_ObjectHideFlags: 0
@@ -1210,6 +1211,17 @@ Transform:
   - {fileID: 1362246129}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &783442190 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1978274572935740118, guid: 27ad39ea9b96c094cb1a5c5b1b9765fb, type: 3}
+  m_PrefabInstance: {fileID: 5654383709829946863}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56c769834ae4a244dab70a7274a0ac1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &846489658
 GameObject:
   m_ObjectHideFlags: 0
@@ -1465,6 +1477,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ae623de32bf4967489e198bdb81bf525, type: 2}
   hqTowerPosition: {x: 0, y: 0, z: 0}
   minorTowers: []
+  worldToArrayXOffset: 0
+  worldToArrayYOffset: 0
+  groundBounds:
+    m_Position: {x: 0, y: 0, z: 0}
+    m_Size: {x: 0, y: 0, z: 0}
 --- !u!4 &1018166470
 Transform:
   m_ObjectHideFlags: 0
@@ -1837,6 +1854,7 @@ MonoBehaviour:
   - {fileID: 2228425376035200494, guid: 2e8c0dfc4b6aa5748bc9aecf1b00e62e, type: 3}
   - {fileID: -1373222090665341637, guid: 2e8c0dfc4b6aa5748bc9aecf1b00e62e, type: 3}
   hyenas: []
+  minorTowers: []
 --- !u!4 &1201380923
 Transform:
   m_ObjectHideFlags: 0
@@ -4258,6 +4276,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1978274572935740118, guid: 27ad39ea9b96c094cb1a5c5b1b9765fb, type: 3}
+      propertyPath: tmManager
+      value: 
+      objectReference: {fileID: 1018166469}
     - target: {fileID: 8498424047850533199, guid: 27ad39ea9b96c094cb1a5c5b1b9765fb, type: 3}
       propertyPath: m_Name
       value: Hyena

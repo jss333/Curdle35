@@ -82,10 +82,21 @@ public class Astar
                     Path.Add(temp.previous);
                     temp = temp.previous;
                 }
+                //Debug.Log("pre remove range path\n\n");
+                //for(int z = 0 ; z < Path.Count; z++){
+                //    Debug.Log("astar raw path - " + z + " : (" + Path[z].X + ":" + Path[z].Y + ")");
+                //}
+
                 if (length - (Path.Count - 1) < 0)
                 {
                     Path.RemoveRange(0, (Path.Count - 1) - length);
                 }
+                //Debug.Log("post remove range path\n\n");
+                //for(int z = 0 ; z < Path.Count; z++){
+                //    Debug.Log("astar filtered path - " + z + " : (" + Path[z].X + ":" + Path[z].Y + ")");
+                //}
+
+
                 return Path;
             }
 

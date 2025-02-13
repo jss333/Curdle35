@@ -45,6 +45,10 @@ public class UnitController : MonoBehaviour
     public virtual void Update()
     {
         if(moving){
+            if(team == Team.hyena){
+                Debug.Log("hyena incorrectly moving in unitcontroller");
+            }
+
             Vector3 direction = destinationPos - transform.position;
             float distance = direction.magnitude;
             if(distance < (speed * Time.deltaTime)){

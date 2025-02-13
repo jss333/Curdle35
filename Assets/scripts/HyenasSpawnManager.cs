@@ -66,12 +66,12 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
 
         int minY = bottommostTile.Value.y;
         int maxY = topmostTile.Value.y;
-        int hegith = maxY - minY + 1;
+        int height = maxY - minY + 1;
         tilemapManager.worldToArrayYOffset = Math.Abs(minY);
 
         //Debug.Log($"Determined min and max coordinates from tilemap = minX:{minX} maxX:{maxX} width:{width} --- minY:{minY} maxY:{maxY} height:{hegith}");
 
-        tilemapManager.board = new int[width, hegith];
+        tilemapManager.board = new int[width, height];
 
         foreach (Vector3Int pos in bounds.allPositionsWithin)
         {
@@ -131,9 +131,16 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
         foreach(GameObject spawnMarker in spawnMarkers)
         {
             Vector3 spawnMarkerPos = spawnMarker.transform.position;
+            //Transform transform = new Transform();
+            var tempHyena = Instantiate(hyenaPrefab, spawnMarkerPos, Quaternion.identity);
+            if(tempHyena != null){
+                ret.Add(tempHyena);
+            }
+            else{
+                Debug.Log("failed to create hyena");
+            }
+            GameObject dustCloudObj = Instantiate(dustCloudPrefab, spawnMarkerPos, Quaternion.identity);
             Destroy(spawnMarker);
-            ret.Add(Instantiate<HyenaController>(hyenaPrefab, spawnMarkerPos, Quaternion.identity, hyenasParent.transform));
-            GameObject dustCloudObj = Instantiate(dustCloudPrefab, spawnMarkerPos, Quaternion.identity, hyenasParent.transform);
         }
 
         spawnMarkers.Clear();
