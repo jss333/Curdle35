@@ -608,7 +608,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.1882353, g: 0.25490198, b: 0.2901961, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1050,14 +1050,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b02e50e9378fe8d4da954c28efcf6aec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilemapManager: {fileID: 1018166469}
   startOuterSpawnRate: 3
   startInnerSpawnRate: 1
   minDistBetOuterSpawnPoints: 4
   minDistBetInnerSpawnPointAndHQ: 2
   corruptionNeededForSpawnRateIncrease: 80
   firstSpawnRateToIncrease: 1
+  tilemapManager: {fileID: 1018166469}
   spawnMarkerPrefab: {fileID: 1616397644916556126, guid: 63c7a06c4de387d4f9b001c9572db8b5, type: 3}
+  dustCloudPrefab: {fileID: 3559880717918923000, guid: 604e125f86cf815418f2c712c55cb88d, type: 3}
   hyenaPrefab: {fileID: 8498424047850533199, guid: 27ad39ea9b96c094cb1a5c5b1b9765fb, type: 3}
   hyenasParent: {fileID: 1580702949}
   currentOuterSpawnRate: 0
@@ -3111,15 +3112,9 @@ MonoBehaviour:
   speed: 3
   showMovement: 0
   movementOffsets: []
-  startingAP: 10
-  remainingAP: 10
-  movability: 3
   tmManager: {fileID: 1018166469}
-  abilityCount: 3
   showTowerPlacement: 0
-  showingAbility: -1
   movedThisTurn: 0
-  abilityNames: []
   team: 1
   face_sprite: {fileID: -3317154705612692888, guid: 9cb67307e8e17a143a58d0d8c7337ee9, type: 3}
   placedTowerThisTurn: 0
@@ -3520,15 +3515,9 @@ MonoBehaviour:
   speed: 1
   showMovement: 0
   movementOffsets: []
-  startingAP: 10
-  remainingAP: 10
-  movability: 3
   tmManager: {fileID: 1018166469}
-  abilityCount: 0
   showTowerPlacement: 0
-  showingAbility: -1
   movedThisTurn: 0
-  abilityNames: []
   team: 1
   face_sprite: {fileID: 0}
   placedTowerThisTurn: 0
@@ -3966,15 +3955,9 @@ MonoBehaviour:
   speed: 4
   showMovement: 0
   movementOffsets: []
-  startingAP: 10
-  remainingAP: 10
-  movability: 3
   tmManager: {fileID: 1018166469}
-  abilityCount: 0
   showTowerPlacement: 0
-  showingAbility: -1
   movedThisTurn: 0
-  abilityNames: []
   team: 1
   face_sprite: {fileID: 0}
   placedTowerThisTurn: 0

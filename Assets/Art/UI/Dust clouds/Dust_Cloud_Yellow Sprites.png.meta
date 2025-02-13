@@ -1,0 +1,545 @@
+fileFormatVersion: 2
+guid: 94641d83893ce44439756d98acbf8116
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1240482540215785967
+    second: Dust_Cloud_Yellow_Animation_0
+  - first:
+      213: 4508578062935211102
+    second: Dust_Cloud_Yellow_Animation_1
+  - first:
+      213: -989104208447999727
+    second: Dust_Cloud_Yellow_Animation_2
+  - first:
+      213: 2980364878471382879
+    second: Dust_Cloud_Yellow_Animation_3
+  - first:
+      213: -3865503790141541797
+    second: Dust_Cloud_Yellow_Animation_4
+  - first:
+      213: 8562679018903510852
+    second: Dust_Cloud_Yellow_Animation_5
+  - first:
+      213: 4788937854370052040
+    second: Dust_Cloud_Yellow_Animation_6
+  - first:
+      213: -4380208086962464464
+    second: Dust_Cloud_Yellow_Animation_7
+  - first:
+      213: -6734326443199037550
+    second: Dust_Cloud_Yellow_Animation_8
+  - first:
+      213: 1895416333356690451
+    second: Dust_Cloud_Yellow_Animation_9
+  - first:
+      213: -8640160075938291175
+    second: Dust_Cloud_Yellow_Animation_10
+  - first:
+      213: -2647517289789271987
+    second: Dust_Cloud_Yellow_Animation_11
+  - first:
+      213: -1503677443426781076
+    second: Dust_Cloud_Yellow_Animation_12
+  - first:
+      213: -7637900013312656063
+    second: Dust_Cloud_Yellow_Animation_13
+  - first:
+      213: -410626608819646244
+    second: Dust_Cloud_Yellow_Animation_14
+  - first:
+      213: -8479156004841369743
+    second: Dust_Cloud_Yellow_Animation_15
+  - first:
+      213: 1853859748964853198
+    second: Dust_Cloud_Yellow_Animation_16
+  - first:
+      213: 8064150618151628037
+    second: Dust_Cloud_Yellow_Animation_17
+  - first:
+      213: -5860854093925980123
+    second: Dust_Cloud_Yellow_Animation_18
+  - first:
+      213: 2595384351166685114
+    second: Dust_Cloud_Yellow_Animation_19
+  - first:
+      213: 6366467576976523950
+    second: Dust_Cloud_Yellow_Animation_20
+  - first:
+      213: -3419575813452778092
+    second: Dust_Cloud_Yellow_Animation_21
+  - first:
+      213: -2668267182301688567
+    second: Dust_Cloud_Yellow_Animation_22
+  - first:
+      213: -3220730256730972959
+    second: Dust_Cloud_Yellow_Animation_23
+  - first:
+      213: -3685921483315516850
+    second: Dust_Cloud_Yellow_Animation_24
+  - first:
+      213: 6794526303753033589
+    second: Dust_Cloud_Yellow_Animation_25
+  - first:
+      213: -29183355733327890
+    second: Dust_Cloud_Yellow_Animation_26
+  - first:
+      213: -3744878425144715330
+    second: Dust_Cloud_Yellow_Animation_27
+  - first:
+      213: -6130990327632983167
+    second: Dust_Cloud_Yellow_Animation_28
+  - first:
+      213: 5797809397031736614
+    second: Dust_Cloud_Yellow_Animation_29
+  - first:
+      213: 3904954735954790983
+    second: Dust_Cloud_Yellow_Animation_30
+  - first:
+      213: 1285924878327751726
+    second: Dust_Cloud_Yellow_Animation_31
+  - first:
+      213: -6421336568514974175
+    second: Dust_Cloud_Yellow_Animation_32
+  - first:
+      213: -7261960761425145772
+    second: Dust_Cloud_Yellow_Animation_33
+  - first:
+      213: -4886969120389545207
+    second: Dust_Cloud_Yellow_Animation_34
+  - first:
+      213: -1922552138188311002
+    second: Dust_Cloud_Yellow_Animation_35
+  - first:
+      213: 3114988481156535684
+    second: Dust_Cloud_Yellow_Animation_36
+  - first:
+      213: -942479110567254774
+    second: Dust_Cloud_Yellow_Animation_37
+  - first:
+      213: 5684333114765834015
+    second: Dust_Cloud_Yellow_Animation_38
+  - first:
+      213: -2925438817025247930
+    second: Dust_Cloud_Yellow_Animation_39
+  - first:
+      213: 1323942610051820083
+    second: Dust_Cloud_Yellow_Animation_40
+  - first:
+      213: -2125421531361783637
+    second: Dust_Cloud_Yellow_Animation_41
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 266
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Dust_Cloud_Yellow_Animation_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 544
+        width: 272
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1162d58b3bbe8cee0800000000000000
+      internalID: -1240482540215785967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dust_Cloud_Yellow_Animation_1
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 544
+        width: 272
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5c3f5b5cdfa19e30800000000000000
+      internalID: 4508578062935211102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dust_Cloud_Yellow_Animation_2
+      rect:
+        serializedVersion: 2
+        x: 544
+        y: 544
+        width: 272
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 111fc9186fef542f0800000000000000
+      internalID: -989104208447999727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dust_Cloud_Yellow_Animation_3
+      rect:
+        serializedVersion: 2
+        x: 816
+        y: 544
+        width: 272
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f57465af0126c5920800000000000000
+      internalID: 2980364878471382879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dust_Cloud_Yellow_Animation_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 272
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b52ffae78c8fa5ac0800000000000000
+      internalID: -3865503790141541797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dust_Cloud_Yellow_Animation_5
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 272
+        width: 272
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44f1f6f533fb4d670800000000000000
+      internalID: 8562679018903510852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dust_Cloud_Yellow_Animation_6
+      rect:
+        serializedVersion: 2
+        x: 544
+        y: 272
+        width: 272
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c7f52d0b99b57240800000000000000
+      internalID: 4788937854370052040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dust_Cloud_Yellow_Animation_7
+      rect:
+        serializedVersion: 2
+        x: 816
+        y: 272
+        width: 272
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0391f46c3ff5633c0800000000000000
+      internalID: -4380208086962464464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dust_Cloud_Yellow_Animation_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 272
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29ff997a7cdda82a0800000000000000
+      internalID: -6734326443199037550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dust_Cloud_Yellow_Animation_9
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 0
+        width: 272
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31ce233ec1fdd4a10800000000000000
+      internalID: 1895416333356690451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dust_Cloud_Yellow_Animation_10
+      rect:
+        serializedVersion: 2
+        x: 544
+        y: 0
+        width: 272
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 912af2f303cf71880800000000000000
+      internalID: -8640160075938291175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dust_Cloud_Yellow_Animation_11
+      rect:
+        serializedVersion: 2
+        x: 816
+        y: 0
+        width: 272
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d40d7655d01224bd0800000000000000
+      internalID: -2647517289789271987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 774c4da8f2097eb4f911ade41320f3fe
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Dust_Cloud_Yellow_Animation_0: -1240482540215785967
+      Dust_Cloud_Yellow_Animation_1: 4508578062935211102
+      Dust_Cloud_Yellow_Animation_10: -8640160075938291175
+      Dust_Cloud_Yellow_Animation_11: -2647517289789271987
+      Dust_Cloud_Yellow_Animation_2: -989104208447999727
+      Dust_Cloud_Yellow_Animation_3: 2980364878471382879
+      Dust_Cloud_Yellow_Animation_4: -3865503790141541797
+      Dust_Cloud_Yellow_Animation_5: 8562679018903510852
+      Dust_Cloud_Yellow_Animation_6: 4788937854370052040
+      Dust_Cloud_Yellow_Animation_7: -4380208086962464464
+      Dust_Cloud_Yellow_Animation_8: -6734326443199037550
+      Dust_Cloud_Yellow_Animation_9: 1895416333356690451
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,545 @@
+fileFormatVersion: 2
+guid: f320be36061b75e44be125275f4b5b93
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3715965739033344939
+    second: Dust_Cloud_Green_Animation_0
+  - first:
+      213: 6712729915480964877
+    second: Dust_Cloud_Green_Animation_1
+  - first:
+      213: 3101438896808449886
+    second: Dust_Cloud_Green_Animation_2
+  - first:
+      213: -6284372645277296090
+    second: Dust_Cloud_Green_Animation_3
+  - first:
+      213: -1780233351648695296
+    second: Dust_Cloud_Green_Animation_4
+  - first:
+      213: 7280237728806638983
+    second: Dust_Cloud_Green_Animation_5
+  - first:
+      213: -591840675200384672
+    second: Dust_Cloud_Green_Animation_6
+  - first:
+      213: -2871257137200819822
+    second: Dust_Cloud_Green_Animation_7
+  - first:
+      213: 4980449194887830694
+    second: Dust_Cloud_Green_Animation_8
+  - first:
+      213: 3158148471315389944
+    second: Dust_Cloud_Green_Animation_9
+  - first:
+      213: -2583715826602086754
+    second: Dust_Cloud_Green_Animation_10
+  - first:
+      213: -8724380118639609628
+    second: Dust_Cloud_Green_Animation_11
+  - first:
+      213: -6186465409608545237
+    second: Dust_Cloud_Green_Animation_12
+  - first:
+      213: 1715765219656742012
+    second: Dust_Cloud_Green_Animation_13
+  - first:
+      213: 5522241338488153047
+    second: Dust_Cloud_Green_Animation_14
+  - first:
+      213: -4108353887151978803
+    second: Dust_Cloud_Green_Animation_15
+  - first:
+      213: 5051957576288433307
+    second: Dust_Cloud_Green_Animation_16
+  - first:
+      213: -2275494349178792893
+    second: Dust_Cloud_Green_Animation_17
+  - first:
+      213: 3003329180605635674
+    second: Dust_Cloud_Green_Animation_18
+  - first:
+      213: -9145926796932389808
+    second: Dust_Cloud_Green_Animation_19
+  - first:
+      213: 8911590756348873796
+    second: Dust_Cloud_Green_Animation_20
+  - first:
+      213: -5995938048385219397
+    second: Dust_Cloud_Green_Animation_21
+  - first:
+      213: 8704625071952964658
+    second: Dust_Cloud_Green_Animation_22
+  - first:
+      213: -105858148691680338
+    second: Dust_Cloud_Green_Animation_23
+  - first:
+      213: 211088135987790958
+    second: Dust_Cloud_Green_Animation_24
+  - first:
+      213: 3791131727833802519
+    second: Dust_Cloud_Green_Animation_25
+  - first:
+      213: -7223210374427264127
+    second: Dust_Cloud_Green_Animation_26
+  - first:
+      213: 4346647097307921897
+    second: Dust_Cloud_Green_Animation_27
+  - first:
+      213: -8489636102956272831
+    second: Dust_Cloud_Green_Animation_28
+  - first:
+      213: -8965911611055199322
+    second: Dust_Cloud_Green_Animation_29
+  - first:
+      213: -3549810559193770602
+    second: Dust_Cloud_Green_Animation_30
+  - first:
+      213: 882947975659258730
+    second: Dust_Cloud_Green_Animation_31
+  - first:
+      213: -3057783565895316672
+    second: Dust_Cloud_Green_Animation_32
+  - first:
+      213: -5957215738886164580
+    second: Dust_Cloud_Green_Animation_33
+  - first:
+      213: 7502474052859077871
+    second: Dust_Cloud_Green_Animation_34
+  - first:
+      213: -5286343742271571127
+    second: Dust_Cloud_Green_Animation_35
+  - first:
+      213: 6267481940233340203
+    second: Dust_Cloud_Green_Animation_36
+  - first:
+      213: -3095434725105211465
+    second: Dust_Cloud_Green_Animation_37
+  - first:
+      213: -2974071847820995059
+    second: Dust_Cloud_Green_Animation_38
+  - first:
+      213: 1674024491763288981
+    second: Dust_Cloud_Green_Animation_39
+  - first:
+      213: -4996776543080152692
+    second: Dust_Cloud_Green_Animation_40
+  - first:
+      213: 2571393475903344329
+    second: Dust_Cloud_Green_Animation_41
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 250
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Dust_Cloud_Green Sprites_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 532
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 0.1, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ea64a30aefa0cf4cb7e8111078489b7
+      internalID: 926220862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dust_Cloud_Green Sprites_1
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 532
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 0.1, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbee7fb5187b7884aa2f2cbb1a20deb8
+      internalID: 606975361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dust_Cloud_Green Sprites_2
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 532
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 0.1, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8c8d8adb7360c94594e1ed5d74b0040
+      internalID: -1344544818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dust_Cloud_Green Sprites_3
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 532
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 0.1, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b67e6b0c94741894ea00f231f6bed06d
+      internalID: -1764024657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dust_Cloud_Green Sprites_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 266
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 0.1, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93ebe19b116ad614ba991caabc72b142
+      internalID: -1499159736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dust_Cloud_Green Sprites_5
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 266
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 0.1, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e4bd72d971502648b7c106bf6d736ff
+      internalID: 1137431186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dust_Cloud_Green Sprites_6
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 266
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 0.1, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 046aa024a4e423e4683136ae60ec25e7
+      internalID: 1018187058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dust_Cloud_Green Sprites_7
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 266
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 0.1, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 805ef1b605c9d874387041698bf1f538
+      internalID: 1410682535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dust_Cloud_Green Sprites_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 0.1, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1cfd6faae0ea15a4f9ccc2c6e05ab463
+      internalID: -544203754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dust_Cloud_Green Sprites_9
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 0
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 0.1, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54974230ebe72984a9a3fc5a6e9331dd
+      internalID: 1113359347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dust_Cloud_Green Sprites_10
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 0
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 0.1, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39bfa1469df70e142b7b0120b4b5d050
+      internalID: 1650718687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dust_Cloud_Green Sprites_11
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 0
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 0.1, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f867ee5f0c1b06469de76a6b7bedcfe
+      internalID: -65748533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 7880af99a0cb2d34aac37f3df47fb543
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Dust_Cloud_Green Sprites_0: 926220862
+      Dust_Cloud_Green Sprites_1: 606975361
+      Dust_Cloud_Green Sprites_10: 1650718687
+      Dust_Cloud_Green Sprites_11: -65748533
+      Dust_Cloud_Green Sprites_2: -1344544818
+      Dust_Cloud_Green Sprites_3: -1764024657
+      Dust_Cloud_Green Sprites_4: -1499159736
+      Dust_Cloud_Green Sprites_5: 1137431186
+      Dust_Cloud_Green Sprites_6: 1018187058
+      Dust_Cloud_Green Sprites_7: 1410682535
+      Dust_Cloud_Green Sprites_8: -544203754
+      Dust_Cloud_Green Sprites_9: 1113359347
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
