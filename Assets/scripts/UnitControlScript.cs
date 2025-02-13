@@ -35,6 +35,8 @@ public class UnitController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public virtual void Start()
     {
+        tmManager = FindAnyObjectByType<TilemapManager>();
+
         tmManager.SetOccupancy(transform.position, team);
         tmManager.TryClaimTile(transform.position, team);
     }

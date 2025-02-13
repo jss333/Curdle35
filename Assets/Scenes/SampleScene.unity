@@ -929,122 +929,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 727454882}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &539155028
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 539155031}
-  - component: {fileID: 539155029}
-  - component: {fileID: 539155030}
-  m_Layer: 0
-  m_Name: Hyena
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &539155029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 539155028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56c769834ae4a244dab70a7274a0ac1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementType: 2
-  moving: 0
-  speed: 1
-  showMovement: 0
-  movementOffsets: []
-  startingAP: 10
-  remainingAP: 10
-  movability: 3
-  tmManager: {fileID: 1018166469}
-  abilityCount: 0
-  showTowerPlacement: 0
-  showingAbility: -1
-  movedThisTurn: 0
-  abilityNames: []
-  team: 2
-  face_sprite: {fileID: 0}
---- !u!212 &539155030
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 539155028}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 10
-  m_Sprite: {fileID: -3090604251472796054, guid: f55087e97f8e9994fbb12dcb99323f0f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!4 &539155031
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 539155028}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.5, y: -2.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &549722778
 GameObject:
   m_ObjectHideFlags: 0
@@ -1174,6 +1058,8 @@ MonoBehaviour:
   corruptionNeededForSpawnRateIncrease: 80
   firstSpawnRateToIncrease: 1
   spawnMarkerPrefab: {fileID: 1616397644916556126, guid: 63c7a06c4de387d4f9b001c9572db8b5, type: 3}
+  hyenaPrefab: {fileID: 8498424047850533199, guid: 27ad39ea9b96c094cb1a5c5b1b9765fb, type: 3}
+  hyenasParent: {fileID: 1580702949}
   currentOuterSpawnRate: 0
   currentInnerSpawnRate: 0
   nextSpawnRateToIncrease: 0
@@ -3490,6 +3376,37 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1580702949
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1580702950}
+  m_Layer: 0
+  m_Name: Hyenas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1580702950
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580702949}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1678724990
 GameObject:
   m_ObjectHideFlags: 0
@@ -4310,6 +4227,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2066600380}
   m_CullTransparentMesh: 1
+--- !u!1001 &5654383709829946863
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1725391347223835005, guid: 27ad39ea9b96c094cb1a5c5b1b9765fb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1725391347223835005, guid: 27ad39ea9b96c094cb1a5c5b1b9765fb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1725391347223835005, guid: 27ad39ea9b96c094cb1a5c5b1b9765fb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1725391347223835005, guid: 27ad39ea9b96c094cb1a5c5b1b9765fb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1725391347223835005, guid: 27ad39ea9b96c094cb1a5c5b1b9765fb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1725391347223835005, guid: 27ad39ea9b96c094cb1a5c5b1b9765fb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1725391347223835005, guid: 27ad39ea9b96c094cb1a5c5b1b9765fb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1725391347223835005, guid: 27ad39ea9b96c094cb1a5c5b1b9765fb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1725391347223835005, guid: 27ad39ea9b96c094cb1a5c5b1b9765fb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1725391347223835005, guid: 27ad39ea9b96c094cb1a5c5b1b9765fb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8498424047850533199, guid: 27ad39ea9b96c094cb1a5c5b1b9765fb, type: 3}
+      propertyPath: m_Name
+      value: Hyena
+      objectReference: {fileID: 0}
+    - target: {fileID: 8498424047850533199, guid: 27ad39ea9b96c094cb1a5c5b1b9765fb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 27ad39ea9b96c094cb1a5c5b1b9765fb, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -4322,7 +4300,7 @@ SceneRoots:
   - {fileID: 1998659487}
   - {fileID: 1396475286}
   - {fileID: 1710883589}
-  - {fileID: 539155031}
+  - {fileID: 5654383709829946863}
   - {fileID: 1018166470}
   - {fileID: 1341019718}
   - {fileID: 1017489754}
@@ -4330,3 +4308,4 @@ SceneRoots:
   - {fileID: 549722780}
   - {fileID: 846489660}
   - {fileID: 554228172}
+  - {fileID: 1580702950}

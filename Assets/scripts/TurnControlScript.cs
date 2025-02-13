@@ -91,7 +91,8 @@ public class TurnControlScript : MonoBehaviour
     }
 
     void SpawnHyenas(){
-        //james has a function
+
+        hyenasSpawnManager.SpawnHyenasAtSpawnPoints();
     }
 
     void MoveOneHyena(){
@@ -132,8 +133,8 @@ public class TurnControlScript : MonoBehaviour
                 hyenaTurn = !hyenaTurn;
                 if(!hyenaTurn){ //morning start
 
-                    //CreateSpawnMarkers();
-                    hyenasSpawnManager.GenerateNewSpawnPointsBasedOnSpawnRates();
+                    //Create Spawn Markers
+                    hyenasSpawnManager.GenerateNewSpawnPointsBasedOnSpawnRates(); //TODO this does not get called in the very first morning
 
                     uiBridge.buttons[0].GetComponent<UnityEngine.UI.Image>().color = buttonEnabledColor;
                     uiBridge.buttons[1].GetComponent<UnityEngine.UI.Image>().color = buttonEnabledColor;

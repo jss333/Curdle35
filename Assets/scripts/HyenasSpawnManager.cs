@@ -13,8 +13,6 @@ public enum NextSpawnRateToIncrease
 
 public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
 {
-    private HyenasSpawnPointAlgorithm spawnAlgorithm;
-
     [Header("Config params")]
     [SerializeField] private TilemapManager tilemapManager;
     [SerializeField] private int startOuterSpawnRate = 3;
@@ -23,13 +21,18 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
     [SerializeField] private int minDistBetInnerSpawnPointAndHQ = 2;
     [SerializeField] private int corruptionNeededForSpawnRateIncrease = 80;
     [SerializeField] private NextSpawnRateToIncrease firstSpawnRateToIncrease = NextSpawnRateToIncrease.INNER_SPAWN_RATE;
+
+    [Header("References")]
     [SerializeField] private GameObject spawnMarkerPrefab;
+    [SerializeField] private GameObject hyenaPrefab;
+    [SerializeField] private GameObject hyenasParent;
 
     [Header("State")]
     [SerializeField] private int currentOuterSpawnRate;
     [SerializeField] private int currentInnerSpawnRate;
     [SerializeField] private NextSpawnRateToIncrease nextSpawnRateToIncrease;
 
+    private HyenasSpawnPointAlgorithm spawnAlgorithm;
     private List<GameObject> spawnMarkers = new List<GameObject>();
 
     // Game state
@@ -104,6 +107,7 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
 
         // Testing
         //GenerateNewSpawnPointsBasedOnSpawnRates();
+        //SpawnHyenasAtSpawnPoints();
         //IncreaseSpawnRate();
         //GenerateNewSpawnPointsBasedOnSpawnRates();
     }
@@ -121,6 +125,19 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
             GameObject spawnMarkerObj = Instantiate(spawnMarkerPrefab, worldPosition, Quaternion.identity, transform);
             spawnMarkers.Add(spawnMarkerObj);
         }
+    }
+
+    public void SpawnHyenasAtSpawnPoints()
+    {
+        Debug.Log("Spawning hyenas where the spawn markers are");
+        foreach(GameObject spawnMarker in spawnMarkers)
+        {
+            Vector3 spawnMarkerPos = spawnMarker.transform.position;
+            Destroy(spawnMarker);
+            GameObject hyenaObj = Instantiate(hyenaPrefab, spawnMarkerPos, Quaternion.identity, hyenasParent.transform);
+        }
+
+        spawnMarkers.Clear();
     }
 
     public void IncreaseSpawnRate()
