@@ -14,8 +14,7 @@ public class HyenaController : UnitController
 
     public bool attacking = false;
     public Vector3 attackPosition = Vector3.zero;
-
-    public CatController target;
+    public bool attackedTarget = false;
 
     [SerializeField] private int damage = 1;
 
@@ -58,11 +57,9 @@ public class HyenaController : UnitController
             float distance = direction.magnitude;
             if(distance < (speed * Time.deltaTime)){
                 transform.position = attackPosition;
+                attackedTarget = true;
                 attacking = false;
                 Debug.Log("finished attacking");
-                movedThisTurn = true;
-                //do an attack here, spawn a thing and remove hp from the cat
-                target.health -= damage;
             }
             else{
                 direction /= distance;

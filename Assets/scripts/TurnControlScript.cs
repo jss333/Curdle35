@@ -24,11 +24,15 @@ public class TurnControlScript : MonoBehaviour
     [SerializeField] private TilemapManager tmManager;
     [SerializeField] private HyenasSpawnManager hyenasSpawnManager;
     [SerializeField] public UIBridge uiBridge;
+    [SerializeField] private SoundManager soundManager;
 
     [SerializeField] private Sprite[] clock_sprites;
 
     [SerializeField] public List<HyenaController> hyenas = new List<HyenaController>();
     [SerializeField] public List<Vector3Int> minorTowers = new List<Vector3Int>();
+
+    private Dictionary<GameObject, CatController> hyenaCatTargets = new Dictionary<GameObject, CatController>();
+    private Dictionary<GameObject, Vector3Int> hyenaTowerTargets = new Dictionary<GameObject, Vector3Int>();
 
     int currentHyena = 0;
 
@@ -57,6 +61,9 @@ public class TurnControlScript : MonoBehaviour
     void PerformCatAttack(){
         //cats[currentCat];
         //prefab here, Instantiate<ClawAttack>(transform, ClawPrefab);
+    }
+    void KillOffCat(CatController cat){
+        soundManager.PlayEffect(SoundManager.Effects.CatDeath);
     }
 
     public void SwitchActor(int whichCat){
@@ -101,6 +108,9 @@ public class TurnControlScript : MonoBehaviour
     void SpawnHyenas(){
 
         var returnedHyenas = hyenasSpawnManager.SpawnHyenasAtSpawnPoints();
+        if(returnedHyenas.Count > 0){
+            soundManager.PlayEffect(SoundManager.Effects.HyenaSpawn);
+        }
         foreach(HyenaController hy in returnedHyenas){
             tmManager.TryClaimTile(hy.transform.position, hy.team);
             hyenas.Add(hy);
@@ -116,6 +126,16 @@ public class TurnControlScript : MonoBehaviour
         if(controlledHyena.movedThisTurn){
             currentHyena++;
             return;
+        }
+        if(controlledHyena.attackedTarget){
+            if(hyenaCatTargets.TryGetValue(controlledHyena.gameObject, out var cat)){
+                Destroy(controlledHyena.gameObject);
+                hyenas.Remove(controlledHyena);
+                cat.health--;
+                if(cat.health <= 0){
+                    KillOffCat(cat);
+                }
+            }
         }
         if(!controlledHyena.moving && !controlledHyena.attacking){
             //Debug.Log("hyena was not moving");
@@ -144,7 +164,7 @@ public class TurnControlScript : MonoBehaviour
                             distanceToCat.x = 1.0f;
                         }
                         controlledHyena.attacking = true;
-                        controlledHyena.target = cats[i];
+                        hyenaCatTargets.Add(controlledHyena.gameObject, cats[i]);
                         controlledHyena.attackPosition = cats[i].transform.position - distanceToCat;
                         return;
                     }
@@ -155,6 +175,7 @@ public class TurnControlScript : MonoBehaviour
 
             controlledHyena.movementPath = gridManager.DetermineOptimalPath(tempPos, 2);
             if(controlledHyena.movementPath != null){
+                soundManager.PlayEffect(SoundManager.Effects.HyenaMovement);
                 Debug.Log("current hyena - first point and position and count - " + currentHyena + " : " + controlledHyena.movementPath[0] + " : " + controlledHyena.transform.position  + ":" + controlledHyena.movementPath.Count);
                 
                 if(false){ //i was trying to rework hyena diagonal movement but i couldnt get it right, need to move on
@@ -204,6 +225,29 @@ public class TurnControlScript : MonoBehaviour
         }
         uiBridge.UpdateUI(healths, catScore, hyenaScore);
     }
+    
+    void ChangeDayPhase(DayPhase phase){
+        dayPhase = phase;
+        switch(phase){
+            case DayPhase.Dawn:{
+                soundManager.PlayMusic(SoundManager.Music.DawnBegin);
+                break;
+            }
+            case DayPhase.Day:{
+                soundManager.PlayMusic(SoundManager.Music.DayBegin);
+                break;
+            }
+            case DayPhase.Dusk:{
+                soundManager.PlayMusic(SoundManager.Music.DuskBegin);
+                break;
+            }
+            case DayPhase.Night:{
+                soundManager.PlayMusic(SoundManager.Music.NightBegin);
+                break;
+            }
+        }
+    }
+    
     // Update is called once per frame
     void Update()
     {
@@ -259,6 +303,8 @@ public class TurnControlScript : MonoBehaviour
                                 Vector3Int hyenaPos = tmManager.tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(hyena.transform.position);
                                 if(catTilePos == hyenaPos){
                                     Debug.Log("ran over hyena");
+                                    
+                                    soundManager.PlayEffect(SoundManager.Effects.CatAttack);
                                     Destroy(hyena.gameObject);
 
                                     PerformCatAttack();
@@ -374,7 +420,7 @@ public class TurnControlScript : MonoBehaviour
                     if(currentHyena >= hyenas.Count){
                         //Debug.Log("all hyenas moved - " + currentHyena + " : " + hyenas.Count);
                         Debug.Log("changing day phase to dawn");
-                        dayPhase = DayPhase.Dawn;
+                        ChangeDayPhase(DayPhase.Dawn);
                         currentHyena = 0;
                     }
                     else{
