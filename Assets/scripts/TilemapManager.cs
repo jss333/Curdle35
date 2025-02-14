@@ -347,4 +347,9 @@ public class TilemapManager : MonoBehaviour
         }
         ClearMovement();
     }
+
+    public void CollectTeamResources(UnitController.Team team){
+        if(team == UnitController.Team.cats){
+        }
+    }
 }

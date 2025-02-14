@@ -36,6 +36,8 @@ public class TurnControlScript : MonoBehaviour
 
     int currentHyena = 0;
 
+    [SerializeField] int winConditionScore = 250;
+
     bool committedToAnAction = false;
     float turnChangeTime = 0.0f;
 
@@ -49,6 +51,15 @@ public class TurnControlScript : MonoBehaviour
 
     }
     [SerializeField] DayPhase dayPhase = DayPhase.Dawn;
+
+    void WinConditionAchieved(){
+        soundManager.PlayMusic(SoundManager.Music.WinMusic);
+    }
+    void LossConditionReached(){
+        soundManager.PlayMusic(SoundManager.Music.LossMusic);
+    }
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -59,11 +70,26 @@ public class TurnControlScript : MonoBehaviour
     }
 
     void PerformCatAttack(){
+        soundManager.PlayEffect(SoundManager.Effects.CatAttack);
         //cats[currentCat];
         //prefab here, Instantiate<ClawAttack>(transform, ClawPrefab);
+
+        
     }
     void KillOffCat(CatController cat){
         soundManager.PlayEffect(SoundManager.Effects.CatDeath);
+        cat.isAlive = false;
+
+        bool allDead = true;
+        for(int i = 0; i < cats.Length; i++){
+            if(cats[i].isAlive){
+                allDead = false;
+                break;
+            }
+        }
+        if(allDead){
+            LossConditionReached();
+        }
     }
 
     [SerializeField] public void SwitchActor(int whichCat){
@@ -71,6 +97,9 @@ public class TurnControlScript : MonoBehaviour
         bool fromRoster = whichCat >= cats.Length;
         if(fromRoster){
             whichCat -= cats.Length;
+        }
+        if(whichCat != currentCat){
+            soundManager.PlayEffect(SoundManager.Effects.CatClick);
         }
 
         if(committedToAnAction){
@@ -92,19 +121,10 @@ public class TurnControlScript : MonoBehaviour
             if(fromRoster){
                 cam.transform.position = new Vector3(cats[currentCat].transform.position.x, cats[currentCat].transform.position.y, cam.transform.position.z);
             }
-            if(tempCat.movedThisTurn){
-                uiBridge.SetMoveButtonActivity(false);
 
-            }
-            else{
-                uiBridge.SetMoveButtonActivity(true);
-            }
-            if(tempCat.placedTowerThisTurn){
-                uiBridge.SetTowerPlacementButtonActivity(false);
-            }
-            else{
-                uiBridge.SetTowerPlacementButtonActivity(true);
-            }
+            uiBridge.SetMoveButtonActivity(!tempCat.movedThisTurn);
+
+            uiBridge.SetTowerPlacementButtonActivity(!tempCat.placedTowerThisTurn);
 
             uiBridge.buttons[1].SetActive(cats[currentCat].canPlaceTower);
         }
@@ -126,7 +146,7 @@ public class TurnControlScript : MonoBehaviour
         returnedHyenas.Clear();
     }
 
-    void MoveOneHyena(){
+    void UpdateOneHyena(){
         HyenaController controlledHyena = hyenas[currentHyena];
 
 
@@ -135,6 +155,8 @@ public class TurnControlScript : MonoBehaviour
             return;
         }
         if(controlledHyena.attackedTarget){
+            soundManager.PlayEffect(SoundManager.Effects.HyenaAttack);
+
             if(hyenaCatTargets.TryGetValue(controlledHyena.gameObject, out var cat)){
                 cat.health--;
                 if(cat.health <= 0){
@@ -153,6 +175,7 @@ public class TurnControlScript : MonoBehaviour
 
                 }
             }
+            currentHyena++;
             return;
         }
         if(!controlledHyena.moving && !controlledHyena.attacking){
@@ -196,7 +219,7 @@ public class TurnControlScript : MonoBehaviour
                 soundManager.PlayEffect(SoundManager.Effects.HyenaMovement);
                 Debug.Log("current hyena - first point and position and count - " + currentHyena + " : " + controlledHyena.movementPath[0] + " : " + controlledHyena.transform.position  + ":" + controlledHyena.movementPath.Count);
                 
-                if(false){ //i was trying to rework hyena diagonal movement but i couldnt get it right, need to move on
+                /* //i was trying to rework hyena diagonal movement but i couldnt get it right, need to move on
                     for(int i = 0; i < controlledHyena.movementPath.Count; i++){
                         Debug.Log("full movement list - " + currentHyena + " : " + i + " : " + controlledHyena.movementPath[i]);
                     }
@@ -215,7 +238,7 @@ public class TurnControlScript : MonoBehaviour
                             Debug.Log("post trimming1 movement list - " + currentHyena + " : " + i + " : " + controlledHyena.movementPath[i]);
                         }
                     }
-                }
+                */
 
                 controlledHyena.moving = true;
             }
@@ -242,6 +265,11 @@ public class TurnControlScript : MonoBehaviour
             Debug.Log("failed to find hyena score");
         }
         uiBridge.UpdateUI(healths, catScore, hyenaScore);
+
+        if(catScore > winConditionScore){
+            WinConditionAchieved();
+            //do win condition
+        }
     }
     
     void ChangeDayPhase(DayPhase phase){
@@ -300,8 +328,10 @@ public class TurnControlScript : MonoBehaviour
                     for(int i = 0; i < cats.Length; i++){
                         cats[i].RefreshTurn();
                     }
+                    tmManager.CollectTeamResources(UnitController.Team.hyena);
+                    soundManager.PlayEffect(SoundManager.Effects.HyenaResourceCollection);
                     Debug.Log("changing day phase to day");
-                    dayPhase = DayPhase.Day;
+                    ChangeDayPhase(DayPhase.Day);
                 }
                 
 
@@ -364,6 +394,12 @@ public class TurnControlScript : MonoBehaviour
                         if(catCont.showMovement) {
                             //Debug.Log("checking if movement possible : " + mouseWorldPos);
                             if(tmManager.CheckIfMovementPossible(mouseWorldPos)){
+                                if(currentCat == 0){
+                                    soundManager.PlayEffect(SoundManager.Effects.LionMovement);
+                                }
+                                else{
+                                    soundManager.PlayEffect(SoundManager.Effects.JaguarMovement);
+                                }
                                 //Debug.Log("movment was possible");
                                 committedToAnAction = true;
                                 catCont.MoveTo(mouseWorldPos);
@@ -376,6 +412,8 @@ public class TurnControlScript : MonoBehaviour
                         }
                         else if(catCont.showTowerPlacement){
                             tmManager.PlaceTower(mouseTilePos);
+                            soundManager.PlayEffect(SoundManager.Effects.LionTower);
+
                             catCont.showTowerPlacement = false;
                             minorTowers.Add(mouseTilePos);
                             //uiBridge.abilityButtons[0];
@@ -426,7 +464,9 @@ public class TurnControlScript : MonoBehaviour
                         hyena.movedThisTurn = false;
                     }
                     Debug.Log("changing day phase to night");
-                    dayPhase = DayPhase.Night;
+                    ChangeDayPhase(DayPhase.Night);
+                    tmManager.CollectTeamResources(UnitController.Team.cats);
+                    soundManager.PlayEffect(SoundManager.Effects.CatResourceCollection);
                 }
                 break;
             }
@@ -443,7 +483,7 @@ public class TurnControlScript : MonoBehaviour
                     }
                     else{
                         //Debug.Log("currentHyena : count - " + currentHyena + " : " + hyenas.Count);
-                        MoveOneHyena();
+                        UpdateOneHyena();
                     }
                 break;
             }
@@ -463,7 +503,7 @@ public class TurnControlScript : MonoBehaviour
                 cat.TurnEnding();
             }
             //Debug.Log("changing day phase to dusk");
-            dayPhase = DayPhase.Dusk;
+            ChangeDayPhase(DayPhase.Dusk);
         }
     }
 
