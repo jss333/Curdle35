@@ -703,27 +703,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c91445d651735564aa6cb88746310417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  music:
+  musicClips:
+  - {fileID: 8300000, guid: 42d0d4fba92907c40adb06e4b5bd51f8, type: 3}
+  - {fileID: 8300000, guid: 2de16d19ca86e5a48894bb0603149121, type: 3}
+  - {fileID: 0}
+  - {fileID: 8300000, guid: 42b5ab0e75b789740a4f06e713683aff, type: 3}
+  - {fileID: 8300000, guid: 20b302930d1f15446a5e191f5769971a, type: 3}
   - {fileID: 0}
   - {fileID: 0}
+  effectsClips:
+  - {fileID: 8300000, guid: 4375e089b8a509447af7cdbfbc908ab4, type: 3}
+  - {fileID: 8300000, guid: 3eb2564af3fb21f458bb7e8450dd8fe4, type: 3}
+  - {fileID: 8300000, guid: 4375e089b8a509447af7cdbfbc908ab4, type: 3}
+  - {fileID: 8300000, guid: 48241528a669be64894eaf0dbad66c29, type: 3}
+  - {fileID: 8300000, guid: baed0714866514747bea970b4077719f, type: 3}
+  - {fileID: 8300000, guid: d6a0ccffaec65cb47874667fd4af01d0, type: 3}
+  - {fileID: 0}
+  - {fileID: 8300000, guid: a37224566c31eeb459564472d0fb6fb3, type: 3}
+  - {fileID: 8300000, guid: dda63bcdb3121d44c9a5d7c8cf0a3342, type: 3}
+  - {fileID: 8300000, guid: 8b8474ce5165a724d8bb2ffc92bccc46, type: 3}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  effects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 5959073f96a537a4daffbcd3631cba7c, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

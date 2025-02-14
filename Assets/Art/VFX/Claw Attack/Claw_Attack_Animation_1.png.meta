@@ -1,0 +1,880 @@
+fileFormatVersion: 2
+guid: 73ff8157d79145a4eac321dea32d1b9e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2968030493727968563
+    second: Claw_Attack_Animation_1_0
+  - first:
+      213: -1474287919802882760
+    second: Claw_Attack_Animation_1_1
+  - first:
+      213: 4366710357131050640
+    second: Claw_Attack_Animation_1_2
+  - first:
+      213: -7963027011837023091
+    second: Claw_Attack_Animation_1_3
+  - first:
+      213: 3046760434711497872
+    second: Claw_Attack_Animation_1_4
+  - first:
+      213: 7369367410613881100
+    second: Claw_Attack_Animation_1_5
+  - first:
+      213: 4986491489453071137
+    second: Claw_Attack_Animation_1_6
+  - first:
+      213: -2683314825331179827
+    second: Claw_Attack_Animation_1_7
+  - first:
+      213: -1320994217364253162
+    second: Claw_Attack_Animation_1_8
+  - first:
+      213: 3686419647134055990
+    second: Claw_Attack_Animation_1_9
+  - first:
+      213: 2826301198957707116
+    second: Claw_Attack_Animation_1_10
+  - first:
+      213: -2791967089943052289
+    second: Claw_Attack_Animation_1_11
+  - first:
+      213: -6951145876465659936
+    second: Claw_Attack_Animation_1_12
+  - first:
+      213: 4896192423181802038
+    second: Claw_Attack_Animation_1_13
+  - first:
+      213: 2243205191829128009
+    second: Claw_Attack_Animation_1_14
+  - first:
+      213: 3584624184504138926
+    second: Claw_Attack_Animation_1_15
+  - first:
+      213: 4015116601914284562
+    second: Claw_Attack_Animation_1_16
+  - first:
+      213: -2481685493162062036
+    second: Claw_Attack_Animation_1_17
+  - first:
+      213: -8407280027101622564
+    second: Claw_Attack_Animation_1_18
+  - first:
+      213: -214105964001025266
+    second: Claw_Attack_Animation_1_19
+  - first:
+      213: -3819825525182556153
+    second: Claw_Attack_Animation_1_20
+  - first:
+      213: -7565359819556822096
+    second: Claw_Attack_Animation_1_21
+  - first:
+      213: -2579521312200834527
+    second: Claw_Attack_Animation_1_22
+  - first:
+      213: 152617732351219273
+    second: Claw_Attack_Animation_1_23
+  - first:
+      213: -3031904383794016908
+    second: Claw_Attack_Animation_1_24
+  - first:
+      213: 1413674749948279754
+    second: Claw_Attack_Animation_1_25
+  - first:
+      213: 3987101817064058032
+    second: Claw_Attack_Animation_1_26
+  - first:
+      213: 4620894207810836735
+    second: Claw_Attack_Animation_1_27
+  - first:
+      213: 8131147741095188780
+    second: Claw_Attack_Animation_1_28
+  - first:
+      213: 7423757072240877687
+    second: Claw_Attack_Animation_1_29
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_0
+      rect:
+        serializedVersion: 2
+        x: 617
+        y: 1369
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc231d2cdff6fc6d0800000000000000
+      internalID: -2968030493727968563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_1
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 1405
+        width: 102
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 835ef73b2f64a8be0800000000000000
+      internalID: -1474287919802882760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_2
+      rect:
+        serializedVersion: 2
+        x: 1129
+        y: 1369
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09eb0d91feba99c30800000000000000
+      internalID: 4366710357131050640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_3
+      rect:
+        serializedVersion: 2
+        x: 1149
+        y: 1405
+        width: 102
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8c2d966f15ad7190800000000000000
+      internalID: -7963027011837023091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_4
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 1170
+        width: 113
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09c81b21974484a20800000000000000
+      internalID: 3046760434711497872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_5
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 1168
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c090bf88d90454660800000000000000
+      internalID: 7369367410613881100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_6
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 1160
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12bdb501793933540800000000000000
+      internalID: 4986491489453071137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_7
+      rect:
+        serializedVersion: 2
+        x: 516
+        y: 1170
+        width: 113
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dce78971263f2cad0800000000000000
+      internalID: -2683314825331179827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_8
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 1168
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61698ab12c2eaade0800000000000000
+      internalID: -1320994217364253162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_9
+      rect:
+        serializedVersion: 2
+        x: 567
+        y: 1160
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63e3278332bc82330800000000000000
+      internalID: 3686419647134055990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_10
+      rect:
+        serializedVersion: 2
+        x: 1136
+        y: 1078
+        width: 167
+        height: 153
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6f722057f9093720800000000000000
+      internalID: 2826301198957707116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_11
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 566
+        width: 234
+        height: 376
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffffc5369b0f049d0800000000000000
+      internalID: -2791967089943052289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_12
+      rect:
+        serializedVersion: 2
+        x: 661
+        y: 603
+        width: 360
+        height: 339
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0efc75377a1988f90800000000000000
+      internalID: -6951145876465659936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_13
+      rect:
+        serializedVersion: 2
+        x: 810
+        y: 598
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63ad5b75115c2f340800000000000000
+      internalID: 4896192423181802038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_14
+      rect:
+        serializedVersion: 2
+        x: 1173
+        y: 557
+        width: 360
+        height: 298
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9438949ac37712f10800000000000000
+      internalID: 2243205191829128009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_15
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 45
+        width: 102
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eacb4a224b42fb130800000000000000
+      internalID: 3584624184504138926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_16
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 46
+        width: 243
+        height: 365
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21adfd4c64f88b730800000000000000
+      internalID: 4015116601914284562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_17
+      rect:
+        serializedVersion: 2
+        x: 762
+        y: 150
+        width: 254
+        height: 270
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2fc5d741384f8dd0800000000000000
+      internalID: -2481685493162062036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_18
+      rect:
+        serializedVersion: 2
+        x: 1357
+        y: 246
+        width: 18
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cde0f59eb57535b80800000000000000
+      internalID: -8407280027101622564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_19
+      rect:
+        serializedVersion: 2
+        x: 1374
+        y: 255
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e032d6792c7570df0800000000000000
+      internalID: -214105964001025266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_20
+      rect:
+        serializedVersion: 2
+        x: 1381
+        y: 232
+        width: 128
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70816835ce04dfac0800000000000000
+      internalID: -3819825525182556153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_21
+      rect:
+        serializedVersion: 2
+        x: 1393
+        y: 223
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b36d4db351720790800000000000000
+      internalID: -7565359819556822096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_22
+      rect:
+        serializedVersion: 2
+        x: 1441
+        y: 227
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12248bf8803b33cd0800000000000000
+      internalID: -2579521312200834527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_23
+      rect:
+        serializedVersion: 2
+        x: 1366
+        y: 173
+        width: 14
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 946583bd4053e1200800000000000000
+      internalID: 152617732351219273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_24
+      rect:
+        serializedVersion: 2
+        x: 1417
+        y: 179
+        width: 20
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47d0203d6038ce5d0800000000000000
+      internalID: -3031904383794016908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_25
+      rect:
+        serializedVersion: 2
+        x: 1399
+        y: 154
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acb3b92f1b16e9310800000000000000
+      internalID: 1413674749948279754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_26
+      rect:
+        serializedVersion: 2
+        x: 1413
+        y: 147
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bcea616af7055730800000000000000
+      internalID: 3987101817064058032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_27
+      rect:
+        serializedVersion: 2
+        x: 695
+        y: 27
+        width: 134
+        height: 111
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff89939acc6b02040800000000000000
+      internalID: 4620894207810836735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_28
+      rect:
+        serializedVersion: 2
+        x: 1207
+        y: 27
+        width: 134
+        height: 111
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c29d2343ac3a7d070800000000000000
+      internalID: 8131147741095188780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Claw_Attack_Animation_1_29
+      rect:
+        serializedVersion: 2
+        x: 1384
+        y: 124
+        width: 27
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77026b579bb760760800000000000000
+      internalID: 7423757072240877687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable: {}
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

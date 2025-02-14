@@ -1,0 +1,505 @@
+fileFormatVersion: 2
+guid: b2d3b75d6d3356540a9c90ed1cb39b90
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5837626964659891975
+    second: Jaguar_2_Idle_Animation_0
+  - first:
+      213: 6123930746220045799
+    second: Jaguar_2_Idle_Animation_1
+  - first:
+      213: -3108749655313771566
+    second: Jaguar_2_Idle_Animation_2
+  - first:
+      213: 6149720712448784531
+    second: Jaguar_2_Idle_Animation_3
+  - first:
+      213: -4768428716790481655
+    second: Jaguar_2_Idle_Animation_4
+  - first:
+      213: 9116163619920158150
+    second: Jaguar_2_Idle_Animation_5
+  - first:
+      213: 6953271476456544804
+    second: Jaguar_2_Idle_Animation_6
+  - first:
+      213: -1034096575106139641
+    second: Jaguar_2_Idle_Animation_7
+  - first:
+      213: 7064980146051771425
+    second: Jaguar_2_Idle_Animation_8
+  - first:
+      213: 3224241650951992839
+    second: Jaguar_2_Idle_Animation_9
+  - first:
+      213: -1739163946558915297
+    second: Jaguar_2_Idle_Animation_10
+  - first:
+      213: -1845106856324628015
+    second: Jaguar_2_Idle_Animation_11
+  - first:
+      213: -7212209526522600637
+    second: Jaguar_2_Idle_Animation_12
+  - first:
+      213: -8478060018266871214
+    second: Jaguar_2_Idle_Animation_13
+  - first:
+      213: -1801402872025649165
+    second: Jaguar_2_Idle_Animation_14
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Jaguar_2_Idle_Animation_0
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 770
+        width: 152
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f0943864359cfea0800000000000000
+      internalID: -5837626964659891975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jaguar_2_Idle_Animation_1
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 770
+        width: 152
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e5e98551929cf450800000000000000
+      internalID: 6123930746220045799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jaguar_2_Idle_Animation_2
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 770
+        width: 152
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d3976bc8a08bd4d0800000000000000
+      internalID: -3108749655313771566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jaguar_2_Idle_Animation_3
+      rect:
+        serializedVersion: 2
+        x: 815
+        y: 767
+        width: 157
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3983f55c762385550800000000000000
+      internalID: 6149720712448784531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jaguar_2_Idle_Animation_4
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 511
+        width: 161
+        height: 245
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90d7ee6a85323ddb0800000000000000
+      internalID: -4768428716790481655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jaguar_2_Idle_Animation_5
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 511
+        width: 161
+        height: 245
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6cd1ea7438e138e70800000000000000
+      internalID: 9116163619920158150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jaguar_2_Idle_Animation_6
+      rect:
+        serializedVersion: 2
+        x: 556
+        y: 511
+        width: 163
+        height: 244
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42a5c0d519bfe7060800000000000000
+      internalID: 6953271476456544804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jaguar_2_Idle_Animation_7
+      rect:
+        serializedVersion: 2
+        x: 711
+        y: 589
+        width: 9
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70ab951d4a626a1f0800000000000000
+      internalID: -1034096575106139641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jaguar_2_Idle_Animation_8
+      rect:
+        serializedVersion: 2
+        x: 813
+        y: 511
+        width: 161
+        height: 245
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12c6a9ec20adb0260800000000000000
+      internalID: 7064980146051771425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jaguar_2_Idle_Animation_9
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 255
+        width: 161
+        height: 245
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7063303e2becebc20800000000000000
+      internalID: 3224241650951992839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jaguar_2_Idle_Animation_10
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 255
+        width: 157
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1d7037ea9f3dd7e0800000000000000
+      internalID: -1739163946558915297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jaguar_2_Idle_Animation_11
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 258
+        width: 152
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d10228071dd466e0800000000000000
+      internalID: -1845106856324628015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jaguar_2_Idle_Animation_12
+      rect:
+        serializedVersion: 2
+        x: 818
+        y: 258
+        width: 152
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 343aee5c5a519eb90800000000000000
+      internalID: -7212209526522600637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jaguar_2_Idle_Animation_13
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 2
+        width: 152
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25ae2c20551e75a80800000000000000
+      internalID: -8478060018266871214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jaguar_2_Idle_Animation_14
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 2
+        width: 152
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ffea83d1a12007e0800000000000000
+      internalID: -1801402872025649165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable: {}
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

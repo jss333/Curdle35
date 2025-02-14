@@ -52,9 +52,11 @@ public class TurnControlScript : MonoBehaviour
     [SerializeField] DayPhase dayPhase = DayPhase.Dawn;
 
     void WinConditionAchieved(){
+        soundManager.StopAllMusic();
         soundManager.PlayMusic(SoundManager.Music.WinMusic);
     }
     void LossConditionReached(){
+        soundManager.StopAllMusic();
         soundManager.PlayMusic(SoundManager.Music.LossMusic);
     }
 
@@ -100,7 +102,7 @@ public class TurnControlScript : MonoBehaviour
             whichCat -= cats.Length;
         }
         if(whichCat != currentCat){
-            soundManager.PlayEffect(SoundManager.Effects.CatClick);
+            soundManager.PlayEffect(SoundManager.Effects.UnitSelection);
             tmManager.ClearMovement();
         }
 
@@ -219,7 +221,7 @@ public class TurnControlScript : MonoBehaviour
             controlledHyena.movementPath = gridManager.DetermineOptimalPath(tempPos, 2);
             if(controlledHyena.movementPath != null){
                 soundManager.PlayEffect(SoundManager.Effects.HyenaMovement);
-                Debug.Log("current hyena - first point and position and count - " + currentHyena + " : " + controlledHyena.movementPath[0] + " : " + controlledHyena.transform.position  + ":" + controlledHyena.movementPath.Count);
+                //Debug.Log("current hyena - first point and position and count - " + currentHyena + " : " + controlledHyena.movementPath[0] + " : " + controlledHyena.transform.position  + ":" + controlledHyena.movementPath.Count);
                 
                 /* //i was trying to rework hyena diagonal movement but i couldnt get it right, need to move on
                     for(int i = 0; i < controlledHyena.movementPath.Count; i++){
@@ -275,26 +277,28 @@ public class TurnControlScript : MonoBehaviour
     }
     
     void ChangeDayPhase(DayPhase phase){
-        dayPhase = phase;
         tmManager.ClearMovement();
         switch(phase){
             case DayPhase.Dawn:{
+                soundManager.StopMusic(SoundManager.Music.NightBegin);
                 soundManager.PlayMusic(SoundManager.Music.DawnBegin);
                 break;
             }
             case DayPhase.Day:{
-                soundManager.PlayMusic(SoundManager.Music.DayBegin);
+                soundManager.PlayDayMusic();
                 break;
             }
             case DayPhase.Dusk:{
+                soundManager.StopMusic(SoundManager.Music.DayBegin);
                 soundManager.PlayMusic(SoundManager.Music.DuskBegin);
                 break;
             }
             case DayPhase.Night:{
-                soundManager.PlayMusic(SoundManager.Music.NightBegin);
+                soundManager.PlayNightMusic();
                 break;
             }
         }
+        dayPhase = phase;
     }
     
     // Update is called once per frame

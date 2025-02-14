@@ -1,0 +1,705 @@
+fileFormatVersion: 2
+guid: a07a84ea40310734b9365a4dca61432e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6884396372318439827
+    second: Lion_Idle_Animation_0
+  - first:
+      213: 8321351349762941450
+    second: Lion_Idle_Animation_1
+  - first:
+      213: 735451639956386403
+    second: Lion_Idle_Animation_2
+  - first:
+      213: 1105977291028831655
+    second: Lion_Idle_Animation_3
+  - first:
+      213: -4733663159815388190
+    second: Lion_Idle_Animation_4
+  - first:
+      213: 9179457192335473605
+    second: Lion_Idle_Animation_5
+  - first:
+      213: 2768425698828049147
+    second: Lion_Idle_Animation_6
+  - first:
+      213: 5869086284424195407
+    second: Lion_Idle_Animation_7
+  - first:
+      213: -5358123144655253660
+    second: Lion_Idle_Animation_8
+  - first:
+      213: -4224479338672210423
+    second: Lion_Idle_Animation_9
+  - first:
+      213: -6793027135896877575
+    second: Lion_Idle_Animation_10
+  - first:
+      213: -6272047429291150433
+    second: Lion_Idle_Animation_11
+  - first:
+      213: -5607340483274943171
+    second: Lion_Idle_Animation_12
+  - first:
+      213: 8307473139152665011
+    second: Lion_Idle_Animation_13
+  - first:
+      213: -2196883520196247866
+    second: Lion_Idle_Animation_14
+  - first:
+      213: -1355438785588417566
+    second: Lion_Idle_Animation_15
+  - first:
+      213: 4185648326541635698
+    second: Lion_Idle_Animation_16
+  - first:
+      213: -2600864675939278919
+    second: Lion_Idle_Animation_17
+  - first:
+      213: 3270874981047324433
+    second: Lion_Idle_Animation_18
+  - first:
+      213: 2863791387789132597
+    second: Lion_Idle_Animation_19
+  - first:
+      213: 8041916550369302773
+    second: Lion_Idle_Animation_20
+  - first:
+      213: -7048926056316239509
+    second: Lion_Idle_Animation_21
+  - first:
+      213: 4069593515136379536
+    second: Lion_Idle_Animation_22
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_0
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 774
+        width: 191
+        height: 244
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d66b8f679f5b570a0800000000000000
+      internalID: -6884396372318439827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_1
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 769
+        width: 193
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0266d5d6f06b7370800000000000000
+      internalID: 8321351349762941450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_2
+      rect:
+        serializedVersion: 2
+        x: 414
+        y: 1012
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3623415be59d43a00800000000000000
+      internalID: 735451639956386403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_3
+      rect:
+        serializedVersion: 2
+        x: 541
+        y: 769
+        width: 193
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ad1c698c78395f00800000000000000
+      internalID: 1105977291028831655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_4
+      rect:
+        serializedVersion: 2
+        x: 670
+        y: 1012
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e3c9d8af66ae4eb0800000000000000
+      internalID: -4733663159815388190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_5
+      rect:
+        serializedVersion: 2
+        x: 796
+        y: 767
+        width: 195
+        height: 246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5cb7f0c7eabf36f70800000000000000
+      internalID: 9179457192335473605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_6
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 511
+        width: 196
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfa55bd518c6b6620800000000000000
+      internalID: 2768425698828049147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_7
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 746
+        width: 19
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4da83341ee237150800000000000000
+      internalID: 5869086284424195407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_8
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 511
+        width: 196
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46f4604736f14a5b0800000000000000
+      internalID: -5358123144655253660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_9
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 746
+        width: 19
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90e37797c62af55c0800000000000000
+      internalID: -4224479338672210423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_10
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 511
+        width: 200
+        height: 251
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f507479fc15ab1a0800000000000000
+      internalID: -6793027135896877575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_11
+      rect:
+        serializedVersion: 2
+        x: 795
+        y: 511
+        width: 196
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f93f2b2081635f8a0800000000000000
+      internalID: -6272047429291150433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_12
+      rect:
+        serializedVersion: 2
+        x: 860
+        y: 746
+        width: 19
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d35dab71a89be22b0800000000000000
+      internalID: -5607340483274943171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_13
+      rect:
+        serializedVersion: 2
+        x: 727
+        y: 573
+        width: 10
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b93b402ec21a4370800000000000000
+      internalID: 8307473139152665011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_14
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 255
+        width: 196
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6cefac5f31a1381e0800000000000000
+      internalID: -2196883520196247866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_15
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 490
+        width: 19
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2eb273e1b93803de0800000000000000
+      internalID: -1355438785588417566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_16
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 255
+        width: 195
+        height: 246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 270f83af9f8661a30800000000000000
+      internalID: 4185648326541635698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_17
+      rect:
+        serializedVersion: 2
+        x: 541
+        y: 257
+        width: 193
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bf17c17b5fd7ebd0800000000000000
+      internalID: -2600864675939278919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_18
+      rect:
+        serializedVersion: 2
+        x: 670
+        y: 500
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11fc906277b746d20800000000000000
+      internalID: 3270874981047324433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_19
+      rect:
+        serializedVersion: 2
+        x: 797
+        y: 257
+        width: 193
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5338efb181b3eb720800000000000000
+      internalID: 2863791387789132597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_20
+      rect:
+        serializedVersion: 2
+        x: 926
+        y: 500
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f8d812ae70aa9f60800000000000000
+      internalID: 8041916550369302773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_21
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 6
+        width: 191
+        height: 244
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b61864d391f2d2e90800000000000000
+      internalID: -7048926056316239509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lion_Idle_Animation_22
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 6
+        width: 191
+        height: 244
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09aefe98db91a7830800000000000000
+      internalID: 4069593515136379536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable: {}
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
