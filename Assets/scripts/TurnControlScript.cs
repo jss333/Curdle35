@@ -44,7 +44,7 @@ public class TurnControlScript : MonoBehaviour
         Night,
 
     }
-    DayPhase dayPhase = DayPhase.Dawn;
+    [SerializeField] DayPhase dayPhase = DayPhase.Dawn;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -52,6 +52,11 @@ public class TurnControlScript : MonoBehaviour
         gridManager.tmManager = tmManager;
         gridManager.bounds = tmManager.tilemapArray[(int)TilemapManager.MapType.ground].cellBounds;
         gridManager.Initialize();
+    }
+
+    void PerformCatAttack(){
+        //cats[currentCat];
+        //prefab here, Instantiate<ClawAttack>(transform, ClawPrefab);
     }
 
     public void SwitchActor(int whichCat){
@@ -74,17 +79,17 @@ public class TurnControlScript : MonoBehaviour
             cam.transform.position = new Vector3(cats[currentCat].transform.position.x, cats[currentCat].transform.position.y, cam.transform.position.z);
 
             if(tempCat.movedThisTurn){
-                uiBridge.buttons[0].GetComponent<UnityEngine.UI.Image>().color = uiBridge.buttonDisabledColor;
+                uiBridge.SetMoveButtonActivity(false);
 
             }
             else{
-                uiBridge.buttons[0].GetComponent<UnityEngine.UI.Image>().color = uiBridge.buttonEnabledColor;
+                uiBridge.SetMoveButtonActivity(true);
             }
             if(tempCat.placedTowerThisTurn){
-                uiBridge.buttons[1].GetComponent<UnityEngine.UI.Image>().color = uiBridge.buttonDisabledColor;
+                uiBridge.SetTowerPlacementButtonActivity(false);
             }
             else{
-                uiBridge.buttons[1].GetComponent<UnityEngine.UI.Image>().color = uiBridge.buttonEnabledColor;
+                uiBridge.SetTowerPlacementButtonActivity(true);
             }
 
             uiBridge.buttons[1].SetActive(cats[currentCat].canPlaceTower);
@@ -211,8 +216,9 @@ public class TurnControlScript : MonoBehaviour
 
         switch(dayPhase){
             case DayPhase.Dawn:{
+                Debug.Log("dawn");
                 turnChangeTime += Time.deltaTime;
-                int clockSpriteIter = Mathf.FloorToInt(turnChangeTime * 14.0f);
+                int clockSpriteIter = Mathf.FloorToInt(turnChangeTime * 14.0f) + 14;
                 if(clockSpriteIter > 27){
                     Debug.Log("dawn turn change time should never be over 14 : " + clockSpriteIter);
                     clockSpriteIter = 0;
@@ -223,14 +229,16 @@ public class TurnControlScript : MonoBehaviour
                 if(turnChangeTime >= 1.0f){
                     turnChangeTime = 0.0f;
 
+                    tmManager.CollectResourcesFromTowers();
                     //Create Spawn Markers
                     hyenasSpawnManager.GenerateNewSpawnPointsBasedOnSpawnRates(); //TODO this does not get called in the very first morning
 
-                    uiBridge.buttons[0].GetComponent<UnityEngine.UI.Image>().color = uiBridge.buttonEnabledColor;
-                    uiBridge.buttons[1].GetComponent<UnityEngine.UI.Image>().color = uiBridge.buttonEnabledColor;
+                    uiBridge.SetMoveButtonActivity(true);
+                    uiBridge.SetTowerPlacementButtonActivity(true);
                     for(int i = 0; i < cats.Length; i++){
                         cats[i].RefreshTurn();
                     }
+                    Debug.Log("changing day phase to day");
                     dayPhase = DayPhase.Day;
                 }
                 
@@ -238,12 +246,25 @@ public class TurnControlScript : MonoBehaviour
                 break;
             }
             case DayPhase.Day:{
+                Debug.Log("day");
                 if(committedToAnAction){
                     if(!cats[currentCat].moving){
                         committedToAnAction = false;
                     }
                     else{
-                        return;
+                        Vector3Int catTilePos = tmManager.tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(cats[currentCat].transform.position);
+                        for(int i = 0; i < hyenas.Count; i++){
+                            Vector3Int hyenaPos = tmManager.tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(hyenas[i].transform.position);
+                            if(catTilePos == hyenaPos){
+                                Debug.Log("ran over hyena");
+                                Destroy(hyenas[i]);
+                                hyenas.RemoveAt(i);
+                                i--;
+
+                                PerformCatAttack();
+                            }
+                        }
+                        break;
                     }
                 }
                 
@@ -267,9 +288,7 @@ public class TurnControlScript : MonoBehaviour
                                 committedToAnAction = true;
                                 catCont.MoveTo(mouseWorldPos);
                                 catCont.DisableMovement();
-                                //uiBridge.rosterUISetup[currentCat].moveImage.GetComponent<UnityEngine.UI.Image>().color = uiBridge.buttonDisabledColor;
-                                uiBridge.buttons[0].GetComponent<UnityEngine.UI.Image>().color = uiBridge.buttonDisabledColor;
-                                //uiBridge.buttons[0]. = new Color(0.2f, 0.2f, 0.2f, 1.0f);
+                                uiBridge.SetMoveButtonActivity(false);
                             }
                             else{
                                 //Debug.Log("failed to move");
@@ -281,8 +300,7 @@ public class TurnControlScript : MonoBehaviour
                             minorTowers.Add(mouseTilePos);
                             //uiBridge.abilityButtons[0];
                             catCont.DisablePlaceTower();
-                            //uiBridge.rosterUISetup[currentCat].towerImage.GetComponent<UnityEngine.UI.Image>().color = uiBridge.buttonDisabledColor;
-                            uiBridge.buttons[1].GetComponent<UnityEngine.UI.Image>().color = uiBridge.buttonDisabledColor;
+                            uiBridge.SetTowerPlacementButtonActivity(false);
                             
                         }
                         else {
@@ -311,8 +329,9 @@ public class TurnControlScript : MonoBehaviour
                 break;
             }
             case DayPhase.Dusk:{
+                Debug.Log("dusk");
                 turnChangeTime += Time.deltaTime;
-                int clockSpriteIter = Mathf.FloorToInt(turnChangeTime * 14.0f) + 14;
+                int clockSpriteIter = Mathf.FloorToInt(turnChangeTime * 14.0f);
                 if(clockSpriteIter > 27){
                     clockSpriteIter = 0;
                 }
@@ -326,16 +345,19 @@ public class TurnControlScript : MonoBehaviour
                     foreach(var hyena in hyenas){
                         hyena.movedThisTurn = false;
                     }
+                    Debug.Log("changing day phase to night");
                     dayPhase = DayPhase.Night;
                 }
                 break;
             }
             case DayPhase.Night:{
                 
+                Debug.Log("night");
             
                     //currentHyena = hyenas.Count; //this turns off movement for debuggign
                     if(currentHyena >= hyenas.Count){
                         //Debug.Log("all hyenas moved - " + currentHyena + " : " + hyenas.Count);
+                        Debug.Log("changing day phase to dawn");
                         dayPhase = DayPhase.Dawn;
                         currentHyena = 0;
                     }
@@ -360,6 +382,7 @@ public class TurnControlScript : MonoBehaviour
             foreach(CatController cat in cats){
                 cat.TurnEnding();
             }
+            Debug.Log("changing day phase to dusk");
             dayPhase = DayPhase.Dusk;
         }
     }

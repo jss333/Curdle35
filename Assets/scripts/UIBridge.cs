@@ -34,6 +34,9 @@ public class UIBridge : MonoBehaviour
     
     void Start(){
         faceObj.SetActive(false);
+        foreach(var button in buttons){
+            button.SetActive(true);
+        }
     }
 
     public void DisableFaceSprite(){
@@ -52,14 +55,39 @@ public class UIBridge : MonoBehaviour
 
     public void UpdateUI(int[] healths, int catScore, int hyenaScore) {
         for(int i = 0; i < healths.Length; i++){
-            uiRoster[i].healthBar.GetComponent<UnityEngine.UI.Image>().sprite = uiRoster[i].sprites[healths[i]];
-
-            if(healths[i] > uiRoster[i].sprites.Length){
-                Debug.Log("cat has more health than planned : " + i);
+            if(healths[i] < 0){
+                uiRoster[i].healthBar.GetComponent<UnityEngine.UI.Image>().sprite = uiRoster[i].sprites[0];
+                Debug.Log("hp is out of bounds : " + uiRoster[i].sprites.Length + ":" + healths[i]);
+            }
+            else if(healths[i] >= uiRoster[i].sprites.Length){
+                uiRoster[i].healthBar.GetComponent<UnityEngine.UI.Image>().sprite = uiRoster[i].sprites[uiRoster[i].sprites.Length - 1];
+                Debug.Log("hp is out of bounds : " + uiRoster[i].sprites.Length + ":" + healths[i]);
+            }
+            else{
+                uiRoster[i].healthBar.GetComponent<UnityEngine.UI.Image>().sprite = uiRoster[i].sprites[healths[i]];
             }
         }
 
         scoreTexts[0].text = catScore.ToString();
         scoreTexts[1].text = hyenaScore.ToString();
+    }
+
+    public void SetMoveButtonActivity(bool active){
+        //this doesnt fully disable it just changes the color
+        if(active){
+            buttons[0].GetComponent<UnityEngine.UI.Image>().color = buttonEnabledColor;
+        }
+        else{
+            buttons[0].GetComponent<UnityEngine.UI.Image>().color = buttonDisabledColor;
+        }
+    }
+    public void SetTowerPlacementButtonActivity(bool active){
+        //this doesnt fully disable it just changes the color
+        if(active){
+            buttons[1].GetComponent<UnityEngine.UI.Image>().color = buttonEnabledColor;
+        }
+        else{
+            buttons[1].GetComponent<UnityEngine.UI.Image>().color = buttonDisabledColor;
+        }
     }
 }

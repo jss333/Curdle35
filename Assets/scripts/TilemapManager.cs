@@ -194,6 +194,33 @@ public class TilemapManager : MonoBehaviour
             drawnTiles.Add(tilePos);
         }
     }
+
+    public void AddResourceToScore(Vector3Int resPos, UnitController.Team team, int multiplier = 1){ //set multiplier to negative to subtract
+        TileBase resourceTile = tilemapArray[(int)MapType.resource].GetTile<TileBase>(resPos);
+        if (resourceTile != null)  // Check if a tile exists at that position
+        {
+            
+            Debug.Log("resource tile existed");
+            if(resourcesFromTiles.TryGetValue(resourceTile, out TileResourceData resTile)) {
+                Debug.Log("res tile existed");
+                team_scores[team] += resTile.score * multiplier;
+            }
+        }
+    }
+    public void CollectResourcesFromTowers() {
+        
+        Vector3Int offset = new Vector3Int(-1, -1, 0);
+        for(offset.x = -1; offset.x <= 1; offset.x++) {
+            for(offset.y = -1; offset.y <= 1; offset.y++) {
+                foreach(var tower in minorTowers){
+                    Debug.Log("checking resource map : " + (tower + offset));
+                    AddResourceToScore(tower + offset, UnitController.Team.cats, 2);
+                }
+                    AddResourceToScore(hqTowerPosition + offset, UnitController.Team.cats, 2);
+            }
+        }
+    }
+
     public TileTerritoryData.Type CheckTileForHyenaSpawn(Vector3Int tilePos){
         TileBase tile = tilemapArray[(int)MapType.ground].GetTile<TileBase>(tilePos);
         if(tile != null){
@@ -204,20 +231,7 @@ public class TilemapManager : MonoBehaviour
         return TileTerritoryData.Type.None;
     }
 
-    public void TryClaimTile(Vector3 transformPos, UnitController.Team team){
-
-        //Debug.Log("attempting to claim tile");
-        Vector3 myPos = transformPos;
-        myPos.x -= Mathf.Floor(myPos.x) + 0.5f;
-        myPos.y -= Mathf.Floor(myPos.y) + 0.5f;
-        myPos.x = Mathf.Abs(myPos.x);
-        myPos.y = Mathf.Abs(myPos.y);
-        if(myPos.x > 0.1f && myPos.y > 0.1f){
-            //Debug.Log("failed to claim, not in the center of the tile");
-            return;
-        }
-        Vector3Int tilePos = tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(transformPos);
-        
+    private void TryClaimTileWithTilePos(Vector3Int tilePos, UnitController.Team team){
         TileBase groundTile = tilemapArray[(int)MapType.ground].GetTile<TileBase>(tilePos);
         tilemapArray[(int)MapType.ground].SetTile(tilePos, groundTiles[(int)team]);
         if(groundTile != null){
@@ -242,25 +256,11 @@ public class TilemapManager : MonoBehaviour
                 if(tileTeam == team){
                     return;
                 }
-                
 
-                //if(team_scores.TryGetValue(UnitController.Team.cats, out int score)){
-                TileBase resourceTile = tilemapArray[(int)MapType.resource].GetTile<TileBase>(tilePos);
-                if (resourceTile != null)  // Check if a tile exists at that position
-                {
-                    Debug.Log("resource tile existed");
-                    if(resourcesFromTiles.TryGetValue(resourceTile, out TileResourceData resTile)) {
-                        team_scores[team] += resTile.score;
-                        if(tileTeam != UnitController.Team.neutral){
-                            team_scores[tileTeam] -= resTile.score;
-                        }
-                    }
+                AddResourceToScore(tilePos, team, 1);
+                if((tileTeam == UnitController.Team.hyena) || (tileTeam == UnitController.Team.cats)){
+                    AddResourceToScore(tilePos, tileTeam, -1);
                 }
-                else{
-                    
-                    Debug.Log("resource tile did not exist");
-                }
-                //}
             }
             else{
                 Debug.Log("tile is not on a valid team while trying to claim? : " + tilePos);
@@ -269,6 +269,23 @@ public class TilemapManager : MonoBehaviour
 
  
         }
+    }
+
+    public void TryClaimTile(Vector3 transformPos, UnitController.Team team){
+
+        //Debug.Log("attempting to claim tile");
+        Vector3 myPos = transformPos;
+        myPos.x -= Mathf.Floor(myPos.x) + 0.5f;
+        myPos.y -= Mathf.Floor(myPos.y) + 0.5f;
+        myPos.x = Mathf.Abs(myPos.x);
+        myPos.y = Mathf.Abs(myPos.y);
+        if(myPos.x > 0.1f && myPos.y > 0.1f){
+            //Debug.Log("failed to claim, not in the center of the tile");
+            return;
+        }
+        Vector3Int tilePos = tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(transformPos);
+        
+        TryClaimTileWithTilePos(tilePos, team);
     }
 
     public void ClearMovement(){
@@ -301,7 +318,7 @@ public class TilemapManager : MonoBehaviour
         Vector3Int offset = new Vector3Int(-1, -1, 0);
         for(offset.x = -1; offset.x <= 1; offset.x++) {
             for(offset.y = -1; offset.y <= 1; offset.y++) {
-                TryClaimTile(towerPos + offset, UnitController.Team.cats);
+                TryClaimTileWithTilePos(towerPos + offset, UnitController.Team.cats);
             }
         }
     }
@@ -313,10 +330,5 @@ public class TilemapManager : MonoBehaviour
             ClaimAreaAroundTower(towerTilePos);
         }
         ClearMovement();
-    }
-
-    void Update()
-    {
-
     }
 }
