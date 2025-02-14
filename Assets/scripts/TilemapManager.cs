@@ -39,6 +39,7 @@ public class TilemapManager : MonoBehaviour
     private Dictionary<Vector3Int, UnitController.Team> occupancy; //shitty solution but the old tilebase was aggregrate for every tile of that type or something. this would be better as an array but an array would be signifcantly more complicated
 
     public Dictionary<UnitController.Team, int> team_scores = new Dictionary<UnitController.Team, int>();
+    public Dictionary<Vector3Int, int> tower_healths = new Dictionary<Vector3Int, int>();
 
     public Vector3Int hqTowerPosition;
     public List<Vector3Int> minorTowers = new List<Vector3Int>();

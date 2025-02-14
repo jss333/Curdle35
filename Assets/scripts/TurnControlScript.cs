@@ -66,7 +66,13 @@ public class TurnControlScript : MonoBehaviour
         soundManager.PlayEffect(SoundManager.Effects.CatDeath);
     }
 
-    public void SwitchActor(int whichCat){
+    [SerializeField] public void SwitchActor(int whichCat){
+
+        bool fromRoster = whichCat >= cats.Length;
+        if(fromRoster){
+            whichCat -= cats.Length;
+        }
+
         if(committedToAnAction){
             //Debug.Log("cant switch actor, commited to action");
             return;
@@ -83,8 +89,9 @@ public class TurnControlScript : MonoBehaviour
             //Debug.Log("before and after cam pos - " + cam.transform.position + " : " + cats[currentCat].transform.position);
 
             //cam.ResolveLookAt(cats[currentCat].transform);
-            cam.transform.position = new Vector3(cats[currentCat].transform.position.x, cats[currentCat].transform.position.y, cam.transform.position.z);
-
+            if(fromRoster){
+                cam.transform.position = new Vector3(cats[currentCat].transform.position.x, cats[currentCat].transform.position.y, cam.transform.position.z);
+            }
             if(tempCat.movedThisTurn){
                 uiBridge.SetMoveButtonActivity(false);
 
@@ -129,13 +136,24 @@ public class TurnControlScript : MonoBehaviour
         }
         if(controlledHyena.attackedTarget){
             if(hyenaCatTargets.TryGetValue(controlledHyena.gameObject, out var cat)){
-                Destroy(controlledHyena.gameObject);
-                hyenas.Remove(controlledHyena);
                 cat.health--;
                 if(cat.health <= 0){
                     KillOffCat(cat);
                 }
+                //else{
+                    hyenaCatTargets.Remove(controlledHyena.gameObject);
+                    hyenas.Remove(controlledHyena);
+                    Destroy(controlledHyena.gameObject);
+                //}
             }
+            else if (hyenaTowerTargets.TryGetValue(controlledHyena.gameObject, out var tower)){
+                hyenaCatTargets.Remove(controlledHyena.gameObject);
+                hyenas.Remove(controlledHyena);
+                if(tower == tmManager.hqTowerPosition){
+
+                }
+            }
+            return;
         }
         if(!controlledHyena.moving && !controlledHyena.attacking){
             //Debug.Log("hyena was not moving");
