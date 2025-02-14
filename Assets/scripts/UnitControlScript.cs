@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitController : MonoBehaviour
@@ -17,7 +18,6 @@ public class UnitController : MonoBehaviour
     [SerializeField] public float speed = 1.0f;
 
     public bool showMovement = false;
-    public Vector3Int[] movementOffsets;
 
 
     public TilemapManager tmManager;
@@ -83,19 +83,136 @@ public class UnitController : MonoBehaviour
         Vector3Int myTilePos = tmManager.tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(transform.position);
         tmManager.ClearMovement();
         switch(movementType){
-            case Movement.Type.Lion:{ //placeholder type, remove types later
-                
-                foreach(Vector3Int offset in movementOffsets){
-                    Debug.Log("offset in movement offsets : " + offset);
-                    tmManager.ActivateMovementTile(offset + myTilePos, team);
+            case Movement.Type.Lion:{
+
+                Vector3Int placement = Vector3Int.zero;
+                for(placement.x = -1; placement.x >= -3; placement.x--){
+                    if(!tmManager.TryActivateMovementTile(placement + myTilePos, team)){
+                        break;
+                    }
                 }
+                for(placement.x = 1; placement.x <= 3; placement.x++){
+                    if(!tmManager.TryActivateMovementTile(placement + myTilePos, team)){
+                        break;
+                    }
+                }
+
+                //currentIter should be 6 right now
+                placement.x = 0;
+
+                for(placement.y = -1; placement.y >= -3; placement.y--){
+                    if(!tmManager.TryActivateMovementTile(placement + myTilePos, team)){
+                        break;
+                    }
+                }
+                for(placement.y = 1; placement.y <= 3; placement.y++){
+                    if(!tmManager.TryActivateMovementTile(placement + myTilePos, team)){
+                        break;
+                    }
+                }
+
+                placement.x = 1;
+                placement.y = 1;
+                if(tmManager.TryActivateMovementTile(placement + myTilePos, team)){
+                    placement.x = 2;
+                    placement.y = 2;
+                    tmManager.TryActivateMovementTile(placement + myTilePos, team);
+                }
+                placement.x = -1;
+                placement.y = 1;
+                if(tmManager.TryActivateMovementTile(placement + myTilePos, team)){
+                    placement.x = -2;
+                    placement.y = 2;
+                    tmManager.TryActivateMovementTile(placement + myTilePos, team);
+                }
+                placement.x = -1;
+                placement.y = -1;
+                if(tmManager.TryActivateMovementTile(placement + myTilePos, team)){
+                    placement.x = -2;
+                    placement.y = -2;
+                    tmManager.TryActivateMovementTile(placement + myTilePos, team);
+                }
+                placement.x = 1;
+                placement.y = -1;
+                if(tmManager.TryActivateMovementTile(placement + myTilePos, team)){
+                    placement.x = 2;
+                    placement.y = -2;
+                    tmManager.TryActivateMovementTile(placement + myTilePos, team);
+                }
+
                 break;
             }
             case Movement.Type.Jaguar:{
                 
-                foreach(Vector3Int offset in movementOffsets){
-                    Debug.Log("offset in movement offsets : " + offset);
-                    tmManager.ActivateMovementTile(offset + myTilePos, team);
+                Vector3Int placement = Vector3Int.zero;
+                for(placement.x = -1; placement.x >= -4; placement.x--){
+                    if(!tmManager.TryActivateMovementTile(placement + myTilePos, team)){
+                        break;
+                    }
+                }
+                for(placement.x = 1; placement.x <= 4; placement.x++){
+                    if(!tmManager.TryActivateMovementTile(placement + myTilePos, team)){
+                        break;
+                    }
+                }
+
+                //currentIter should be 6 right now
+                placement.x = 0;
+
+                for(placement.y = -1; placement.y >= -4; placement.y--){
+                    if(!tmManager.TryActivateMovementTile(placement + myTilePos, team)){
+                        break;
+                    }
+                }
+                for(placement.y = 1; placement.y <= 4; placement.y++){
+                    if(!tmManager.TryActivateMovementTile(placement + myTilePos, team)){
+                        break;
+                    }
+                }
+
+                placement.x = 1;
+                placement.y = 1;
+                if(tmManager.TryActivateMovementTile(placement + myTilePos, team)){
+                    placement.x = 2;
+                    placement.y = 2;
+                    if(tmManager.TryActivateMovementTile(placement + myTilePos, team)){
+                        placement.x = 3;
+                        placement.y = 3;
+                        tmManager.TryActivateMovementTile(placement + myTilePos, team);
+                    }
+                }
+                placement.x = -1;
+                placement.y = 1;
+                if(tmManager.TryActivateMovementTile(placement + myTilePos, team)){
+                    placement.x = -2;
+                    placement.y = 2;
+                    if(tmManager.TryActivateMovementTile(placement + myTilePos, team)){
+                        placement.x = -3;
+                        placement.y = 3;
+                        tmManager.TryActivateMovementTile(placement + myTilePos, team);
+                    }
+                }
+                placement.x = -1;
+                placement.y = -1;
+                if(tmManager.TryActivateMovementTile(placement + myTilePos, team)){
+                    placement.x = -2;
+                    placement.y = -2;
+                    if(tmManager.TryActivateMovementTile(placement + myTilePos, team)){
+                        placement.x = -3;
+                        placement.y = -3;
+                        tmManager.TryActivateMovementTile(placement + myTilePos, team);
+                    }
+                }
+                placement.x = 1;
+                placement.y = -1;
+                if(tmManager.TryActivateMovementTile(placement + myTilePos, team)){
+                    placement.x = 2;
+                    placement.y = -2;
+                    if(tmManager.TryActivateMovementTile(placement + myTilePos, team)){
+                        placement.x = 3;
+                        placement.y = -3;
+                        tmManager.TryActivateMovementTile(placement + myTilePos, team);
+                    }
                 }
                 break;
             }

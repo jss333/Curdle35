@@ -171,6 +171,10 @@ public class TilemapManager : MonoBehaviour
         
     }
 
+    public bool GetValidGroundTile(Vector3Int tilePos){
+        return tilemapArray[(int)MapType.ground].GetTile<TileBase>(tilePos) != null;
+    }
+
     public bool CheckIfMovementPossible(Vector3 mouseWorldPos){
         Vector3Int tilePosition = tilemapArray[(int)MapType.ground].WorldToCell(mouseWorldPos);
         
@@ -181,17 +185,28 @@ public class TilemapManager : MonoBehaviour
         TileBase tile = tilemapArray[(int)MapType.ground].GetTile<TileBase>(tilePos);
         if (tile != null)  // Check if a tile exists at that position
         {
-            if(occupancy.TryGetValue(tilePos, out UnitController.Team occupantTeam)){
+            //if(occupancy.TryGetValue(tilePos, out UnitController.Team occupantTeam)){
                     //Debug.Log("aborting activating movement because tile was occupied : " + tilePos);
-            }
-            else{
-                occupancy.Add(tilePos, team);
-            }
+            //}
+            //else{
+            //    occupancy.Add(tilePos, team);
+            //}
             
             //TileData.Type tileType = dataFromTiles[tile].type;
             //Debug.Log("Clicked on tile at: " + tilePosition + " with type : " + tileType.ToString());
             tilemapArray[(int)MapType.movement].SetTile(tilePos, movementBaseTile);
             drawnTiles.Add(tilePos);
+        }
+    }
+
+    public bool TryActivateMovementTile(Vector3Int tilePos, UnitController.Team team){
+        if(!GetValidGroundTile(tilePos)){
+            return false;
+        }
+        else{
+            tilemapArray[(int)MapType.movement].SetTile(tilePos, movementBaseTile);
+            drawnTiles.Add(tilePos);
+            return true;
         }
     }
 
@@ -233,8 +248,8 @@ public class TilemapManager : MonoBehaviour
 
     private void TryClaimTileWithTilePos(Vector3Int tilePos, UnitController.Team team){
         TileBase groundTile = tilemapArray[(int)MapType.ground].GetTile<TileBase>(tilePos);
-        tilemapArray[(int)MapType.ground].SetTile(tilePos, groundTiles[(int)team]);
         if(groundTile != null){
+            tilemapArray[(int)MapType.ground].SetTile(tilePos, groundTiles[(int)team]);
             if(dataFromTiles.TryGetValue(groundTile, out TileTerritoryData tilesTeam)){
                 
                 UnitController.Team tileTeam;

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 894d10d4024efcb458d51677ee97df41
+guid: 59336a3a4aae2874e95895cf004e7377
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5863430937827172395
-    second: HQ Tower_0
+      213: 3866501776042946610
+    second: RAD_Symbol_v1.1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 256
+  spritePixelsToUnits: 260
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HQ Tower_0
+      name: RAD_Symbol_v1.1_0
       rect:
         serializedVersion: 2
-        x: 76
-        y: 0
-        width: 105
-        height: 256
+        x: 4
+        y: 4
+        width: 248
+        height: 248
       alignment: 9
-      pivot: {x: 0.49133578, y: 0.29981047}
+      pivot: {x: -0.016851975, y: -0.01589596}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b2069364f571f5150800000000000000
-      internalID: 5863430937827172395
+      spriteID: 230f47431e298a530800000000000000
+      internalID: 3866501776042946610
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: a1b1fbd0d7c0e0d43a582df99a9220da
+    spriteID: 3ecc28767b3712a4eb6aaf069913b595
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      HQ Tower_0: 5863430937827172395
+      RAD_Symbol_v1.1_0: 3866501776042946610
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

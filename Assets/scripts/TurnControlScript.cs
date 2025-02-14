@@ -216,7 +216,7 @@ public class TurnControlScript : MonoBehaviour
 
         switch(dayPhase){
             case DayPhase.Dawn:{
-                Debug.Log("dawn");
+                //Debug.Log("dawn");
                 turnChangeTime += Time.deltaTime;
                 int clockSpriteIter = Mathf.FloorToInt(turnChangeTime * 14.0f) + 14;
                 if(clockSpriteIter > 27){
@@ -246,13 +246,29 @@ public class TurnControlScript : MonoBehaviour
                 break;
             }
             case DayPhase.Day:{
-                Debug.Log("day");
+                //Debug.Log("day");
                 if(committedToAnAction){
                     if(!cats[currentCat].moving){
                         committedToAnAction = false;
                     }
                     else{
                         Vector3Int catTilePos = tmManager.tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(cats[currentCat].transform.position);
+
+                        hyenas.RemoveAll(hyena =>
+                            {
+                                Vector3Int hyenaPos = tmManager.tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(hyena.transform.position);
+                                if(catTilePos == hyenaPos){
+                                    Debug.Log("ran over hyena");
+                                    Destroy(hyena.gameObject);
+
+                                    PerformCatAttack();
+
+                                    return true;
+                                }
+                                return false;
+                            }
+                        );
+
                         for(int i = 0; i < hyenas.Count; i++){
                             Vector3Int hyenaPos = tmManager.tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(hyenas[i].transform.position);
                             if(catTilePos == hyenaPos){
@@ -329,7 +345,7 @@ public class TurnControlScript : MonoBehaviour
                 break;
             }
             case DayPhase.Dusk:{
-                Debug.Log("dusk");
+                //Debug.Log("dusk");
                 turnChangeTime += Time.deltaTime;
                 int clockSpriteIter = Mathf.FloorToInt(turnChangeTime * 14.0f);
                 if(clockSpriteIter > 27){
@@ -352,7 +368,7 @@ public class TurnControlScript : MonoBehaviour
             }
             case DayPhase.Night:{
                 
-                Debug.Log("night");
+                //Debug.Log("night");
             
                     //currentHyena = hyenas.Count; //this turns off movement for debuggign
                     if(currentHyena >= hyenas.Count){
@@ -382,7 +398,7 @@ public class TurnControlScript : MonoBehaviour
             foreach(CatController cat in cats){
                 cat.TurnEnding();
             }
-            Debug.Log("changing day phase to dusk");
+            //Debug.Log("changing day phase to dusk");
             dayPhase = DayPhase.Dusk;
         }
     }
