@@ -17,8 +17,8 @@ public class HyenasSpawnPointAlgorithm
         this.outerCells = cellCalculator.GetOuterCells();
         this.innerCellsAwayFromHQ = cellCalculator.GetInnerCellsAwayFromHQ();
         
-        LogUtils.LogEnumerable("outer Cells", outerCells);
-        LogUtils.LogEnumerable("inner Cells Away From HQ", innerCellsAwayFromHQ);
+        //LogUtils.LogEnumerable("outer Cells", outerCells);
+        //LogUtils.LogEnumerable("inner Cells Away From HQ", innerCellsAwayFromHQ);
     }
 
     public HashSet<Tuple<int, int>> GenerateRandomOuterSpawnPoints(int numOuterSpawnPoints, int minDistBetweenPoints)

@@ -118,9 +118,4 @@ public class UnitController : MonoBehaviour
 
         showTowerPlacement = true;
     }
-    public void PlaceTower(Vector3Int mouseTilePos){
-        tmManager.PlaceTower(mouseTilePos);
-
-        showTowerPlacement = false;
-    }    
 }

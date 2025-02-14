@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
+using System;
 
 [System.Serializable]
 public class TurnControlScript : MonoBehaviour
@@ -24,8 +25,6 @@ public class TurnControlScript : MonoBehaviour
     [SerializeField] private HyenasSpawnManager hyenasSpawnManager;
     [SerializeField] public UIBridge uiBridge;
 
-    [SerializeField] private Color buttonDisabledColor;
-    [SerializeField] private Color buttonEnabledColor;
     [SerializeField] private Sprite[] clock_sprites;
 
     [SerializeField] public List<HyenaController> hyenas = new List<HyenaController>();
@@ -33,27 +32,22 @@ public class TurnControlScript : MonoBehaviour
 
     int currentHyena = 0;
 
-    bool finishedUpdatingTurn = false;
-
     bool committedToAnAction = false;
-
-    bool hyenaTurn = false;
-    bool spawnedHyenasThisTurn = false;
-    bool endTurn = false;
     float turnChangeTime = 0.0f;
 
     public GridManager gridManager;
 
-    private void OnValidate()
-    {
-    }
+    enum DayPhase : int{
+        Dawn,
+        Day,
+        Dusk,
+        Night,
 
+    }
+    DayPhase dayPhase = DayPhase.Dawn;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(uiBridge == null){
-            Debug.Log("uiBridge wasn't set ub turn control script");
-        }
         gridManager = new GridManager();
         gridManager.tmManager = tmManager;
         gridManager.bounds = tmManager.tilemapArray[(int)TilemapManager.MapType.ground].cellBounds;
@@ -62,11 +56,11 @@ public class TurnControlScript : MonoBehaviour
 
     public void SwitchActor(int whichCat){
         if(committedToAnAction){
-            Debug.Log("cant switch actor, commited to action");
+            //Debug.Log("cant switch actor, commited to action");
             return;
         }
         if(whichCat < 0 || whichCat >= cats.Length){
-            Debug.Log("trying to swap to an invalid actor : " + whichCat);
+            //Debug.Log("trying to swap to an invalid actor : " + whichCat);
         }
         else{
             currentCat = whichCat;
@@ -74,23 +68,23 @@ public class TurnControlScript : MonoBehaviour
             CatController tempCat = cats[whichCat];
             //uiBridge.ChangeFaceSprite(tempUnit.face_sprite);
 
-            Debug.Log("before and after cam pos - " + cam.transform.position + " : " + cats[currentCat].transform.position);
+            //Debug.Log("before and after cam pos - " + cam.transform.position + " : " + cats[currentCat].transform.position);
 
             //cam.ResolveLookAt(cats[currentCat].transform);
             cam.transform.position = new Vector3(cats[currentCat].transform.position.x, cats[currentCat].transform.position.y, cam.transform.position.z);
 
             if(tempCat.movedThisTurn){
-                uiBridge.buttons[0].GetComponent<UnityEngine.UI.Image>().color = buttonDisabledColor;
+                uiBridge.buttons[0].GetComponent<UnityEngine.UI.Image>().color = uiBridge.buttonDisabledColor;
 
             }
             else{
-                uiBridge.buttons[0].GetComponent<UnityEngine.UI.Image>().color = buttonEnabledColor;
+                uiBridge.buttons[0].GetComponent<UnityEngine.UI.Image>().color = uiBridge.buttonEnabledColor;
             }
             if(tempCat.placedTowerThisTurn){
-                uiBridge.buttons[1].GetComponent<UnityEngine.UI.Image>().color = buttonDisabledColor;
+                uiBridge.buttons[1].GetComponent<UnityEngine.UI.Image>().color = uiBridge.buttonDisabledColor;
             }
             else{
-                uiBridge.buttons[1].GetComponent<UnityEngine.UI.Image>().color = buttonEnabledColor;
+                uiBridge.buttons[1].GetComponent<UnityEngine.UI.Image>().color = uiBridge.buttonEnabledColor;
             }
 
             uiBridge.buttons[1].SetActive(cats[currentCat].canPlaceTower);
@@ -113,184 +107,260 @@ public class TurnControlScript : MonoBehaviour
     void MoveOneHyena(){
         HyenaController controlledHyena = hyenas[currentHyena];
 
-        if(!controlledHyena.moving){
-            Debug.Log("hyena was not moving");
+
+        if(controlledHyena.movedThisTurn){
+            currentHyena++;
+            return;
+        }
+        if(!controlledHyena.moving && !controlledHyena.attacking){
+            //Debug.Log("hyena was not moving");
+            for(int i = 0; i < cats.Length; i++) {
+                Vector3 distanceToCat = cats[i].transform.position - controlledHyena.transform.position;
+                if((Mathf.Abs(distanceToCat.x) + Mathf.Abs(distanceToCat.y)) <= 3.0){
+                    Debug.Log("hyena was close to cat - " + distanceToCat);
+                    distanceToCat.Normalize();
+                    if(Mathf.Abs(distanceToCat.x) < Mathf.Abs(distanceToCat.y)){
+                        distanceToCat.x = 0.0f;
+                        if(distanceToCat.y < 0.0f){
+                            distanceToCat.y = -1.0f;
+                            
+                        }
+                        else{
+                            distanceToCat.y = 1.0f;
+                        }
+                    }
+                    else{
+                        distanceToCat.y = 0.0f;
+                        if(distanceToCat.x < 0.0f){
+                            distanceToCat.x = -1.0f;
+                            
+                        }
+                        else{
+                            distanceToCat.x = 1.0f;
+                        }
+                        controlledHyena.attacking = true;
+                        controlledHyena.target = cats[i];
+                        controlledHyena.attackPosition = cats[i].transform.position - distanceToCat;
+                        return;
+                    }
+                }
+            }
+
             Vector3Int tempPos = tmManager.tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(controlledHyena.transform.position);
 
-            controlledHyena.movementPath = gridManager.DetermineOptimalPath(tempPos, 3);
+            controlledHyena.movementPath = gridManager.DetermineOptimalPath(tempPos, 2);
             if(controlledHyena.movementPath != null){
-                //Debug.Log("created path, length - values - " + controlledHyena.movementPath.Count);
-                //for(int i = 0; i < controlledHyena.movementPath.Count; i++){
-                   // Debug.Log(i + " : " + controlledHyena.movementPath[i]);
-                //}
+                Debug.Log("current hyena - first point and position and count - " + currentHyena + " : " + controlledHyena.movementPath[0] + " : " + controlledHyena.transform.position  + ":" + controlledHyena.movementPath.Count);
+                
+                if(false){ //i was trying to rework hyena diagonal movement but i couldnt get it right, need to move on
+                    for(int i = 0; i < controlledHyena.movementPath.Count; i++){
+                        Debug.Log("full movement list - " + currentHyena + " : " + i + " : " + controlledHyena.movementPath[i]);
+                    }
+                    //Debug.Log("finna move hyena, OG pos : path length - " + controlledHyena.transform.position + controlledHyena.movementPath.Count);
+                    if((controlledHyena.movementPath.Count >= 2) && ((controlledHyena.movementPath[0] - controlledHyena.transform.position).magnitude > 1.1f)){
+                        Debug.Log("removing index 1 because 0 was diagonal");
+                        controlledHyena.movementPath.RemoveAt(1);
+                        for(int i = 0; i < controlledHyena.movementPath.Count; i++){
+                            Debug.Log("post trimming0 movement list - " + currentHyena + " : " + i + " : " + controlledHyena.movementPath[i]);
+                        }
+                    }
+                    else if((controlledHyena.movementPath.Count >= 2) && ((controlledHyena.movementPath[1] - controlledHyena.movementPath[0]).magnitude > 1.1f)){
+                        controlledHyena.movementPath.RemoveAt(1);
+                        Debug.Log("removing index 1 because 0 was diagonal");
+                        for(int i = 0; i < controlledHyena.movementPath.Count; i++){
+                            Debug.Log("post trimming1 movement list - " + currentHyena + " : " + i + " : " + controlledHyena.movementPath[i]);
+                        }
+                    }
+                }
 
                 controlledHyena.moving = true;
             }
             else{
                 controlledHyena.movedThisTurn = true;
             }
-
-            if(controlledHyena.movedThisTurn){
-                currentHyena++;
-            }
         }
         else{
-            Debug.Log("hyena was moving");
+            //Debug.Log("hyena was moving");
         }
         
 
     }
-
+    void UpdateUI(){
+        int[] healths = new int[]{ //theres probably ab etter way to do this
+            cats[0].health,
+            cats[1].health,
+            cats[2].health
+        };
+        if(!tmManager.team_scores.TryGetValue(UnitController.Team.cats, out int catScore)){
+            Debug.Log("failed to find cat score");
+        }
+        if(!tmManager.team_scores.TryGetValue(UnitController.Team.hyena, out int hyenaScore)){
+            Debug.Log("failed to find hyena score");
+        }
+        uiBridge.UpdateUI(healths, catScore, hyenaScore);
+    }
     // Update is called once per frame
     void Update()
     {
-        foreach(var cat in cats){
-            tmManager.TryClaimTile(cat.transform.position, cat.team);
-        }
-        foreach(var hyena in hyenas){
-            tmManager.TryClaimTile(hyena.transform.position, hyena.team);
-        }
+        //Debug.Log("Mouse pos in world space : " + Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        //if(Input.GetMouseButtonDown(0)){
+            //Debug.Log("mouse pos in tile space : " + tmManager.tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
+        //}
 
-        if(endTurn){
-            turnChangeTime += Time.deltaTime;
-            int clockSpriteIter = Mathf.FloorToInt(turnChangeTime * 14.0f);
-            if(hyenaTurn){
-                clockSpriteIter += 14;
+        UpdateUI();
+
+        switch(dayPhase){
+            case DayPhase.Dawn:{
+                turnChangeTime += Time.deltaTime;
+                int clockSpriteIter = Mathf.FloorToInt(turnChangeTime * 14.0f);
                 if(clockSpriteIter > 27){
+                    Debug.Log("dawn turn change time should never be over 14 : " + clockSpriteIter);
                     clockSpriteIter = 0;
                 }
-            }
-            uiBridge.clock.GetComponent<UnityEngine.UI.Image>().sprite = clock_sprites[clockSpriteIter];
-
-            if(turnChangeTime >= 1.0f){
-                turnChangeTime = 0.0f;
-                endTurn = false;
-                hyenaTurn = !hyenaTurn;
-                if(!hyenaTurn){ //morning start
+                uiBridge.clock.GetComponent<UnityEngine.UI.Image>().sprite = clock_sprites[clockSpriteIter];
+            
+                
+                if(turnChangeTime >= 1.0f){
+                    turnChangeTime = 0.0f;
 
                     //Create Spawn Markers
                     hyenasSpawnManager.GenerateNewSpawnPointsBasedOnSpawnRates(); //TODO this does not get called in the very first morning
 
-                    uiBridge.buttons[0].GetComponent<UnityEngine.UI.Image>().color = buttonEnabledColor;
-                    uiBridge.buttons[1].GetComponent<UnityEngine.UI.Image>().color = buttonEnabledColor;
+                    uiBridge.buttons[0].GetComponent<UnityEngine.UI.Image>().color = uiBridge.buttonEnabledColor;
+                    uiBridge.buttons[1].GetComponent<UnityEngine.UI.Image>().color = uiBridge.buttonEnabledColor;
                     for(int i = 0; i < cats.Length; i++){
-                        uiBridge.rosterUISetup[i].moveImage.GetComponent<UnityEngine.UI.Image>().color = buttonEnabledColor;
-                        if(cats[i].canPlaceTower){
-                            uiBridge.rosterUISetup[i].towerImage.GetComponent<UnityEngine.UI.Image>().color = buttonEnabledColor;
-                        }
                         cats[i].RefreshTurn();
-                    }   
-                }
-                else{ //night start
-                    foreach(var hyena in hyenas){
-                        hyena.movedThisTurn = false;
                     }
-                    spawnedHyenasThisTurn = false;
+                    dayPhase = DayPhase.Day;
                 }
-            }
-        }
-        else if(hyenaTurn){
-
-            if(!spawnedHyenasThisTurn){
-                SpawnHyenas();
-                spawnedHyenasThisTurn = true;
-            }
-
-
-
-            if(currentHyena >= hyenas.Count){
-
-                endTurn = true;
-            }
-            else{
-                Debug.Log("currentHyena : count - " + currentHyena + " : " + hyenas.Count);
-                MoveOneHyena();
-            }
-
-        }
-        else{
-
-            if(committedToAnAction){
-                if(!cats[currentCat].moving){
-                    committedToAnAction = false;
-                }
-                else{
-                    return;
-                }
-            }
-            
-            bool lmbDown = Input.GetMouseButtonDown(0);
-            bool rmbDown = Input.GetMouseButtonDown(1);
-            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mouseWorldPos.z = 0.0f;
-            Vector3Int mouseTilePos = tmManager.tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(mouseWorldPos);
-
-            CatController catCont = null;
-            if(currentCat >= 0 && currentCat < cats.Length){
-                catCont = cats[currentCat];
                 
+
+                break;
             }
-            if(catCont != null){
-                if(lmbDown) {
-                    if(catCont.showMovement) {
-                        //Debug.Log("checking if movement possible : " + mouseWorldPos);
-                        if(tmManager.CheckIfMovementPossible(mouseWorldPos)){
-                            //Debug.Log("movment was possible");
-                            committedToAnAction = true;
-                            catCont.MoveTo(mouseWorldPos);
-                            catCont.DisableMovement();
-                            uiBridge.rosterUISetup[currentCat].moveImage.GetComponent<UnityEngine.UI.Image>().color = buttonDisabledColor;
-                            uiBridge.buttons[0].GetComponent<UnityEngine.UI.Image>().color = buttonDisabledColor;
-                            //uiBridge.buttons[0]. = new Color(0.2f, 0.2f, 0.2f, 1.0f);
-                        }
-                        else{
-                            //Debug.Log("failed to move");
-                        }
+            case DayPhase.Day:{
+                if(committedToAnAction){
+                    if(!cats[currentCat].moving){
+                        committedToAnAction = false;
                     }
-                    else if(catCont.showTowerPlacement){
-                        catCont.PlaceTower(mouseTilePos);
-                        minorTowers.Add(mouseTilePos);
-                        //uiBridge.abilityButtons[0];
-                        catCont.DisablePlaceTower();
-                        uiBridge.rosterUISetup[currentCat].towerImage.GetComponent<UnityEngine.UI.Image>().color = buttonDisabledColor;
-                        uiBridge.buttons[1].GetComponent<UnityEngine.UI.Image>().color = buttonDisabledColor;
-                        
+                    else{
+                        return;
                     }
-                    else {
-                        //Debug.Log("mouse button down while controlled actor is not showing movement");
-                        //try to select a creature
-                        for(int i = 0; i < cats.Length; i++){
-                            Bounds spriteBounds = cats[i].GetComponent<SpriteRenderer>().bounds;
-                            //Debug.Log("sprite bounds : mouse pos - " + spriteBounds + " - " + mouseWorldPos);
-                            if(spriteBounds.Contains(mouseWorldPos)){
-                                Debug.Log("selected new actor : " + i);
-                                SwitchActor(i);
-                                break;
+                }
+                
+                bool lmbDown = Input.GetMouseButtonDown(0);
+                bool rmbDown = Input.GetMouseButtonDown(1);
+                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                mouseWorldPos.z = 0.0f;
+                Vector3Int mouseTilePos = tmManager.tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(mouseWorldPos);
+
+                CatController catCont = null;
+                if(currentCat >= 0 && currentCat < cats.Length){
+                    catCont = cats[currentCat];
+                    
+                }
+                if(catCont != null){
+                    if(lmbDown) {
+                        if(catCont.showMovement) {
+                            //Debug.Log("checking if movement possible : " + mouseWorldPos);
+                            if(tmManager.CheckIfMovementPossible(mouseWorldPos)){
+                                //Debug.Log("movment was possible");
+                                committedToAnAction = true;
+                                catCont.MoveTo(mouseWorldPos);
+                                catCont.DisableMovement();
+                                //uiBridge.rosterUISetup[currentCat].moveImage.GetComponent<UnityEngine.UI.Image>().color = uiBridge.buttonDisabledColor;
+                                uiBridge.buttons[0].GetComponent<UnityEngine.UI.Image>().color = uiBridge.buttonDisabledColor;
+                                //uiBridge.buttons[0]. = new Color(0.2f, 0.2f, 0.2f, 1.0f);
+                            }
+                            else{
+                                //Debug.Log("failed to move");
+                            }
+                        }
+                        else if(catCont.showTowerPlacement){
+                            tmManager.PlaceTower(mouseTilePos);
+                            catCont.showTowerPlacement = false;
+                            minorTowers.Add(mouseTilePos);
+                            //uiBridge.abilityButtons[0];
+                            catCont.DisablePlaceTower();
+                            //uiBridge.rosterUISetup[currentCat].towerImage.GetComponent<UnityEngine.UI.Image>().color = uiBridge.buttonDisabledColor;
+                            uiBridge.buttons[1].GetComponent<UnityEngine.UI.Image>().color = uiBridge.buttonDisabledColor;
+                            
+                        }
+                        else {
+                            //Debug.Log("mouse button down while controlled actor is not showing movement");
+                            //try to select a creature
+                            for(int i = 0; i < cats.Length; i++){
+                                Bounds spriteBounds = cats[i].GetComponent<SpriteRenderer>().bounds;
+                                //Debug.Log("sprite bounds : mouse pos - " + spriteBounds + " - " + mouseWorldPos);
+                                if(spriteBounds.Contains(mouseWorldPos)){
+                                    Debug.Log("selected new actor : " + i);
+                                    SwitchActor(i);
+                                    break;
+                                }
                             }
                         }
                     }
+                    else if(rmbDown){
+                        cats[currentCat].showMovement = false;
+                        cats[currentCat].showTowerPlacement = false;
+                        tmManager.ClearMovement();
+                    }
                 }
-                else if(rmbDown){
-                    cats[currentCat].showMovement = false;
-                    cats[currentCat].showTowerPlacement = false;
-                    tmManager.ClearMovement();
+                else{
+                    //Debug.Log("controlled player or actor is nuLL? currentCat -  " + currentCat);
                 }
+                break;
             }
-            else{
-                //Debug.Log("controlled player or actor is nuLL? currentCat -  " + currentCat);
+            case DayPhase.Dusk:{
+                turnChangeTime += Time.deltaTime;
+                int clockSpriteIter = Mathf.FloorToInt(turnChangeTime * 14.0f) + 14;
+                if(clockSpriteIter > 27){
+                    clockSpriteIter = 0;
+                }
+                uiBridge.clock.GetComponent<UnityEngine.UI.Image>().sprite = clock_sprites[clockSpriteIter];
+            
+
+                
+                if(turnChangeTime >= 1.0f){
+                    turnChangeTime = 0.0f;
+                    SpawnHyenas();  
+                    foreach(var hyena in hyenas){
+                        hyena.movedThisTurn = false;
+                    }
+                    dayPhase = DayPhase.Night;
+                }
+                break;
+            }
+            case DayPhase.Night:{
+                
+            
+                    //currentHyena = hyenas.Count; //this turns off movement for debuggign
+                    if(currentHyena >= hyenas.Count){
+                        //Debug.Log("all hyenas moved - " + currentHyena + " : " + hyenas.Count);
+                        dayPhase = DayPhase.Dawn;
+                        currentHyena = 0;
+                    }
+                    else{
+                        //Debug.Log("currentHyena : count - " + currentHyena + " : " + hyenas.Count);
+                        MoveOneHyena();
+                    }
+                break;
+            }
+            default:{
+                Debug.Log("invalid day phase : " + dayPhase);
+                break;
             }
         }
     }
 
     public void EndTurn(){
-        if(!hyenaTurn){
+        if(dayPhase == DayPhase.Day){
             if(committedToAnAction){
                 return;
             }
             foreach(CatController cat in cats){
                 cat.TurnEnding();
             }
-            endTurn = true;
+            dayPhase = DayPhase.Dusk;
         }
     }
 

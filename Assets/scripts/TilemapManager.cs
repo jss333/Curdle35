@@ -38,10 +38,20 @@ public class TilemapManager : MonoBehaviour
 
     private Dictionary<Vector3Int, UnitController.Team> occupancy; //shitty solution but the old tilebase was aggregrate for every tile of that type or something. this would be better as an array but an array would be signifcantly more complicated
 
-    private Dictionary<UnitController.Team, int> team_scores = new Dictionary<UnitController.Team, int>();
+    public Dictionary<UnitController.Team, int> team_scores = new Dictionary<UnitController.Team, int>();
 
     public Vector3Int hqTowerPosition;
     public List<Vector3Int> minorTowers = new List<Vector3Int>();
+    [SerializeField] private float noiseScale = 5.0f;
+    [SerializeField] private float tier3NoiseGate = 0.1f;
+    [SerializeField] private float tier2NoiseGate = 0.35f;
+    [SerializeField] private float tier1NoiseGate = 0.7f;
+
+    [SerializeField] private Vector2 noiseSeed = Vector2.zero;
+
+    [SerializeField] private int noiseOctaves;
+    [SerializeField] private float noisePersistence;
+    [SerializeField] private float noiseLacunarity;
 
     public int[,] board;
     public int worldToArrayXOffset;
@@ -66,61 +76,45 @@ public class TilemapManager : MonoBehaviour
         }
     }
 
+    float PerlinNoiseWithOctaves(float x, float y, float scale, Vector2 seed, int octaves, float persistence, float lacunarity)
+{
+    float total = 0f;
+    float amplitude = 1f;
+    float frequency = 1f;
+    float maxValue = 0f;  // Used to normalize the result between 0 and 1
+
+    for (int i = 0; i < octaves; i++)
+    {
+        total += Mathf.PerlinNoise((x / scale + seed.x) * frequency, (y / scale + seed.y) * frequency) * amplitude;
+
+        maxValue += amplitude; // Track total amplitude to normalize values
+        amplitude *= persistence; // Decrease amplitude (controls roughness)
+        frequency *= lacunarity; // Increase frequency (controls detail)
+    }
+
+    return total / maxValue; // Normalize to keep values between 0-1
+}
+
+
     void Start()
     {
 
         team_scores.Add(UnitController.Team.cats, 0);
         team_scores.Add(UnitController.Team.hyena, 0);
 
-        tilemapArray[(int)MapType.ground].ClearAllTiles();
-        int[,] predefinedBoard = new int[,]
-        {
-            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,-1,-1,-1},
-            {-1,-1,-1,-1,-1,-1,1,1,1,1,2,1,2,1,1,1,1,1,-1,-1,-1},
-            {-1,-1,-1,-1,1,1,1,1,1,1,1,1,2,1,1,1,3,3,-1,-1,-1},
-            {-1,-1,-1,-1,1,1,1,1,1,1,1,2,1,2,3,2,2,2,1,-1,-1},
-            {-1,-1,-1,1,1,1,1,-1,-1,2,1,2,2,2,1,2,1,1,1,3,-1},
-            {-1,-1,-1,-1,1,3,1,-1,-1,2,1,1,2,2,1,2,1,1,1,2,1},
-            {-1,-1,-1,-1,3,2,1,1,1,1,1,2,2,3,2,-1,-1,2,3,2,1},
-            {-1,-1,-1,1,1,1,1,1,1,2,2,1,2,2,3,-1,-1,2,1,1,-1},
-            {-1,-1,-1,-1,1,1,2,1,1,2,1,1,3,1,2,1,1,2,1,-1,-1},
-            {-1,2,1,2,2,3,2,1,1,2,2,1,1,2,1,1,3,-1,-1,-1,-1},
-            {-1,3,1,1,2,1,1,1,1,2,1,1,2,1,1,1,2,1,-1,-1,-1},
-            {-1,3,2,1,1,1,1,-1,-1,2,3,2,1,2,2,3,2,1,-1,-1,-1},
-            {1,1,1,1,1,1,2,2,1,2,2,3,1,1,2,1,1,-1,-1,-1,-1},
-            {-1,1,1,2,1,1,2,1,1,3,1,2,1,1,2,1,-1,-1,-1,-1,-1},
-            {-1,-1,-1,-1,1,1,2,2,1,1,2,1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-            {-1,-1,-1,-1,1,1,2,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}
-        };
-        groundHeight = predefinedBoard.GetLength(0);
-        groundWidth = predefinedBoard.GetLength(1);
-
-        Vector3Int placementPos = Vector3Int.zero;
-        placementPos.y = -groundHeight / 2;
-
-        int rightSide = groundHeight / 2;
-        int bottomSide = groundWidth / 2;
-
-        for(; placementPos.y < rightSide; placementPos.y++){
-            
-            for(placementPos.x = -bottomSide; placementPos.x < bottomSide; placementPos.x++){
-                if(predefinedBoard[placementPos.y + rightSide, placementPos.x + bottomSide] >= 0){
-                    Vector3Int tempPos = -placementPos;
-                    tempPos.x = -tempPos.x;
-                    tilemapArray[(int)MapType.ground].SetTile(-placementPos, groundTiles[(int)UnitController.Team.neutral]);
-                }
-            }
-        }
+        tilemapArray[(int)MapType.ground].CompressBounds();
         groundBounds = tilemapArray[(int)MapType.ground].cellBounds;
 
         Vector3Int checkTowerPosition = Vector3Int.zero;
 
         bool foundHQTower = false;
-        for(checkTowerPosition.x = -rightSide; checkTowerPosition.x < rightSide; checkTowerPosition.x++){
-            for(checkTowerPosition.y = -bottomSide; checkTowerPosition.y < bottomSide; checkTowerPosition.y++){
+        for(checkTowerPosition.x = groundBounds.xMin; checkTowerPosition.x < groundBounds.xMax; checkTowerPosition.x++){
+            for(checkTowerPosition.y = groundBounds.yMin; checkTowerPosition.y < groundBounds.yMax; checkTowerPosition.y++){
                 TileBase tile = tilemapArray[(int)MapType.tower].GetTile(checkTowerPosition);
                 if(tile != null){
-                    hqTowerPosition = checkTowerPosition;
+
+                    hqTowerPosition = tilemapArray[(int)MapType.ground].WorldToCell(tilemapArray[(int)MapType.tower].CellToWorld(checkTowerPosition));
+                    Debug.Log("hq tower position");
                     foundHQTower = true;
                     break;
                 }
@@ -129,6 +123,44 @@ public class TilemapManager : MonoBehaviour
                 break;
             }
         }
+        if(!foundHQTower){
+            Debug.Log("failed to find hq tower - groundBounds - " + groundBounds.xMin + ":" + groundBounds.xMax + ":" + groundBounds.yMin + ":" + groundBounds.yMax);
+            hqTowerPosition.x = 1;
+            hqTowerPosition.y = -1;
+        }
+
+        //int noiseIter = 0;
+        foreach (Vector3Int pos in groundBounds.allPositionsWithin)
+        {
+            if(hqTowerPosition == pos){
+                continue;
+            }
+            if (tilemapArray[(int)MapType.ground].HasTile(pos)) // Check if a tile exists at this position
+            {
+                if(!tilemapArray[(int)MapType.resource].HasTile(pos)){
+
+                    Vector3 noisePos = pos;
+                    noisePos.x /= groundBounds.size.x; //might need to double this, idk if it matters
+                    noisePos.y /= groundBounds.size.y;
+                    float noiseVal = PerlinNoiseWithOctaves(noisePos.x, noisePos.y, noiseScale, noiseSeed, noiseOctaves, noisePersistence, noiseLacunarity);
+                    //Debug.Log("noie val - " + noiseIter++ + " : " + noiseVal);
+                    if(noiseVal < tier3NoiseGate){
+                        tilemapArray[(int)MapType.resource].SetTile(pos, (TileBase)rockTiles[2]);
+                    }
+                    else if(noiseVal < tier2NoiseGate){
+                        tilemapArray[(int)MapType.resource].SetTile(pos, (TileBase)rockTiles[1]);
+                    }
+                    else if(noiseVal < tier1NoiseGate){
+                        tilemapArray[(int)MapType.resource].SetTile(pos, (TileBase)rockTiles[0]);
+                    }
+                }
+                else{
+                    tilemapArray[(int)MapType.resource].SetTile(pos, (TileBase)rockTiles[2]);
+                }
+            }
+        }
+        
+        ClaimAreaAroundTower(hqTowerPosition);
 
         // After we're done creating the map we need to initialize the hyenasSpawnAlgorithm with the data from the same tilemap
         // We also need to pass in the location of the HQ
@@ -174,20 +206,20 @@ public class TilemapManager : MonoBehaviour
 
     public void TryClaimTile(Vector3 transformPos, UnitController.Team team){
 
-        Debug.Log("attempting to claim tile");
+        //Debug.Log("attempting to claim tile");
         Vector3 myPos = transformPos;
         myPos.x -= Mathf.Floor(myPos.x) + 0.5f;
         myPos.y -= Mathf.Floor(myPos.y) + 0.5f;
         myPos.x = Mathf.Abs(myPos.x);
         myPos.y = Mathf.Abs(myPos.y);
         if(myPos.x > 0.1f && myPos.y > 0.1f){
-            Debug.Log("failed to claim, not in the center of the tile");
+            //Debug.Log("failed to claim, not in the center of the tile");
             return;
         }
         Vector3Int tilePos = tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(transformPos);
-        tilemapArray[(int)MapType.ground].SetTile(tilePos, groundTiles[(int)team]);
         
         TileBase groundTile = tilemapArray[(int)MapType.ground].GetTile<TileBase>(tilePos);
+        tilemapArray[(int)MapType.ground].SetTile(tilePos, groundTiles[(int)team]);
         if(groundTile != null){
             if(dataFromTiles.TryGetValue(groundTile, out TileTerritoryData tilesTeam)){
                 
@@ -204,7 +236,7 @@ public class TilemapManager : MonoBehaviour
                     tileTeam = UnitController.Team.neutral;
                 }
                 else{
-                    Debug.Log("territory tile is not on a valid team while trying to claim? : " + tilePos);
+                    //Debug.Log("territory tile is not on a valid team while trying to claim? : " + tilePos);
                     return;
                 }
                 if(tileTeam == team){
@@ -216,12 +248,17 @@ public class TilemapManager : MonoBehaviour
                 TileBase resourceTile = tilemapArray[(int)MapType.resource].GetTile<TileBase>(tilePos);
                 if (resourceTile != null)  // Check if a tile exists at that position
                 {
+                    Debug.Log("resource tile existed");
                     if(resourcesFromTiles.TryGetValue(resourceTile, out TileResourceData resTile)) {
                         team_scores[team] += resTile.score;
                         if(tileTeam != UnitController.Team.neutral){
                             team_scores[tileTeam] -= resTile.score;
                         }
                     }
+                }
+                else{
+                    
+                    Debug.Log("resource tile did not exist");
                 }
                 //}
             }
@@ -259,11 +296,21 @@ public class TilemapManager : MonoBehaviour
             Debug.Log("failed to remove occupancy, tile was not occupied");
         }
     }
+    
+    public void ClaimAreaAroundTower(Vector3Int towerPos){
+        Vector3Int offset = new Vector3Int(-1, -1, 0);
+        for(offset.x = -1; offset.x <= 1; offset.x++) {
+            for(offset.y = -1; offset.y <= 1; offset.y++) {
+                TryClaimTile(towerPos + offset, UnitController.Team.cats);
+            }
+        }
+    }
     public void PlaceTower(Vector3Int towerTilePos){
         TileBase tile = tilemapArray[(int)MapType.ground].GetTile<TileBase>(towerTilePos);
         if(tile != null){
             tilemapArray[(int)MapType.tower].SetTile(towerTilePos, starterTowerTile);
             minorTowers.Add(towerTilePos);
+            ClaimAreaAroundTower(towerTilePos);
         }
         ClearMovement();
     }

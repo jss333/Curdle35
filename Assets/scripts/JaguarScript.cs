@@ -11,6 +11,7 @@ public class JaguarController : CatController
 
         base.canPlaceTower = false;
         base.movementType = Movement.Type.Jaguar;
+        base.health = 2;
 
         base.Start();
         PrecalculateMovementOffsets();

@@ -114,6 +114,8 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
         allSpawnPoints.UnionWith(spawnAlgorithm.GenerateRandomInnerSpawnPoints(currentInnerSpawnRate));
         //LogUtils.LogEnumerable("generated spawn points", allSpawnPoints);
 
+
+
         foreach (Tuple<int, int> spawnPoint in allSpawnPoints)
         {
             Vector3Int worldPosition = ConvertFromTuple(spawnPoint);
@@ -128,17 +130,26 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
         //Debug.Log("Spawning hyenas where the spawn markers are");
 
         List<HyenaController> ret = new List<HyenaController>();
+        //bool spawnedOne = false; //spawns only one for debuggign
         foreach(GameObject spawnMarker in spawnMarkers)
         {
             Vector3 spawnMarkerPos = spawnMarker.transform.position;
-            //Transform transform = new Transform();
-            var tempHyena = Instantiate(hyenaPrefab, spawnMarkerPos, Quaternion.identity);
-            if(tempHyena != null){
-                ret.Add(tempHyena);
-            }
-            else{
-                Debug.Log("failed to create hyena");
-            }
+            Vector3 hyenaPos = spawnMarkerPos;
+            hyenaPos.y += 0.5f;
+            hyenaPos.x += 0.5f;
+            //if(!spawnedOne){
+                //Transform transform = new Transform();
+                var tempHyena = Instantiate(hyenaPrefab, hyenaPos, Quaternion.identity);
+
+                if(tempHyena != null){
+                    ret.Add(tempHyena);
+                }
+                else{
+                    Debug.Log("failed to create hyena");
+                }
+                //spawnedOne = true;
+            //}
+            
             GameObject dustCloudObj = Instantiate(dustCloudPrefab, spawnMarkerPos, Quaternion.identity);
             Destroy(spawnMarker);
         }

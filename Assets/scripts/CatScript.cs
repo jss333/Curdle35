@@ -11,6 +11,7 @@ public class CatController : UnitController
 
     public bool canPlaceTower;
     
+    public int health = 1;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void Start() 

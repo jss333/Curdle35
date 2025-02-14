@@ -1,0 +1,630 @@
+fileFormatVersion: 2
+guid: d9b627fe53fc6b84e908a8a906a97bc4
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5303357176054361594
+    second: Hyena_2_Idle_Animation_0
+  - first:
+      213: -8236445316343647057
+    second: Hyena_2_Idle_Animation_1
+  - first:
+      213: 5605609682243888077
+    second: Hyena_2_Idle_Animation_2
+  - first:
+      213: 9097804047399184603
+    second: Hyena_2_Idle_Animation_3
+  - first:
+      213: 3235204160225172917
+    second: Hyena_2_Idle_Animation_4
+  - first:
+      213: 5116205183684547019
+    second: Hyena_2_Idle_Animation_5
+  - first:
+      213: -1816045471742882479
+    second: Hyena_2_Idle_Animation_6
+  - first:
+      213: 9052689236415050121
+    second: Hyena_2_Idle_Animation_7
+  - first:
+      213: -6680507183494686456
+    second: Hyena_2_Idle_Animation_8
+  - first:
+      213: -3612352131027969074
+    second: Hyena_2_Idle_Animation_9
+  - first:
+      213: -1356570522774632814
+    second: Hyena_2_Idle_Animation_10
+  - first:
+      213: 502766824973534084
+    second: Hyena_2_Idle_Animation_11
+  - first:
+      213: -7751019701224291292
+    second: Hyena_2_Idle_Animation_12
+  - first:
+      213: 6556947992577617364
+    second: Hyena_2_Idle_Animation_13
+  - first:
+      213: 6963896588099390169
+    second: Hyena_2_Idle_Animation_14
+  - first:
+      213: -7601669215579207001
+    second: Hyena_2_Idle_Animation_15
+  - first:
+      213: 3241390516829220950
+    second: Hyena_2_Idle_Animation_16
+  - first:
+      213: -6058795298160248617
+    second: Hyena_2_Idle_Animation_17
+  - first:
+      213: 5600002048498165462
+    second: Hyena_2_Idle_Animation_18
+  - first:
+      213: -347382552066778829
+    second: Hyena_2_Idle_Animation_19
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Hyena_2_Idle_Animation_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 1098
+        width: 507
+        height: 347
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 602d24c2fb0b666b0800000000000000
+      internalID: -5303357176054361594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyena_2_Idle_Animation_1
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 1098
+        width: 507
+        height: 347
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa438639f9442bd80800000000000000
+      internalID: -8236445316343647057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyena_2_Idle_Animation_2
+      rect:
+        serializedVersion: 2
+        x: 1030
+        y: 1297
+        width: 13
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc323a36e402bcd40800000000000000
+      internalID: 5605609682243888077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyena_2_Idle_Animation_3
+      rect:
+        serializedVersion: 2
+        x: 1037
+        y: 1090
+        width: 500
+        height: 342
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd8e6513494e14e70800000000000000
+      internalID: 9097804047399184603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyena_2_Idle_Animation_4
+      rect:
+        serializedVersion: 2
+        x: 1542
+        y: 1297
+        width: 13
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bd561afa01c5ec20800000000000000
+      internalID: 3235204160225172917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyena_2_Idle_Animation_5
+      rect:
+        serializedVersion: 2
+        x: 1549
+        y: 1090
+        width: 499
+        height: 342
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc1978bf189600740800000000000000
+      internalID: 5116205183684547019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyena_2_Idle_Animation_6
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 791
+        width: 13
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15d0fc8e34c1cc6e0800000000000000
+      internalID: -1816045471742882479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyena_2_Idle_Animation_7
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 583
+        width: 501
+        height: 361
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9817586b5ec91ad70800000000000000
+      internalID: 9052689236415050121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyena_2_Idle_Animation_8
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 795
+        width: 12
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8099a588c121a43a0800000000000000
+      internalID: -6680507183494686456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyena_2_Idle_Animation_9
+      rect:
+        serializedVersion: 2
+        x: 523
+        y: 586
+        width: 501
+        height: 354
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecbd37a30e85eddc0800000000000000
+      internalID: -3612352131027969074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyena_2_Idle_Animation_10
+      rect:
+        serializedVersion: 2
+        x: 1029
+        y: 795
+        width: 12
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29680450c4e7c2de0800000000000000
+      internalID: -1356570522774632814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyena_2_Idle_Animation_11
+      rect:
+        serializedVersion: 2
+        x: 1035
+        y: 586
+        width: 501
+        height: 354
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 483066773cf2af600800000000000000
+      internalID: 502766824973534084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyena_2_Idle_Animation_12
+      rect:
+        serializedVersion: 2
+        x: 1540
+        y: 788
+        width: 13
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 424c87df5a8de6490800000000000000
+      internalID: -7751019701224291292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyena_2_Idle_Animation_13
+      rect:
+        serializedVersion: 2
+        x: 1547
+        y: 578
+        width: 501
+        height: 346
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ddac448575fefa50800000000000000
+      internalID: 6556947992577617364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyena_2_Idle_Animation_14
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 276
+        width: 13
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9da0832fc0bb4a060800000000000000
+      internalID: 6963896588099390169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyena_2_Idle_Animation_15
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 66
+        width: 502
+        height: 346
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7aa0161bf12718690800000000000000
+      internalID: -7601669215579207001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyena_2_Idle_Animation_16
+      rect:
+        serializedVersion: 2
+        x: 516
+        y: 276
+        width: 12
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 650fced508bbbfc20800000000000000
+      internalID: 3241390516829220950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyena_2_Idle_Animation_17
+      rect:
+        serializedVersion: 2
+        x: 523
+        y: 71
+        width: 502
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d8f956f6c5daeba0800000000000000
+      internalID: -6058795298160248617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyena_2_Idle_Animation_18
+      rect:
+        serializedVersion: 2
+        x: 1029
+        y: 74
+        width: 507
+        height: 347
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d6613a613437bd40800000000000000
+      internalID: 5600002048498165462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hyena_2_Idle_Animation_19
+      rect:
+        serializedVersion: 2
+        x: 1541
+        y: 74
+        width: 507
+        height: 347
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33914eec869dd2bf0800000000000000
+      internalID: -347382552066778829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable: {}
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -44,11 +44,16 @@ public class Astar
         {
             for (int j = 0; j < rows; j++)
             {
-                Spots[i, j].AddNeighboors(Spots, i, j);
-                if (Spots[i, j].X == start.x && Spots[i, j].Y == start.y)
+                Spots[i, j].AddNeighbors(Spots, i, j, true); //if you dont want hyenas to hit HQ tower from diagonal, figure out how to make its neighbors not have diagonal neighbors
+                if (Spots[i, j].X == start.x && Spots[i, j].Y == start.y){
                     Start = Spots[i, j];
-                else if (Spots[i, j].X == end.x && Spots[i, j].Y == end.y)
+                    //Debug.Log("found start - " + Start.X + ":" + Start.Y);
+                }
+                else if (Spots[i, j].X == end.x && Spots[i, j].Y == end.y){
                     End = Spots[i, j];
+                    
+                    //Debug.Log("found end - " + End.X + ":" + End.Y);
+                }
             }
         }
         if (!IsValidPath(grid, Start, End))
@@ -105,10 +110,10 @@ public class Astar
 
 
             //Finds the next closest step on the grid
-            var neighboors = current.Neighboors;
-            for (int i = 0; i < neighboors.Count; i++)//look threw our current spots neighboors (current spot is the shortest F distance in openSet
+            var neighbors = current.Neighbors;
+            for (int i = 0; i < neighbors.Count; i++)//look threw our current spots neighboors (current spot is the shortest F distance in openSet
             {
-                var n = neighboors[i];
+                var n = neighbors[i];
                 if (!ClosedSet.Contains(n) && n.Height < 1)//Checks to make sure the neighboor of our current tile is not within closed set, and has a height of less than 1
                 {
                     var tempG = current.G + 1;//gets a temp comparison integer for seeing if a route is shorter than our current path
@@ -172,7 +177,7 @@ public class Spot
     public int G;
     public int H;
     public int Height = 0;
-    public List<Spot> Neighboors;
+    public List<Spot> Neighbors;
     public Spot previous = null;
     public Spot(int x, int y, int height)
     {
@@ -181,29 +186,32 @@ public class Spot
         F = 0;
         G = 0;
         H = 0;
-        Neighboors = new List<Spot>();
+        Neighbors = new List<Spot>();
         Height = height;
     }
-    public void AddNeighboors(Spot[,] grid, int x, int y)
+    public void AddNeighbors(Spot[,] grid, int x, int y, bool diagonal)
     {
-        if (x < grid.GetUpperBound(0))
-            Neighboors.Add(grid[x + 1, y]);
+        int maxX = grid.GetUpperBound(0);
+        int maxY = grid.GetUpperBound(1);
+        if (x < maxX)
+            Neighbors.Add(grid[x + 1, y]);
         if (x > 0)
-            Neighboors.Add(grid[x - 1, y]);
-        if (y < grid.GetUpperBound(1))
-            Neighboors.Add(grid[x, y + 1]);
+            Neighbors.Add(grid[x - 1, y]);
+        if (y < maxY)
+            Neighbors.Add(grid[x, y + 1]);
         if (y > 0)
-            Neighboors.Add(grid[x, y - 1]);
-        #region diagonal
-        //if (X > 0 && Y > 0)
-        //    Neighboors.Add(grid[X - 1, Y - 1]);
-        //if (X < Utils.Columns - 1 && Y > 0)
-        //    Neighboors.Add(grid[X + 1, Y - 1]);
-        //if (X > 0 && Y < Utils.Rows - 1)
-        //    Neighboors.Add(grid[X - 1, Y + 1]);
-        //if (X < Utils.Columns - 1 && Y < Utils.Rows - 1)
-        //    Neighboors.Add(grid[X + 1, Y + 1]);
-        #endregion
+            Neighbors.Add(grid[x, y - 1]);
+
+        if(diagonal){
+            if (x > 0 && y > 0)
+                Neighbors.Add(grid[x - 1, y - 1]);
+            if (x < maxX && y > 0)
+                Neighbors.Add(grid[x + 1, y - 1]);
+            if (x > 0 && y < maxY)
+                Neighbors.Add(grid[x - 1, y + 1]);
+            if (x < maxX && y < maxY)
+                Neighbors.Add(grid[x + 1, y + 1]);
+        }
     }
 
 

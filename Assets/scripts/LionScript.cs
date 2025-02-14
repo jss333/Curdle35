@@ -13,6 +13,7 @@ public class LionController : CatController
         base.team = Team.cats;
         base.movementType = Movement.Type.Lion;
         base.canPlaceTower =  true;
+        base.health = 3;
 
         base.Start();
         PrecalculateMovementOffsets();
