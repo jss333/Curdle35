@@ -36,7 +36,7 @@ public class TurnControlScript : MonoBehaviour
 
     int currentHyena = 0;
 
-    [SerializeField] int winConditionScore = 250;
+    [SerializeField] int winConditionScore = 350;
 
     bool committedToAnAction = false;
     float turnChangeTime = 0.0f;
@@ -67,6 +67,8 @@ public class TurnControlScript : MonoBehaviour
         gridManager.tmManager = tmManager;
         gridManager.bounds = tmManager.tilemapArray[(int)TilemapManager.MapType.ground].cellBounds;
         gridManager.Initialize();
+
+        uiBridge.towerPlacementText.text = "Place Tower (" + tmManager.towerPlacementResourceCost + ")";
     }
 
     void PerformCatAttack(){
@@ -100,6 +102,7 @@ public class TurnControlScript : MonoBehaviour
         }
         if(whichCat != currentCat){
             soundManager.PlayEffect(SoundManager.Effects.CatClick);
+            tmManager.ClearMovement();
         }
 
         if(committedToAnAction){
@@ -124,7 +127,7 @@ public class TurnControlScript : MonoBehaviour
 
             uiBridge.SetMoveButtonActivity(!tempCat.movedThisTurn);
 
-            uiBridge.SetTowerPlacementButtonActivity(!tempCat.placedTowerThisTurn);
+            uiBridge.SetTowerPlacementButtonActivity((!tempCat.placedTowerThisTurn) && (tmManager.team_scores[UnitController.Team.cats].x >= tmManager.towerPlacementResourceCost));
 
             uiBridge.buttons[1].SetActive(cats[currentCat].canPlaceTower);
         }
@@ -258,15 +261,15 @@ public class TurnControlScript : MonoBehaviour
             cats[1].health,
             cats[2].health
         };
-        if(!tmManager.team_scores.TryGetValue(UnitController.Team.cats, out int catScore)){
+        if(!tmManager.team_scores.TryGetValue(UnitController.Team.cats, out Vector2Int catScore)){
             Debug.Log("failed to find cat score");
         }
-        if(!tmManager.team_scores.TryGetValue(UnitController.Team.hyena, out int hyenaScore)){
+        if(!tmManager.team_scores.TryGetValue(UnitController.Team.hyena, out Vector2Int hyenaScore)){
             Debug.Log("failed to find hyena score");
         }
         uiBridge.UpdateUI(healths, catScore, hyenaScore);
 
-        if(catScore > winConditionScore){
+        if(catScore.x > winConditionScore){
             WinConditionAchieved();
             //do win condition
         }
@@ -274,6 +277,7 @@ public class TurnControlScript : MonoBehaviour
     
     void ChangeDayPhase(DayPhase phase){
         dayPhase = phase;
+        tmManager.ClearMovement();
         switch(phase){
             case DayPhase.Dawn:{
                 soundManager.PlayMusic(SoundManager.Music.DawnBegin);
@@ -324,7 +328,7 @@ public class TurnControlScript : MonoBehaviour
                     hyenasSpawnManager.GenerateNewSpawnPointsBasedOnSpawnRates(); //TODO this does not get called in the very first morning
 
                     uiBridge.SetMoveButtonActivity(true);
-                    uiBridge.SetTowerPlacementButtonActivity(true);
+                    uiBridge.SetTowerPlacementButtonActivity(tmManager.team_scores[UnitController.Team.cats].x >= tmManager.towerPlacementResourceCost);
                     for(int i = 0; i < cats.Length; i++){
                         cats[i].RefreshTurn();
                     }
@@ -411,8 +415,9 @@ public class TurnControlScript : MonoBehaviour
                             }
                         }
                         else if(catCont.showTowerPlacement){
-                            tmManager.PlaceTower(mouseTilePos);
-                            soundManager.PlayEffect(SoundManager.Effects.LionTower);
+                            if(tmManager.PlaceTower(mouseTilePos)){
+                                soundManager.PlayEffect(SoundManager.Effects.LionTower);
+                            }
 
                             catCont.showTowerPlacement = false;
                             minorTowers.Add(mouseTilePos);

@@ -10,6 +10,8 @@ public class TilemapManager : MonoBehaviour
     [SerializeField] public TileBase starterTowerTile;
     [SerializeField] private HyenasSpawnManager hyenasSpawnManager;
 
+    public int towerPlacementResourceCost = 50;
+
     public enum MapType : int{
         ground,
         resource,
@@ -38,8 +40,8 @@ public class TilemapManager : MonoBehaviour
 
     private Dictionary<Vector3Int, UnitController.Team> occupancy; //shitty solution but the old tilebase was aggregrate for every tile of that type or something. this would be better as an array but an array would be signifcantly more complicated
 
-    public Dictionary<UnitController.Team, int> team_scores = new Dictionary<UnitController.Team, int>();
-    public Dictionary<Vector3Int, int> tower_healths = new Dictionary<Vector3Int, int>();
+    public Dictionary<UnitController.Team, Vector2Int> team_scores = new Dictionary<UnitController.Team, Vector2Int>(); //x is the real score, y is the score per round
+    public Dictionary<Vector3Int, TowerBehavior> towerData = new Dictionary<Vector3Int, TowerBehavior>();
 
     public Vector3Int hqTowerPosition;
     public List<Vector3Int> minorTowers = new List<Vector3Int>();
@@ -100,8 +102,8 @@ public class TilemapManager : MonoBehaviour
     void Start()
     {
 
-        team_scores.Add(UnitController.Team.cats, 0);
-        team_scores.Add(UnitController.Team.hyena, 0);
+        team_scores.Add(UnitController.Team.cats, new Vector2Int(0, 0));
+        team_scores.Add(UnitController.Team.hyena, new Vector2Int(0, 0));
 
         tilemapArray[(int)MapType.ground].CompressBounds();
         groundBounds = tilemapArray[(int)MapType.ground].cellBounds;
@@ -161,7 +163,12 @@ public class TilemapManager : MonoBehaviour
             }
         }
         
-        ClaimAreaAroundTower(hqTowerPosition);
+        TowerBehavior hqTower = new TowerBehavior();
+        hqTower.health = 3;
+        hqTower.isHQTower = true;
+        ClaimAreaAroundTower(hqTowerPosition, hqTower);
+        towerData.Add(hqTowerPosition, hqTower);
+
 
         // After we're done creating the map we need to initialize the hyenasSpawnAlgorithm with the data from the same tilemap
         // We also need to pass in the location of the HQ
@@ -211,7 +218,8 @@ public class TilemapManager : MonoBehaviour
         }
     }
 
-    public void AddResourceToScore(Vector3Int resPos, UnitController.Team team, int multiplier = 1){ //set multiplier to negative to subtract
+
+    public void AddResourceToScorePerRound(Vector3Int resPos, UnitController.Team team, int multiplier = 1){ //set multiplier to negative to subtract
         TileBase resourceTile = tilemapArray[(int)MapType.resource].GetTile<TileBase>(resPos);
         if (resourceTile != null)  // Check if a tile exists at that position
         {
@@ -219,21 +227,16 @@ public class TilemapManager : MonoBehaviour
             Debug.Log("resource tile existed");
             if(resourcesFromTiles.TryGetValue(resourceTile, out TileResourceData resTile)) {
                 Debug.Log("res tile existed");
-                team_scores[team] += resTile.score * multiplier;
+                Vector2Int tempScore = team_scores[team];
+                tempScore.y += resTile.score * multiplier;
+                team_scores[team] = tempScore;
             }
         }
     }
     public void CollectResourcesFromTowers() {
-        
-        Vector3Int offset = new Vector3Int(-1, -1, 0);
-        for(offset.x = -1; offset.x <= 1; offset.x++) {
-            for(offset.y = -1; offset.y <= 1; offset.y++) {
-                foreach(var tower in minorTowers){
-                    Debug.Log("checking resource map : " + (tower + offset));
-                    AddResourceToScore(tower + offset, UnitController.Team.cats, 2);
-                }
-                    AddResourceToScore(hqTowerPosition + offset, UnitController.Team.cats, 2);
-            }
+        Vector2Int tempScore = team_scores[UnitController.Team.cats];
+        foreach(var tower in towerData){
+            tempScore.x += tower.Value.resourcesOwned;
         }
     }
 
@@ -273,9 +276,9 @@ public class TilemapManager : MonoBehaviour
                     return;
                 }
 
-                AddResourceToScore(tilePos, team, 1);
+                AddResourceToScorePerRound(tilePos, team, 1);
                 if((tileTeam == UnitController.Team.hyena) || (tileTeam == UnitController.Team.cats)){
-                    AddResourceToScore(tilePos, tileTeam, -1);
+                    AddResourceToScorePerRound(tilePos, tileTeam, -1);
                 }
             }
             else{
@@ -330,26 +333,56 @@ public class TilemapManager : MonoBehaviour
         }
     }
     
-    public void ClaimAreaAroundTower(Vector3Int towerPos){
+    public void ClaimAreaAroundTower(Vector3Int towerPos, TowerBehavior tower){
         Vector3Int offset = new Vector3Int(-1, -1, 0);
         for(offset.x = -1; offset.x <= 1; offset.x++) {
             for(offset.y = -1; offset.y <= 1; offset.y++) {
+                TileBase resourceTile = tilemapArray[(int)MapType.resource].GetTile(towerPos + offset);
+                if(resourceTile != null){
+                    if(resourcesFromTiles.TryGetValue(resourceTile, out TileResourceData resTile)) {
+                        tower.resourcesOwned += resTile.score;
+                    }
+                }
+
                 TryClaimTileWithTilePos(towerPos + offset, UnitController.Team.cats);
+
             }
         }
     }
-    public void PlaceTower(Vector3Int towerTilePos){
+    public bool PlaceTower(Vector3Int towerTilePos){
+        if(towerData.ContainsKey(towerTilePos)){
+            return false;
+        }
+        if(team_scores[UnitController.Team.cats].x < towerPlacementResourceCost){
+            return false;
+        }
+
         TileBase tile = tilemapArray[(int)MapType.ground].GetTile<TileBase>(towerTilePos);
         if(tile != null){
             tilemapArray[(int)MapType.tower].SetTile(towerTilePos, starterTowerTile);
-            minorTowers.Add(towerTilePos);
-            ClaimAreaAroundTower(towerTilePos);
+            TowerBehavior temp = new TowerBehavior();
+            temp.health = 2;
+            
+
+            ClaimAreaAroundTower(towerTilePos, temp);
+            towerData.Add(towerTilePos, temp);
+
+            Vector2Int catScore = team_scores[UnitController.Team.cats];
+            catScore.x -= towerPlacementResourceCost;
+            team_scores[UnitController.Team.cats] = catScore;
+            ClearMovement();
+            return true;
         }
-        ClearMovement();
+        return false;
     }
 
     public void CollectTeamResources(UnitController.Team team){
-        if(team == UnitController.Team.cats){
+        Vector2Int tempScore = team_scores[team];
+        tempScore.x += tempScore.y;
+
+        foreach(var tower in towerData){
+            tempScore.x += tower.Value.resourcesOwned;
         }
+        team_scores[team] = tempScore;
     }
 }

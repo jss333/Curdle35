@@ -7,6 +7,8 @@ public class UIBridge : MonoBehaviour
 {
     public UnityEngine.UIElements.Image faceSprite;
     public GameObject[] buttons;
+
+    public TextMeshProUGUI towerPlacementText;
     public GameObject clock;
     //public TextMeshProUGUI[] abilityTexts;
     public TextMeshProUGUI[] scoreTexts;
@@ -53,7 +55,7 @@ public class UIBridge : MonoBehaviour
         }
     }
 
-    public void UpdateUI(int[] healths, int catScore, int hyenaScore) {
+    public void UpdateUI(int[] healths, Vector2Int catScore, Vector2Int hyenaScore) {
         for(int i = 0; i < healths.Length; i++){
             if(healths[i] < 0){
                 uiRoster[i].healthBar.GetComponent<UnityEngine.UI.Image>().sprite = uiRoster[i].sprites[0];
@@ -68,8 +70,10 @@ public class UIBridge : MonoBehaviour
             }
         }
 
-        scoreTexts[0].text = catScore.ToString();
-        scoreTexts[1].text = hyenaScore.ToString();
+        scoreTexts[0].text = catScore.x.ToString();
+        scoreTexts[1].text = hyenaScore.x.ToString();
+        scoreTexts[2].text = catScore.y.ToString();
+        scoreTexts[3].text = hyenaScore.y.ToString();
     }
 
     public void SetMoveButtonActivity(bool active){

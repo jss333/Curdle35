@@ -1,14 +1,17 @@
 using UnityEngine;
 
-public class TowerBehavior : MonoBehaviour
-{
+public class TowerBehavior {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    public int owningPlayer;
-    public int actorThatPlaced; //not srue if this is important
+    GameObject[] healthbar;
+    public int resourcesOwned = 0;
+
+    public bool isHQTower = false;
+
+    public int health = 2;
     void Start()
     {
-        
+        //instantiate healthbar here
     }
 
     // Update is called once per frame
