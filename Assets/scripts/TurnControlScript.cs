@@ -326,7 +326,6 @@ public class TurnControlScript : MonoBehaviour
                 if(turnChangeTime >= 1.0f){
                     turnChangeTime = 0.0f;
 
-                    tmManager.CollectResourcesFromTowers();
                     //Create Spawn Markers
                     hyenasSpawnManager.GenerateNewSpawnPointsBasedOnSpawnRates();
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.Tilemaps;
 
 public class TilemapManager : MonoBehaviour
@@ -40,7 +41,7 @@ public class TilemapManager : MonoBehaviour
 
     private Dictionary<Vector3Int, UnitController.Team> occupancy; //shitty solution but the old tilebase was aggregrate for every tile of that type or something. this would be better as an array but an array would be signifcantly more complicated
 
-    public Dictionary<UnitController.Team, Vector2Int> team_scores = new Dictionary<UnitController.Team, Vector2Int>(); //x is the real score, y is the score per round
+    [SerializeField] public Dictionary<UnitController.Team, Vector2Int> team_scores = new Dictionary<UnitController.Team, Vector2Int>(); //x is the real score, y is the score per round
     public Dictionary<Vector3Int, TowerBehavior> towerData = new Dictionary<Vector3Int, TowerBehavior>();
 
     public Vector3Int hqTowerPosition;
@@ -63,8 +64,9 @@ public class TilemapManager : MonoBehaviour
     public BoundsInt groundBounds;
 
     private void Awake(){
-        dataFromTiles = new Dictionary<TileBase, TileTerritoryData>();
         occupancy = new Dictionary<Vector3Int, UnitController.Team>();
+
+        dataFromTiles = new Dictionary<TileBase, TileTerritoryData>();
         foreach(var tileData in territoryTiles){
             foreach(var tile in tileData.tiles){
                 dataFromTiles.Add(tile, tileData);
@@ -117,7 +119,7 @@ public class TilemapManager : MonoBehaviour
                 if(tile != null){
 
                     hqTowerPosition = tilemapArray[(int)MapType.ground].WorldToCell(tilemapArray[(int)MapType.tower].CellToWorld(checkTowerPosition));
-                    Debug.Log("hq tower position");
+                    Debug.Log("hq tower position: " + checkTowerPosition);
                     foundHQTower = true;
                     break;
                 }
@@ -163,9 +165,7 @@ public class TilemapManager : MonoBehaviour
             }
         }
         
-        TowerBehavior hqTower = new TowerBehavior();
-        hqTower.health = 3;
-        hqTower.isHQTower = true;
+        TowerBehavior hqTower = new TowerBehavior(hqTowerPosition, 3, true);
         ClaimAreaAroundTower(hqTowerPosition, hqTower);
         towerData.Add(hqTowerPosition, hqTower);
 
@@ -219,26 +219,29 @@ public class TilemapManager : MonoBehaviour
     }
 
 
-    public void AddResourceToScorePerRound(Vector3Int resPos, UnitController.Team team, int multiplier = 1){ //set multiplier to negative to subtract
-        TileBase resourceTile = tilemapArray[(int)MapType.resource].GetTile<TileBase>(resPos);
+    public int GetResourceValueAtPos(Vector3Int resPos)
+    {
+        TileBase resourceTile = ResourceTilemap().GetTile<TileBase>(resPos);
         if (resourceTile != null)  // Check if a tile exists at that position
         {
-            
-            Debug.Log("resource tile existed");
-            if(resourcesFromTiles.TryGetValue(resourceTile, out TileResourceData resTile)) {
-                Debug.Log("res tile existed");
-                Vector2Int tempScore = team_scores[team];
-                tempScore.y += resTile.score * multiplier;
-                team_scores[team] = tempScore;
+            if (resourcesFromTiles.TryGetValue(resourceTile, out TileResourceData resTile))
+            {
+                return resTile.score;
             }
         }
+
+        return 0; //no tile means no resource value
     }
-    public void CollectResourcesFromTowers() {
-        Vector2Int tempScore = team_scores[UnitController.Team.cats];
-        foreach(var tower in towerData){
-            tempScore.x += tower.Value.resourcesOwned;
-        }
+
+    public void AddResourceToScorePerRound(int resourceVal, UnitController.Team team)
+    {
+        Vector2Int tempScore = team_scores[team];
+        Debug.Log($"Adding {resourceVal} to {team} score -- before {team_scores[team]}");
+        tempScore.y += resourceVal;
+        team_scores[team] = tempScore;
+        Debug.Log($"After {team_scores[team]}");
     }
+
 
     public TileTerritoryData.Type CheckTileForHyenaSpawn(Vector3Int tilePos){
         TileBase tile = tilemapArray[(int)MapType.ground].GetTile<TileBase>(tilePos);
@@ -250,43 +253,78 @@ public class TilemapManager : MonoBehaviour
         return TileTerritoryData.Type.None;
     }
 
-    private void TryClaimTileWithTilePos(Vector3Int tilePos, UnitController.Team team){
-        TileBase groundTile = tilemapArray[(int)MapType.ground].GetTile<TileBase>(tilePos);
-        if(groundTile != null){
-            tilemapArray[(int)MapType.ground].SetTile(tilePos, groundTiles[(int)team]);
-            if(dataFromTiles.TryGetValue(groundTile, out TileTerritoryData tilesTeam)){
-                
-                UnitController.Team tileTeam;
+    private void TryClaimTileWithTilePos(Vector3Int tilePos, UnitController.Team newTeam)
+    {
+        // Check if tile actually exists in the board
+        TileBase previousGroundTile = GroundTileMap().GetTile<TileBase>(tilePos);
+        if (previousGroundTile == null)
+        {
+            return;
+        }
 
-                if(tilesTeam.type == TileTerritoryData.Type.Cats){
-                    tileTeam = UnitController.Team.cats;
-                
-                }
-                else if(tilesTeam.type == TileTerritoryData.Type.Hyena){
-                    tileTeam = UnitController.Team.hyena;
-                }
-                else if(tilesTeam.type == TileTerritoryData.Type.None){
-                    tileTeam = UnitController.Team.neutral;
-                }
-                else{
-                    //Debug.Log("territory tile is not on a valid team while trying to claim? : " + tilePos);
-                    return;
-                }
-                if(tileTeam == team){
-                    return;
-                }
+        // If tile is already claimed by newTeam, then there's nothing to be done
+        UnitController.Team previousTeam = GetMappingFromTileBaseToUnitControllerTeam(previousGroundTile);
 
-                AddResourceToScorePerRound(tilePos, team, 1);
-                if((tileTeam == UnitController.Team.hyena) || (tileTeam == UnitController.Team.cats)){
-                    AddResourceToScorePerRound(tilePos, tileTeam, -1);
-                }
-            }
-            else{
-                Debug.Log("tile is not on a valid team while trying to claim? : " + tilePos);
-                return;
+        if (newTeam == previousTeam)
+        {
+            return;
+        }
+
+        // Claim the tile
+        GroundTileMap().SetTile(tilePos, groundTiles[(int)newTeam]);
+
+        // If the tile has a resource value we need to update score per round
+        int resourceValInTile = GetResourceValueAtPos(tilePos);
+
+        if (resourceValInTile > 0)
+        {
+            // Add it to the new team
+            AddResourceToScorePerRound(resourceValInTile, newTeam);
+
+            // Remove it from the previous team
+            if ((previousTeam == UnitController.Team.hyena) || (previousTeam == UnitController.Team.cats))
+            {
+                AddResourceToScorePerRound(-resourceValInTile, previousTeam); //negative amount
             }
 
- 
+            // If the tile is within range of any towers, we add/remove a second time as needed
+            foreach (TowerBehavior tower in towerData.Values)
+            {
+                if (tower.AreaIncludesCellAtPosition(tilePos))
+                {
+                    if (newTeam == UnitController.Team.cats)
+                    {
+                        AddResourceToScorePerRound(resourceValInTile, UnitController.Team.cats);
+                    }
+                    else if (newTeam == UnitController.Team.hyena && previousTeam == UnitController.Team.cats)
+                    {
+                        AddResourceToScorePerRound(-resourceValInTile, UnitController.Team.cats); //negative amount
+                    }
+                }
+            }
+        }
+        
+    }
+
+    private UnitController.Team GetMappingFromTileBaseToUnitControllerTeam(TileBase tile)
+    {
+        if (!dataFromTiles.TryGetValue(tile, out TileTerritoryData tileTerritoryData))
+        {
+            Debug.LogError("Assuming neutral ownership because found no mapping for tile : " + tile);
+            return UnitController.Team.neutral;
+        }
+
+        if (tileTerritoryData.type == TileTerritoryData.Type.Cats)
+        {
+            return UnitController.Team.cats;
+        }
+        else if (tileTerritoryData.type == TileTerritoryData.Type.Hyena)
+        {
+            return UnitController.Team.hyena;
+        }
+        else
+        {
+            return UnitController.Team.neutral;
         }
     }
 
@@ -332,62 +370,86 @@ public class TilemapManager : MonoBehaviour
             Debug.Log("failed to remove occupancy, tile was not occupied");
         }
     }
-    
-    public void ClaimAreaAroundTower(Vector3Int towerPos, TowerBehavior tower){
-        Vector3Int offset = new Vector3Int(-1, -1, 0);
-        for(offset.x = -1; offset.x <= 1; offset.x++) {
-            for(offset.y = -1; offset.y <= 1; offset.y++) {
-                TileBase resourceTile = tilemapArray[(int)MapType.resource].GetTile(towerPos + offset);
-                if(resourceTile != null){
-                    if(resourcesFromTiles.TryGetValue(resourceTile, out TileResourceData resTile)) {
-                        tower.resourcesOwned += resTile.score;
-                    }
+
+    public void ClaimAreaAroundTower(Vector3Int towerPos, TowerBehavior tower)
+    {
+        foreach (Vector3Int cell in tower.getCellsInTowerArea())
+        {
+            TryClaimTileWithTilePos(cell, UnitController.Team.cats);
+        }
+    }
+
+    public bool PlaceTower(Vector3Int towerTilePos)
+    {
+        if (towerData.ContainsKey(towerTilePos))
+        {
+            return false;
+        }
+
+        if (team_scores[UnitController.Team.cats].x < towerPlacementResourceCost)
+        {
+            return false;
+        }
+
+        TileBase tile = GroundTileMap().GetTile<TileBase>(towerTilePos);
+        if (tile == null)
+        {
+            return false;
+        }
+
+        // Update tilemap
+        TowerTilemap().SetTile(towerTilePos, starterTowerTile);
+        TowerBehavior towerInfo = new TowerBehavior(towerTilePos, 2, false);
+        towerData.Add(towerTilePos, towerInfo);
+
+        // Spend the needed resources
+        Vector2Int catScore = team_scores[UnitController.Team.cats];
+        catScore.x -= towerPlacementResourceCost;
+        team_scores[UnitController.Team.cats] = catScore;
+
+        // First check if any of the cells around the tower were already claimed by Cats
+        // If so, we update the resource collection value
+        foreach(Vector3Int cell in towerInfo.getCellsInTowerArea())
+        {
+            TileBase groundTile = GroundTileMap().GetTile<TileBase>(cell);
+            if (groundTile != null)
+            {
+                if (GetMappingFromTileBaseToUnitControllerTeam(groundTile) == UnitController.Team.cats)
+                {
+                    int resourceValInTile = GetResourceValueAtPos(cell);
+                    AddResourceToScorePerRound(resourceValInTile, UnitController.Team.cats);
                 }
-
-                TryClaimTileWithTilePos(towerPos + offset, UnitController.Team.cats);
-
             }
         }
-    }
-    public bool PlaceTower(Vector3Int towerTilePos){
-        if(towerData.ContainsKey(towerTilePos)){
-            return false;
-        }
-        if(team_scores[UnitController.Team.cats].x < towerPlacementResourceCost){
-            return false;
-        }
 
-        TileBase tile = tilemapArray[(int)MapType.ground].GetTile<TileBase>(towerTilePos);
-        if(tile != null){
-            tilemapArray[(int)MapType.tower].SetTile(towerTilePos, starterTowerTile);
-            TowerBehavior temp = new TowerBehavior();
-            temp.health = 2;
-            
+        // Second we claim the area around tower, as a bonus
+        // This will also add to the resource collection value, but only for the newly-claimed tiles
+        ClaimAreaAroundTower(towerTilePos, towerInfo);
 
-            ClaimAreaAroundTower(towerTilePos, temp);
-            towerData.Add(towerTilePos, temp);
-
-            Vector2Int catScore = team_scores[UnitController.Team.cats];
-            catScore.x -= towerPlacementResourceCost;
-            team_scores[UnitController.Team.cats] = catScore;
-            ClearMovement();
-            return true;
-        }
-        return false;
+        ClearMovement();
+        return true;
     }
 
-    public void CollectTeamResources(UnitController.Team team) {
+    public void CollectTeamResources(UnitController.Team team)
+    {
 
         Vector2Int tempScore = team_scores[team];
         tempScore.x += tempScore.y;
-
-        if(team == UnitController.Team.cats) {
-            foreach (var tower in towerData)
-            {
-                tempScore.x += tower.Value.resourcesOwned;
-            }
-        }
-
         team_scores[team] = tempScore;
+    }
+
+    private Tilemap TowerTilemap()
+    {
+        return tilemapArray[(int)MapType.tower];
+    }
+
+    private Tilemap GroundTileMap()
+    {
+        return tilemapArray[(int)MapType.ground];
+    }
+
+    private Tilemap ResourceTilemap()
+    {
+        return tilemapArray[(int)MapType.resource];
     }
 }
