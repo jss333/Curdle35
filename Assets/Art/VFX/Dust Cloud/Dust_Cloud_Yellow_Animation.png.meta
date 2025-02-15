@@ -232,6 +232,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -1172,7 +1185,49 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Dust_Cloud_Yellow_Animation_0: -1240482540215785967
+      Dust_Cloud_Yellow_Animation_1: 4508578062935211102
+      Dust_Cloud_Yellow_Animation_10: -8640160075938291175
+      Dust_Cloud_Yellow_Animation_11: -2647517289789271987
+      Dust_Cloud_Yellow_Animation_12: -1503677443426781076
+      Dust_Cloud_Yellow_Animation_13: -7637900013312656063
+      Dust_Cloud_Yellow_Animation_14: -410626608819646244
+      Dust_Cloud_Yellow_Animation_15: -8479156004841369743
+      Dust_Cloud_Yellow_Animation_16: 1853859748964853198
+      Dust_Cloud_Yellow_Animation_17: 8064150618151628037
+      Dust_Cloud_Yellow_Animation_18: -5860854093925980123
+      Dust_Cloud_Yellow_Animation_19: 2595384351166685114
+      Dust_Cloud_Yellow_Animation_2: -989104208447999727
+      Dust_Cloud_Yellow_Animation_20: 6366467576976523950
+      Dust_Cloud_Yellow_Animation_21: -3419575813452778092
+      Dust_Cloud_Yellow_Animation_22: -2668267182301688567
+      Dust_Cloud_Yellow_Animation_23: -3220730256730972959
+      Dust_Cloud_Yellow_Animation_24: -3685921483315516850
+      Dust_Cloud_Yellow_Animation_25: 6794526303753033589
+      Dust_Cloud_Yellow_Animation_26: -29183355733327890
+      Dust_Cloud_Yellow_Animation_27: -3744878425144715330
+      Dust_Cloud_Yellow_Animation_28: -6130990327632983167
+      Dust_Cloud_Yellow_Animation_29: 5797809397031736614
+      Dust_Cloud_Yellow_Animation_3: 2980364878471382879
+      Dust_Cloud_Yellow_Animation_30: 3904954735954790983
+      Dust_Cloud_Yellow_Animation_31: 1285924878327751726
+      Dust_Cloud_Yellow_Animation_32: -6421336568514974175
+      Dust_Cloud_Yellow_Animation_33: -7261960761425145772
+      Dust_Cloud_Yellow_Animation_34: -4886969120389545207
+      Dust_Cloud_Yellow_Animation_35: -1922552138188311002
+      Dust_Cloud_Yellow_Animation_36: 3114988481156535684
+      Dust_Cloud_Yellow_Animation_37: -942479110567254774
+      Dust_Cloud_Yellow_Animation_38: 5684333114765834015
+      Dust_Cloud_Yellow_Animation_39: -2925438817025247930
+      Dust_Cloud_Yellow_Animation_4: -3865503790141541797
+      Dust_Cloud_Yellow_Animation_40: 1323942610051820083
+      Dust_Cloud_Yellow_Animation_41: -2125421531361783637
+      Dust_Cloud_Yellow_Animation_5: 8562679018903510852
+      Dust_Cloud_Yellow_Animation_6: 4788937854370052040
+      Dust_Cloud_Yellow_Animation_7: -4380208086962464464
+      Dust_Cloud_Yellow_Animation_8: -6734326443199037550
+      Dust_Cloud_Yellow_Animation_9: 1895416333356690451
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

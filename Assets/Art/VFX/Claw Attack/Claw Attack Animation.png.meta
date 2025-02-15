@@ -163,6 +163,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -597,7 +610,26 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Claw Attack Animation_0: 7837607886536172087
+      Claw Attack Animation_1: -2992399095758459073
+      Claw Attack Animation_10: -2598056399382413773
+      Claw Attack Animation_11: -1672331821999969279
+      Claw Attack Animation_12: 8348628874178829058
+      Claw Attack Animation_13: -2649243336238744810
+      Claw Attack Animation_14: -564803617542686954
+      Claw Attack Animation_15: -2102985896694331796
+      Claw Attack Animation_16: -9043398576320209304
+      Claw Attack Animation_17: 3212189881861694361
+      Claw Attack Animation_18: 5938893170540382020
+      Claw Attack Animation_2: -3000829947378748948
+      Claw Attack Animation_3: 7932951248024610176
+      Claw Attack Animation_4: -1243074477340739713
+      Claw Attack Animation_5: 7045093248976005630
+      Claw Attack Animation_6: 5498746259241304335
+      Claw Attack Animation_7: -1267553047354490784
+      Claw Attack Animation_8: 1071120348421573125
+      Claw Attack Animation_9: -4293348241243253163
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -202,6 +202,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -922,7 +935,39 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Claw_Attack_Animation_2_0: -2919793005696804834
+      Claw_Attack_Animation_2_1: 4151387528240007096
+      Claw_Attack_Animation_2_10: 5330782767633587199
+      Claw_Attack_Animation_2_11: 3870347850234106382
+      Claw_Attack_Animation_2_12: 7288460738385714511
+      Claw_Attack_Animation_2_13: -2869210453468043349
+      Claw_Attack_Animation_2_14: -3851991593307144472
+      Claw_Attack_Animation_2_15: 4493417122716988222
+      Claw_Attack_Animation_2_16: -8259026002644281312
+      Claw_Attack_Animation_2_17: -8107005733499671053
+      Claw_Attack_Animation_2_18: -4571981910621261565
+      Claw_Attack_Animation_2_19: 4111740063137847370
+      Claw_Attack_Animation_2_2: -2666308776391719785
+      Claw_Attack_Animation_2_20: 1107736339570684075
+      Claw_Attack_Animation_2_21: 3201894089087687463
+      Claw_Attack_Animation_2_22: -779413482756321582
+      Claw_Attack_Animation_2_23: -2377127979163381674
+      Claw_Attack_Animation_2_24: 7558285668315841876
+      Claw_Attack_Animation_2_25: 5054302003219263698
+      Claw_Attack_Animation_2_26: -5432289960447315271
+      Claw_Attack_Animation_2_27: 5707763870691634560
+      Claw_Attack_Animation_2_28: -8308459699967633513
+      Claw_Attack_Animation_2_29: 5471330791700829695
+      Claw_Attack_Animation_2_3: 8510108218241575513
+      Claw_Attack_Animation_2_30: -3073233788673668136
+      Claw_Attack_Animation_2_31: 3851010320344394790
+      Claw_Attack_Animation_2_4: 5845381914973686350
+      Claw_Attack_Animation_2_5: 8705259889729380814
+      Claw_Attack_Animation_2_6: -3458690155144878037
+      Claw_Attack_Animation_2_7: 4217797570277291746
+      Claw_Attack_Animation_2_8: 6709486734798274872
+      Claw_Attack_Animation_2_9: -5157782833450437942
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

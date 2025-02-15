@@ -160,6 +160,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -572,7 +585,25 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Hyena_1_Idle_Animation_0: 2992572295229214940
+      Hyena_1_Idle_Animation_1: 1804013155245282036
+      Hyena_1_Idle_Animation_10: 2614697372389280778
+      Hyena_1_Idle_Animation_11: -7293786646668014763
+      Hyena_1_Idle_Animation_12: -8580015903475840867
+      Hyena_1_Idle_Animation_13: 4479580710613452429
+      Hyena_1_Idle_Animation_14: -528075919941498763
+      Hyena_1_Idle_Animation_15: 7842337510414340267
+      Hyena_1_Idle_Animation_16: 5730732553941574817
+      Hyena_1_Idle_Animation_17: 2767551793099670731
+      Hyena_1_Idle_Animation_2: -8082180184117761826
+      Hyena_1_Idle_Animation_3: -7731269907325930477
+      Hyena_1_Idle_Animation_4: -8799752694227986019
+      Hyena_1_Idle_Animation_5: -4611694330707845085
+      Hyena_1_Idle_Animation_6: 3530603731704142219
+      Hyena_1_Idle_Animation_7: 5957598907444164879
+      Hyena_1_Idle_Animation_8: 4908238116589075284
+      Hyena_1_Idle_Animation_9: 7827345219909207919
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

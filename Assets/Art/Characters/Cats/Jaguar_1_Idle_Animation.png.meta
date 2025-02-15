@@ -151,6 +151,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -497,7 +510,22 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Jaguar_1_Idle_Animation_0: 6213204707013535633
+      Jaguar_1_Idle_Animation_1: -2092728442905950358
+      Jaguar_1_Idle_Animation_10: 6759687160306486566
+      Jaguar_1_Idle_Animation_11: -1081358600204426753
+      Jaguar_1_Idle_Animation_12: -1931270984942782602
+      Jaguar_1_Idle_Animation_13: 4749886051784581990
+      Jaguar_1_Idle_Animation_14: -3695328318829321931
+      Jaguar_1_Idle_Animation_2: 59671329421803441
+      Jaguar_1_Idle_Animation_3: -7397116551603769970
+      Jaguar_1_Idle_Animation_4: 8264406864483989193
+      Jaguar_1_Idle_Animation_5: -516465496199229628
+      Jaguar_1_Idle_Animation_6: 6801220724674789062
+      Jaguar_1_Idle_Animation_7: -4339090659258342460
+      Jaguar_1_Idle_Animation_8: -6630372630452202358
+      Jaguar_1_Idle_Animation_9: -181888137113552420
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
