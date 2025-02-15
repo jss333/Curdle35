@@ -704,13 +704,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicClips:
-  - {fileID: 8300000, guid: 42d0d4fba92907c40adb06e4b5bd51f8, type: 3}
-  - {fileID: 8300000, guid: 2de16d19ca86e5a48894bb0603149121, type: 3}
+  - {fileID: 8300000, guid: ee8d3b8c06ddb5b4f8c1c690568887f5, type: 3}
+  - {fileID: 8300000, guid: e3a78422b2132984caa71c2ed667446d, type: 3}
   - {fileID: 0}
   - {fileID: 8300000, guid: 42b5ab0e75b789740a4f06e713683aff, type: 3}
   - {fileID: 8300000, guid: 20b302930d1f15446a5e191f5769971a, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 67fa0dbbef87f0a4f9b2ee20e28cf9ec, type: 3}
+  - {fileID: 8300000, guid: 8fab196f2e4a3594393f0473701e1744, type: 3}
   effectsClips:
   - {fileID: 8300000, guid: 4375e089b8a509447af7cdbfbc908ab4, type: 3}
   - {fileID: 8300000, guid: 3eb2564af3fb21f458bb7e8450dd8fe4, type: 3}
