@@ -376,13 +376,18 @@ public class TilemapManager : MonoBehaviour
         return false;
     }
 
-    public void CollectTeamResources(UnitController.Team team){
+    public void CollectTeamResources(UnitController.Team team) {
+
         Vector2Int tempScore = team_scores[team];
         tempScore.x += tempScore.y;
 
-        foreach(var tower in towerData){
-            tempScore.x += tower.Value.resourcesOwned;
+        if(team == UnitController.Team.cats) {
+            foreach (var tower in towerData)
+            {
+                tempScore.x += tower.Value.resourcesOwned;
+            }
         }
+
         team_scores[team] = tempScore;
     }
 }

@@ -328,7 +328,7 @@ public class TurnControlScript : MonoBehaviour
 
                     tmManager.CollectResourcesFromTowers();
                     //Create Spawn Markers
-                    hyenasSpawnManager.GenerateNewSpawnPointsBasedOnSpawnRates(); //TODO this does not get called in the very first morning
+                    hyenasSpawnManager.GenerateNewSpawnPointsBasedOnSpawnRates();
 
                     uiBridge.SetMoveButtonActivity(true);
                     uiBridge.SetTowerPlacementButtonActivity(tmManager.team_scores[UnitController.Team.cats].x >= tmManager.towerPlacementResourceCost);
