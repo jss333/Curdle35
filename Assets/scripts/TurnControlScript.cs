@@ -31,7 +31,7 @@ public class TurnControlScript : MonoBehaviour
     [SerializeField] public List<Vector3Int> minorTowers = new List<Vector3Int>();
 
     private Dictionary<GameObject, CatController> hyenaCatTargets = new Dictionary<GameObject, CatController>();
-    private Dictionary<GameObject, Vector3Int> hyenaTowerTargets = new Dictionary<GameObject, Vector3Int>();
+    private Dictionary<GameObject, TowerBehavior> hyenaTowerTargets = new Dictionary<GameObject, TowerBehavior>();
 
     int currentHyena = 0;
 
@@ -82,6 +82,7 @@ public class TurnControlScript : MonoBehaviour
     void KillOffCat(CatController cat){
         soundManager.PlayEffect(SoundManager.Effects.CatDeath);
         cat.isAlive = false;
+        cat.enabled = false;
 
         bool allDead = true;
         for(int i = 0; i < cats.Length; i++){
@@ -94,12 +95,26 @@ public class TurnControlScript : MonoBehaviour
             LossConditionReached();
         }
     }
+    void KillOffTower(TowerBehavior tower){
+        soundManager.PlayEffect(SoundManager.Effects.TowerDestroyed);
+        
+        foreach(var towerKV in tmManager.towerData){
+            if(towerKV.Value == tower){
+                tmManager.tilemapArray[(int)TilemapManager.MapType.tower].SetTile(towerKV.Key, null);
+                tmManager.towerData.Remove(towerKV.Key);
+                break;
+            }
+        }
+    }
 
     [SerializeField] public void SwitchActor(int whichCat){
 
         bool fromRoster = whichCat >= cats.Length;
         if(fromRoster){
             whichCat -= cats.Length;
+        }
+        if(cats[whichCat].health <= 0){
+            return;
         }
         if(whichCat != currentCat){
             soundManager.PlayEffect(SoundManager.Effects.UnitSelection);
@@ -173,11 +188,12 @@ public class TurnControlScript : MonoBehaviour
                 //}
             }
             else if (hyenaTowerTargets.TryGetValue(controlledHyena.gameObject, out var tower)){
+                tower.health--;
+                if(tower.health <= 0){
+                    KillOffTower(tower);
+                }
                 hyenaCatTargets.Remove(controlledHyena.gameObject);
                 hyenas.Remove(controlledHyena);
-                if(tower == tmManager.hqTowerPosition){
-
-                }
             }
             currentHyena++;
             return;
@@ -211,6 +227,41 @@ public class TurnControlScript : MonoBehaviour
                         controlledHyena.attacking = true;
                         hyenaCatTargets.Add(controlledHyena.gameObject, cats[i]);
                         controlledHyena.attackPosition = cats[i].transform.position - distanceToCat;
+                        return;
+                    }
+                }
+            }
+
+            foreach(var tower in tmManager.towerData){
+                Vector3 towerWorldPos = tower.Key;
+                towerWorldPos.x += 0.5f;
+                towerWorldPos.y += 0.5f;
+                Vector3  distanceToTower = towerWorldPos - controlledHyena.transform.position;
+                if((Mathf.Abs(distanceToTower.x) + Mathf.Abs(distanceToTower.y)) <= 3.0){
+                    Debug.Log("tower was close to cat - " + distanceToTower);
+                    distanceToTower.Normalize();
+                    if(Mathf.Abs(distanceToTower.x) < Mathf.Abs(distanceToTower.y)){
+                        distanceToTower.x = 0.0f;
+                        if(distanceToTower.y < 0.0f){
+                            distanceToTower.y = -1.0f;
+                            
+                        }
+                        else{
+                            distanceToTower.y = 1.0f;
+                        }
+                    }
+                    else{
+                        distanceToTower.y = 0.0f;
+                        if(distanceToTower.x < 0.0f){
+                            distanceToTower.x = -1.0f;
+                            
+                        }
+                        else{
+                            distanceToTower.x = 1.0f;
+                        }
+                        controlledHyena.attacking = true;
+                        hyenaTowerTargets.Add(controlledHyena.gameObject, tower.Value);
+                        controlledHyena.attackPosition = towerWorldPos - distanceToTower;
                         return;
                     }
                 }
