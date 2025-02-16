@@ -78,6 +78,7 @@ public class UnitController : MonoBehaviour
     
     public void CalculatePossibleDestinations(){
         Debug.Log("showing default movement");
+        showTowerPlacement = false;
         showMovement = true;
 
         Vector3Int myTilePos = tmManager.tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(transform.position);
@@ -221,6 +222,7 @@ public class UnitController : MonoBehaviour
 
     //id do an array of function pointers here in C++, just gonna handtype it for now. im assuming the max ability count is 3
     public void ShowTowerPlacement(){
+        showMovement = false;
         Debug.Log("showing range for tower placement");
         tmManager.ClearMovement();
         Vector3Int myTilePos = tmManager.tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(transform.position);

@@ -82,20 +82,7 @@ public class SoundManager : MonoBehaviour
             effects[i].clip = effectsClips[i];
         }
     }
-
-    public void PlayDayMusic(){
-        Debug.Log("playing day music");
-        music[(int)Music.DayBegin].loop = true;
-        music[(int)Music.DayBegin].time = dayNightMusicTimer;
-        music[(int)Music.DayBegin].Play();
-        
-    }
-    public void PlayNightMusic(){
-        Debug.Log("playing night music");
-        music[(int)Music.NightBegin].loop = true;
-        music[(int)Music.NightBegin].time = dayNightMusicTimer;
-        music[(int)Music.NightBegin].Play();
-    }    
+    
     public void PlayMusic(Music musicVal){
         if(music[(int)musicVal] != null){
             //StopAllMusic();

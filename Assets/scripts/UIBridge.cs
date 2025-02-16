@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 public class UIBridge : MonoBehaviour
 {
-    public UnityEngine.UIElements.Image faceSprite;
+    //public UnityEngine.UIElements.Image face_image;
     public GameObject[] buttons;
 
     public TextMeshProUGUI towerPlacementText;
@@ -28,30 +28,29 @@ public class UIBridge : MonoBehaviour
 
     [SerializeField] private RosterSetup[] uiRoster;
 
-    public UnityEngine.UIElements.Image face_image;
-    public GameObject faceObj;    
+    public UnityEngine.UI.Image face_image;
     private void OnEnable()
     {
     }
     
     void Start(){
-        faceObj.SetActive(false);
+        face_image.enabled = false;
         foreach(var button in buttons){
             button.SetActive(true);
         }
     }
 
     public void DisableFaceSprite(){
-        faceObj.SetActive(false);
+        //faceObj.SetActive(false);
     }
     public void ChangeFaceSprite(Sprite faceSprite){
         //face_sprite
         if(faceSprite != null){
-            faceObj.SetActive(true);
+            face_image.enabled = true;
             face_image.sprite = faceSprite;
         }
         else{
-            faceObj.SetActive(false);
+            face_image.enabled = false;
         }
     }
 
@@ -92,6 +91,15 @@ public class UIBridge : MonoBehaviour
         }
         else{
             buttons[1].GetComponent<UnityEngine.UI.Image>().color = buttonDisabledColor;
+        }
+    }
+    public void SetEndTurnButtonActivity(bool active){
+        //this doesnt fully disable it just changes the color
+        if(active){
+            buttons[2].GetComponent<UnityEngine.UI.Image>().color = buttonEnabledColor;
+        }
+        else{
+            buttons[2].GetComponent<UnityEngine.UI.Image>().color = buttonDisabledColor;
         }
     }
 }

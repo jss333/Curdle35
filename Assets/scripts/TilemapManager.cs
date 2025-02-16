@@ -236,10 +236,10 @@ public class TilemapManager : MonoBehaviour
     public void AddResourceToScorePerRound(int resourceVal, UnitController.Team team)
     {
         Vector2Int tempScore = team_scores[team];
-        Debug.Log($"Adding {resourceVal} to {team} score -- before {team_scores[team]}");
+        //Debug.Log($"Adding {resourceVal} to {team} score -- before {team_scores[team]}");
         tempScore.y += resourceVal;
         team_scores[team] = tempScore;
-        Debug.Log($"After {team_scores[team]}");
+        //Debug.Log($"After {team_scores[team]}");
     }
 
 

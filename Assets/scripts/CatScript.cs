@@ -38,6 +38,5 @@ public class CatController : UnitController
     }
     public void DisablePlaceTower(){
         placedTowerThisTurn = true;
-        movedThisTurn = true;
     }
 }

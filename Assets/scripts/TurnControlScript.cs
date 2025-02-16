@@ -1,13 +1,7 @@
 using System.Collections.Generic;
-using System.Data;
-using TMPro;
+using System.Collections;
 using Unity.Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.InputSystem;
-using UnityEngine.Tilemaps;
-using System;
 
 [System.Serializable]
 public class TurnControlScript : MonoBehaviour
@@ -36,11 +30,14 @@ public class TurnControlScript : MonoBehaviour
     int currentHyena = 0;
 
     [SerializeField] int winConditionScore = 350;
+    [SerializeField] int towerAttackScoreUsage = 15;
 
     bool committedToAnAction = false;
     float turnChangeTime = 0.0f;
 
     public GridManager gridManager;
+
+    bool allTowersUpdated = false;
 
     enum DayPhase : int{
         Dawn,
@@ -83,6 +80,7 @@ public class TurnControlScript : MonoBehaviour
         soundManager.PlayEffect(SoundManager.Effects.CatDeath);
         cat.isAlive = false;
         cat.enabled = false;
+        cat.GetComponent<Renderer>().enabled = false;
 
         bool allDead = true;
         for(int i = 0; i < cats.Length; i++){
@@ -132,8 +130,12 @@ public class TurnControlScript : MonoBehaviour
             currentCat = whichCat;
 
             CatController tempCat = cats[whichCat];
-            //uiBridge.ChangeFaceSprite(tempUnit.face_sprite);
-
+            if(tempCat.face_sprite != null){
+                uiBridge.ChangeFaceSprite(tempCat.face_sprite);
+            }
+            else{
+                Debug.Log("why is cat sprite null");
+            }
             //Debug.Log("before and after cam pos - " + cam.transform.position + " : " + cats[currentCat].transform.position);
 
             //cam.ResolveLookAt(cats[currentCat].transform);
@@ -168,7 +170,6 @@ public class TurnControlScript : MonoBehaviour
     void UpdateOneHyena(){
         HyenaController controlledHyena = hyenas[currentHyena];
 
-
         if(controlledHyena.movedThisTurn){
             currentHyena++;
             return;
@@ -201,6 +202,9 @@ public class TurnControlScript : MonoBehaviour
         if(!controlledHyena.moving && !controlledHyena.attacking){
             //Debug.Log("hyena was not moving");
             for(int i = 0; i < cats.Length; i++) {
+                if(!cats[i].isAlive){
+                    continue;
+                }
                 Vector3 distanceToCat = cats[i].transform.position - controlledHyena.transform.position;
                 if((Mathf.Abs(distanceToCat.x) + Mathf.Abs(distanceToCat.y)) <= 3.0){
                     Debug.Log("hyena was close to cat - " + distanceToCat);
@@ -269,7 +273,7 @@ public class TurnControlScript : MonoBehaviour
 
             Vector3Int tempPos = tmManager.tilemapArray[(int)TilemapManager.MapType.ground].WorldToCell(controlledHyena.transform.position);
 
-            controlledHyena.movementPath = gridManager.DetermineOptimalPath(tempPos, 2);
+            controlledHyena.movementPath = gridManager.DetermineOptimalPath(tempPos, 3);
             if(controlledHyena.movementPath != null){
                 soundManager.PlayEffect(SoundManager.Effects.HyenaMovement);
                 //Debug.Log("current hyena - first point and position and count - " + currentHyena + " : " + controlledHyena.movementPath[0] + " : " + controlledHyena.transform.position  + ":" + controlledHyena.movementPath.Count);
@@ -327,6 +331,37 @@ public class TurnControlScript : MonoBehaviour
         }
     }
     
+    void UpdateTowers(){
+
+        float delayedTime = 0.0f;
+        foreach(var hyena in hyenas){
+            foreach (var tower in tmManager.towerData){
+                if((hyena.transform.position - tower.Key).magnitude < 3.0f){
+                    Debug.Log("distance for tower attack? " + hyena.transform.position + " : " + tower.Key);
+                    if(tmManager.team_scores[UnitController.Team.cats].x > towerAttackScoreUsage){
+                        var temp = tmManager.team_scores[UnitController.Team.cats];
+                        temp.x -= towerAttackScoreUsage;
+                        tmManager.team_scores[UnitController.Team.cats] = temp;
+                        StartCoroutine(AttackWithTower(hyena, delayedTime));
+                        delayedTime += 0.25f;
+                    }
+                    else{
+                        break;
+                    }
+                }
+            }
+        }
+        allTowersUpdated = true;
+    }
+    IEnumerator AttackWithTower(HyenaController hyena, float delay){
+        yield return new WaitForSeconds(delay);
+        hyenas.Remove(hyena);
+        Destroy(hyena.gameObject);
+
+        //Instantiate(whatever tower attack prefab you want)
+
+    }
+
     void ChangeDayPhase(DayPhase phase){
         tmManager.ClearMovement();
         switch(phase){
@@ -336,16 +371,21 @@ public class TurnControlScript : MonoBehaviour
                 break;
             }
             case DayPhase.Day:{
-                soundManager.PlayDayMusic();
+                //soundManager.PlayDayMusic();
+                soundManager.PlayMusic(SoundManager.Music.DayBegin);
                 break;
             }
             case DayPhase.Dusk:{
+                if(hyenas.Count > 0){
+                    uiBridge.ChangeFaceSprite(hyenas[0].face_sprite);
+                }
                 soundManager.StopMusic(SoundManager.Music.DayBegin);
                 soundManager.PlayMusic(SoundManager.Music.DuskBegin);
                 break;
             }
             case DayPhase.Night:{
-                soundManager.PlayNightMusic();
+                //soundManager.PlayNightMusic();
+                soundManager.PlayMusic(SoundManager.Music.NightBegin);
                 break;
             }
         }
@@ -375,12 +415,14 @@ public class TurnControlScript : MonoBehaviour
             
                 
                 if(turnChangeTime >= 1.0f){
+                    UpdateTowers();
                     turnChangeTime = 0.0f;
 
                     //Create Spawn Markers
                     hyenasSpawnManager.GenerateNewSpawnPointsBasedOnSpawnRates();
 
                     uiBridge.SetMoveButtonActivity(true);
+                    uiBridge.SetEndTurnButtonActivity(false);
                     uiBridge.SetTowerPlacementButtonActivity(tmManager.team_scores[UnitController.Team.cats].x >= tmManager.towerPlacementResourceCost);
                     for(int i = 0; i < cats.Length; i++){
                         cats[i].RefreshTurn();
@@ -396,6 +438,10 @@ public class TurnControlScript : MonoBehaviour
             }
             case DayPhase.Day:{
                 //Debug.Log("day");
+                if(allTowersUpdated){
+                    uiBridge.SetEndTurnButtonActivity(true);
+                }
+
                 if(committedToAnAction){
                     if(!cats[currentCat].moving){
                         committedToAnAction = false;
