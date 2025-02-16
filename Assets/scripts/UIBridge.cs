@@ -71,8 +71,8 @@ public class UIBridge : MonoBehaviour
 
         scoreTexts[0].text = catScore.x.ToString();
         scoreTexts[1].text = hyenaScore.x.ToString();
-        scoreTexts[2].text = catScore.y.ToString();
-        scoreTexts[3].text = hyenaScore.y.ToString();
+        scoreTexts[2].text = "(+" + catScore.y.ToString() + ")";
+        scoreTexts[3].text = "(+" + hyenaScore.y.ToString() + ")";
     }
 
     public void SetMoveButtonActivity(bool active){

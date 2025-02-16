@@ -73,6 +73,10 @@ public class SoundManager : MonoBehaviour
             }
             music[i] = gameObject.AddComponent<AudioSource>();
             music[i].clip = musicClips[i];
+            if(i == 1)
+            {
+                music[i].loop = true;
+            }
         }
         for(int i = 0; i < effectsClips.Length; i++){
             if(effectsClips[i] == null){
@@ -80,6 +84,10 @@ public class SoundManager : MonoBehaviour
             }
             effects[i] = gameObject.AddComponent<AudioSource>();
             effects[i].clip = effectsClips[i];
+            if (i == 0) //Cat attack
+            {
+                effects[i].volume = 0.2f;
+            }
         }
     }
     

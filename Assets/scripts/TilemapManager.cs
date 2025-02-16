@@ -435,6 +435,13 @@ public class TilemapManager : MonoBehaviour
 
         Vector2Int tempScore = team_scores[team];
         tempScore.x += tempScore.y;
+
+        if (team == UnitController.Team.hyena && tempScore.x >= 80)
+        {
+            tempScore.x -= 80;
+            hyenasSpawnManager.IncreaseSpawnRate();
+        }
+
         team_scores[team] = tempScore;
     }
 
