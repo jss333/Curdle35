@@ -1,28 +1,28 @@
 fileFormatVersion: 2
-guid: b099cc9afb8535c48bc0601d9fb9ee79
+guid: 39c44e6a1dbe631448381727eddd28bf
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 325440641546151924
-    second: Credits_0
+      213: -3472216634474295507
+    second: Credits (1)_0
   - first:
-      213: -7230797560680492228
-    second: Credits_1
+      213: -2907321737617599187
+    second: Credits (1)_1
   - first:
-      213: 1660878261141922055
-    second: Credits_2
+      213: 2863828056557184513
+    second: Credits (1)_2
   - first:
-      213: 3408833089268186296
-    second: Credits_3
+      213: -4974414212940575181
+    second: Credits (1)_3
   - first:
-      213: -4505729462688360816
-    second: Credits_4
+      213: 6454772274823788497
+    second: Credits (1)_4
   - first:
-      213: 7564604414351219451
-    second: Credits_5
+      213: 7905641904095606446
+    second: Credits (1)_5
   - first:
-      213: -8157575453700540238
-    second: Credits_6
+      213: -2589558381075069918
+    second: Credits (1)_6
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -144,7 +144,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Credits_0
+      name: Credits (1)_0
       rect:
         serializedVersion: 2
         x: 0
@@ -159,14 +159,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4f765da0a82348400800000000000000
-      internalID: 325440641546151924
+      spriteID: d2f05f61e5530dfc0800000000000000
+      internalID: -3472216634474295507
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Credits_1
+      name: Credits (1)_1
       rect:
         serializedVersion: 2
         x: 32
@@ -181,14 +181,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c33d0e0ddeb07ab90800000000000000
-      internalID: -7230797560680492228
+      spriteID: d251885884e17a7d0800000000000000
+      internalID: -2907321737617599187
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Credits_2
+      name: Credits (1)_2
       rect:
         serializedVersion: 2
         x: 63
@@ -203,14 +203,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 70168829aff9c0710800000000000000
-      internalID: 1660878261141922055
+      spriteID: 10663e8b17c5eb720800000000000000
+      internalID: 2863828056557184513
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Credits_3
+      name: Credits (1)_3
       rect:
         serializedVersion: 2
         x: 92
@@ -225,14 +225,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8bc7d6842ab9e4f20800000000000000
-      internalID: 3408833089268186296
+      spriteID: 33ec50001a457fab0800000000000000
+      internalID: -4974414212940575181
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Credits_4
+      name: Credits (1)_4
       rect:
         serializedVersion: 2
         x: 127
@@ -247,14 +247,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 096d2721dee6871c0800000000000000
-      internalID: -4505729462688360816
+      spriteID: 1d779e26f25f39950800000000000000
+      internalID: 6454772274823788497
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Credits_5
+      name: Credits (1)_5
       rect:
         serializedVersion: 2
         x: 142
@@ -269,14 +269,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bfa91c7c2afdaf860800000000000000
-      internalID: 7564604414351219451
+      spriteID: ea6bf070d6b76bd60800000000000000
+      internalID: 7905641904095606446
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Credits_6
+      name: Credits (1)_6
       rect:
         serializedVersion: 2
         x: 172
@@ -291,8 +291,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2b8bbb578587ace80800000000000000
-      internalID: -8157575453700540238
+      spriteID: 22482ea5f5a001cd0800000000000000
+      internalID: -2589558381075069918
       vertices: []
       indices: 
       edges: []
@@ -311,13 +311,13 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Credits_0: 325440641546151924
-      Credits_1: -7230797560680492228
-      Credits_2: 1660878261141922055
-      Credits_3: 3408833089268186296
-      Credits_4: -4505729462688360816
-      Credits_5: 7564604414351219451
-      Credits_6: -8157575453700540238
+      Credits (1)_0: -3472216634474295507
+      Credits (1)_1: -2907321737617599187
+      Credits (1)_2: 2863828056557184513
+      Credits (1)_3: -4974414212940575181
+      Credits (1)_4: 6454772274823788497
+      Credits (1)_5: 7905641904095606446
+      Credits (1)_6: -2589558381075069918
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
