@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 5b42810f3f2a7ed48beb111219bd0155
+guid: b75d12e415f6fb94fac2e34a01410da5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4296760176796813495
-    second: face_0
+      213: 6738480177456192941
+    second: Tower_Regular_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 256
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -126,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: face_0
+      name: Tower_Regular_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 78
         y: 0
-        width: 64
-        height: 64
+        width: 100
+        height: 227
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9473bf86267de54c0800000000000000
-      internalID: -4296760176796813495
+      spriteID: dad9947f404e38d50800000000000000
+      internalID: 6738480177456192941
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 586cc25033704e348b84c47b50fe27d2
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      face_0: -4296760176796813495
+      Tower_Regular_0: 6738480177456192941
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

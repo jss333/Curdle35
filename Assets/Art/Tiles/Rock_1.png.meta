@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 5b42810f3f2a7ed48beb111219bd0155
+guid: 9689ae4d4322f71498e0a45714c353d1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4296760176796813495
-    second: face_0
+      213: 4390033149433182506
+    second: Rock_1_0
+  - first:
+      213: -2515339362117706479
+    second: Rock_1_1
+  - first:
+      213: 4534554471996968086
+    second: Rock_1_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,12 +52,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 374
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -126,13 +132,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: face_0
+      name: Rock_1_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 64
-        height: 64
+        x: 33
+        y: 117
+        width: 45
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +147,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9473bf86267de54c0800000000000000
-      internalID: -4296760176796813495
+      spriteID: a297728d3e78cec30800000000000000
+      internalID: 4390033149433182506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock_1_1
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 151
+        width: 31
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11d9a6f4d28b71dd0800000000000000
+      internalID: -2515339362117706479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock_1_2
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 70
+        width: 85
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69cc9066449fdee30800000000000000
+      internalID: 4534554471996968086
       vertices: []
       indices: 
       edges: []
@@ -151,7 +201,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +211,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      face_0: -4296760176796813495
+      Rock_1_0: 4390033149433182506
+      Rock_1_1: -2515339362117706479
+      Rock_1_2: 4534554471996968086
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

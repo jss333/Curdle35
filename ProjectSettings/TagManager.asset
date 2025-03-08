@@ -47,6 +47,9 @@ TagManager:
   - name: Resources
     uniqueID: 476703059
     locked: 0
+  - name: Movement Range
+    uniqueID: 4269478555
+    locked: 0
   - name: Units
     uniqueID: 1595681471
     locked: 0
