@@ -4,17 +4,19 @@ using UnityEngine.Tilemaps;
 
 public class BoardManager : MonoBehaviour
 {
-    private int width;
-    private int height;
+    [Header("Config - References")]
+    [SerializeField] private Tilemap terrainTilemap;
+    [SerializeField] private Tilemap resourceTilemap;
 
-    public Tilemap terrainTilemap;
-    public Tilemap resourceTilemap;
+    [SerializeField] private TileBase neutralTerrainTile;
+    [SerializeField] private TileBase catTerrainTile;
+    [SerializeField] private TileBase hyenaTerrainTile;
 
-    public TileBase neutralTerrainTile;
-    public TileBase catTerrainTile;
-    public TileBase hyenaTerrainTile;
+    [SerializeField] private TileBase[] resourceTiles;
 
-    public TileBase[] resourceTiles;
+    [Header("State")]
+    [SerializeField] private int width;
+    [SerializeField] private int height;
 
     private int[,] predefinedBoard = new int[,]
     {

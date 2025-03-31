@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [Header("Zoom Settings")]
+    [Header("Config - Zoom Settings")]
     [SerializeField] private float zoomSpeed = 5f;
     [SerializeField] private float minZoom = 3f;
     [SerializeField] private float maxZoom = 15f;
 
-    [Header("Panning Settings")]
+    [Header("Config - Panning Settings")]
     [SerializeField] private float panSpeed = 5f;
     [SerializeField] private float dragSpeed = 0.1f;
 
