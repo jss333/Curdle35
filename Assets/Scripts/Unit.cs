@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
@@ -31,5 +32,16 @@ public class Unit : MonoBehaviour
     public void ShowDeselected()
     {
         spriteRenderer.color = originalColor;
+    }
+
+    public virtual List<Vector2Int> GetValidMovePositions()
+    {
+        List<Vector2Int> positions = new List<Vector2Int>();
+
+        positions.Add(new Vector2Int(2, 1));
+        positions.Add(new Vector2Int(0, 2));
+        positions.Add(new Vector2Int(1, 2));
+
+        return positions;
     }
 }

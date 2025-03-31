@@ -1,12 +1,15 @@
-using System.Threading;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class BoardManager : MonoBehaviour
 {
+    public static BoardManager Instance { get; private set; }
+
     [Header("Config - Tilemap references")]
     [SerializeField] private Tilemap terrainTilemap;
     [SerializeField] private Tilemap resourceTilemap;
+    [SerializeField] private Tilemap movementRangeTilemap;
 
     [Header("Config - Terrain tile references")]
     [SerializeField] private TileBase neutralTerrainTile;
@@ -15,6 +18,9 @@ public class BoardManager : MonoBehaviour
 
     [Header("Config - Resource tile references")]
     [SerializeField] private TileBase[] resourceTiles;
+
+    [Header("Config - Movement range tile reference")]
+    [SerializeField] private TileBase movementRangeTile;
 
     [Header("State")]
     [SerializeField] private int width;
@@ -29,6 +35,11 @@ public class BoardManager : MonoBehaviour
         { -1,  4,  3,  2,  1, -1 },
         { -1,  1,  2, -1, -1, -1 }
     };
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
@@ -71,8 +82,25 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    void Update()
+    public void ShowMovementRange(IEnumerable<Vector2Int> cells)
     {
-        
+        foreach (var cell in cells)
+        {
+            if (IsWithinBounds(cell))
+            {
+                movementRangeTilemap.SetTile((Vector3Int)cell, movementRangeTile);
+            }
+        }
+    }
+
+    public void ClearMovementRange()
+    {
+        movementRangeTilemap.ClearAllTiles();
+    }
+
+    private bool IsWithinBounds(Vector2Int pos)
+    {
+        return pos.x >= 0 && pos.x < width &&
+               pos.y >= 0 && pos.y < height;
     }
 }

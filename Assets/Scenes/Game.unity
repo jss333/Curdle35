@@ -770,9 +770,9 @@ GameObject:
   m_Component:
   - component: {fileID: 449178326}
   - component: {fileID: 449178325}
-  - component: {fileID: 449178327}
   - component: {fileID: 449178328}
   - component: {fileID: 449178329}
+  - component: {fileID: 449178327}
   m_Layer: 0
   m_Name: Lion
   m_TagString: Untagged
@@ -1336,6 +1336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   terrainTilemap: {fileID: 1520607443}
   resourceTilemap: {fileID: 990433878}
+  movementRangeTilemap: {fileID: 1592856328}
   neutralTerrainTile: {fileID: 11400000, guid: 85717a9c366829d42badd4af8ebc0ec3, type: 2}
   catTerrainTile: {fileID: 11400000, guid: 149dbb788bc6f7b4998c0221bc0dd098, type: 2}
   hyenaTerrainTile: {fileID: 11400000, guid: f65130ef14a89454ab303381e0a2a7f2, type: 2}
@@ -1343,6 +1344,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 49cc9d1baefd556489f1d0b75dacc1ec, type: 2}
   - {fileID: 11400000, guid: ceaf946a467abce47802b34ff090b20b, type: 2}
   - {fileID: 11400000, guid: 011d1348f487d8e4e9f86456f1f71bc7, type: 2}
+  movementRangeTile: {fileID: 11400000, guid: 97070a33132d98b4c8c7707816850c15, type: 2}
   width: 0
   height: 0
 --- !u!4 &561208013
@@ -2973,6 +2975,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc61f267402915a40bbd6b8c53d6b9e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardManager: {fileID: 561208012}
   selectedUnit: {fileID: 0}
 --- !u!4 &1258754734
 Transform:
@@ -4857,7 +4860,7 @@ GameObject:
   - component: {fileID: 1592856328}
   - component: {fileID: 1592856327}
   m_Layer: 0
-  m_Name: MoveRangeTilemap
+  m_Name: MovementRangeTilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

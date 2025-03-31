@@ -1,10 +1,12 @@
+#nullable enable
+
 using UnityEngine;
 using static DG.Tweening.DOTweenModuleUtils;
 
 public class UnitSelectionManager : MonoBehaviour
 {
     [Header("State")]
-    [SerializeField] private Unit selectedUnit;
+    [SerializeField] private Unit? selectedUnit;
 
     void Update()
     {
@@ -15,44 +17,49 @@ public class UnitSelectionManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0)) // Left-click
         {
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero); //distance of 0 means just check under the point
+            Unit? unit = RaycastToFindUnitAt(Input.mousePosition);
 
-            if (hit.collider != null)
+            if (unit != null)
             {
-                Unit unit = hit.collider.GetComponent<Unit>();
-
-                if (unit != null)
-                {
-                    SelectUnit(unit);
-                }
-                else
-                {
-                    DeselectCurrentUnit();
-                }
+                SelectUnitAndShowMovementRange(unit);
             }
             else
             {
-                DeselectCurrentUnit();
+                DeselectCurrentUnitAndClearMovementRange();
             }
         }
     }
 
-    private void SelectUnit(Unit unit)
+    private Unit? RaycastToFindUnitAt(Vector3 position)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(position), Vector2.zero); //direction of 0 means just check under the point
+
+        if (hit.collider != null)
+        {
+            return hit.collider.GetComponent<Unit>();
+        }
+
+        return null;
+    }
+
+    private void SelectUnitAndShowMovementRange(Unit unit)
     {
         if (selectedUnit != null)
         {
-            selectedUnit.ShowDeselected();
+            DeselectCurrentUnitAndClearMovementRange();
         }
 
         selectedUnit = unit;
         selectedUnit.ShowSelected();
+        BoardManager.Instance.ShowMovementRange(selectedUnit.GetValidMovePositions());
     }
 
-    private void DeselectCurrentUnit()
+    private void DeselectCurrentUnitAndClearMovementRange()
     {
         if (selectedUnit != null)
         {
             selectedUnit.ShowDeselected();
+            BoardManager.Instance.ClearMovementRange();
             selectedUnit = null;
         }
     }

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6e5677749388c048b93820c2cc2e741, type: 3}
-  m_Name: Border_With_Rules
+  m_Name: Movement_Range_Tile
   m_EditorClassIdentifier: 
   m_Sprites:
   - {fileID: -4603182780432533220, guid: 41546e31a867589478d6b2ad288a9e2f, type: 3}
