@@ -117,7 +117,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 256
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -195,12 +195,12 @@ TextureImporter:
       name: Lion_Idle_Animation_0
       rect:
         serializedVersion: 2
-        x: 31
-        y: 774
-        width: 191
-        height: 244
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 768
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.468, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -217,12 +217,12 @@ TextureImporter:
       name: Lion_Idle_Animation_1
       rect:
         serializedVersion: 2
-        x: 285
-        y: 769
-        width: 193
-        height: 247
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 256
+        y: 768
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.468, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -239,12 +239,12 @@ TextureImporter:
       name: Lion_Idle_Animation_2
       rect:
         serializedVersion: 2
-        x: 414
-        y: 1012
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 512
+        y: 767
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.468, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -261,12 +261,12 @@ TextureImporter:
       name: Lion_Idle_Animation_3
       rect:
         serializedVersion: 2
-        x: 541
-        y: 769
-        width: 193
-        height: 247
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 768
+        y: 768
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.468, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -283,12 +283,12 @@ TextureImporter:
       name: Lion_Idle_Animation_4
       rect:
         serializedVersion: 2
-        x: 670
-        y: 1012
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 512
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.468, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -305,12 +305,12 @@ TextureImporter:
       name: Lion_Idle_Animation_5
       rect:
         serializedVersion: 2
-        x: 796
-        y: 767
-        width: 195
-        height: 246
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 256
+        y: 512
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.468, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -327,12 +327,12 @@ TextureImporter:
       name: Lion_Idle_Animation_6
       rect:
         serializedVersion: 2
-        x: 27
-        y: 511
-        width: 196
-        height: 250
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 512
+        y: 512
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.468, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -349,12 +349,12 @@ TextureImporter:
       name: Lion_Idle_Animation_7
       rect:
         serializedVersion: 2
-        x: 92
-        y: 746
-        width: 19
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 768
+        y: 512
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.468, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -371,12 +371,12 @@ TextureImporter:
       name: Lion_Idle_Animation_8
       rect:
         serializedVersion: 2
-        x: 283
-        y: 511
-        width: 196
-        height: 250
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 256
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.468, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -393,12 +393,12 @@ TextureImporter:
       name: Lion_Idle_Animation_9
       rect:
         serializedVersion: 2
-        x: 348
-        y: 746
-        width: 19
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 256
+        y: 256
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.468, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -415,12 +415,12 @@ TextureImporter:
       name: Lion_Idle_Animation_10
       rect:
         serializedVersion: 2
-        x: 535
-        y: 511
-        width: 200
-        height: 251
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 512
+        y: 256
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.468, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -437,12 +437,12 @@ TextureImporter:
       name: Lion_Idle_Animation_11
       rect:
         serializedVersion: 2
-        x: 795
-        y: 511
-        width: 196
-        height: 250
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 768
+        y: 256
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.468, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -459,12 +459,12 @@ TextureImporter:
       name: Lion_Idle_Animation_12
       rect:
         serializedVersion: 2
-        x: 860
-        y: 746
-        width: 19
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 0
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.468, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -481,12 +481,12 @@ TextureImporter:
       name: Lion_Idle_Animation_13
       rect:
         serializedVersion: 2
-        x: 727
-        y: 573
-        width: 10
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.468, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -499,209 +499,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: Lion_Idle_Animation_14
-      rect:
-        serializedVersion: 2
-        x: 27
-        y: 255
-        width: 196
-        height: 250
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6cefac5f31a1381e0800000000000000
-      internalID: -2196883520196247866
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lion_Idle_Animation_15
-      rect:
-        serializedVersion: 2
-        x: 92
-        y: 490
-        width: 19
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2eb273e1b93803de0800000000000000
-      internalID: -1355438785588417566
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lion_Idle_Animation_16
-      rect:
-        serializedVersion: 2
-        x: 284
-        y: 255
-        width: 195
-        height: 246
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 270f83af9f8661a30800000000000000
-      internalID: 4185648326541635698
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lion_Idle_Animation_17
-      rect:
-        serializedVersion: 2
-        x: 541
-        y: 257
-        width: 193
-        height: 247
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9bf17c17b5fd7ebd0800000000000000
-      internalID: -2600864675939278919
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lion_Idle_Animation_18
-      rect:
-        serializedVersion: 2
-        x: 670
-        y: 500
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 11fc906277b746d20800000000000000
-      internalID: 3270874981047324433
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lion_Idle_Animation_19
-      rect:
-        serializedVersion: 2
-        x: 797
-        y: 257
-        width: 193
-        height: 247
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5338efb181b3eb720800000000000000
-      internalID: 2863791387789132597
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lion_Idle_Animation_20
-      rect:
-        serializedVersion: 2
-        x: 926
-        y: 500
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5f8d812ae70aa9f60800000000000000
-      internalID: 8041916550369302773
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lion_Idle_Animation_21
-      rect:
-        serializedVersion: 2
-        x: 31
-        y: 6
-        width: 191
-        height: 244
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b61864d391f2d2e90800000000000000
-      internalID: -7048926056316239509
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lion_Idle_Animation_22
-      rect:
-        serializedVersion: 2
-        x: 287
-        y: 6
-        width: 191
-        height: 244
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 09aefe98db91a7830800000000000000
-      internalID: 4069593515136379536
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: d49c1a298620a6c4fb0a54506f9a7e5a
     internalID: 0
     vertices: []
     indices: 
@@ -717,16 +519,7 @@ TextureImporter:
       Lion_Idle_Animation_11: -6272047429291150433
       Lion_Idle_Animation_12: -5607340483274943171
       Lion_Idle_Animation_13: 8307473139152665011
-      Lion_Idle_Animation_14: -2196883520196247866
-      Lion_Idle_Animation_15: -1355438785588417566
-      Lion_Idle_Animation_16: 4185648326541635698
-      Lion_Idle_Animation_17: -2600864675939278919
-      Lion_Idle_Animation_18: 3270874981047324433
-      Lion_Idle_Animation_19: 2863791387789132597
       Lion_Idle_Animation_2: 735451639956386403
-      Lion_Idle_Animation_20: 8041916550369302773
-      Lion_Idle_Animation_21: -7048926056316239509
-      Lion_Idle_Animation_22: 4069593515136379536
       Lion_Idle_Animation_3: 1105977291028831655
       Lion_Idle_Animation_4: -4733663159815388190
       Lion_Idle_Animation_5: 9179457192335473605

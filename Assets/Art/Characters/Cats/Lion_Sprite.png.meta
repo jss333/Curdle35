@@ -129,12 +129,12 @@ TextureImporter:
       name: Lion_Sprite_0
       rect:
         serializedVersion: 2
-        x: 31
-        y: 6
-        width: 191
-        height: 244
+        x: 0
+        y: 0
+        width: 256
+        height: 256
       alignment: 9
-      pivot: {x: 0.49364933, y: 0.32600656}
+      pivot: {x: 0.5025097, y: 0.36942318}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
