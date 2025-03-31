@@ -23,12 +23,12 @@ public class Unit : MonoBehaviour
         this.transform.position = GridHelper.Instance.GridToWorld(boardPosition);
     }
 
-    public void Select()
+    public void ShowSelected()
     {
         spriteRenderer.color = highlightColor;
     }
 
-    public void Deselect()
+    public void ShowDeselected()
     {
         spriteRenderer.color = originalColor;
     }
