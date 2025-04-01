@@ -75,7 +75,7 @@ public class UnitSelectionManager : MonoBehaviour
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2Int pos = GridHelper.Instance.WorldToGrid(mouseWorld);
 
-        if (moveRange.IsCellInMoveRange(pos))
+        if (moveRange.IsCellInMovementRange(pos))
         {
             StartCoroutine(movableUnit.MoveToCell(pos));
             DeselectCurrentUnitIfAny();

@@ -16,18 +16,25 @@ public class MovementRange : MonoBehaviour
 
     public List<Vector2Int> GetValidMovementCells()
     {
-        List<Vector2Int> directions = new List<Vector2Int>();
-        AddAllOrthogonalDirectionsOfLengthUpTo(directions, movementRange);
-        AddAllDiagonalDirectionsOfLengthUpTo(directions, movementRange - 1);
-
         List<Vector2Int> targetCells = new List<Vector2Int>();
-
         Vector2Int currentPos = unit.GetBoardPosition();
-        foreach (var dir in directions)
+
+        foreach (var dir in OrthogonalDirections())
         {
-            Vector2Int candidatePos = currentPos + dir;
-            if (BoardManager.Instance.IsValidCellForUnitMovement(candidatePos))
+            for(int length = 1; length <= movementRange; length++)
             {
+                Vector2Int candidatePos = currentPos + (dir * length);
+                if (!BoardManager.Instance.IsValidCellForUnitMovement(candidatePos)) break;
+                targetCells.Add(candidatePos);
+            }
+        }
+
+        foreach (var dir in DiagonalDirections())
+        {
+            for (int length = 1; length <= movementRange-1; length++)
+            {
+                Vector2Int candidatePos = currentPos + (dir * length);
+                if (!BoardManager.Instance.IsValidCellForUnitMovement(candidatePos)) break;
                 targetCells.Add(candidatePos);
             }
         }
@@ -35,29 +42,27 @@ public class MovementRange : MonoBehaviour
         return targetCells;
     }
 
-    private void AddAllOrthogonalDirectionsOfLengthUpTo(List<Vector2Int> directions, int maxLength)
+    private IEnumerable<Vector2Int> OrthogonalDirections()
     {
-        for (int i = 1; i <= maxLength; i++)
-        {
-            directions.Add(new Vector2Int( 0,  i));
-            directions.Add(new Vector2Int( 0, -i));
-            directions.Add(new Vector2Int( i,  0));
-            directions.Add(new Vector2Int(-i,  0));
-        }
+        List<Vector2Int> dirs = new List<Vector2Int>();
+        dirs.Add(new Vector2Int( 0,  1));
+        dirs.Add(new Vector2Int( 0, -1));
+        dirs.Add(new Vector2Int( 1,  0));
+        dirs.Add(new Vector2Int(-1,  0));
+        return dirs;
     }
 
-    private void AddAllDiagonalDirectionsOfLengthUpTo(List<Vector2Int> directions, int maxLength)
+    private IEnumerable<Vector2Int> DiagonalDirections()
     {
-        for (int i = 1; i <= maxLength; i++)
-        {
-            directions.Add(new Vector2Int( i,  i));
-            directions.Add(new Vector2Int(-i, -i));
-            directions.Add(new Vector2Int( i, -i));
-            directions.Add(new Vector2Int(-i,  i));
-        }
+        List<Vector2Int> dirs = new List<Vector2Int>();
+        dirs.Add(new Vector2Int( 1,  1));
+        dirs.Add(new Vector2Int( 1, -1));
+        dirs.Add(new Vector2Int(-1, -1));
+        dirs.Add(new Vector2Int(-1,  1));
+        return dirs;
     }
 
-    public bool IsCellInMoveRange(Vector2Int pos)
+    public bool IsCellInMovementRange(Vector2Int pos)
     {
         return GetValidMovementCells().Contains(pos);
     }
