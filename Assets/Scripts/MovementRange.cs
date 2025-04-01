@@ -14,28 +14,35 @@ public class MovementRange : MonoBehaviour
         unit = GetComponent<Unit>();
     }
 
-    public List<Vector2Int> GetValidMovementCells()
+    public List<Vector2Int> GetValidCells()
     {
         List<Vector2Int> targetCells = new List<Vector2Int>();
-        Vector2Int currentPos = unit.GetBoardPosition();
 
-        foreach (var dir in OrthogonalDirections())
-        {
-            for(int length = 1; length <= movementRange; length++)
-            {
-                Vector2Int candidatePos = currentPos + (dir * length);
-                if (!BoardManager.Instance.IsValidCellForUnitMovement(candidatePos)) break;
-                targetCells.Add(candidatePos);
-            }
-        }
+        targetCells.AddRange(CellsInDirsUpToLengthThatAreNotVoidAndNotOccupied(OrthogonalDirections(), movementRange));
+        targetCells.AddRange(CellsInDirsUpToLengthThatAreNotVoidAndNotOccupied(DiagonalDirections(), movementRange - 1));
 
-        foreach (var dir in DiagonalDirections())
+        return targetCells;
+    }
+
+    private List<Vector2Int> CellsInDirsUpToLengthThatAreNotVoidAndNotOccupied(IEnumerable<Vector2Int> dirs, int maxLength)
+    {
+        List<Vector2Int> targetCells = new List<Vector2Int>();
+
+        foreach (var dir in dirs)
         {
-            for (int length = 1; length <= movementRange-1; length++)
+            for (int length = 1; length <= maxLength; length++)
             {
-                Vector2Int candidatePos = currentPos + (dir * length);
+                Vector2Int candidatePos = unit.GetBoardPosition() + (dir * length);
+
+                // Stop looking in this direction if there is a void cell
                 if (!BoardManager.Instance.IsValidCellForUnitMovement(candidatePos)) break;
-                targetCells.Add(candidatePos);
+
+                // Ignore cells already occupied by a cat
+                Unit unitAtPos = BoardManager.Instance.GetUnitAt(candidatePos);
+                if (unitAtPos == null || unitAtPos.GetFaction() != Faction.Cats)
+                {
+                    targetCells.Add(candidatePos);
+                }
             }
         }
 
@@ -64,7 +71,7 @@ public class MovementRange : MonoBehaviour
 
     public bool IsCellInMovementRange(Vector2Int pos)
     {
-        return GetValidMovementCells().Contains(pos);
+        return GetValidCells().Contains(pos);
     }
 
     public Unit GetUnit()

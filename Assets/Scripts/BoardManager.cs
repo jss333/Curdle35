@@ -26,6 +26,7 @@ public class BoardManager : MonoBehaviour
     [SerializeField] private int width;
     [SerializeField] private int height;
     [SerializeField] private CellData[,] board;
+    [SerializeField] private Dictionary<Vector2Int, Unit> units = new Dictionary<Vector2Int, Unit>();
 
     private int[,] predefinedBoard = new int[,]
     {
@@ -84,7 +85,7 @@ public class BoardManager : MonoBehaviour
 
     public void ShowMovementRange(MovementRange mvmtRange)
     {
-        IEnumerable<Vector2Int> cells = mvmtRange.GetValidMovementCells();
+        IEnumerable<Vector2Int> cells = mvmtRange.GetValidCells();
 
         foreach (var cell in cells)
         {
@@ -97,6 +98,26 @@ public class BoardManager : MonoBehaviour
     public void ClearMovementRange()
     {
         movementRangeTilemap.ClearAllTiles();
+    }
+
+    public Unit GetUnitAt(Vector2Int pos)
+    {
+        if (units.ContainsKey(pos))
+        {
+            return units[pos];
+        }
+        return null;
+    }
+
+    public void RegisterUnitPos(Unit unit, Vector2Int pos)
+    {
+        units[pos] = unit;
+    }
+
+    public void UpdateUnitPos(Unit unit, Vector2Int oldPos, Vector2Int newPos)
+    {
+        units.Remove(oldPos);
+        RegisterUnitPos(unit, newPos);
     }
 
     public bool IsValidCellForUnitMovement(Vector2Int pos)

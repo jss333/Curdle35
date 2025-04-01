@@ -26,7 +26,7 @@ public class MovableUnit : MonoBehaviour
         }
 
         transform.position = targetWorld;
-        unit.SetBoardPosition(destination);
+        unit.UpdateBoardPosition(destination);
 
         GameManager.Instance.SetState(GameState.PlayerInput);
     }

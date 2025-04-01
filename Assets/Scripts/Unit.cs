@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+    [Header("Config")]
+    [SerializeField] private Faction faction;
+
     [Header("State")]
     [SerializeField] private Vector2Int boardPosition;
 
@@ -13,9 +16,15 @@ public class Unit : MonoBehaviour
     {
         // Determine logical board position given current world position
         boardPosition = GridHelper.Instance.WorldToGrid(transform.position);
+        BoardManager.Instance.RegisterUnitPos(this, boardPosition);
 
         // Set unit's workd position to be the correct one for the given board position
         this.transform.position = GridHelper.Instance.GridToWorld(boardPosition);
+    }
+
+    public Faction GetFaction()
+    {
+        return faction;
     }
 
     public Vector2Int GetBoardPosition()
@@ -23,8 +32,9 @@ public class Unit : MonoBehaviour
         return boardPosition;
     }
 
-    public void SetBoardPosition(Vector2Int pos)
+    public void UpdateBoardPosition(Vector2Int newPos)
     {
-        boardPosition = pos;
+        BoardManager.Instance.UpdateUnitPos(this, boardPosition, newPos);
+        boardPosition = newPos;
     }
 }

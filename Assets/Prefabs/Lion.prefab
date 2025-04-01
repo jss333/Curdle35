@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51527edc4ba57754e937e03389ffd9cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  faction: 1
   boardPosition: {x: 0, y: 0}
 --- !u!114 &7929002686415522403
 MonoBehaviour:
