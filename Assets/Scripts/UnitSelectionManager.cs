@@ -51,7 +51,12 @@ public class UnitSelectionManager : MonoBehaviour
 
         selectedUnit = unit;
         selectedUnit.ShowSelected();
-        BoardManager.Instance.ShowMovementRange(selectedUnit.GetValidMovePositions());
+
+        PlayerMovableUnit? movableUnit = unit.GetPlayerMovableUnit();
+        if (movableUnit != null)
+        {
+            BoardManager.Instance.ShowMovementRangeForUnit(movableUnit);
+        }
     }
 
     private void DeselectCurrentUnitAndClearMovementRange()

@@ -1,9 +1,12 @@
+#nullable enable
+
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class Unit : MonoBehaviour
 {
-    private SpriteRenderer spriteRenderer;
+    private SpriteRenderer spriteRenderer = null!;
 
     [Header("Config")]
     [SerializeField] private Color highlightColor = Color.yellow;
@@ -24,6 +27,11 @@ public class Unit : MonoBehaviour
         this.transform.position = GridHelper.Instance.GridToWorld(boardPosition);
     }
 
+    public Vector2Int GetBoardPosition()
+    {
+        return boardPosition;
+    }
+
     public void ShowSelected()
     {
         spriteRenderer.color = highlightColor;
@@ -34,14 +42,8 @@ public class Unit : MonoBehaviour
         spriteRenderer.color = originalColor;
     }
 
-    public virtual List<Vector2Int> GetValidMovePositions()
+    public PlayerMovableUnit? GetPlayerMovableUnit()
     {
-        List<Vector2Int> positions = new List<Vector2Int>();
-
-        positions.Add(new Vector2Int(2, 1));
-        positions.Add(new Vector2Int(0, 2));
-        positions.Add(new Vector2Int(1, 2));
-
-        return positions;
+        return GetComponent<PlayerMovableUnit>();
     }
 }

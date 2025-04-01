@@ -82,20 +82,29 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    public void ShowMovementRange(IEnumerable<Vector2Int> cells)
+    public void ShowMovementRangeForUnit(PlayerMovableUnit unit)
     {
+        IEnumerable<Vector2Int> cells = unit.GetValidMovementCells();
+
         foreach (var cell in cells)
         {
-            if (IsWithinBounds(cell))
-            {
-                movementRangeTilemap.SetTile((Vector3Int)cell, movementRangeTile);
-            }
+            movementRangeTilemap.SetTile((Vector3Int)cell, movementRangeTile);
         }
     }
 
     public void ClearMovementRange()
     {
         movementRangeTilemap.ClearAllTiles();
+    }
+
+    public bool IsValidCellForUnitMovement(Vector2Int pos)
+    {
+        return IsWithinBounds(pos) && !IsVoidCell(pos);
+    }
+
+    public bool IsVoidCell(Vector2Int pos)
+    {
+        return board[pos.x, pos.y].IsVoidCell();
     }
 
     private bool IsWithinBounds(Vector2Int pos)
