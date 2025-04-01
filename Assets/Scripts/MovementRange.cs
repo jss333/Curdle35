@@ -61,4 +61,9 @@ public class MovementRange : MonoBehaviour
     {
         return GetValidMovementCells().Contains(pos);
     }
+
+    public Unit GetUnit()
+    {
+        return unit;
+    }
 }

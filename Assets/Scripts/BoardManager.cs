@@ -82,14 +82,16 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    public void ShowMovementRangeForUnit(MovementRange unit)
+    public void ShowMovementRange(MovementRange mvmtRange)
     {
-        IEnumerable<Vector2Int> cells = unit.GetValidMovementCells();
+        IEnumerable<Vector2Int> cells = mvmtRange.GetValidMovementCells();
 
         foreach (var cell in cells)
         {
             movementRangeTilemap.SetTile((Vector3Int)cell, movementRangeTile);
         }
+        // Also highlight the cell the unit is standing on
+        movementRangeTilemap.SetTile((Vector3Int)mvmtRange.GetUnit().GetBoardPosition(), movementRangeTile);
     }
 
     public void ClearMovementRange()

@@ -24,10 +24,10 @@ public class SelectableUnit : MonoBehaviour
         spriteRenderer.color = highlightColor;
 
         // TODO use notification?
-        MovementRange? unitWithMoveRange = GetMovementRange();
-        if (unitWithMoveRange != null)
+        MovementRange? mvmtRange = GetMovementRange();
+        if (mvmtRange != null)
         {
-            BoardManager.Instance.ShowMovementRangeForUnit(unitWithMoveRange);
+            BoardManager.Instance.ShowMovementRange(mvmtRange);
         }
     }
 
