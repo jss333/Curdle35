@@ -1,7 +1,7 @@
 #nullable enable
 
 using UnityEngine;
-using static DG.Tweening.DOTweenModuleUtils;
+using System.Collections;
 
 public class UnitSelectionManager : MonoBehaviour
 {
@@ -10,23 +10,26 @@ public class UnitSelectionManager : MonoBehaviour
 
     void Update()
     {
-        HandleSelection();
+        if (!GameManager.Instance.IsPlayerInputState()) return;
+
+        if (Input.GetMouseButtonDown(0)) // Left-click
+        {
+            if (HandleMoveInput()) return;
+            HandleSelection();
+        }
     }
 
     private void HandleSelection()
     {
-        if (Input.GetMouseButtonDown(0)) // Left-click
-        {
-            Unit? unit = RaycastToFindUnitAt(Input.mousePosition);
+        Unit? unit = RaycastToFindUnitAt(Input.mousePosition);
 
-            if (unit != null)
-            {
-                SelectUnitAndShowMovementRange(unit);
-            }
-            else
-            {
-                DeselectCurrentUnitAndClearMovementRange();
-            }
+        if (unit != null)
+        {
+            SelectUnitAndShowMovementRange(unit);
+        }
+        else
+        {
+            DeselectCurrentUnitAndClearMovementRange();
         }
     }
 
@@ -67,5 +70,25 @@ public class UnitSelectionManager : MonoBehaviour
             BoardManager.Instance.ClearMovementRange();
             selectedUnit = null;
         }
+    }
+
+    private bool HandleMoveInput()
+    {
+        if (selectedUnit == null) return false;
+        
+        PlayerMovableUnit? movableUnit = selectedUnit.GetPlayerMovableUnit();
+        if(movableUnit == null) return false;
+        
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2Int pos = GridHelper.Instance.WorldToGrid(mouseWorld);
+
+        if (movableUnit.IsCellInMoveRange(pos))
+        {
+            StartCoroutine(selectedUnit.MoveToCell(pos));
+            DeselectCurrentUnitAndClearMovementRange();
+            return true;
+        }
+
+        return false;
     }
 }

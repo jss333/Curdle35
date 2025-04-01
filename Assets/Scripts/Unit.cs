@@ -1,6 +1,7 @@
 #nullable enable
 
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -10,6 +11,7 @@ public class Unit : MonoBehaviour
 
     [Header("Config")]
     [SerializeField] private Color highlightColor = Color.yellow;
+    [SerializeField] private float moveSpeed = 4f;
 
     [Header("State")]
     [SerializeField] private Color originalColor;
@@ -45,5 +47,22 @@ public class Unit : MonoBehaviour
     public PlayerMovableUnit? GetPlayerMovableUnit()
     {
         return GetComponent<PlayerMovableUnit>();
+    }
+
+    public IEnumerator MoveToCell(Vector2Int destination)
+    {
+        GameManager.Instance.SetState(GameState.UnitIsMoving);
+
+        Vector3 targetWorld = GridHelper.Instance.GridToWorld(destination);
+        while (Vector3.Distance(transform.position, targetWorld) > 0.01f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetWorld, moveSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        transform.position = targetWorld;
+        boardPosition = destination;
+
+        GameManager.Instance.SetState(GameState.PlayerInput);
     }
 }

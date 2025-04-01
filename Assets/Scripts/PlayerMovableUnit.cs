@@ -56,4 +56,9 @@ public class PlayerMovableUnit : MonoBehaviour
             directions.Add(new Vector2Int(-i,  i));
         }
     }
+
+    public bool IsCellInMoveRange(Vector2Int pos)
+    {
+        return GetValidMovementCells().Contains(pos);
+    }
 }
