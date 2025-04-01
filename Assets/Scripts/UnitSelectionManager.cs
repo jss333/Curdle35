@@ -66,15 +66,18 @@ public class UnitSelectionManager : MonoBehaviour
     {
         if (currentlySelectedUnit == null) return false;
         
-        PlayerMovableUnit? movableUnit = currentlySelectedUnit.GetPlayerMovableUnit();
+        MovementRange? moveRange = currentlySelectedUnit.GetMovementRange();
+        if(moveRange == null) return false;
+
+        MovableUnit? movableUnit = currentlySelectedUnit.GetComponent<MovableUnit>();
         if(movableUnit == null) return false;
-        
+
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2Int pos = GridHelper.Instance.WorldToGrid(mouseWorld);
 
-        if (movableUnit.IsCellInMoveRange(pos))
+        if (moveRange.IsCellInMoveRange(pos))
         {
-            StartCoroutine(movableUnit.GetUnit().MoveToCell(pos));
+            StartCoroutine(movableUnit.MoveToCell(pos));
             DeselectCurrentUnitIfAny();
             return true;
         }

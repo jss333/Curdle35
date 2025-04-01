@@ -24,10 +24,10 @@ public class SelectableUnit : MonoBehaviour
         spriteRenderer.color = highlightColor;
 
         // TODO use notification?
-        PlayerMovableUnit? movableUnit = GetPlayerMovableUnit();
-        if (movableUnit != null)
+        MovementRange? unitWithMoveRange = GetMovementRange();
+        if (unitWithMoveRange != null)
         {
-            BoardManager.Instance.ShowMovementRangeForUnit(movableUnit);
+            BoardManager.Instance.ShowMovementRangeForUnit(unitWithMoveRange);
         }
     }
 
@@ -39,8 +39,8 @@ public class SelectableUnit : MonoBehaviour
         BoardManager.Instance.ClearMovementRange();
     }
 
-    public PlayerMovableUnit? GetPlayerMovableUnit()
+    public MovementRange? GetMovementRange()
     {
-        return GetComponent<PlayerMovableUnit>();
+        return GetComponent<MovementRange>();
     }
 }

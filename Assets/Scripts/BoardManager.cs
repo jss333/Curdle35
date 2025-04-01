@@ -82,7 +82,7 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    public void ShowMovementRangeForUnit(PlayerMovableUnit unit)
+    public void ShowMovementRangeForUnit(MovementRange unit)
     {
         IEnumerable<Vector2Int> cells = unit.GetValidMovementCells();
 

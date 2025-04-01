@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Unit))]
-public class PlayerMovableUnit : MonoBehaviour
+public class MovementRange : MonoBehaviour
 {
     [Header("Config")]
     [SerializeField] private int movementRange = 2;
@@ -60,10 +60,5 @@ public class PlayerMovableUnit : MonoBehaviour
     public bool IsCellInMoveRange(Vector2Int pos)
     {
         return GetValidMovementCells().Contains(pos);
-    }
-
-    public Unit GetUnit()
-    {
-        return GetComponent<Unit>();
     }
 }
