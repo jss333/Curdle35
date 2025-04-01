@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 public class HyenaController : UnitController
 {
 
-    bool attackedThisTurn = false;
+    //bool attackedThisTurn = false;
 
     public List<Vector3> movementPath;
 
@@ -16,7 +16,7 @@ public class HyenaController : UnitController
     public Vector3 attackPosition = Vector3.zero;
     public bool attackedTarget = false;
 
-    [SerializeField] private int damage = 1;
+    //[SerializeField] private int damage = 1;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void Start() 

@@ -18,7 +18,7 @@ public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
     [SerializeField] private int startInnerSpawnRate = 1;
     [SerializeField] private int minDistBetOuterSpawnPoints = 4;
     [SerializeField] private int minDistBetInnerSpawnPointAndHQ = 2;
-    [SerializeField] private int corruptionNeededForSpawnRateIncrease = 80;
+    //[SerializeField] private int corruptionNeededForSpawnRateIncrease = 80;
     [SerializeField] private NextSpawnRateToIncrease firstSpawnRateToIncrease = NextSpawnRateToIncrease.INNER_SPAWN_RATE;
 
     [Header("References")]

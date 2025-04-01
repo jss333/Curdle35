@@ -1279,7 +1279,6 @@ MonoBehaviour:
   startInnerSpawnRate: 1
   minDistBetOuterSpawnPoints: 4
   minDistBetInnerSpawnPointAndHQ: 2
-  corruptionNeededForSpawnRateIncrease: 80
   firstSpawnRateToIncrease: 1
   tilemapManager: {fileID: 1018166469}
   spawnMarkerPrefab: {fileID: 1616397644916556126, guid: 63c7a06c4de387d4f9b001c9572db8b5, type: 3}
