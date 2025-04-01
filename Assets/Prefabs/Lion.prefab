@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4372751507755794473}
   - component: {fileID: 5718867230797424493}
   - component: {fileID: 1492189641627946981}
+  - component: {fileID: 7929002686415522403}
   m_Layer: 0
   m_Name: Lion
   m_TagString: Untagged
@@ -162,9 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51527edc4ba57754e937e03389ffd9cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   moveSpeed: 4
-  originalColor: {r: 0, g: 0, b: 0, a: 0}
   boardPosition: {x: 0, y: 0}
 --- !u!114 &1492189641627946981
 MonoBehaviour:
@@ -179,3 +178,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementRange: 2
+--- !u!114 &7929002686415522403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5224848648760891206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d934a665543e83458782ee55b0297bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  originalColor: {r: 0, g: 0, b: 0, a: 0}

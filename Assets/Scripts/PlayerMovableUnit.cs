@@ -61,4 +61,9 @@ public class PlayerMovableUnit : MonoBehaviour
     {
         return GetValidMovementCells().Contains(pos);
     }
+
+    public Unit GetUnit()
+    {
+        return GetComponent<Unit>();
+    }
 }

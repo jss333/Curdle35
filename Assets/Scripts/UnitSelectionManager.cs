@@ -6,7 +6,7 @@ using System.Collections;
 public class UnitSelectionManager : MonoBehaviour
 {
     [Header("State")]
-    [SerializeField] private Unit? selectedUnit;
+    [SerializeField] private SelectableUnit? currentlySelectedUnit;
 
     void Update()
     {
@@ -14,69 +14,59 @@ public class UnitSelectionManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0)) // Left-click
         {
-            if (HandleMoveInput()) return;
+            if (TryHandleMoveInput()) return;
             HandleSelection();
         }
     }
 
     private void HandleSelection()
     {
-        Unit? unit = RaycastToFindUnitAt(Input.mousePosition);
+        SelectableUnit? selectableUnit = RaycastToFindUnitAt(Input.mousePosition);
 
-        if (unit != null)
+        if (selectableUnit != null)
         {
-            SelectUnitAndShowMovementRange(unit);
+            SelectUnit(selectableUnit);
         }
         else
         {
-            DeselectCurrentUnitAndClearMovementRange();
+            DeselectCurrentUnitIfAny();
         }
     }
 
-    private Unit? RaycastToFindUnitAt(Vector3 position)
+    private SelectableUnit? RaycastToFindUnitAt(Vector3 position)
     {
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(position), Vector2.zero); //direction of 0 means just check under the point
 
         if (hit.collider != null)
         {
-            return hit.collider.GetComponent<Unit>();
+            return hit.collider.GetComponent<SelectableUnit>();
         }
 
         return null;
     }
 
-    private void SelectUnitAndShowMovementRange(Unit unit)
+    private void SelectUnit(SelectableUnit newlySelectedUnit)
     {
-        if (selectedUnit != null)
-        {
-            DeselectCurrentUnitAndClearMovementRange();
-        }
-
-        selectedUnit = unit;
-        selectedUnit.ShowSelected();
-
-        PlayerMovableUnit? movableUnit = unit.GetPlayerMovableUnit();
-        if (movableUnit != null)
-        {
-            BoardManager.Instance.ShowMovementRangeForUnit(movableUnit);
-        }
-    }
-
-    private void DeselectCurrentUnitAndClearMovementRange()
-    {
-        if (selectedUnit != null)
-        {
-            selectedUnit.ShowDeselected();
-            BoardManager.Instance.ClearMovementRange();
-            selectedUnit = null;
-        }
-    }
-
-    private bool HandleMoveInput()
-    {
-        if (selectedUnit == null) return false;
+        DeselectCurrentUnitIfAny();
         
-        PlayerMovableUnit? movableUnit = selectedUnit.GetPlayerMovableUnit();
+        currentlySelectedUnit = newlySelectedUnit;
+        currentlySelectedUnit.DoUnitSelection();
+    }
+
+    private void DeselectCurrentUnitIfAny()
+    {
+        if (currentlySelectedUnit != null)
+        {
+            currentlySelectedUnit.DoUnitDeselection();
+            currentlySelectedUnit = null;
+        }
+    }
+
+    private bool TryHandleMoveInput()
+    {
+        if (currentlySelectedUnit == null) return false;
+        
+        PlayerMovableUnit? movableUnit = currentlySelectedUnit.GetPlayerMovableUnit();
         if(movableUnit == null) return false;
         
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -84,8 +74,8 @@ public class UnitSelectionManager : MonoBehaviour
 
         if (movableUnit.IsCellInMoveRange(pos))
         {
-            StartCoroutine(selectedUnit.MoveToCell(pos));
-            DeselectCurrentUnitAndClearMovementRange();
+            StartCoroutine(movableUnit.GetUnit().MoveToCell(pos));
+            DeselectCurrentUnitIfAny();
             return true;
         }
 
