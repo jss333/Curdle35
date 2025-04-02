@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class GameManager : MonoBehaviour
         return CurrentState == GameState.PlayerInput;
     }
 
-    public void OnPlayerUnitStartMoving()
+    public void OnPlayerUnitStartsMoving()
     {
         if (CurrentState != GameState.PlayerInput)
         {
@@ -33,12 +34,12 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        SetState(GameState.PlayerUnitIsMoving);
+        SetState(GameState.PlayerUnitMoving);
     }
 
-    public void OnPlayerUnitFinishMoving()
+    public void OnPlayerUnitFinishesMoving()
     {
-        if (CurrentState != GameState.PlayerUnitIsMoving)
+        if (CurrentState != GameState.PlayerUnitMoving)
         {
             Debug.LogWarning("Cannot finish moving, not in PlayerUnitIsMoving state.");
             return;
@@ -47,7 +48,7 @@ public class GameManager : MonoBehaviour
         SetState(GameState.PlayerInput);
     }
 
-    public void OnPlayerEndTurn()
+    public void OnPlayerEndsTurn()
     {
         if (CurrentState != GameState.PlayerInput)
         {
@@ -55,17 +56,88 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        SetState(GameState.DayToNightAnimation);
-        StartCoroutine(PlayDayToNightAnimation());
+        SetState(GameState.PlayerTurretShooting);
+        Simulate("Turrets shooting", 1f, OnPlayerTurretsFinishShooting);
     }
 
-
-    private IEnumerator PlayDayToNightAnimation()
+    public void OnPlayerTurretsFinishShooting()
     {
-        Debug.Log("Playing day-to-night animation...");
-        yield return new WaitForSeconds(1.5f); // Simulate animation time
-        Debug.Log("Animation ended.");
-        
-        SetState(GameState.HyenasAreMovingAttacking);
+        if (CurrentState != GameState.PlayerTurretShooting)
+        {
+            Debug.LogWarning("Cannot finish turret shooting, not in PlayerTurretShooting state.");
+            return;
+        }
+
+        SetState(GameState.PlayerHarvesting);
+        Simulate("Player harvesting", 1f, OnPlayerFinishesHarvesting);
+    }
+
+    public void OnPlayerFinishesHarvesting()
+    {
+        if (CurrentState != GameState.PlayerHarvesting)
+        {
+            Debug.LogWarning("Cannot finish player harvesting, not in PlayerHarvesting state.");
+            return;
+        }
+
+        SetState(GameState.DayToNightAnimation);
+        Simulate("Play day-to-night animation", 1f, OnDayToNightAnimationEnds);
+    }
+
+    public void OnDayToNightAnimationEnds()
+    {
+        if (CurrentState != GameState.DayToNightAnimation)
+        {
+            Debug.LogWarning("Cannot end day-to-night animation, not in DayToNightAnimation state.");
+            return;
+        }
+
+        SetState(GameState.HyenasMoving);
+        Simulate("Hyenas moving", 1f, OnHyenasFinishMoving);
+    }
+
+    public void OnHyenasFinishMoving()
+    {
+        if (CurrentState != GameState.HyenasMoving)
+        {
+            Debug.LogWarning("Cannot finish hyenas moving, not in HyenasAreMoving state.");
+            return;
+        }
+
+        SetState(GameState.HyenasHarvesting);
+        Simulate("Hyenas harvesting", 1f, OnHyenasFinishHarvesting);
+    }
+
+    public void OnHyenasFinishHarvesting()
+    {
+        if (CurrentState != GameState.HyenasHarvesting)
+        {
+            Debug.LogWarning("Cannot finish hyenas harvesting, not in HyenasHarvesting state.");
+            return;
+        }
+
+        SetState(GameState.NightToDayAnimation);
+        Simulate("Play night-to-day animation", 1f, OnNightToDayAnimationEnds);
+    }
+
+    public void OnNightToDayAnimationEnds()
+    {
+        if (CurrentState != GameState.NightToDayAnimation)
+        {
+            Debug.LogWarning("Cannot end night-to-day animation, not in NightToDayAnimation state.");
+            return;
+        }
+
+        SetState(GameState.PlayerInput);
+    }
+
+    private static void Simulate(string msg, float duration, System.Action completionCallback)
+    {
+        DOTween.Sequence()
+            .OnStart(() => Debug.Log(msg + " start..."))
+            .AppendInterval(duration)
+            .AppendCallback(() => Debug.Log(msg + " end."))
+            .OnComplete(() => completionCallback?.Invoke())
+            .Play();
     }
 }

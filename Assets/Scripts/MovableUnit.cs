@@ -69,10 +69,10 @@ public class MovableUnit : MonoBehaviour
         {
             // After the sequence is done, update the unit's board position to the last cell
             unit.UpdateBoardPosition(path.Last());
-            GameManager.Instance.OnPlayerUnitFinishMoving();
+            GameManager.Instance.OnPlayerUnitFinishesMoving();
         });
 
-        GameManager.Instance.OnPlayerUnitStartMoving();
+        GameManager.Instance.OnPlayerUnitStartsMoving();
         moveSequence.Play();
     }
 
