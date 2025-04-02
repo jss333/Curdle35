@@ -5,6 +5,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    public event System.Action<GameState> OnGameStateChanged;
+
     public GameState CurrentState { get; private set; } = GameState.PlayerInput;
 
     void Awake()
@@ -12,9 +14,10 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
-    public void SetState(GameState newState)
+    private void SetState(GameState newState)
     {
         CurrentState = newState;
+        OnGameStateChanged?.Invoke(CurrentState);
     }
 
     public bool IsPlayerInputState()
@@ -22,22 +25,47 @@ public class GameManager : MonoBehaviour
         return CurrentState == GameState.PlayerInput;
     }
 
-    public void OnPlayerEndTurn()
+    public void OnPlayerUnitStartMoving()
     {
-        if (CurrentState != GameState.PlayerInput) return;
+        if (CurrentState != GameState.PlayerInput)
+        {
+            Debug.LogWarning("Cannot start moving, not in PlayerInput state.");
+            return;
+        }
 
-        SetState(GameState.DayToNightAnimation);
-        StartCoroutine(PlayDayToNightAnimationThenSpawn());
+        SetState(GameState.PlayerUnitIsMoving);
     }
 
-    private IEnumerator PlayDayToNightAnimationThenSpawn()
+    public void OnPlayerUnitFinishMoving()
+    {
+        if (CurrentState != GameState.PlayerUnitIsMoving)
+        {
+            Debug.LogWarning("Cannot finish moving, not in PlayerUnitIsMoving state.");
+            return;
+        }
+
+        SetState(GameState.PlayerInput);
+    }
+
+    public void OnPlayerEndTurn()
+    {
+        if (CurrentState != GameState.PlayerInput)
+        {
+            Debug.LogWarning("Cannot end turn, not in PlayerInput state.");
+            return;
+        }
+
+        SetState(GameState.DayToNightAnimation);
+        StartCoroutine(PlayDayToNightAnimation());
+    }
+
+
+    private IEnumerator PlayDayToNightAnimation()
     {
         Debug.Log("Playing day-to-night animation...");
-        yield return new WaitForSeconds(3f); // Simulate animation time
+        yield return new WaitForSeconds(1.5f); // Simulate animation time
         Debug.Log("Animation ended.");
         
-        //SpawnHyenas();
-
         SetState(GameState.HyenasAreMovingAttacking);
     }
 }
