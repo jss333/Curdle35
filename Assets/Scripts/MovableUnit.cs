@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class MovableUnit : MonoBehaviour
 {
     [Header("Config")]
     [SerializeField] private float moveSpeed = 4f;
+    [SerializeField] private Ease moveEaseType = Ease.InOutCubic;
 
     private Unit unit;
 
@@ -14,20 +16,18 @@ public class MovableUnit : MonoBehaviour
         unit = GetComponent<Unit>();
     }
 
-    public IEnumerator MoveToCell(Vector2Int destination)
+    public void MoveToCell(Vector2Int destination)
     {
         GameManager.Instance.SetState(GameState.UnitIsMoving);
 
         Vector3 targetWorld = GridHelper.Instance.GridToWorld(destination);
-        while (Vector3.Distance(transform.position, targetWorld) > 0.01f)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, targetWorld, moveSpeed * Time.deltaTime);
-            yield return null;
-        }
-
-        transform.position = targetWorld;
-        unit.UpdateBoardPosition(destination);
-
-        GameManager.Instance.SetState(GameState.PlayerInput);
+        transform.DOMove(targetWorld, moveSpeed)
+            .SetEase(moveEaseType)
+            .SetSpeedBased() // Use speed instead of time
+            .OnComplete(() =>
+            {
+                unit.UpdateBoardPosition(destination);
+                GameManager.Instance.SetState(GameState.PlayerInput);
+            });
     }
 }

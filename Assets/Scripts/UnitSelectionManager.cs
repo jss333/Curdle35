@@ -1,7 +1,7 @@
 #nullable enable
 
 using UnityEngine;
-using System.Collections;
+using DG.Tweening;
 
 public class UnitSelectionManager : MonoBehaviour
 {
@@ -77,11 +77,11 @@ public class UnitSelectionManager : MonoBehaviour
 
         if (moveRange.IsCellInMovementRange(pos))
         {
-            StartCoroutine(movableUnit.MoveToCell(pos));
+            movableUnit.MoveToCell(pos);
             DeselectCurrentUnitIfAny();
             return true;
         }
-
+        
         return false;
     }
 }
