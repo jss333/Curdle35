@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -40,10 +41,6 @@ public class BoardManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-    }
-
-    void Start()
-    {
         InitializeBoardAndTilemapsFromPredefinedBoard();
     }
 
@@ -65,7 +62,7 @@ public class BoardManager : MonoBehaviour
                 if (resourceValue != -1)
                 {
                     Vector3Int pos = new Vector3Int(x, y, 0);
-                    terrainTilemap.SetTile(pos, neutralTerrainTile);
+                    terrainTilemap.SetTile(pos, GetTerrainTileForFaction(Faction.None));
                     resourceTilemap.SetTile(pos, GetResourceTileForResourceValue(resourceValue));
                 }
             }
@@ -134,5 +131,28 @@ public class BoardManager : MonoBehaviour
     {
         return pos.x >= 0 && pos.x < width &&
                pos.y >= 0 && pos.y < height;
+    }
+
+    public void ClaimCell(Vector2Int pos, Faction faction)
+    {
+        if (IsValidCellForUnitMovement(pos))
+        {
+            board[pos.x, pos.y].owner = faction;
+            terrainTilemap.SetTile((Vector3Int)pos, GetTerrainTileForFaction(faction));
+        }
+    }
+
+    private TileBase GetTerrainTileForFaction(Faction faction)
+    {
+        switch (faction)
+        {
+            case Faction.Cats:
+                return catTerrainTile;
+            case Faction.Hyenas:
+                return hyenaTerrainTile;
+            case Faction.None:
+            default:
+                return neutralTerrainTile;
+        }
     }
 }
