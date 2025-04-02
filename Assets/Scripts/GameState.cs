@@ -3,5 +3,7 @@ using UnityEngine;
 public enum GameState
 {
     PlayerInput,
-    UnitIsMoving
+    UnitIsMoving,
+    DayToNightAnimation,
+    HyenasAreMovingAttacking
 }
