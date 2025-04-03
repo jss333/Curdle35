@@ -93,7 +93,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 256
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -171,12 +171,12 @@ TextureImporter:
       name: Jaguar_1_Idle_Animation_0
       rect:
         serializedVersion: 2
-        x: 50
-        y: 770
-        width: 152
-        height: 249
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 768
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -193,12 +193,12 @@ TextureImporter:
       name: Jaguar_1_Idle_Animation_1
       rect:
         serializedVersion: 2
-        x: 306
-        y: 770
-        width: 152
-        height: 247
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 256
+        y: 768
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -215,12 +215,12 @@ TextureImporter:
       name: Jaguar_1_Idle_Animation_2
       rect:
         serializedVersion: 2
-        x: 562
-        y: 770
-        width: 152
-        height: 247
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 512
+        y: 768
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -237,12 +237,12 @@ TextureImporter:
       name: Jaguar_1_Idle_Animation_3
       rect:
         serializedVersion: 2
-        x: 815
-        y: 767
-        width: 157
-        height: 247
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 768
+        y: 768
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -259,12 +259,12 @@ TextureImporter:
       name: Jaguar_1_Idle_Animation_4
       rect:
         serializedVersion: 2
-        x: 45
-        y: 511
-        width: 161
-        height: 245
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 512
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -281,12 +281,12 @@ TextureImporter:
       name: Jaguar_1_Idle_Animation_5
       rect:
         serializedVersion: 2
-        x: 301
-        y: 511
-        width: 161
-        height: 245
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 256
+        y: 512
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -303,12 +303,12 @@ TextureImporter:
       name: Jaguar_1_Idle_Animation_6
       rect:
         serializedVersion: 2
-        x: 556
-        y: 511
-        width: 163
-        height: 244
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 512
+        y: 512
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -325,12 +325,12 @@ TextureImporter:
       name: Jaguar_1_Idle_Animation_7
       rect:
         serializedVersion: 2
-        x: 711
-        y: 589
-        width: 9
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 768
+        y: 512
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -347,12 +347,12 @@ TextureImporter:
       name: Jaguar_1_Idle_Animation_8
       rect:
         serializedVersion: 2
-        x: 813
-        y: 511
-        width: 161
-        height: 245
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 256
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -369,12 +369,12 @@ TextureImporter:
       name: Jaguar_1_Idle_Animation_9
       rect:
         serializedVersion: 2
-        x: 45
-        y: 255
-        width: 161
-        height: 245
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 256
+        y: 256
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -391,12 +391,12 @@ TextureImporter:
       name: Jaguar_1_Idle_Animation_10
       rect:
         serializedVersion: 2
-        x: 303
-        y: 255
-        width: 157
-        height: 247
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 512
+        y: 256
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -413,12 +413,12 @@ TextureImporter:
       name: Jaguar_1_Idle_Animation_11
       rect:
         serializedVersion: 2
-        x: 562
-        y: 258
-        width: 152
-        height: 247
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 768
+        y: 256
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -435,12 +435,12 @@ TextureImporter:
       name: Jaguar_1_Idle_Animation_12
       rect:
         serializedVersion: 2
-        x: 818
-        y: 258
-        width: 152
-        height: 247
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 0
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -457,12 +457,12 @@ TextureImporter:
       name: Jaguar_1_Idle_Animation_13
       rect:
         serializedVersion: 2
-        x: 50
-        y: 2
-        width: 152
-        height: 249
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -475,33 +475,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: Jaguar_1_Idle_Animation_14
-      rect:
-        serializedVersion: 2
-        x: 306
-        y: 2
-        width: 152
-        height: 249
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 531acb3097e87bcc0800000000000000
-      internalID: -3695328318829321931
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 4ed8e922792020a4fbe9c5b806c0f26d
     internalID: 0
     vertices: []
     indices: 
@@ -517,7 +495,6 @@ TextureImporter:
       Jaguar_1_Idle_Animation_11: -1081358600204426753
       Jaguar_1_Idle_Animation_12: -1931270984942782602
       Jaguar_1_Idle_Animation_13: 4749886051784581990
-      Jaguar_1_Idle_Animation_14: -3695328318829321931
       Jaguar_1_Idle_Animation_2: 59671329421803441
       Jaguar_1_Idle_Animation_3: -7397116551603769970
       Jaguar_1_Idle_Animation_4: 8264406864483989193

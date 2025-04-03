@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 5680186288665232822}
   - component: {fileID: 4378499478943888294}
   m_Layer: 0
-  m_Name: Lion
+  m_Name: Base Cat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingLayerID: 1595681471
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: -6884396372318439827, guid: a07a84ea40310734b9365a4dca61432e, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -90,7 +90,7 @@ SpriteRenderer:
   m_Size: {x: 0.8304348, y: 1.0608696}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &2535350318648084459
@@ -103,7 +103,7 @@ Animator:
   m_GameObject: {fileID: 5224848648760891206}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c8521e61ab7fb0847bb6faeb2469a6d0, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
