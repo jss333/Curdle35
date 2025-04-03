@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c19c5a37de0f7fe4c8aa39889fd364e1
+guid: 2e8c0dfc4b6aa5748bc9aecf1b00e62e
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -210,12 +210,12 @@ TextureImporter:
       name: Day_Night_Indicator_Animation_0
       rect:
         serializedVersion: 2
-        x: 9
-        y: 1677
-        width: 539
-        height: 539
+        x: 0
+        y: 1668
+        width: 556
+        height: 556
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -229,59 +229,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Day_Night_Indicator_Animation_1
-      rect:
-        serializedVersion: 2
-        x: 565
-        y: 1677
-        width: 539
-        height: 539
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: bc99839cbae5a62b0800000000000000
-      internalID: -5590551895518701109
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Day_Night_Indicator_Animation_2
-      rect:
-        serializedVersion: 2
-        x: 1121
-        y: 1677
-        width: 539
-        height: 539
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9fe706aeeb39b8f50800000000000000
-      internalID: 6884758903551196921
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Day_Night_Indicator_Animation_3
       rect:
         serializedVersion: 2
-        x: 1677
-        y: 1677
-        width: 539
-        height: 539
+        x: 1668
+        y: 1668
+        width: 556
+        height: 556
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -298,12 +254,12 @@ TextureImporter:
       name: Day_Night_Indicator_Animation_4
       rect:
         serializedVersion: 2
-        x: 2233
-        y: 1677
-        width: 539
-        height: 539
+        x: 2224
+        y: 1668
+        width: 556
+        height: 556
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -317,37 +273,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Day_Night_Indicator_Animation_5
-      rect:
-        serializedVersion: 2
-        x: 2789
-        y: 1677
-        width: 539
-        height: 539
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f0fcec647e79ea800800000000000000
-      internalID: 625604417832275727
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Day_Night_Indicator_Animation_6
       rect:
         serializedVersion: 2
-        x: 3345
-        y: 1677
-        width: 539
-        height: 539
+        x: 3336
+        y: 1668
+        width: 556
+        height: 556
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -364,12 +298,12 @@ TextureImporter:
       name: Day_Night_Indicator_Animation_7
       rect:
         serializedVersion: 2
-        x: 9
-        y: 1121
-        width: 539
-        height: 539
+        x: 0
+        y: 1112
+        width: 556
+        height: 556
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -383,37 +317,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Day_Night_Indicator_Animation_8
-      rect:
-        serializedVersion: 2
-        x: 565
-        y: 1121
-        width: 539
-        height: 539
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7c3a7ed3587f62d20800000000000000
-      internalID: 3253559932463064007
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Day_Night_Indicator_Animation_9
       rect:
         serializedVersion: 2
-        x: 1121
-        y: 1121
-        width: 539
-        height: 539
+        x: 1112
+        y: 1112
+        width: 556
+        height: 556
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -430,12 +342,12 @@ TextureImporter:
       name: Day_Night_Indicator_Animation_10
       rect:
         serializedVersion: 2
-        x: 1677
-        y: 1121
-        width: 539
-        height: 539
+        x: 1668
+        y: 1112
+        width: 556
+        height: 556
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -449,37 +361,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Day_Night_Indicator_Animation_11
-      rect:
-        serializedVersion: 2
-        x: 2233
-        y: 1121
-        width: 539
-        height: 539
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f186e8e28c4a47c60800000000000000
-      internalID: 7815052433076152351
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Day_Night_Indicator_Animation_12
       rect:
         serializedVersion: 2
-        x: 2789
-        y: 1121
-        width: 539
-        height: 539
+        x: 2780
+        y: 1112
+        width: 556
+        height: 556
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -496,12 +386,12 @@ TextureImporter:
       name: Day_Night_Indicator_Animation_13
       rect:
         serializedVersion: 2
-        x: 3345
-        y: 1121
-        width: 539
-        height: 539
+        x: 3336
+        y: 1112
+        width: 556
+        height: 556
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -515,59 +405,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Day_Night_Indicator_Animation_14
-      rect:
-        serializedVersion: 2
-        x: 9
-        y: 565
-        width: 539
-        height: 539
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fcae5cad05e9e5dc0800000000000000
-      internalID: -3648304578018546993
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Day_Night_Indicator_Animation_15
-      rect:
-        serializedVersion: 2
-        x: 565
-        y: 565
-        width: 539
-        height: 539
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ea20bde6884dc5140800000000000000
-      internalID: 4709872992763183790
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Day_Night_Indicator_Animation_16
       rect:
         serializedVersion: 2
-        x: 1121
-        y: 565
-        width: 539
-        height: 539
+        x: 1112
+        y: 556
+        width: 556
+        height: 556
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -584,12 +430,12 @@ TextureImporter:
       name: Day_Night_Indicator_Animation_17
       rect:
         serializedVersion: 2
-        x: 1677
-        y: 565
-        width: 539
-        height: 539
+        x: 1668
+        y: 556
+        width: 556
+        height: 556
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -603,37 +449,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Day_Night_Indicator_Animation_18
-      rect:
-        serializedVersion: 2
-        x: 2233
-        y: 565
-        width: 539
-        height: 539
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fe3ac04f55e5f5fa0800000000000000
-      internalID: -5809821271024950289
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Day_Night_Indicator_Animation_19
       rect:
         serializedVersion: 2
-        x: 2789
-        y: 565
-        width: 539
-        height: 539
+        x: 2780
+        y: 556
+        width: 556
+        height: 556
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -650,12 +474,12 @@ TextureImporter:
       name: Day_Night_Indicator_Animation_20
       rect:
         serializedVersion: 2
-        x: 3345
-        y: 565
-        width: 539
-        height: 539
+        x: 3336
+        y: 556
+        width: 556
+        height: 556
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -669,37 +493,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Day_Night_Indicator_Animation_21
-      rect:
-        serializedVersion: 2
-        x: 9
-        y: 9
-        width: 539
-        height: 539
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0b5b878e64ae49880800000000000000
-      internalID: -8604995397729339984
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Day_Night_Indicator_Animation_22
       rect:
         serializedVersion: 2
-        x: 565
-        y: 9
-        width: 539
-        height: 539
+        x: 556
+        y: 0
+        width: 556
+        height: 556
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -716,12 +518,12 @@ TextureImporter:
       name: Day_Night_Indicator_Animation_23
       rect:
         serializedVersion: 2
-        x: 1121
-        y: 9
-        width: 539
-        height: 539
+        x: 1112
+        y: 0
+        width: 556
+        height: 556
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -735,37 +537,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Day_Night_Indicator_Animation_24
-      rect:
-        serializedVersion: 2
-        x: 1677
-        y: 9
-        width: 539
-        height: 539
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fe6f01a4fb26ec480800000000000000
-      internalID: -8877049241779767569
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Day_Night_Indicator_Animation_25
       rect:
         serializedVersion: 2
-        x: 2233
-        y: 9
-        width: 539
-        height: 539
+        x: 2224
+        y: 0
+        width: 556
+        height: 556
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -782,12 +562,12 @@ TextureImporter:
       name: Day_Night_Indicator_Animation_26
       rect:
         serializedVersion: 2
-        x: 2789
-        y: 9
-        width: 539
-        height: 539
+        x: 2780
+        y: 0
+        width: 556
+        height: 556
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -800,33 +580,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: Day_Night_Indicator_Animation_27
-      rect:
-        serializedVersion: 2
-        x: 3345
-        y: 9
-        width: 539
-        height: 539
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b3d4c20c8c551fce0800000000000000
-      internalID: -1373222090665341637
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: e1c88883f7278f74b8c277293f8e9ea4
     internalID: 0
     vertices: []
     indices: 

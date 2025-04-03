@@ -80,8 +80,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        SetState(GameState.DayToNightAnimation);
-        Simulate("Play day-to-night animation", 1f, OnDayToNightAnimationEnds);
+        SetState(GameState.DayToNightAnimation); // Day Night Indicator object observes this state change to play the animation
     }
 
     public void OnDayToNightAnimationEnds()
@@ -116,8 +115,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        SetState(GameState.NightToDayAnimation);
-        Simulate("Play night-to-day animation", 1f, OnNightToDayAnimationEnds);
+        SetState(GameState.NightToDayAnimation); // Day Night Indicator object observes this state change to play the animation
     }
 
     public void OnNightToDayAnimationEnds()
