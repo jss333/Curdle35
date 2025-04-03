@@ -9,27 +9,48 @@ using UnityEngine;
 public class MovableUnit : MonoBehaviour
 {
     [Header("Config")]
+    [SerializeField] private bool initialFacingRight = true;
     [SerializeField] private float moveSpeed = 4f;
     [SerializeField] private Ease stepEaseType = Ease.Linear;
     [SerializeField] private Ease pathEaseType = Ease.Linear;
 
+    [Header("State")]
+    [SerializeField] private bool facingRight;
+
     private Unit unit;
+    private SpriteRenderer spriteRenderer;
 
     public void Start()
     {
         unit = GetComponent<Unit>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        facingRight = initialFacingRight;
     }
 
     public void MoveToCell(Vector2Int destination)
     {
-        MoveAlongPath(BuildPathToDestination(destination));
+        Vector2Int origin = unit.GetBoardPosition();
+
+        EnsureSpriteIsFacingDirectionOfMovement(destination, origin);
+
+        MoveAlongPath(BuildPathToDestination(origin, destination));
     }
 
-    private IEnumerable<Vector2Int> BuildPathToDestination(Vector2Int destination)
+    private void EnsureSpriteIsFacingDirectionOfMovement(Vector2Int destination, Vector2Int origin)
+    {
+        int horizontalDirection = Math.Sign(destination.x - origin.x);
+        bool shouldFlipSprite = (horizontalDirection > 0 && !facingRight) || (horizontalDirection < 0 && facingRight);
+        if (shouldFlipSprite)
+        {
+            spriteRenderer.flipX = !spriteRenderer.flipX;
+            facingRight = !facingRight;
+        }
+    }
+
+    private IEnumerable<Vector2Int> BuildPathToDestination(Vector2Int origin, Vector2Int destination)
     {
         List<Vector2Int> path = new List<Vector2Int>();
-
-        Vector2Int origin = unit.GetBoardPosition();
 
         int xVariation = Math.Sign(destination.x - origin.x);
         int yVariation = Math.Sign(destination.y - origin.y);
