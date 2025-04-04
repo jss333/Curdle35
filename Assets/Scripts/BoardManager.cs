@@ -31,11 +31,22 @@ public class BoardManager : MonoBehaviour
 
     private int[,] predefinedBoard = new int[,]
     {
-        { -1,  1,  2,  3, -1, -1 },
-        { -1,  2,  3,  4,  1,  1 },
-        {  2,  3, -1,  3,  2,  1 },
-        { -1,  4,  3,  2,  1, -1 },
-        { -1,  1,  2, -1, -1, -1 }
+        {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 1, 1,-1,-1,-1},
+        {-1,-1,-1,-1,-1,-1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1,-1,-1,-1},
+        {-1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 3, 3,-1,-1,-1},
+        {-1,-1,-1,-1, 1, 4, 1, 1, 1, 1, 1, 2, 1, 2, 3, 2, 4, 2, 1,-1,-1},
+        {-1,-1,-1, 1, 1, 1, 1,-1,-1, 2, 1, 2, 2, 2, 1, 2, 1, 1, 1, 3,-1},
+        {-1,-1,-1,-1, 1, 3, 1,-1,-1, 2, 1, 1, 2, 2, 1, 2, 1, 1, 1, 2, 1},
+        {-1,-1,-1,-1, 3, 2, 1, 1, 1, 1, 1, 2, 2, 3, 2,-1,-1, 2, 3, 2, 1},
+        {-1,-1,-1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 4, 2, 3,-1,-1, 2, 1, 1,-1},
+        {-1,-1,-1,-1, 1, 1, 2, 1, 1, 2, 1, 1, 3, 1, 2, 1, 1, 2, 1,-1,-1},
+        {-1, 2, 1, 2, 2, 3, 2, 1, 1, 2, 2, 1, 1, 2, 1, 1, 3,-1,-1,-1,-1},
+        {-1, 3, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 2, 1,-1,-1,-1},
+        {-1, 3, 2, 1, 1, 1, 1,-1,-1, 2, 3, 2, 1, 2, 2, 3, 2, 1,-1,-1,-1},
+        { 1, 1, 1, 1, 1, 1, 2, 2, 1, 2, 2, 4, 1, 1, 2, 1, 1,-1,-1,-1,-1},
+        {-1, 1, 1, 2, 1, 1, 2, 1, 1, 3, 1, 2, 1, 1, 2, 1,-1,-1,-1,-1,-1},
+        {-1,-1,-1,-1, 1, 1, 2, 2, 1, 1, 2, 1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+        {-1,-1,-1,-1, 1, 1, 2, 1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}
     };
 
     void Awake()
@@ -66,6 +77,20 @@ public class BoardManager : MonoBehaviour
                     resourceTilemap.SetTile(pos, GetResourceTileForResourceValue(resourceValue));
                 }
             }
+        }
+    }
+
+    private TileBase GetTerrainTileForFaction(Faction faction)
+    {
+        switch (faction)
+        {
+            case Faction.Cats:
+                return catTerrainTile;
+            case Faction.Hyenas:
+                return hyenaTerrainTile;
+            case Faction.None:
+            default:
+                return neutralTerrainTile;
         }
     }
 
@@ -139,20 +164,6 @@ public class BoardManager : MonoBehaviour
         {
             board[pos.x, pos.y].owner = faction;
             terrainTilemap.SetTile((Vector3Int)pos, GetTerrainTileForFaction(faction));
-        }
-    }
-
-    private TileBase GetTerrainTileForFaction(Faction faction)
-    {
-        switch (faction)
-        {
-            case Faction.Cats:
-                return catTerrainTile;
-            case Faction.Hyenas:
-                return hyenaTerrainTile;
-            case Faction.None:
-            default:
-                return neutralTerrainTile;
         }
     }
 }
