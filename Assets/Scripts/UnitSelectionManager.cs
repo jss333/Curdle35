@@ -39,7 +39,11 @@ public class UnitSelectionManager : MonoBehaviour
 
         if (hit.collider != null)
         {
-            return hit.collider.GetComponent<SelectableUnit>();
+            SelectableUnit? selectableUnit = hit.collider.GetComponent<SelectableUnit>();
+            if(selectableUnit != null && selectableUnit.enabled)
+            {
+                return selectableUnit;
+            }
         }
 
         return null;
