@@ -835,6 +835,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 466632045}
   m_CullTransparentMesh: 1
+--- !u!1001 &488758218
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5224848648760891206, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_Name
+      value: Hyena (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -3522,6 +3579,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1272963497}
   m_CullTransparentMesh: 1
+--- !u!1001 &1282600643
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5224848648760891206, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_Name
+      value: Hyena (2)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
 --- !u!1 &1285042468
 GameObject:
   m_ObjectHideFlags: 0
@@ -6717,6 +6831,63 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1001 &2112083717
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5224848648760891206, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_Name
+      value: Hyena
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
 --- !u!1 &2118798105
 GameObject:
   m_ObjectHideFlags: 0
@@ -6940,3 +7111,6 @@ SceneRoots:
   - {fileID: 1952307617411803395}
   - {fileID: 1345686668}
   - {fileID: 1566744766}
+  - {fileID: 2112083717}
+  - {fileID: 488758218}
+  - {fileID: 1282600643}
