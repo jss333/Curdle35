@@ -133,6 +133,12 @@ public class BoardManager : MonoBehaviour
 
     public void RegisterUnitPos(Unit unit, Vector2Int pos)
     {
+        if (units.ContainsKey(pos))
+        {
+            Unit oldUnit = units[pos];
+            Debug.LogWarning("Unit already registered at position " + pos + ". Replacing " + oldUnit.name + " with " + unit.name + ".");
+        }
+            
         units[pos] = unit;
     }
 

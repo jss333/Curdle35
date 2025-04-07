@@ -7,6 +7,7 @@ public enum GameState
     PlayerTurretShooting,
     PlayerHarvesting,
     DayToNightAnimation,
+    HyenasSpawning,
     HyenasMoving,
     HyenasHarvesting,
     HyenasGenerateNewSpawnMarkers,

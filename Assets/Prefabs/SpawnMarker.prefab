@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2951635324897563169}
   - component: {fileID: 7297939711101177095}
+  - component: {fileID: 3560328111906031903}
   m_Layer: 0
   m_Name: SpawnMarker
   m_TagString: Untagged
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1385011139
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 3866501776042946610, guid: 59336a3a4aae2874e95895cf004e7377, type: 3}
   m_Color: {r: 1, g: 0.29411766, b: 0, a: 1}
@@ -87,3 +88,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3560328111906031903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616397644916556126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c1cb8dfc10611544905cad6e79d3263, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -91,6 +91,17 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        SetState(GameState.HyenasSpawning); // HyenasSpawnManager object observes this state change
+    }
+
+    public void OnHyenasFinishSpawningFromMarkers()
+    {
+        if (CurrentState != GameState.HyenasSpawning)
+        {
+            Debug.LogWarning("Cannot finish hyenas spawning, not in HyenasSpawning state.");
+            return;
+        }
+
         SetState(GameState.HyenasMoving); // HyenasManager object observes this state change to start moving hyenas
     }
 
@@ -114,7 +125,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        SetState(GameState.HyenasGenerateNewSpawnMarkers); // HyenasSpawnManager object observes this state change to play the animation
+        SetState(GameState.HyenasGenerateNewSpawnMarkers); // HyenasSpawnManager object observes this state change
     }
 
     public void OnHyenasFinishGeneratingNewSpawnMarkers()
