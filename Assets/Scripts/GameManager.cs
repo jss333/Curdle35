@@ -91,8 +91,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        SetState(GameState.HyenasMoving);
-        Simulate("Hyenas moving", 1f, OnHyenasFinishMoving);
+        SetState(GameState.HyenasMoving); // HyenasManager object observes this state change to start moving hyenas
     }
 
     public void OnHyenasFinishMoving()
