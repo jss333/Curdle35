@@ -5,12 +5,12 @@ using System.Collections.Generic;
 public struct HyenaMove
 {
     public MovableUnit hyena;
-    public Vector2Int targetCell;
+    public IEnumerable<Vector2Int> path;
 
-    public HyenaMove(MovableUnit hyena, Vector2Int targetCell)
+    public HyenaMove(MovableUnit hyena, IEnumerable<Vector2Int> path)
     {
         this.hyena = hyena;
-        this.targetCell = targetCell;
+        this.path = path;
     }
 }
 
@@ -22,6 +22,8 @@ public class HyenasManager : MonoBehaviour
     [Header("State")]
     [SerializeField] private int currentHyenaIndex = 0;
     [SerializeField] private List<HyenaMove> hyenasToMove = new List<HyenaMove>();
+
+    private static HyenaMovementAI MovementAI = new HyenaMovementAI();
 
     void Start()
     {
@@ -39,17 +41,18 @@ public class HyenasManager : MonoBehaviour
         // Iterate over all child hyena to pick a target cell and move it there
         foreach (Transform child in transform)
         {
-            var movementAI = child.GetComponent<MovementAI>();
+            var unit = child.GetComponent<Unit>();
             var hyena = child.GetComponent<MovableUnit>();
 
-            if (movementAI == null || hyena == null)
+            if (unit == null || hyena == null)
             {
-                Debug.LogWarning($"--- skipping child '{child.name}' as it does not have both MovementAI and MovableUnit components.");
+                Debug.LogWarning($"--- skipping child '{child.name}' as it does not have Unit and MovableUnit components.");
                 continue;
             }
 
-            Vector2Int targetCell = movementAI.CalculateTargetCell();
-            hyenasToMove.Add(new HyenaMove(hyena, targetCell));
+            IEnumerable<Vector2Int> path = MovementAI.CalculateMovementPath(unit.GetBoardPosition());
+
+            hyenasToMove.Add(new HyenaMove(hyena, path));
         }
 
         MoveNextHyena();
@@ -68,7 +71,7 @@ public class HyenasManager : MonoBehaviour
 
         DOTween.Sequence()
             .AppendInterval(delayBetweenMoves)
-            .AppendCallback(() => { move.hyena.MoveToCell(move.targetCell, MoveNextHyena); })
+            .AppendCallback(() => { move.hyena.MoveAlongPath(move.path, MoveNextHyena); })
             .Play();
     }
 }

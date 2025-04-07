@@ -28,18 +28,16 @@ public class MovableUnit : MonoBehaviour
         facingRight = initialFacingRight;
     }
 
-    public void MoveToCell(Vector2Int destination, Action moveDoneCallback)
+    public void MoveAlongPath(IEnumerable<Vector2Int> path, Action moveDoneCallback)
     {
         Vector2Int origin = unit.GetBoardPosition();
 
-        EnsureSpriteIsFacingDirectionOfMovement(origin, destination);
+        EnsureSpriteIsFacingDirectionOfDestination(origin, path.Last());
 
-        IEnumerable<Vector2Int> path = BuildPathToDestination(origin, destination);
-
-        MoveAlongPath(path, moveDoneCallback);
+        DoMoveAlongPath(path, moveDoneCallback);
     }
 
-    private void EnsureSpriteIsFacingDirectionOfMovement(Vector2Int origin, Vector2Int destination)
+    private void EnsureSpriteIsFacingDirectionOfDestination(Vector2Int origin, Vector2Int destination)
     {
         int horizontalDirection = Math.Sign(destination.x - origin.x);
         bool shouldFlipSprite = (horizontalDirection > 0 && !facingRight) || (horizontalDirection < 0 && facingRight);
@@ -50,25 +48,7 @@ public class MovableUnit : MonoBehaviour
         }
     }
 
-    private IEnumerable<Vector2Int> BuildPathToDestination(Vector2Int origin, Vector2Int destination)
-    {
-        List<Vector2Int> path = new List<Vector2Int>();
-
-        int xVariation = Math.Sign(destination.x - origin.x);
-        int yVariation = Math.Sign(destination.y - origin.y);
-
-        Vector2Int nextStep = new Vector2Int(origin.x + xVariation, origin.y + yVariation);
-        while (nextStep != destination)
-        {
-            path.Add(nextStep);
-            nextStep = new Vector2Int(nextStep.x + xVariation, nextStep.y + yVariation);
-        }
-        path.Add(nextStep);
-
-        return path;
-    }
-
-    private void MoveAlongPath(IEnumerable<Vector2Int> path, Action moveDoneCallback)
+    private void DoMoveAlongPath(IEnumerable<Vector2Int> path, Action moveDoneCallback)
     {
         Sequence moveSequence = DOTween.Sequence();
 

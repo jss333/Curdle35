@@ -2,6 +2,9 @@
 
 using UnityEngine;
 using DG.Tweening;
+using System.Collections.Generic;
+using System;
+using static UnityEngine.UI.Image;
 
 public class UnitSelectionManager : MonoBehaviour
 {
@@ -69,21 +72,23 @@ public class UnitSelectionManager : MonoBehaviour
     private bool TryHandleMoveInput()
     {
         if (currentlySelectedUnit == null) return false;
-        
-        MovementRange? moveRange = currentlySelectedUnit.GetMovementRange();
-        if(moveRange == null) return false;
 
-        MovableUnit? movableUnit = currentlySelectedUnit.GetComponent<MovableUnit>();
-        if(movableUnit == null) return false;
+        var moveRange = currentlySelectedUnit.GetMovementRange();
+        var movableUnit = currentlySelectedUnit.GetComponent<MovableUnit>();
+
+        if(moveRange == null || movableUnit == null) return false;
 
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2Int pos = GridHelper.Instance.WorldToGrid(mouseWorld);
+        Vector2Int clickedCell = GridHelper.Instance.WorldToGrid(mouseWorld);
 
-        if (moveRange.IsCellInMovementRange(pos))
+        if (moveRange.IsCellInMovementRange(clickedCell))
         {
+            IEnumerable<Vector2Int> path = moveRange.BuildPathToOrthogonalOrDiagonalDestination(clickedCell);
+
             GameManager.Instance.OnPlayerUnitStartsMoving();
-            movableUnit.MoveToCell(pos, GameManager.Instance.OnPlayerUnitFinishesMoving);
+            movableUnit.MoveAlongPath(path, GameManager.Instance.OnPlayerUnitFinishesMoving);
             DeselectCurrentUnitIfAny();
+
             return true;
         }
         

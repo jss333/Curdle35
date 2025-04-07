@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [RequireComponent(typeof(Unit))]
 public class MovementRange : MonoBehaviour
@@ -77,5 +78,25 @@ public class MovementRange : MonoBehaviour
     public Unit GetUnit()
     {
         return unit;
+    }
+
+    public IEnumerable<Vector2Int> BuildPathToOrthogonalOrDiagonalDestination(Vector2Int destination)
+    {
+        Vector2Int origin = unit.GetBoardPosition();
+
+        List<Vector2Int> path = new List<Vector2Int>();
+
+        int xVariation = Math.Sign(destination.x - origin.x);
+        int yVariation = Math.Sign(destination.y - origin.y);
+
+        Vector2Int nextStep = new Vector2Int(origin.x + xVariation, origin.y + yVariation);
+        while (nextStep != destination)
+        {
+            path.Add(nextStep);
+            nextStep = new Vector2Int(nextStep.x + xVariation, nextStep.y + yVariation);
+        }
+        path.Add(nextStep);
+
+        return path;
     }
 }

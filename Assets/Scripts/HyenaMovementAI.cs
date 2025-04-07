@@ -1,16 +1,14 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
-public class MovementAI : MonoBehaviour
+public class HyenaMovementAI
 {
     static private List<Vector2Int> ALL_DIRS = new List<Vector2Int>();
-    private Unit unit;
 
-
-    void Start()
+    public HyenaMovementAI()
     {
-        unit = GetComponent<Unit>();
-
+        // Ensure ALL_DIRS is initialized when the class is instantiated
         for(int x = -1; x <= 1; x++)
         {
             for (int y = -1; y <= 1; y++)
@@ -21,10 +19,15 @@ public class MovementAI : MonoBehaviour
         }
     }
 
-    public Vector2Int CalculateTargetCell()
+    public IEnumerable<Vector2Int> CalculateMovementPath(Vector2Int origin)
     {
-        Vector2Int origin = unit.GetBoardPosition();
-        
+        List<Vector2Int> path = new List<Vector2Int>();
+        path.Add(RandomlyPickCellAroundUnit(origin));
+        return path;
+    }
+
+    private Vector2Int RandomlyPickCellAroundUnit(Vector2Int origin)
+    {
         List<Vector2Int> candidateCells = new List<Vector2Int>();
         foreach (var dir in ALL_DIRS)
         {
@@ -39,6 +42,6 @@ public class MovementAI : MonoBehaviour
             }
         }
 
-        return candidateCells[Random.Range(0, candidateCells.Count)]; // Randomly select one of the candidate cells as the target cell
+        return candidateCells[UnityEngine.Random.Range(0, candidateCells.Count)]; // Randomly select one of the candidate cells as the target cell
     }
 }

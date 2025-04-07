@@ -1461,7 +1461,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59d2b3eed9107bd458d1e1203d0441a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numHyenasToFinishMoving: 0
+  delayBetweenMoves: 0.3
+  currentHyenaIndex: 0
 --- !u!1 &649936302
 GameObject:
   m_ObjectHideFlags: 0
