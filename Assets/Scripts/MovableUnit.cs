@@ -28,16 +28,18 @@ public class MovableUnit : MonoBehaviour
         facingRight = initialFacingRight;
     }
 
-    public void MoveToCell(Vector2Int destination)
+    public void MoveToCell(Vector2Int destination, Action moveDoneCallback)
     {
         Vector2Int origin = unit.GetBoardPosition();
 
-        EnsureSpriteIsFacingDirectionOfMovement(destination, origin);
+        EnsureSpriteIsFacingDirectionOfMovement(origin, destination);
 
-        MoveAlongPath(BuildPathToDestination(origin, destination));
+        IEnumerable<Vector2Int> path = BuildPathToDestination(origin, destination);
+
+        MoveAlongPath(path, moveDoneCallback);
     }
 
-    private void EnsureSpriteIsFacingDirectionOfMovement(Vector2Int destination, Vector2Int origin)
+    private void EnsureSpriteIsFacingDirectionOfMovement(Vector2Int origin, Vector2Int destination)
     {
         int horizontalDirection = Math.Sign(destination.x - origin.x);
         bool shouldFlipSprite = (horizontalDirection > 0 && !facingRight) || (horizontalDirection < 0 && facingRight);
@@ -66,7 +68,7 @@ public class MovableUnit : MonoBehaviour
         return path;
     }
 
-    private void MoveAlongPath(IEnumerable<Vector2Int> path)
+    private void MoveAlongPath(IEnumerable<Vector2Int> path, Action moveDoneCallback)
     {
         Sequence moveSequence = DOTween.Sequence();
 
@@ -90,10 +92,9 @@ public class MovableUnit : MonoBehaviour
         {
             // After the sequence is done, update the unit's board position to the last cell
             unit.UpdateBoardPosition(path.Last());
-            GameManager.Instance.OnPlayerUnitFinishesMoving();
+            moveDoneCallback?.Invoke();
         });
 
-        GameManager.Instance.OnPlayerUnitStartsMoving();
         moveSequence.Play();
     }
 

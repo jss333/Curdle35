@@ -81,7 +81,8 @@ public class UnitSelectionManager : MonoBehaviour
 
         if (moveRange.IsCellInMovementRange(pos))
         {
-            movableUnit.MoveToCell(pos);
+            GameManager.Instance.OnPlayerUnitStartsMoving();
+            movableUnit.MoveToCell(pos, GameManager.Instance.OnPlayerUnitFinishesMoving);
             DeselectCurrentUnitIfAny();
             return true;
         }
