@@ -114,6 +114,17 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        SetState(GameState.HyenasGenerateNewSpawnMarkers); // HyenasSpawnManager object observes this state change to play the animation
+    }
+
+    public void OnHyenasFinishGeneratingNewSpawnMarkers()
+    {
+        if (CurrentState != GameState.HyenasGenerateNewSpawnMarkers)
+        {
+            Debug.LogWarning("Cannot finish generating spawn markers, not in HyenasGenerateNewSpawnMarkers state.");
+            return;
+        }
+
         SetState(GameState.NightToDayAnimation); // Day Night Indicator object observes this state change to play the animation
     }
 

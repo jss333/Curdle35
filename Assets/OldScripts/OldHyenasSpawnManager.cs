@@ -11,7 +11,7 @@ public enum NextSpawnRateToIncrease
     INNER_SPAWN_RATE
 }
 
-public class HyenasSpawnManager : MonoBehaviour, IGameStateProvider
+public class OldHyenasSpawnManager : MonoBehaviour, IGameStateProvider
 {
     [Header("Config params")]
     [SerializeField] private int startOuterSpawnRate = 3;

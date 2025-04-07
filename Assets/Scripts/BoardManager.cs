@@ -166,4 +166,14 @@ public class BoardManager : MonoBehaviour
             terrainTilemap.SetTile((Vector3Int)pos, GetTerrainTileForFaction(faction));
         }
     }
+
+    public int GetWidth()
+    {
+        return width;
+    }
+
+    public int GetHeight()
+    {
+        return height;
+    }
 }

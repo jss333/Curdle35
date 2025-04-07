@@ -9,7 +9,7 @@ public class TilemapManager : MonoBehaviour
 {
     [SerializeField] public TileBase movementBaseTile;
     [SerializeField] public TileBase starterTowerTile;
-    [SerializeField] private HyenasSpawnManager hyenasSpawnManager;
+    [SerializeField] private OldHyenasSpawnManager hyenasSpawnManager;
 
     public int towerPlacementResourceCost = 50;
 

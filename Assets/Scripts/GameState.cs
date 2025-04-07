@@ -9,5 +9,6 @@ public enum GameState
     DayToNightAnimation,
     HyenasMoving,
     HyenasHarvesting,
+    HyenasGenerateNewSpawnMarkers,
     NightToDayAnimation
 }

@@ -41,6 +41,8 @@ public class HyenasManager : MonoBehaviour
         // Iterate over all child hyena to pick a target cell and move it there
         foreach (Transform child in transform)
         {
+            if (child.gameObject.activeInHierarchy == false) continue;
+
             var unit = child.GetComponent<Unit>();
             var hyena = child.GetComponent<MovableUnit>();
 

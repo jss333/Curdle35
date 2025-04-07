@@ -15,7 +15,7 @@ public class TurnControlScript : MonoBehaviour
     int currentCat = 0;
 
     [SerializeField] private TilemapManager tmManager;
-    [SerializeField] private HyenasSpawnManager hyenasSpawnManager;
+    [SerializeField] private OldHyenasSpawnManager hyenasSpawnManager;
     [SerializeField] public UIBridge uiBridge;
     [SerializeField] private SoundManager soundManager;
 
