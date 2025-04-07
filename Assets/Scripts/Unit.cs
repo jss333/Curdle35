@@ -15,8 +15,11 @@ public class Unit : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        animator.Play("Idle", 0, Random.Range(0f, 1f));
-        animator.speed = Random.Range(0.95f, 1.05f);
+        if(animator != null)
+        {
+            animator.Play("Idle", 0, Random.Range(0f, 1f));
+            animator.speed = Random.Range(0.95f, 1.05f);
+        }
 
         // Determine logical board position given current world position
         boardPosition = GridHelper.Instance.WorldToGrid(transform.position);
