@@ -17,11 +17,18 @@ public class HyenasSpawnAI
                 continue;
             }
 
+            if (spawnPoints.Contains(candidate))
+            {
+                continue;
+            }
+
             Unit unit = BoardManager.Instance.GetUnitAt(candidate);
             if (unit != null && unit.GetFaction() == Faction.Hyenas)
             {
                 continue;
             }
+
+            // TODO prevent spawning where there are structures
 
             spawnPoints.Add(candidate);
         }

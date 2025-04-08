@@ -26,7 +26,7 @@ public class Unit : MonoBehaviour
         BoardManager.Instance.RegisterUnitPos(this, boardPosition);
         BoardManager.Instance.ClaimCell(boardPosition, faction);
 
-        // Set unit's workd position to be the correct one for the given board position
+        // Set unit's world position to be the correct one for the given board position
         this.transform.position = GridHelper.Instance.GridToWorld(boardPosition);
     }
 
@@ -40,9 +40,9 @@ public class Unit : MonoBehaviour
         return boardPosition;
     }
 
-    public void UpdateBoardPosition(Vector2Int newPos)
+    public void UpdateBoardPositionAfterMove(Vector2Int newPos)
     {
-        BoardManager.Instance.UpdateUnitPos(this, boardPosition, newPos);
+        BoardManager.Instance.UpdateUnitPosRegister(this, boardPosition, newPos);
         boardPosition = newPos;
     }
 }

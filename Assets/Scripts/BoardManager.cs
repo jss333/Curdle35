@@ -136,15 +136,26 @@ public class BoardManager : MonoBehaviour
         if (units.ContainsKey(pos))
         {
             Unit oldUnit = units[pos];
-            Debug.LogWarning("Unit already registered at position " + pos + ". Replacing " + oldUnit.name + " with " + unit.name + ".");
+            if (oldUnit != unit)
+            {
+                Debug.LogWarning("Unit already registered at position " + pos + ". Replacing " + oldUnit.name + " with " + unit.name + ".");
+            }
         }
             
         units[pos] = unit;
     }
 
-    public void UpdateUnitPos(Unit unit, Vector2Int oldPos, Vector2Int newPos)
+    public void UpdateUnitPosRegister(Unit unit, Vector2Int oldPos, Vector2Int newPos)
     {
-        units.Remove(oldPos);
+        if (units.ContainsKey(oldPos) && units[oldPos] == unit)
+        {
+            units.Remove(oldPos);
+        }
+        else
+        {
+            Debug.LogWarning("Unit " + unit.name + " is not registered at position " + oldPos + ".");
+        }
+        
         RegisterUnitPos(unit, newPos);
     }
 

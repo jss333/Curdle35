@@ -71,7 +71,7 @@ public class MovableUnit : MonoBehaviour
         moveSequence.OnComplete(() =>
         {
             // After the sequence is done, update the unit's board position to the last cell
-            unit.UpdateBoardPosition(path.Last());
+            unit.UpdateBoardPositionAfterMove(path.Last());
             moveDoneCallback?.Invoke();
         });
 

@@ -82,7 +82,6 @@ public class HyenasSpawnManager : MonoBehaviour
 
         // Spawns a hyena at the spawn marker location
         GameObject hyena = Instantiate(hyenaPrefab, GridHelper.Instance.GridToWorld(pos), Quaternion.identity);
-        hyena.transform.SetParent(hyenasManager);
-        hyena.GetComponent<Unit>().UpdateBoardPosition(pos);
+        hyena.transform.SetParent(hyenasManager); // Unit's logical board position is registered in BoardManager by Unit.Start()
     }
 }
