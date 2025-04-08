@@ -51,4 +51,11 @@ public class Unit : MonoBehaviour
         BoardManager.Instance.UpdateUnitPosRegister(this, boardPosition, newPos);
         boardPosition = newPos;
     }
+
+    public void Die()
+    {
+        BoardManager.Instance.UnregisterUnitPos(this, boardPosition);
+        Destroy(gameObject);
+        // TODO add death VFX and SFX
+    }
 }

@@ -62,7 +62,7 @@ public class MovableUnit : MonoBehaviour
                 .SetEase(stepEaseType)
                 .OnComplete(() =>
                 {
-                    ClaimCellUnderUnit(cell);
+                    HandlePotentialInteractionsInCell(cell, cell == path.Last());
                 })
              ); 
         }
@@ -78,8 +78,41 @@ public class MovableUnit : MonoBehaviour
         moveSequence.Play();
     }
 
-    private void ClaimCellUnderUnit(Vector2Int cell)
+    private void HandlePotentialInteractionsInCell(Vector2Int cell, bool isLastCellInPath)
     {
-        BoardManager.Instance.ClaimCell(cell, unit.GetFaction());
+        BoardManager boardMngr = BoardManager.Instance;
+        Faction myFaction = unit.GetFaction();
+
+        //if cell is occupied by an unit in the same faction: log an error if this is the last cell in the path, do nothing otherwise
+        if (boardMngr.CellHasUnit(cell))
+        {
+            Unit otherUnit = boardMngr.GetUnitAt(cell);
+            Faction otherFaction = otherUnit.GetFaction();
+
+            if(otherFaction == myFaction && isLastCellInPath)
+            {
+                Debug.LogError($"Error when moving {unit.name}: destination cell {cell} is occupied by a unit of the same faction: {otherUnit.name}");
+            }
+
+            //if cats are moving, destroy the other unit and continue the movement
+            if(myFaction == Faction.Cats && otherFaction == Faction.Hyenas)
+            {
+                otherUnit.Die();
+                Debug.Log($"{unit.name} killed {otherUnit.name} at {cell}");
+            }
+
+            //if hyenas are moving, damage the other unit, destroy the hyena and stop movement
+            //if (myFaction == Faction.Hyenas && otherFaction == Faction.Cats)
+            //{
+            //    otherUnit.Damage(1);
+            //    unit.Destroy();
+            //}
+        }
+
+        //if after any interactions the cell is empty, claim it for the unit that moved
+        if (!boardMngr.CellHasUnit(cell))
+        {
+            boardMngr.ClaimCell(cell, myFaction);
+        }
     }
 }

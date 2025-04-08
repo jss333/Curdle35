@@ -138,7 +138,7 @@ public class BoardManager : MonoBehaviour
             Unit oldUnit = units[pos];
             if (oldUnit != unit)
             {
-                Debug.LogWarning("Unit already registered at position " + pos + ". Replacing " + oldUnit.name + " with " + unit.name + ".");
+                Debug.LogWarning($"An unit is already registered at {pos}. Replacing {oldUnit.name} with {unit.name}.");
             }
         }
             
@@ -147,16 +147,32 @@ public class BoardManager : MonoBehaviour
 
     public void UpdateUnitPosRegister(Unit unit, Vector2Int oldPos, Vector2Int newPos)
     {
-        if (units.ContainsKey(oldPos) && units[oldPos] == unit)
+        UnregisterUnitPos(unit, oldPos);
+        RegisterUnitPos(unit, newPos);
+    }
+
+    public void UnregisterUnitPos(Unit unit, Vector2Int pos)
+    {
+        if (units.ContainsKey(pos))
         {
-            units.Remove(oldPos);
+            if (units[pos] == unit)
+            {
+                units.Remove(pos);
+            }
+            else
+            {
+                Debug.LogWarning($"Trying to unregister unit {unit.name} from {pos}, but unit {units[pos].name} it currently registered there.");
+            }
         }
         else
         {
-            Debug.LogWarning("Unit " + unit.name + " is not registered at position " + oldPos + ".");
+            Debug.LogWarning($"Trying to unregister unit {unit.name} from {pos}, but no unit is currently registered there.");
         }
-        
-        RegisterUnitPos(unit, newPos);
+    }
+
+    public bool CellHasUnit(Vector2Int pos)
+    {
+        return IsWithinBounds(pos) && units.ContainsKey(pos);
     }
 
     public bool IsValidCellForUnitMovement(Vector2Int pos)
@@ -166,7 +182,7 @@ public class BoardManager : MonoBehaviour
 
     public bool IsVoidCell(Vector2Int pos)
     {
-        return board[pos.x, pos.y].IsVoidCell();
+        return IsWithinBounds(pos) && board[pos.x, pos.y].IsVoidCell();
     }
 
     private bool IsWithinBounds(Vector2Int pos)
