@@ -133,6 +133,7 @@ public class BoardManager : MonoBehaviour
 
     public void RegisterUnitPos(Unit unit, Vector2Int pos)
     {
+        Debug.Log($"RegisterUnitPos {unit.name} at {pos}");
         if (units.ContainsKey(pos))
         {
             Unit oldUnit = units[pos];
@@ -147,12 +148,14 @@ public class BoardManager : MonoBehaviour
 
     public void UpdateUnitPosRegister(Unit unit, Vector2Int oldPos, Vector2Int newPos)
     {
+        Debug.Log($"UpdateUnitPosRegister {unit.name} from {oldPos} to {newPos}");
         UnregisterUnitPos(unit, oldPos);
         RegisterUnitPos(unit, newPos);
     }
 
     public void UnregisterUnitPos(Unit unit, Vector2Int pos)
     {
+        Debug.Log($"UnregisterUnitPos {unit.name} at {pos}");
         if (units.ContainsKey(pos))
         {
             if (units[pos] == unit)

@@ -62,6 +62,7 @@ public class MovableUnit : MonoBehaviour
                 .SetEase(stepEaseType)
                 .OnComplete(() =>
                 {
+                    Debug.Log($"--Done with step for {unit.name} at {cell}");
                     HandlePotentialInteractionsInCell(cell, cell == path.Last());
                 })
              ); 
@@ -71,10 +72,15 @@ public class MovableUnit : MonoBehaviour
         moveSequence.OnComplete(() =>
         {
             // After the sequence is done, update the unit's board position to the last cell
-            unit.UpdateBoardPositionAfterMove(path.Last());
+            Debug.Log($"--Done with movement for {unit.name}");
+            if(unit.IsAlive())
+            {
+                unit.UpdateBoardPositionAfterMove(path.Last());
+            }
             moveDoneCallback?.Invoke();
         });
 
+        Debug.Log($"Moving {unit.name} to {path.Last()}");
         moveSequence.Play();
     }
 
@@ -83,13 +89,13 @@ public class MovableUnit : MonoBehaviour
         BoardManager boardMngr = BoardManager.Instance;
         Faction myFaction = unit.GetFaction();
 
-        //if cell is occupied by an unit in the same faction: log an error if this is the last cell in the path, do nothing otherwise
         if (boardMngr.CellHasUnit(cell))
         {
             Unit otherUnit = boardMngr.GetUnitAt(cell);
             Faction otherFaction = otherUnit.GetFaction();
 
-            if(otherFaction == myFaction && isLastCellInPath)
+            //if cell is occupied by an unit in the same faction: log an error if this is the last cell in the path
+            if (otherFaction == myFaction && isLastCellInPath)
             {
                 Debug.LogError($"Error when moving {unit.name}: destination cell {cell} is occupied by a unit of the same faction: {otherUnit.name}");
             }
@@ -97,16 +103,18 @@ public class MovableUnit : MonoBehaviour
             //if cats are moving, destroy the other unit and continue the movement
             if(myFaction == Faction.Cats && otherFaction == Faction.Hyenas)
             {
-                otherUnit.Die();
                 Debug.Log($"{unit.name} killed {otherUnit.name} at {cell}");
+                otherUnit.Die();
             }
 
             //if hyenas are moving, damage the other unit, destroy the hyena and stop movement
-            //if (myFaction == Faction.Hyenas && otherFaction == Faction.Cats)
-            //{
-            //    otherUnit.Damage(1);
-            //    unit.Destroy();
-            //}
+            if (myFaction == Faction.Hyenas && otherFaction == Faction.Cats)
+            {
+                Debug.Log($"{unit.name} damaged {otherUnit.name} at {cell}, and then died");
+                otherUnit.TakeDamage(1);
+                unit.Die();
+                // TODO: stop movement
+            }
         }
 
         //if after any interactions the cell is empty, claim it for the unit that moved

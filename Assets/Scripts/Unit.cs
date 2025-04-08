@@ -9,9 +9,12 @@ public class Unit : MonoBehaviour
     [Header("Config")]
     [SerializeField] private Faction faction;
     [SerializeField] private bool isStructure;
+    [SerializeField] private int maxHealth = 1;
 
     [Header("State")]
     [SerializeField] private Vector2Int boardPosition;
+    [SerializeField] private int currentHealth;
+    [SerializeField] private bool isAlive = true;
 
     void Start()
     {
@@ -29,6 +32,8 @@ public class Unit : MonoBehaviour
 
         // Set unit's world position to be the correct one for the given board position
         this.transform.position = GridHelper.Instance.GridToWorld(boardPosition);
+
+        currentHealth = maxHealth;
     }
 
     public Faction GetFaction()
@@ -52,10 +57,24 @@ public class Unit : MonoBehaviour
         boardPosition = newPos;
     }
 
+    public void TakeDamage(int dmg)
+    {
+        currentHealth = System.Math.Min(0, currentHealth - dmg);
+        if(currentHealth == 0)
+        {
+            Die();
+        }
+    }
+
     public void Die()
     {
+        isAlive = false;
         BoardManager.Instance.UnregisterUnitPos(this, boardPosition);
         Destroy(gameObject);
-        // TODO add death VFX and SFX
+    }
+
+    public bool IsAlive()
+    {
+        return isAlive;
     }
 }
