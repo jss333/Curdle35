@@ -101,4 +101,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   faction: 1
+  isStructure: 1
   boardPosition: {x: 0, y: 0}

@@ -8,6 +8,7 @@ public class Unit : MonoBehaviour
 
     [Header("Config")]
     [SerializeField] private Faction faction;
+    [SerializeField] private bool isStructure;
 
     [Header("State")]
     [SerializeField] private Vector2Int boardPosition;
@@ -33,6 +34,11 @@ public class Unit : MonoBehaviour
     public Faction GetFaction()
     {
         return faction;
+    }
+
+    public bool IsStructure()
+    {
+        return isStructure;
     }
 
     public Vector2Int GetBoardPosition()

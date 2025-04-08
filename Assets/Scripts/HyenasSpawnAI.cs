@@ -10,9 +10,13 @@ public class HyenasSpawnAI
         // Generate random spawn points based on the spawn rate
         while (spawnPoints.Count < spawnRate)
         {
-            var candidate = new Vector2Int(Random.Range(0, BoardManager.Instance.GetWidth()), Random.Range(0, BoardManager.Instance.GetHeight()));
+            var boardMngr = BoardManager.Instance;
+            var candidate = new Vector2Int(
+                Random.Range(0, boardMngr.GetWidth()),
+                Random.Range(0, boardMngr.GetHeight())
+            );
 
-            if (!BoardManager.Instance.IsValidCellForUnitMovement(candidate))
+            if (!boardMngr.IsValidCellForUnitMovement(candidate))
             {
                 continue;
             }
@@ -22,13 +26,11 @@ public class HyenasSpawnAI
                 continue;
             }
 
-            Unit unit = BoardManager.Instance.GetUnitAt(candidate);
-            if (unit != null && unit.GetFaction() == Faction.Hyenas)
+            Unit unit = boardMngr.GetUnitAt(candidate);
+            if (unit != null && (unit.GetFaction() == Faction.Hyenas || unit.IsStructure()))
             {
                 continue;
             }
-
-            // TODO prevent spawning where there are structures
 
             spawnPoints.Add(candidate);
         }
