@@ -895,7 +895,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5224848648760891206, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
       propertyPath: m_Name
-      value: Hyena (1)
+      value: Hyena #1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3688,7 +3688,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5224848648760891206, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
       propertyPath: m_Name
-      value: Hyena (2)
+      value: Hyena #2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4685,6 +4685,7 @@ MonoBehaviour:
   hyenasManager: {fileID: 632487794}
   maxDelayBeforeSpawning: 0.3
   currentInnerSpawnRate: 1
+  nextHyenaId: 3
 --- !u!4 &1369951113
 Transform:
   m_ObjectHideFlags: 0
@@ -6825,7 +6826,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5224848648760891206, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
       propertyPath: m_Name
-      value: Hyena
+      value: Hyena #0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

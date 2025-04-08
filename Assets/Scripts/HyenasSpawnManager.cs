@@ -15,6 +15,7 @@ public class HyenasSpawnManager : MonoBehaviour
 
     [Header("State")]
     [SerializeField] private int currentInnerSpawnRate;
+    [SerializeField] private int nextHyenaId = 0;
 
     private static HyenasSpawnAI HyenasSpawnAI = new HyenasSpawnAI();
 
@@ -49,6 +50,7 @@ public class HyenasSpawnManager : MonoBehaviour
             SpawnMarker spawnMarker = Instantiate(spawnMarkerPrefab, GridHelper.Instance.GridToWorld(spawnPoint), Quaternion.identity);
             spawnMarker.transform.SetParent(transform);
             spawnMarker.SetBoardPosition(spawnPoint);
+            spawnMarker.name = "Spawn marker @ " + spawnPoint;
         }
 
         GameManager.Instance.OnHyenasFinishGeneratingNewSpawnMarkers();
@@ -83,5 +85,6 @@ public class HyenasSpawnManager : MonoBehaviour
         // Spawns a hyena at the spawn marker location
         GameObject hyena = Instantiate(hyenaPrefab, GridHelper.Instance.GridToWorld(pos), Quaternion.identity);
         hyena.transform.SetParent(hyenasManager); // Unit's logical board position is registered in BoardManager by Unit.Start()
+        hyena.name = "Hyena #" + nextHyenaId++;
     }
 }
