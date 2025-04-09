@@ -27,6 +27,7 @@ public class Unit : MonoBehaviour
 
         // Determine logical board position given current world position
         boardPosition = GridHelper.Instance.WorldToGrid(transform.position);
+        Debug.Log($"Unit {gameObject.name} located at {transform.position} is at board position {boardPosition}");
         BoardManager.Instance.RegisterUnitPos(this, boardPosition);
         BoardManager.Instance.ClaimCell(boardPosition, faction);
 

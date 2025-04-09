@@ -17,12 +17,19 @@ public class GridHelper : MonoBehaviour
     public Vector3 GridToWorld(Vector2Int cell)
     {
         Vector3 basePos = grid.CellToWorld((Vector3Int)cell);
-        return basePos + (Vector3)renderingOffset;
+        Vector3Int gridToArrayOffset = (Vector3Int)BoardManager.Instance.GetGridToArrayOffset();
+        return basePos + (Vector3)gridToArrayOffset  + (Vector3)renderingOffset;
+    }
+
+    public Vector3Int GridToTilemapWorld(Vector2Int cell)
+    {
+        return (Vector3Int)cell + (Vector3Int)BoardManager.Instance.GetGridToArrayOffset();
     }
 
     public Vector2Int WorldToGrid(Vector3 worldPos)
     {
         Vector3Int cell = grid.WorldToCell(worldPos);
-        return new Vector2Int(cell.x, cell.y);
+        Vector2Int gridToArrayOffset = BoardManager.Instance.GetGridToArrayOffset();
+        return new Vector2Int(cell.x - gridToArrayOffset.x, cell.y - gridToArrayOffset.y);
     }
 }

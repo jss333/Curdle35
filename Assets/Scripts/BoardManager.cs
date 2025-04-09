@@ -7,6 +7,9 @@ public class BoardManager : MonoBehaviour
 {
     public static BoardManager Instance { get; private set; }
 
+    [Header("Config - Debug")]
+    [SerializeField] private bool usePrePaintedMap = false;
+
     [Header("Config - Tilemap references")]
     [SerializeField] private Tilemap terrainTilemap;
     [SerializeField] private Tilemap resourceTilemap;
@@ -26,6 +29,7 @@ public class BoardManager : MonoBehaviour
     [Header("State")]
     [SerializeField] private int width;
     [SerializeField] private int height;
+    [SerializeField] private Vector2Int gridToArrayOffset;
     [SerializeField] private CellData[,] board;
     [SerializeField] private Dictionary<Vector2Int, Unit> units = new Dictionary<Vector2Int, Unit>();
 
@@ -52,13 +56,62 @@ public class BoardManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        InitializeBoardAndTilemapsFromPredefinedBoard();
+        if(usePrePaintedMap)
+        {
+            InitializeBoardFromPaintedTilemap();
+        }
+        else
+        {
+            InitializeBoardAndTilemapsFromPredefinedBoard();
+        }
+
+        Debug.Log($"Board initialized ===== width: {width}  height: {height}  gridToArrayOffset: {gridToArrayOffset}");
+    }
+
+    private void InitializeBoardFromPaintedTilemap()
+    {
+        terrainTilemap.CompressBounds();
+        BoundsInt bounds = terrainTilemap.cellBounds;
+        Debug.Log($"Bounds: {bounds}  position: {bounds.position}  size: {bounds.size}");
+        width = bounds.size.x;
+        height = bounds.size.y;
+        gridToArrayOffset = new Vector2Int(bounds.x, bounds.y);
+
+        board = new CellData[width, height];
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                Vector3Int tilemapPos = new Vector3Int(bounds.x + x, bounds.y + y, 0);
+                Vector2Int boardPos = new Vector2Int(x, y);
+
+                TileBase terrainTile = terrainTilemap.GetTile(tilemapPos);
+                TileBase resourceTile = resourceTilemap.GetTile(tilemapPos);
+
+                CellData cellData;
+                if (terrainTile == null)
+                {
+                    // TODO make sure the terrain tilemap is empty here
+                    cellData = new CellData(-1, Faction.None);
+                }
+                else
+                {
+                    Faction faction = GetFactionForTerrainTile(terrainTile, tilemapPos);
+                    int resourceValue = GetResourceValueForResourceTile(resourceTile, tilemapPos);
+                    cellData = new CellData(resourceValue, faction);
+                }
+
+                board[x, y] = cellData;
+            }
+        }
     }
 
     private void InitializeBoardAndTilemapsFromPredefinedBoard()
     {
         width = predefinedBoard.GetLength(1);
         height = predefinedBoard.GetLength(0);
+        gridToArrayOffset = new Vector2Int(0, 0);
 
         board = new CellData[width, height];
 
@@ -94,6 +147,32 @@ public class BoardManager : MonoBehaviour
         }
     }
 
+    private Faction GetFactionForTerrainTile(TileBase tile, Vector3Int pos)
+    {
+        if (tile == neutralTerrainTile)
+        {
+            return Faction.None;
+        }
+        else if (tile == catTerrainTile)
+        {
+            return Faction.Cats;
+        }
+        else if (tile == hyenaTerrainTile)
+        {
+            return Faction.Hyenas;
+        }
+        else if (tile == null)
+        {
+            Debug.LogError($"No faction for null terrain tile at {pos}");
+            return Faction.None;
+        }
+        else
+        {
+            Debug.LogError($"Unknown terrain tile at {pos}");
+            return Faction.None;
+        }
+    }
+
     private TileBase GetResourceTileForResourceValue(int resourceValue)
     {
         switch (resourceValue)
@@ -105,16 +184,41 @@ public class BoardManager : MonoBehaviour
         }
     }
 
+    private int GetResourceValueForResourceTile(TileBase tile, Vector3Int pos)
+    {
+        if (tile == null)
+        {
+            return 1;
+        }
+        if (tile == resourceTiles[0])
+        {
+            return 2;
+        }
+        else if (tile == resourceTiles[1])
+        {
+            return 3;
+        }
+        else if (tile == resourceTiles[2])
+        {
+            return 4;
+        }
+        else
+        {
+            Debug.LogError($"Unknown terrain tile at {pos}");
+            return 1;
+        }
+    }
+
     public void ShowMovementRange(MovementRange mvmtRange)
     {
         IEnumerable<Vector2Int> cells = mvmtRange.GetValidCells();
 
         foreach (var cell in cells)
         {
-            movementRangeTilemap.SetTile((Vector3Int)cell, movementRangeTile);
+            movementRangeTilemap.SetTile(GridHelper.Instance.GridToTilemapWorld(cell), movementRangeTile);
         }
         // Also highlight the cell the unit is standing on
-        movementRangeTilemap.SetTile((Vector3Int)mvmtRange.GetUnit().GetBoardPosition(), movementRangeTile);
+        movementRangeTilemap.SetTile(GridHelper.Instance.GridToTilemapWorld(mvmtRange.GetUnit().GetBoardPosition()), movementRangeTile);
     }
 
     public void ClearMovementRange()
@@ -199,7 +303,7 @@ public class BoardManager : MonoBehaviour
         if (IsValidCellForUnitMovement(pos))
         {
             board[pos.x, pos.y].owner = faction;
-            terrainTilemap.SetTile((Vector3Int)pos, GetTerrainTileForFaction(faction));
+            terrainTilemap.SetTile(GridHelper.Instance.GridToTilemapWorld(pos), GetTerrainTileForFaction(faction));
         }
     }
 
@@ -211,5 +315,10 @@ public class BoardManager : MonoBehaviour
     public int GetHeight()
     {
         return height;
+    }
+
+    public Vector2Int GetGridToArrayOffset()
+    {
+        return gridToArrayOffset;
     }
 }

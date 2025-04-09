@@ -17,6 +17,12 @@ public class CellData
         this.resourceValue = resourceValue;
     }
 
+    public CellData(int resourceValue, Faction owner)
+    {
+        this.resourceValue = resourceValue;
+        this.owner = owner;
+    }
+
     public bool IsVoidCell()
     {
         return resourceValue == -1;

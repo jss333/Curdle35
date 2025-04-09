@@ -8,8 +8,12 @@ public class HyenasSpawnAI
         List<Vector2Int> spawnPoints = new List<Vector2Int>();
 
         // Generate random spawn points based on the spawn rate
+        int curIteration = 0;
+        int maxIterations = 100;
         while (spawnPoints.Count < spawnRate)
         {
+            if (curIteration++ > maxIterations) break; // Prevent infinite loop
+
             var boardMngr = BoardManager.Instance;
             var candidate = new Vector2Int(
                 Random.Range(0, boardMngr.GetWidth()),
@@ -33,6 +37,11 @@ public class HyenasSpawnAI
             }
 
             spawnPoints.Add(candidate);
+        }
+
+        if (spawnPoints.Count < spawnRate)
+        {
+            Debug.LogWarning($"HyenasSpawnAI: Not able to generate {spawnRate} spawn point after {curIteration} iterations. Generated {spawnPoints.Count}.");
         }
 
         return spawnPoints;
