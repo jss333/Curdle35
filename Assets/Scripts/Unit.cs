@@ -59,7 +59,7 @@ public class Unit : MonoBehaviour
 
     public void TakeDamage(int dmg)
     {
-        currentHealth = System.Math.Min(0, currentHealth - dmg);
+        currentHealth = System.Math.Max(0, currentHealth - dmg);
         if(currentHealth == 0)
         {
             Die();

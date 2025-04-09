@@ -102,4 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   faction: 1
   isStructure: 1
+  maxHealth: 3
   boardPosition: {x: 0, y: 0}
+  currentHealth: 0
+  isAlive: 1
