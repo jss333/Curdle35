@@ -5,10 +5,10 @@ using System;
 public class HyenaMovementAI
 {
     static private List<Vector2Int> ALL_DIRS = new List<Vector2Int>();
+    static private bool debug = false;
 
     public HyenaMovementAI()
     {
-        // Ensure ALL_DIRS is initialized when the class is instantiated
         for(int x = -1; x <= 1; x++)
         {
             for (int y = -1; y <= 1; y++)
@@ -22,7 +22,17 @@ public class HyenaMovementAI
     public IEnumerable<Vector2Int> CalculateMovementPath(Vector2Int origin)
     {
         List<Vector2Int> path = new List<Vector2Int>();
-        path.Add(RandomlyPickCellAroundUnit(origin));
+
+        if(debug)
+        {
+            path.Add(origin + new Vector2Int(1, 0));
+            path.Add(origin + new Vector2Int(2, 0));
+        }
+        else
+        {
+            path.Add(RandomlyPickCellAroundUnit(origin));
+        }
+        
         return path;
     }
 

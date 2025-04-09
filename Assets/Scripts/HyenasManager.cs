@@ -1,6 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public struct HyenaMove
 {
@@ -62,14 +63,19 @@ public class HyenasManager : MonoBehaviour
 
     private void MoveNextHyena()
     {
+        Debug.Log($"*** moving next hyena {currentHyenaIndex}/{hyenasToMove.Count}...");
+
         if (currentHyenaIndex >= hyenasToMove.Count)
         {
+            Debug.Log($"*** calling OnHyenasFinishMoving()...");
             GameManager.Instance.OnHyenasFinishMoving();
             return;
         }
 
         var move = hyenasToMove[currentHyenaIndex];
         currentHyenaIndex++;
+
+        Debug.Log($"*** moving hyena {move.hyena.name} to {move.path.Last()} / currentHyenaIndex has been updated to {currentHyenaIndex}.");
 
         DOTween.Sequence()
             .AppendInterval(delayBetweenMoves)

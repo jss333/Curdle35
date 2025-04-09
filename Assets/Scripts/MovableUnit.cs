@@ -57,26 +57,31 @@ public class MovableUnit : MonoBehaviour
         foreach (var cell in path)
         {
             Vector3 targetWorld = GridHelper.Instance.GridToWorld(cell);
-            moveSequence.Append(
-                transform.DOMove(targetWorld, timePerSegment)
-                .SetEase(stepEaseType)
-                .OnComplete(() =>
+            moveSequence.Append(transform.DOMove(targetWorld, timePerSegment).SetEase(stepEaseType)); 
+            moveSequence.AppendCallback(() =>
+            {
+                Debug.Log($"--Done with step for {unit.name} at {cell}");
+                HandlePotentialInteractionsInCell(cell, cell == path.Last());
+                if (!unit.IsAlive())
                 {
-                    Debug.Log($"--Done with step for {unit.name} at {cell}");
-                    HandlePotentialInteractionsInCell(cell, cell == path.Last());
-                })
-             ); 
+                    Debug.Log($"--Unit not alive so will Kill sequence... ");
+                    // Interrupt the sequence if the unit is dead (the sequence completion callback below will still be invoked)
+                    moveSequence.Kill(true);
+                }
+            });
         }
 
         moveSequence.SetEase(pathEaseType);
         moveSequence.OnComplete(() =>
         {
             // After the sequence is done, update the unit's board position to the last cell
-            Debug.Log($"--Done with movement for {unit.name}");
+            Debug.Log($"--Done with total movement for {unit.name}");
             if(unit.IsAlive())
             {
+                Debug.Log($"--Unit is alive so will update board position");
                 unit.UpdateBoardPositionAfterMove(path.Last());
             }
+            Debug.Log($"--Will (also) invoke the callback");
             moveDoneCallback?.Invoke();
         });
 
