@@ -19,7 +19,24 @@ public class HyenaMovementAI
         }
     }
 
-    public IEnumerable<Vector2Int> CalculateMovementPath(Vector2Int origin)
+    public List<HyenaMoveOrder> CalculateMovementPathForHyenas(List<Unit> hyenas)
+    {
+        List<HyenaMoveOrder> moveOrders = new List<HyenaMoveOrder>();
+
+        HashSet<Vector2Int> newlyOccupiedCells = new HashSet<Vector2Int>(); // Cells that a hyena will move to
+        HashSet<Vector2Int> newlyFreeCells = new HashSet<Vector2Int>(); // Cells that will be vacated by a moving hyena
+
+        foreach (var unit in hyenas)
+        {
+            Debug.Log($"Calculating movement path for {unit.name} at {unit.GetBoardPosition()}");
+            IEnumerable<Vector2Int> path = CalculateMovementPath(unit.GetBoardPosition(), newlyOccupiedCells, newlyFreeCells);
+            moveOrders.Add(new HyenaMoveOrder(unit.GetComponent<MovableUnit>(), path));
+        }
+
+        return moveOrders;
+    }
+
+    private IEnumerable<Vector2Int> CalculateMovementPath(Vector2Int origin, HashSet<Vector2Int> newlyOccupiedCells, HashSet<Vector2Int> newlyFreeCells)
     {
         List<Vector2Int> path = new List<Vector2Int>();
 
@@ -30,28 +47,56 @@ public class HyenaMovementAI
         }
         else
         {
-            path.Add(RandomlyPickCellAroundUnit(origin));
+            Vector2Int? pickedCell = RandomlyPickCellAroundUnit(origin, newlyOccupiedCells, newlyFreeCells);
+            if(pickedCell is Vector2Int)
+            {
+                path.Add(pickedCell.Value);
+            }
         }
         
         return path;
     }
 
-    private Vector2Int RandomlyPickCellAroundUnit(Vector2Int origin)
+    private Vector2Int? RandomlyPickCellAroundUnit(Vector2Int origin, HashSet<Vector2Int> newlyOccupiedCells, HashSet<Vector2Int> newlyFreeCells)
     {
+        Debug.Log($"Randomly picking cell around {origin}");
+        LogUtils.LogEnumerable("--- newlyOccupiedCells", newlyOccupiedCells);
+        LogUtils.LogEnumerable("--- newlyFreeCells", newlyFreeCells);
+
         List<Vector2Int> candidateCells = new List<Vector2Int>();
+
         foreach (var dir in ALL_DIRS)
         {
             Vector2Int candidateCell = origin + dir;
 
             if (!BoardManager.Instance.IsValidCellForUnitMovement(candidateCell)) continue;
 
+            if (newlyOccupiedCells.Contains(candidateCell)) continue;
+
             Unit unitAtPos = BoardManager.Instance.GetUnitAt(candidateCell);
-            if (unitAtPos == null || unitAtPos.GetFaction() != Faction.Hyenas)
+            if (unitAtPos == null || unitAtPos.GetFaction() != Faction.Hyenas || newlyFreeCells.Contains(candidateCell))
             {
                 candidateCells.Add(candidateCell);
             }
         }
 
-        return candidateCells[UnityEngine.Random.Range(0, candidateCells.Count)]; // Randomly select one of the candidate cells as the target cell
+        LogUtils.LogEnumerable($"Candidate cells from origin {origin}: ", candidateCells);
+
+        if(candidateCells.Count == 0)
+        {
+            return null;
+        }
+
+        Vector2Int pickedCell = candidateCells[UnityEngine.Random.Range(0, candidateCells.Count)]; // Randomly select one of the candidate cells as the target cell
+
+        newlyOccupiedCells.Add(pickedCell);
+        if (newlyFreeCells.Contains(pickedCell)) newlyFreeCells.Remove(pickedCell);
+        newlyFreeCells.Add(origin);
+
+        Debug.Log($"Picked the following cell: {pickedCell}");
+        LogUtils.LogEnumerable("--- newlyOccupiedCells", newlyOccupiedCells);
+        LogUtils.LogEnumerable("--- newlyFreeCells", newlyFreeCells);
+
+        return pickedCell;
     }
 }

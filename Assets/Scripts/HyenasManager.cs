@@ -2,16 +2,17 @@ using DG.Tweening;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 
-public struct HyenaMove
+public struct HyenaMoveOrder
 {
     public MovableUnit hyena;
-    public IEnumerable<Vector2Int> path;
+    public IEnumerable<Vector2Int> movePath;
 
-    public HyenaMove(MovableUnit hyena, IEnumerable<Vector2Int> path)
+    public HyenaMoveOrder(MovableUnit hyena, IEnumerable<Vector2Int> movePath)
     {
         this.hyena = hyena;
-        this.path = path;
+        this.movePath = movePath;
     }
 }
 
@@ -21,8 +22,8 @@ public class HyenasManager : MonoBehaviour
     [SerializeField] private float delayBetweenMoves = 0.3f;
 
     [Header("State")]
-    [SerializeField] private int currentHyenaIndex = 0;
-    [SerializeField] private List<HyenaMove> hyenasToMove = new List<HyenaMove>();
+    [SerializeField] private int currentMoveOrderIndex = 0;
+    [SerializeField] private List<HyenaMoveOrder> moveOrders;
 
     private static HyenaMovementAI MovementAI = new HyenaMovementAI();
 
@@ -36,10 +37,20 @@ public class HyenasManager : MonoBehaviour
         if (state != GameState.HyenasMoving) return;
 
         Debug.Log("Starting to move hyenas");
-        hyenasToMove.Clear();
-        currentHyenaIndex = 0;
 
-        // Iterate over all child hyena to pick a target cell and move it there
+        // Iterate over all child hyenas and filter out any that are disabled or missing Unit or MovableUnit components
+        List<Unit> hyenasToMove = GetValidHyenasToMove();
+
+        // Ask the AI component to calculate move orders
+        moveOrders = MovementAI.CalculateMovementPathForHyenas(hyenasToMove);
+        currentMoveOrderIndex = 0;
+
+        MoveNextHyena();
+    }
+
+    private List<Unit> GetValidHyenasToMove()
+    {
+        List<Unit> validHyenas = new List<Unit>();
         foreach (Transform child in transform)
         {
             if (child.gameObject.activeInHierarchy == false) continue;
@@ -49,37 +60,43 @@ public class HyenasManager : MonoBehaviour
 
             if (unit == null || hyena == null)
             {
-                Debug.LogWarning($"--- skipping child '{child.name}' as it does not have Unit and MovableUnit components.");
+                Debug.LogWarning($"Hyena {child.name} is missing an Unit or MovableUnit component.");
                 continue;
             }
 
-            IEnumerable<Vector2Int> path = MovementAI.CalculateMovementPath(unit.GetBoardPosition());
-
-            hyenasToMove.Add(new HyenaMove(hyena, path));
+            validHyenas.Add(unit);
         }
-
-        MoveNextHyena();
+        return validHyenas;
     }
 
     private void MoveNextHyena()
     {
-        Debug.Log($"*** moving next hyena {currentHyenaIndex}/{hyenasToMove.Count}...");
+        Debug.Log($"*** moving next hyena {currentMoveOrderIndex}/{moveOrders.Count()}...");
 
-        if (currentHyenaIndex >= hyenasToMove.Count)
+        if (currentMoveOrderIndex >= moveOrders.Count())
         {
             Debug.Log($"*** calling OnHyenasFinishMoving()...");
             GameManager.Instance.OnHyenasFinishMoving();
             return;
         }
 
-        var move = hyenasToMove[currentHyenaIndex];
-        currentHyenaIndex++;
+        var moveOrder = moveOrders[currentMoveOrderIndex];
+        currentMoveOrderIndex++;
 
-        Debug.Log($"*** moving hyena {move.hyena.name} to {move.path.Last()} / currentHyenaIndex has been updated to {currentHyenaIndex}.");
+        if(moveOrder.movePath.Count() == 0)
+        {
+            Debug.Log($"*** hyena {moveOrder.hyena.name} has no place to move to / currentHyenaIndex has been updated to {currentMoveOrderIndex}.");
 
-        DOTween.Sequence()
-            .AppendInterval(delayBetweenMoves)
-            .AppendCallback(() => { move.hyena.MoveAlongPath(move.path, MoveNextHyena); })
-            .Play();
+            MoveNextHyena();
+        }
+        else
+        {
+            Debug.Log($"*** moving hyena {moveOrder.hyena.name} to {moveOrder.movePath.Last()} / currentHyenaIndex has been updated to {currentMoveOrderIndex}.");
+
+            DOTween.Sequence()
+                .AppendInterval(delayBetweenMoves)
+                .AppendCallback(() => { moveOrder.hyena.MoveAlongPath(moveOrder.movePath, MoveNextHyena); })
+                .Play();
+        }
     }
 }
