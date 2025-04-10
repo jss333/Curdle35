@@ -4,9 +4,18 @@ using DG.Tweening;
 
 public class HyenasSpawnManager : MonoBehaviour
 {
+    public static HyenasSpawnManager Instance { get; private set; }
+
+    public event System.Action<int> OnSpawnRateChanged;
+    public event System.Action<int> OnUpgradeCostChanged;
+
+    [Header("Config - Spawn rate")]
+    [SerializeField] private int startSpawnRate = 1;
+    [SerializeField] private int spawnRateUpgradeCostConstant = 5;
+    [SerializeField] private int spawnRateUpgradeCostStageMultiplier = 5;
+
     [Header("Config - Spawn markers")]
     [SerializeField] private SpawnMarker spawnMarkerPrefab;
-    [SerializeField] private int startInnerSpawnRate = 1;
 
     [Header("Config - Hyenas")]
     [SerializeField] private GameObject hyenaPrefab;
@@ -14,16 +23,44 @@ public class HyenasSpawnManager : MonoBehaviour
     [SerializeField] private float maxDelayBeforeSpawning = 0.5f;
 
     [Header("State")]
-    [SerializeField] private int currentInnerSpawnRate;
+    [SerializeField] private int currentSpawnRate;
+    [SerializeField] private int currentSpawnRateStage = 0;
+    [SerializeField] private int nextSpawnRateUpgradeCost;
     [SerializeField] private int nextHyenaId = 0;
 
+    public int CurrentSpawnRate
+    {
+        get => currentSpawnRate;
+        set
+        {
+            currentSpawnRate = value;
+            OnSpawnRateChanged?.Invoke(currentSpawnRate);
+        }
+    }
+
+    public int NextSpawnRateUpgradeCost
+    {
+        get => nextSpawnRateUpgradeCost;
+        set
+        {
+            nextSpawnRateUpgradeCost = value;
+            OnUpgradeCostChanged?.Invoke(nextSpawnRateUpgradeCost);
+        }
+    }
+
     private static readonly HyenasSpawnAI HyenasSpawnAI = new();
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
         GameManager.Instance.OnGameStateChanged += HandleGameStateChanged;
 
-        currentInnerSpawnRate = startInnerSpawnRate;
+        CurrentSpawnRate = startSpawnRate;
+        NextSpawnRateUpgradeCost = GetNextSpawnRateUpgradeCostBasedOnCurrentStage();
     }
 
     private void HandleGameStateChanged(GameState newState)
@@ -42,7 +79,7 @@ public class HyenasSpawnManager : MonoBehaviour
     private void InstantiateSpawnMarkers()
     {
         // Determine where hyenas will spawn next
-        List<Vector2Int> spawnPoints = HyenasSpawnAI.GetSpawnPoints(currentInnerSpawnRate);
+        List<Vector2Int> spawnPoints = HyenasSpawnAI.GetSpawnPoints(currentSpawnRate);
 
         // Instantiate spawn markers at each location
         foreach (Vector2Int spawnPoint in spawnPoints)
@@ -111,5 +148,30 @@ public class HyenasSpawnManager : MonoBehaviour
             hyena.transform.SetParent(hyenasManager); // Unit's logical board position is registered in BoardManager by Unit.Start()
             hyena.name = "Hyena #" + nextHyenaId++;
         }
+    }
+
+    public bool IsEnoughResourcesToUpgradeSpawnRate(int hyenasResources)
+    {
+        bool isEnough = hyenasResources >= nextSpawnRateUpgradeCost;
+        Debug.Log($"Hyenas do{(isEnough ? "" : " not")} have enough resources ({hyenasResources}) to pay upgrade spawn rate cost ({nextSpawnRateUpgradeCost}).");
+        return isEnough;
+    }
+
+    public int UpgradeSpawnRateAndReturnTotalCost()
+    {
+        // TODO animate and return only when animation ends
+
+        int prevSpawnRateUpgradeCost = nextSpawnRateUpgradeCost;
+        CurrentSpawnRate++;
+        currentSpawnRateStage++;
+        NextSpawnRateUpgradeCost = GetNextSpawnRateUpgradeCostBasedOnCurrentStage();
+        Debug.Log($"Hyenas spawn rate upgraded to {currentSpawnRate}. It cost {prevSpawnRateUpgradeCost} resources. Next upgrade at {nextSpawnRateUpgradeCost}");
+
+        return prevSpawnRateUpgradeCost;
+    }
+
+    private int GetNextSpawnRateUpgradeCostBasedOnCurrentStage()
+    {
+        return spawnRateUpgradeCostConstant + (currentSpawnRateStage * spawnRateUpgradeCostStageMultiplier);
     }
 }

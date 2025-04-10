@@ -8,15 +8,16 @@ public class ResourcesManager : MonoBehaviour
     public event System.Action<int> OnPlayerResourcesChanged;
     public event System.Action<int> OnHyenasResourcesChanged;
 
-    [Header("State")]
+    [Header("Config")]
     [SerializeField] private int initialPlayerResources;
     [SerializeField] private int initialHyenasResources;
+    [SerializeField] private HyenasSpawnManager hyenasSpawnManager;
 
     [Header("State")]
     [SerializeField] private int playerResources;
     [SerializeField] private int hyenasResources;
 
-    private void Awake()
+    void Awake()
     {
         Instance = this;
 
@@ -24,7 +25,7 @@ public class ResourcesManager : MonoBehaviour
         hyenasResources = initialHyenasResources;
     }
 
-    private void Start()
+    void Start()
     {
         GameManager.Instance.OnGameStateChanged += HandleGameStateChanged;
     }
@@ -68,7 +69,11 @@ public class ResourcesManager : MonoBehaviour
             // TODO animate resource collection and only update + transition game state after animation ends
             HyenasResources += resourcesHarvested;
 
-            // TODO check hyenas spawn rate uprade conditions (if resource >= X, spend them to increase rate)
+            //Handle upgrading of spawn rate
+            if (hyenasSpawnManager.IsEnoughResourcesToUpgradeSpawnRate(hyenasResources))
+            {
+                HyenasResources -= hyenasSpawnManager.UpgradeSpawnRateAndReturnTotalCost();
+            }
 
             GameManager.Instance.OnHyenasFinishHarvesting();
         }
