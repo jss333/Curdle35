@@ -3,9 +3,24 @@ using System.Collections.Generic;
 
 public class HyenasSpawnAI
 {
+    private bool debug = false;
+
     public List<Vector2Int> GetSpawnPoints(int spawnRate)
     {
         List<Vector2Int> spawnPoints = new List<Vector2Int>();
+
+        if(debug)
+        {
+            spawnPoints.Add(new Vector2Int(0, 0));
+            spawnPoints.Add(new Vector2Int(1, 0));
+            spawnPoints.Add(new Vector2Int(2, 0));
+            spawnPoints.Add(new Vector2Int(3, 0));
+            spawnPoints.Add(new Vector2Int(4, 0));
+            spawnPoints.Add(new Vector2Int(5, 0));
+            spawnPoints.Add(new Vector2Int(6, 0));
+            spawnPoints.Add(new Vector2Int(7, 0));
+            return spawnPoints;
+        }
 
         // Generate random spawn points based on the spawn rate
         int curIteration = 0;

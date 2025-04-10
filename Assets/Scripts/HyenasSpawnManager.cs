@@ -58,18 +58,26 @@ public class HyenasSpawnManager : MonoBehaviour
 
     private void SpawnHyenasFromMarkers()
     {
+        Debug.Log("Spawning hyenas from markers");
+
+        Sequence allSpawnSeq = DOTween.Sequence();
+
         foreach (Transform child in transform)
         {
             SpawnMarker spawnMarker = child.GetComponent<SpawnMarker>();
             if (spawnMarker != null)
             {
-                DOTween.Sequence()
+                Sequence spawnSeq = DOTween.Sequence();
+                spawnSeq
                     .AppendInterval(Random.Range(0, maxDelayBeforeSpawning))
-                    .AppendCallback(() => SpawnHyenaAtMarkerLocation(spawnMarker));
+                    .AppendCallback(() => SpawnHyenaAtMarkerLocation(spawnMarker))
+                    .AppendInterval(0.1f); // Give the Start() code in Unit time to run and register the hyena's position in BoardManager
+                allSpawnSeq.Join(spawnSeq);
             }
         }
 
-        GameManager.Instance.OnHyenasFinishSpawningFromMarkers();
+        allSpawnSeq.onComplete = GameManager.Instance.OnHyenasFinishSpawningFromMarkers;
+        allSpawnSeq.Play();
     }
 
     private void SpawnHyenaAtMarkerLocation(SpawnMarker spawnMarker)
