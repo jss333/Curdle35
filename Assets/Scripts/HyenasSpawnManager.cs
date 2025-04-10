@@ -91,16 +91,25 @@ public class HyenasSpawnManager : MonoBehaviour
 
         // TODO also spawn a dust cloud that self-destructs once the animation ends
 
-        // TODO hadle situation when hyena spawns on a cell occupied by another unit
-        if (boardMngr.CellHasUnit(cell))
+        // Check if the cell is already occupied
+        if (boardMngr.TryGetUnitAt(cell, out Unit unit))
         {
-            Debug.LogWarning($"Hyena cannot spawn on cell {cell} because it is occupied by another unit");
-            return;
+            if (unit.GetFaction() == Faction.Hyenas || unit.IsStructure())
+            {
+                Debug.LogError($"Trying to spawn a new hyena at {cell} but {unit.name} is already there. Will ignore spawn.");
+            }
+            else if(unit.GetFaction() == Faction.Cats)
+            {
+                Debug.Log($"New hyena spawned at {cell} which is occupied by {unit.name}. Unit will take damage and hyena won't be spawned.");
+                unit.TakeDamage(1);
+            }
         }
-
-        // Spawns a hyena at the spawn marker location
-        GameObject hyena = Instantiate(hyenaPrefab, worldPos, Quaternion.identity);
-        hyena.transform.SetParent(hyenasManager); // Unit's logical board position is registered in BoardManager by Unit.Start()
-        hyena.name = "Hyena #" + nextHyenaId++;
+        else
+        {
+            // Spawns a hyena at the spawn marker location
+            GameObject hyena = Instantiate(hyenaPrefab, worldPos, Quaternion.identity);
+            hyena.transform.SetParent(hyenasManager); // Unit's logical board position is registered in BoardManager by Unit.Start()
+            hyena.name = "Hyena #" + nextHyenaId++;
+        }
     }
 }
