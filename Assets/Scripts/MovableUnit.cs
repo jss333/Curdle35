@@ -117,7 +117,6 @@ public class MovableUnit : MonoBehaviour
                 Debug.Log($"{unit.name} damaged {otherUnit.name} at {cell}, and then died");
                 otherUnit.TakeDamage(1);
                 unit.Die();
-                // TODO: stop movement
             }
         }
 
