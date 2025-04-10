@@ -260,6 +260,17 @@ public class BoardManager : MonoBehaviour
         return null;
     }
 
+    public bool TryGetUnitAt(Vector2Int cell, out Unit unit)
+    {
+        if (cellToUnitMap.ContainsKey(cell))
+        {
+            unit = cellToUnitMap[cell];
+            return true;
+        }
+        unit = null;
+        return false;
+    }
+
     public void RegisterUnitInCell(Unit unit, Vector2Int cell)
     {
         Debug.Log($"RegisterUnitInCell {unit.name} at {cell}");
@@ -307,14 +318,12 @@ public class BoardManager : MonoBehaviour
     #region Movement range tilemap
     public void ShowMovementRange(MovementRange mvmtRange)
     {
-        IEnumerable<Vector2Int> cells = mvmtRange.GetValidCells();
-
-        foreach (var cell in cells)
+        foreach (var cell in mvmtRange.GetValidCells())
         {
             movementRangeTilemap.SetTile(BoardCellToGridmapCell(cell), movementRangeTile);
         }
         // Also highlight the cell the unit is standing on
-        movementRangeTilemap.SetTile(BoardCellToGridmapCell(mvmtRange.GetUnit().GetBoardPosition()), movementRangeTile);
+        movementRangeTilemap.SetTile(BoardCellToGridmapCell(mvmtRange.GetUnitBoardPosition()), movementRangeTile);
     }
 
     public void ClearMovementRange()

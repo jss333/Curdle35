@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 public class HyenasSpawnAI
 {
-    private bool debug = false;
+    private readonly bool debug = false;
 
     public List<Vector2Int> GetSpawnPoints(int spawnRate)
     {
-        List<Vector2Int> spawnPoints = new List<Vector2Int>();
+        List<Vector2Int> spawnPoints = new();
 
         if(debug)
         {
@@ -45,10 +45,12 @@ public class HyenasSpawnAI
                 continue;
             }
 
-            Unit unit = boardMngr.GetUnitAt(candidate);
-            if (unit != null && (unit.GetFaction() == Faction.Hyenas || unit.IsStructure()))
+            if(boardMngr.TryGetUnitAt(candidate, out Unit unit))
             {
-                continue;
+                if(unit.GetFaction() == Faction.Hyenas || unit.IsStructure())
+                {
+                    continue;
+                }
             }
 
             spawnPoints.Add(candidate);

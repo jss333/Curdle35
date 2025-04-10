@@ -17,7 +17,7 @@ public class HyenasSpawnManager : MonoBehaviour
     [SerializeField] private int currentInnerSpawnRate;
     [SerializeField] private int nextHyenaId = 0;
 
-    private static HyenasSpawnAI HyenasSpawnAI = new HyenasSpawnAI();
+    private static readonly HyenasSpawnAI HyenasSpawnAI = new();
 
     void Start()
     {
@@ -26,14 +26,14 @@ public class HyenasSpawnManager : MonoBehaviour
         currentInnerSpawnRate = startInnerSpawnRate;
     }
 
-    private void HandleGameStateChanged(GameState state)
+    private void HandleGameStateChanged(GameState newState)
     {
-        if (state == GameState.HyenasGenerateNewSpawnMarkers)
+        if (newState == GameState.HyenasGenerateNewSpawnMarkers)
         {
             InstantiateSpawnMarkers();
         }
 
-        if (state == GameState.HyenasSpawning)
+        if (newState == GameState.HyenasSpawning)
         {
             SpawnHyenasFromMarkers();
         }
@@ -49,7 +49,7 @@ public class HyenasSpawnManager : MonoBehaviour
         {
             SpawnMarker spawnMarker = Instantiate(spawnMarkerPrefab, BoardManager.Instance.BoardCellToWorld(spawnPoint), Quaternion.identity);
             spawnMarker.transform.SetParent(transform);
-            spawnMarker.SetBoardPosition(spawnPoint);
+            spawnMarker.SetBoardCell(spawnPoint);
             spawnMarker.name = "Spawn marker @ " + spawnPoint;
         }
 
@@ -64,14 +64,14 @@ public class HyenasSpawnManager : MonoBehaviour
 
         foreach (Transform child in transform)
         {
-            SpawnMarker spawnMarker = child.GetComponent<SpawnMarker>();
-            if (spawnMarker != null)
+            if (child.TryGetComponent<SpawnMarker>(out var spawnMarker))
             {
                 Sequence spawnSeq = DOTween.Sequence();
                 spawnSeq
                     .AppendInterval(Random.Range(0, maxDelayBeforeSpawning))
-                    .AppendCallback(() => SpawnHyenaAtMarkerLocation(spawnMarker))
+                    .AppendCallback(() => InstantiateHyenaAtMarkerLocation(spawnMarker))
                     .AppendInterval(0.1f); // Give the Start() code in Unit time to run and register the hyena's position in BoardManager
+
                 allSpawnSeq.Join(spawnSeq);
             }
         }
@@ -80,18 +80,26 @@ public class HyenasSpawnManager : MonoBehaviour
         allSpawnSeq.Play();
     }
 
-    private void SpawnHyenaAtMarkerLocation(SpawnMarker spawnMarker)
+    private void InstantiateHyenaAtMarkerLocation(SpawnMarker spawnMarker)
     {
-        Vector2Int pos = spawnMarker.GetBoardPosition();
+        BoardManager boardMngr = BoardManager.Instance;
+        Vector2Int cell = spawnMarker.GetBoardCell();
+        Vector3 worldPos = boardMngr.BoardCellToWorld(cell);
 
         // Destroy the spawn marker
         Destroy(spawnMarker.gameObject);
 
         // TODO also spawn a dust cloud that self-destructs once the animation ends
+
         // TODO hadle situation when hyena spawns on a cell occupied by another unit
+        if (boardMngr.CellHasUnit(cell))
+        {
+            Debug.LogWarning($"Hyena cannot spawn on cell {cell} because it is occupied by another unit");
+            return;
+        }
 
         // Spawns a hyena at the spawn marker location
-        GameObject hyena = Instantiate(hyenaPrefab, BoardManager.Instance.BoardCellToWorld(pos), Quaternion.identity);
+        GameObject hyena = Instantiate(hyenaPrefab, worldPos, Quaternion.identity);
         hyena.transform.SetParent(hyenasManager); // Unit's logical board position is registered in BoardManager by Unit.Start()
         hyena.name = "Hyena #" + nextHyenaId++;
     }

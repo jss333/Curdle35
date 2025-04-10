@@ -4,8 +4,8 @@ using System;
 
 public class HyenaMovementAI
 {
-    static private List<Vector2Int> ALL_DIRS = new List<Vector2Int>();
-    static private bool debug = false;
+    private static readonly List<Vector2Int> ALL_DIRS = new();
+    private static readonly bool debug = false;
 
     public HyenaMovementAI()
     {
@@ -21,10 +21,10 @@ public class HyenaMovementAI
 
     public List<HyenaMoveOrder> CalculateMovementPathForHyenas(List<Unit> hyenas)
     {
-        List<HyenaMoveOrder> moveOrders = new List<HyenaMoveOrder>();
+        List<HyenaMoveOrder> moveOrders = new();
 
-        HashSet<Vector2Int> newlyOccupiedCells = new HashSet<Vector2Int>(); // Cells that a hyena will move to
-        HashSet<Vector2Int> newlyFreeCells = new HashSet<Vector2Int>(); // Cells that will be vacated by a moving hyena
+        HashSet<Vector2Int> newlyOccupiedCells = new(); // Cells that a hyena will move to
+        HashSet<Vector2Int> newlyFreeCells = new(); // Cells that will be vacated by a moving hyena
 
         foreach (var unit in hyenas)
         {
@@ -38,7 +38,7 @@ public class HyenaMovementAI
 
     private IEnumerable<Vector2Int> CalculateMovementPath(Vector2Int origin, HashSet<Vector2Int> newlyOccupiedCells, HashSet<Vector2Int> newlyFreeCells)
     {
-        List<Vector2Int> path = new List<Vector2Int>();
+        List<Vector2Int> path = new();
 
         if(debug)
         {
@@ -63,7 +63,7 @@ public class HyenaMovementAI
         LogUtils.LogEnumerable("--- newlyOccupiedCells", newlyOccupiedCells);
         LogUtils.LogEnumerable("--- newlyFreeCells", newlyFreeCells);
 
-        List<Vector2Int> candidateCells = new List<Vector2Int>();
+        List<Vector2Int> candidateCells = new();
 
         foreach (var dir in ALL_DIRS)
         {

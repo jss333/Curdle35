@@ -3,15 +3,15 @@ using UnityEngine;
 public class SpawnMarker : MonoBehaviour
 {
     [Header("State")]
-    [SerializeField] private Vector2Int boardPosition;
+    [SerializeField] private Vector2Int boardCell;
 
-    public void SetBoardPosition(Vector2Int pos)
+    public void SetBoardCell(Vector2Int cell)
     {
-        boardPosition = pos;
+        boardCell = cell;
     }
 
-    public Vector2Int GetBoardPosition()
+    public Vector2Int GetBoardCell()
     {
-        return boardPosition;
+        return boardCell;
     }
 }

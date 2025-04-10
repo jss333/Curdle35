@@ -94,9 +94,8 @@ public class MovableUnit : MonoBehaviour
         BoardManager boardMngr = BoardManager.Instance;
         Faction myFaction = unit.GetFaction();
 
-        if (boardMngr.CellHasUnit(cell))
+        if (boardMngr.TryGetUnitAt(cell, out Unit otherUnit))
         {
-            Unit otherUnit = boardMngr.GetUnitAt(cell);
             Faction otherFaction = otherUnit.GetFaction();
 
             //if cell is occupied by an unit in the same faction: log an error if this is the last cell in the path

@@ -10,6 +10,22 @@ public class MovementRange : MonoBehaviour
 
     private Unit unit;
 
+    private static readonly List<Vector2Int> orthogonalDirs = new()
+    {
+        new Vector2Int( 0,  1),
+        new Vector2Int( 0, -1),
+        new Vector2Int( 1,  0),
+        new Vector2Int(-1,  0)
+    };
+
+    private static readonly List<Vector2Int> diagonalDirs = new()
+    {
+        new Vector2Int( 1,  1),
+        new Vector2Int( 1, -1),
+        new Vector2Int(-1, -1),
+        new Vector2Int(-1,  1)
+    };
+
     public void Start()
     {
         unit = GetComponent<Unit>();
@@ -17,17 +33,17 @@ public class MovementRange : MonoBehaviour
 
     public List<Vector2Int> GetValidCells()
     {
-        List<Vector2Int> targetCells = new List<Vector2Int>();
+        List<Vector2Int> targetCells = new();
 
-        targetCells.AddRange(CellsInDirsUpToLengthThatAreNotVoidAndNotOccupied(OrthogonalDirections(), movementRange));
-        targetCells.AddRange(CellsInDirsUpToLengthThatAreNotVoidAndNotOccupied(DiagonalDirections(), movementRange - 1));
+        targetCells.AddRange(CellsInDirsUpToLengthThatAreNotVoidAndNotOccupied(orthogonalDirs, movementRange));
+        targetCells.AddRange(CellsInDirsUpToLengthThatAreNotVoidAndNotOccupied(diagonalDirs, movementRange - 1));
 
         return targetCells;
     }
 
     private List<Vector2Int> CellsInDirsUpToLengthThatAreNotVoidAndNotOccupied(IEnumerable<Vector2Int> dirs, int maxLength)
     {
-        List<Vector2Int> targetCells = new List<Vector2Int>();
+        List<Vector2Int> targetCells = new();
 
         foreach (var dir in dirs)
         {
@@ -50,46 +66,26 @@ public class MovementRange : MonoBehaviour
         return targetCells;
     }
 
-    private IEnumerable<Vector2Int> OrthogonalDirections()
-    {
-        List<Vector2Int> dirs = new List<Vector2Int>();
-        dirs.Add(new Vector2Int( 0,  1));
-        dirs.Add(new Vector2Int( 0, -1));
-        dirs.Add(new Vector2Int( 1,  0));
-        dirs.Add(new Vector2Int(-1,  0));
-        return dirs;
-    }
-
-    private IEnumerable<Vector2Int> DiagonalDirections()
-    {
-        List<Vector2Int> dirs = new List<Vector2Int>();
-        dirs.Add(new Vector2Int( 1,  1));
-        dirs.Add(new Vector2Int( 1, -1));
-        dirs.Add(new Vector2Int(-1, -1));
-        dirs.Add(new Vector2Int(-1,  1));
-        return dirs;
-    }
-
     public bool IsCellInMovementRange(Vector2Int pos)
     {
         return GetValidCells().Contains(pos);
     }
 
-    public Unit GetUnit()
+    public Vector2Int GetUnitBoardPosition()
     {
-        return unit;
+        return unit.GetBoardPosition();
     }
 
     public IEnumerable<Vector2Int> BuildPathToOrthogonalOrDiagonalDestination(Vector2Int destination)
     {
         Vector2Int origin = unit.GetBoardPosition();
 
-        List<Vector2Int> path = new List<Vector2Int>();
+        List<Vector2Int> path = new();
 
         int xVariation = Math.Sign(destination.x - origin.x);
         int yVariation = Math.Sign(destination.y - origin.y);
 
-        Vector2Int nextStep = new Vector2Int(origin.x + xVariation, origin.y + yVariation);
+        Vector2Int nextStep = new(origin.x + xVariation, origin.y + yVariation);
         while (nextStep != destination)
         {
             path.Add(nextStep);
