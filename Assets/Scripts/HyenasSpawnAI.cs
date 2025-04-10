@@ -31,8 +31,8 @@ public class HyenasSpawnAI
 
             var boardMngr = BoardManager.Instance;
             var candidate = new Vector2Int(
-                Random.Range(0, boardMngr.GetWidth()),
-                Random.Range(0, boardMngr.GetHeight())
+                Random.Range(0, boardMngr.GetBoardWidth()),
+                Random.Range(0, boardMngr.GetBoardHeight())
             );
 
             if (!boardMngr.IsValidCellForUnitMovement(candidate))

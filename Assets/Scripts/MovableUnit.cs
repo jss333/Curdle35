@@ -56,7 +56,7 @@ public class MovableUnit : MonoBehaviour
 
         foreach (var cell in path)
         {
-            Vector3 targetWorld = GridHelper.Instance.GridToWorld(cell);
+            Vector3 targetWorld = BoardManager.Instance.BoardCellToWorld(cell);
             moveSequence.Append(transform.DOMove(targetWorld, timePerSegment).SetEase(stepEaseType)); 
             moveSequence.AppendCallback(() =>
             {
@@ -125,7 +125,7 @@ public class MovableUnit : MonoBehaviour
         //if after any interactions the cell is empty, claim it for the unit that moved
         if (!boardMngr.CellHasUnit(cell))
         {
-            boardMngr.ClaimCell(cell, myFaction);
+            boardMngr.ClaimCellForFaction(cell, myFaction);
         }
     }
 }

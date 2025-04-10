@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -7,33 +6,36 @@ public class BoardManager : MonoBehaviour
 {
     public static BoardManager Instance { get; private set; }
 
-    [Header("Config - Debug")]
+    [Header("Config")]
     [SerializeField] private bool usePrePaintedMap = false;
-
-    [Header("Config - Tilemap references")]
+    [SerializeField] private Grid grid;
+    [Tooltip("Offset for rendering units in the middle of a tile")]
+    [SerializeField] private Vector2 renderingOffset = new(0.5f, 0.5f);
+    
+    [Header("Config - Terrain tilemap and tile references")]
     [SerializeField] private Tilemap terrainTilemap;
-    [SerializeField] private Tilemap resourceTilemap;
-    [SerializeField] private Tilemap movementRangeTilemap;
-
-    [Header("Config - Terrain tile references")]
     [SerializeField] private TileBase neutralTerrainTile;
     [SerializeField] private TileBase catTerrainTile;
     [SerializeField] private TileBase hyenaTerrainTile;
 
-    [Header("Config - Resource tile references")]
+    [Header("Config - Resource tilemap and tile references")]
+    [SerializeField] private Tilemap resourceTilemap;
     [SerializeField] private TileBase[] resourceTiles;
 
-    [Header("Config - Movement range tile reference")]
+    [Header("Config - Movement range tilemap and tile references")]
+    [SerializeField] private Tilemap movementRangeTilemap;
     [SerializeField] private TileBase movementRangeTile;
 
     [Header("State")]
     [SerializeField] private int width;
     [SerializeField] private int height;
-    [SerializeField] private Vector2Int gridToArrayOffset;
+    [SerializeField] private Vector2Int boardCellToGridmapCellOffset;
     [SerializeField] private CellData[,] board;
-    [SerializeField] private Dictionary<Vector2Int, Unit> units = new Dictionary<Vector2Int, Unit>();
+    [SerializeField] private Dictionary<Vector2Int, Unit> cellToUnitMap = new();
 
-    private int[,] predefinedBoard = new int[,]
+    #region Board Initialization
+
+    private readonly int[,] predefinedBoard = new int[,]
     {
         {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 1, 1,-1,-1,-1},
         {-1,-1,-1,-1,-1,-1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1,-1,-1,-1},
@@ -65,17 +67,18 @@ public class BoardManager : MonoBehaviour
             InitializeBoardAndTilemapsFromPredefinedBoard();
         }
 
-        Debug.Log($"Board initialized ===== width: {width}  height: {height}  gridToArrayOffset: {gridToArrayOffset}");
+        Debug.Log($"Board initialized ===== width: {width}  height: {height}  boardCellToGridmapCellOffset: {boardCellToGridmapCellOffset}");
     }
 
     private void InitializeBoardFromPaintedTilemap()
     {
         terrainTilemap.CompressBounds();
         BoundsInt bounds = terrainTilemap.cellBounds;
-        Debug.Log($"Bounds: {bounds}  position: {bounds.position}  size: {bounds.size}");
+        Debug.Log($"Bounds: {bounds}");
+
         width = bounds.size.x;
         height = bounds.size.y;
-        gridToArrayOffset = new Vector2Int(bounds.x, bounds.y);
+        boardCellToGridmapCellOffset = new Vector2Int(bounds.x, bounds.y);
 
         board = new CellData[width, height];
 
@@ -83,8 +86,7 @@ public class BoardManager : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                Vector3Int tilemapPos = new Vector3Int(bounds.x + x, bounds.y + y, 0);
-                Vector2Int boardPos = new Vector2Int(x, y);
+                Vector3Int tilemapPos = new(bounds.x + x, bounds.y + y, 0);
 
                 TileBase terrainTile = terrainTilemap.GetTile(tilemapPos);
                 TileBase resourceTile = resourceTilemap.GetTile(tilemapPos);
@@ -92,7 +94,7 @@ public class BoardManager : MonoBehaviour
                 CellData cellData;
                 if (terrainTile == null)
                 {
-                    // TODO make sure the terrain tilemap is empty here
+                    resourceTilemap.SetTile(tilemapPos, null);
                     cellData = new CellData(-1, Faction.None);
                 }
                 else
@@ -111,7 +113,7 @@ public class BoardManager : MonoBehaviour
     {
         width = predefinedBoard.GetLength(1);
         height = predefinedBoard.GetLength(0);
-        gridToArrayOffset = new Vector2Int(0, 0);
+        boardCellToGridmapCellOffset = new Vector2Int(0, 0);
 
         board = new CellData[width, height];
 
@@ -125,7 +127,7 @@ public class BoardManager : MonoBehaviour
 
                 if (resourceValue != -1)
                 {
-                    Vector3Int pos = new Vector3Int(x, y, 0);
+                    Vector3Int pos = new(x, y, 0);
                     terrainTilemap.SetTile(pos, GetTerrainTileForFaction(Faction.None));
                     resourceTilemap.SetTile(pos, GetResourceTileForResourceValue(resourceValue));
                 }
@@ -135,32 +137,20 @@ public class BoardManager : MonoBehaviour
 
     private TileBase GetTerrainTileForFaction(Faction faction)
     {
-        switch (faction)
+        return faction switch
         {
-            case Faction.Cats:
-                return catTerrainTile;
-            case Faction.Hyenas:
-                return hyenaTerrainTile;
-            case Faction.None:
-            default:
-                return neutralTerrainTile;
-        }
+            Faction.Cats => catTerrainTile,
+            Faction.Hyenas => hyenaTerrainTile,
+            Faction.None => neutralTerrainTile,
+            _ => neutralTerrainTile,
+        };
     }
 
     private Faction GetFactionForTerrainTile(TileBase tile, Vector3Int pos)
     {
-        if (tile == neutralTerrainTile)
-        {
-            return Faction.None;
-        }
-        else if (tile == catTerrainTile)
-        {
-            return Faction.Cats;
-        }
-        else if (tile == hyenaTerrainTile)
-        {
-            return Faction.Hyenas;
-        }
+        if (tile == neutralTerrainTile) return Faction.None;
+        else if (tile == catTerrainTile) return Faction.Cats;
+        else if (tile == hyenaTerrainTile) return Faction.Hyenas;
         else if (tile == null)
         {
             Debug.LogError($"No faction for null terrain tile at {pos}");
@@ -175,33 +165,21 @@ public class BoardManager : MonoBehaviour
 
     private TileBase GetResourceTileForResourceValue(int resourceValue)
     {
-        switch (resourceValue)
+        return resourceValue switch
         {
-            case 2: return resourceTiles[0];
-            case 3: return resourceTiles[1];
-            case 4: return resourceTiles[2];
-            default: return null;
-        }
+            2 => resourceTiles[0],
+            3 => resourceTiles[1],
+            4 => resourceTiles[2],
+            _ => null,
+        };
     }
 
     private int GetResourceValueForResourceTile(TileBase tile, Vector3Int pos)
     {
-        if (tile == null)
-        {
-            return 1;
-        }
-        if (tile == resourceTiles[0])
-        {
-            return 2;
-        }
-        else if (tile == resourceTiles[1])
-        {
-            return 3;
-        }
-        else if (tile == resourceTiles[2])
-        {
-            return 4;
-        }
+        if (tile == null) return 1;
+        else if (tile == resourceTiles[0]) return 2;
+        else if (tile == resourceTiles[1]) return 3;
+        else if (tile == resourceTiles[2]) return 4;
         else
         {
             Debug.LogError($"Unknown terrain tile at {pos}");
@@ -209,16 +187,134 @@ public class BoardManager : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Mapping to/from board cell
+
+    public Vector3 BoardCellToWorld(Vector2Int boardCell)
+    {
+        Vector3 worldPosBottomLeftCorner = grid.CellToWorld(BoardCellToGridmapCell(boardCell));
+        return worldPosBottomLeftCorner + (Vector3)renderingOffset; // Positions in the middle of the tile
+    }
+
+    public Vector2Int WorldToBoardCell(Vector3 worldPos)
+    {
+        return GridmapCellToBoardCell(grid.WorldToCell(worldPos));
+    }
+
+    public Vector3Int BoardCellToGridmapCell(Vector2Int boardCell)
+    {
+        return (Vector3Int)(boardCell + boardCellToGridmapCellOffset);
+    }
+
+    public Vector2Int GridmapCellToBoardCell(Vector3Int gridmapCell)
+    {
+        return (Vector2Int)gridmapCell - boardCellToGridmapCellOffset;
+    }
+
+    #endregion
+
+    #region Board and cell inspection
+
+    public int GetBoardWidth()
+    {
+        return width;
+    }
+
+    public int GetBoardHeight()
+    {
+        return height;
+    }
+
+    public bool IsValidCellForUnitMovement(Vector2Int cell)
+    {
+        return IsWithinBoardBounds(cell) && !IsVoidCell(cell);
+    }
+
+    public bool IsVoidCell(Vector2Int pos)
+    {
+        return IsWithinBoardBounds(pos) && board[pos.x, pos.y].IsVoidCell();
+    }
+
+    private bool IsWithinBoardBounds(Vector2Int cell)
+    {
+        return cell.x >= 0 && cell.x < width &&
+               cell.y >= 0 && cell.y < height;
+    }
+
+    #endregion
+
+    #region Unit registry
+
+    public bool CellHasUnit(Vector2Int cell)
+    {
+        return IsWithinBoardBounds(cell) && cellToUnitMap.ContainsKey(cell);
+    }
+
+    public Unit GetUnitAt(Vector2Int cell)
+    {
+        if (cellToUnitMap.ContainsKey(cell))
+        {
+            return cellToUnitMap[cell];
+        }
+        return null;
+    }
+
+    public void RegisterUnitInCell(Unit unit, Vector2Int cell)
+    {
+        Debug.Log($"RegisterUnitInCell {unit.name} at {cell}");
+        if (cellToUnitMap.ContainsKey(cell))
+        {
+            Unit oldUnit = cellToUnitMap[cell];
+            if (oldUnit != unit)
+            {
+                Debug.LogWarning($"An unit is already registered at {cell}. Replacing {oldUnit.name} with {unit.name}.");
+            }
+        }
+
+        cellToUnitMap[cell] = unit;
+    }
+
+    public void UpdateUnitFromOldToNewCell(Unit unit, Vector2Int oldCell, Vector2Int newCell)
+    {
+        Debug.Log($"UpdateUnitFromOldToNewCell {unit.name} from {oldCell} to {newCell}");
+        UnregisterUnitFromCell(unit, oldCell);
+        RegisterUnitInCell(unit, newCell);
+    }
+
+    public void UnregisterUnitFromCell(Unit unit, Vector2Int cell)
+    {
+        Debug.Log($"UnregisterUnitFromCell {unit.name} at {cell}");
+        if (cellToUnitMap.ContainsKey(cell))
+        {
+            if (cellToUnitMap[cell] == unit)
+            {
+                cellToUnitMap.Remove(cell);
+            }
+            else
+            {
+                Debug.LogWarning($"Trying to unregister unit {unit.name} from {cell}, but unit {cellToUnitMap[cell].name} it currently registered there.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"Trying to unregister unit {unit.name} from {cell}, but no unit is currently registered there.");
+        }
+    }
+
+    #endregion
+
+    #region Movement range tilemap
     public void ShowMovementRange(MovementRange mvmtRange)
     {
         IEnumerable<Vector2Int> cells = mvmtRange.GetValidCells();
 
         foreach (var cell in cells)
         {
-            movementRangeTilemap.SetTile(GridHelper.Instance.GridToTilemapWorld(cell), movementRangeTile);
+            movementRangeTilemap.SetTile(BoardCellToGridmapCell(cell), movementRangeTile);
         }
         // Also highlight the cell the unit is standing on
-        movementRangeTilemap.SetTile(GridHelper.Instance.GridToTilemapWorld(mvmtRange.GetUnit().GetBoardPosition()), movementRangeTile);
+        movementRangeTilemap.SetTile(BoardCellToGridmapCell(mvmtRange.GetUnit().GetBoardPosition()), movementRangeTile);
     }
 
     public void ClearMovementRange()
@@ -226,99 +322,14 @@ public class BoardManager : MonoBehaviour
         movementRangeTilemap.ClearAllTiles();
     }
 
-    public Unit GetUnitAt(Vector2Int pos)
+    #endregion
+
+    public void ClaimCellForFaction(Vector2Int cell, Faction faction)
     {
-        if (units.ContainsKey(pos))
+        if (IsValidCellForUnitMovement(cell))
         {
-            return units[pos];
+            board[cell.x, cell.y].owner = faction;
+            terrainTilemap.SetTile(BoardCellToGridmapCell(cell), GetTerrainTileForFaction(faction));
         }
-        return null;
-    }
-
-    public void RegisterUnitPos(Unit unit, Vector2Int pos)
-    {
-        Debug.Log($"RegisterUnitPos {unit.name} at {pos}");
-        if (units.ContainsKey(pos))
-        {
-            Unit oldUnit = units[pos];
-            if (oldUnit != unit)
-            {
-                Debug.LogWarning($"An unit is already registered at {pos}. Replacing {oldUnit.name} with {unit.name}.");
-            }
-        }
-            
-        units[pos] = unit;
-    }
-
-    public void UpdateUnitPosRegister(Unit unit, Vector2Int oldPos, Vector2Int newPos)
-    {
-        Debug.Log($"UpdateUnitPosRegister {unit.name} from {oldPos} to {newPos}");
-        UnregisterUnitPos(unit, oldPos);
-        RegisterUnitPos(unit, newPos);
-    }
-
-    public void UnregisterUnitPos(Unit unit, Vector2Int pos)
-    {
-        Debug.Log($"UnregisterUnitPos {unit.name} at {pos}");
-        if (units.ContainsKey(pos))
-        {
-            if (units[pos] == unit)
-            {
-                units.Remove(pos);
-            }
-            else
-            {
-                Debug.LogWarning($"Trying to unregister unit {unit.name} from {pos}, but unit {units[pos].name} it currently registered there.");
-            }
-        }
-        else
-        {
-            Debug.LogWarning($"Trying to unregister unit {unit.name} from {pos}, but no unit is currently registered there.");
-        }
-    }
-
-    public bool CellHasUnit(Vector2Int pos)
-    {
-        return IsWithinBounds(pos) && units.ContainsKey(pos);
-    }
-
-    public bool IsValidCellForUnitMovement(Vector2Int pos)
-    {
-        return IsWithinBounds(pos) && !IsVoidCell(pos);
-    }
-
-    public bool IsVoidCell(Vector2Int pos)
-    {
-        return IsWithinBounds(pos) && board[pos.x, pos.y].IsVoidCell();
-    }
-
-    private bool IsWithinBounds(Vector2Int pos)
-    {
-        return pos.x >= 0 && pos.x < width &&
-               pos.y >= 0 && pos.y < height;
-    }
-
-    public void ClaimCell(Vector2Int pos, Faction faction)
-    {
-        if (IsValidCellForUnitMovement(pos))
-        {
-            board[pos.x, pos.y].owner = faction;
-            terrainTilemap.SetTile(GridHelper.Instance.GridToTilemapWorld(pos), GetTerrainTileForFaction(faction));
-        }
-    }
-
-    public int GetWidth()
-    {
-        return width;
-    }
-
-    public int GetHeight()
-    {
-        return height;
-    }
-
-    public Vector2Int GetGridToArrayOffset()
-    {
-        return gridToArrayOffset;
     }
 }

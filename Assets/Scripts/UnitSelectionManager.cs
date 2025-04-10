@@ -79,7 +79,7 @@ public class UnitSelectionManager : MonoBehaviour
         if(moveRange == null || movableUnit == null) return false;
 
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2Int clickedCell = GridHelper.Instance.WorldToGrid(mouseWorld);
+        Vector2Int clickedCell = BoardManager.Instance.WorldToBoardCell(mouseWorld);
 
         if (moveRange.IsCellInMovementRange(clickedCell))
         {

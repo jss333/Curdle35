@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
@@ -12,27 +10,27 @@ public class Unit : MonoBehaviour
     [SerializeField] private int maxHealth = 1;
 
     [Header("State")]
-    [SerializeField] private Vector2Int boardPosition;
+    [SerializeField] private Vector2Int boardCellPosition;
     [SerializeField] private int currentHealth;
     [SerializeField] private bool isAlive = true;
 
     void Start()
     {
-        animator = GetComponent<Animator>();
-        if(animator != null)
+        if(TryGetComponent<Animator>(out animator))
         {
             animator.Play("Idle", 0, Random.Range(0f, 1f));
             animator.speed = Random.Range(0.95f, 1.05f);
         }
 
-        // Determine logical board position given current world position
-        boardPosition = GridHelper.Instance.WorldToGrid(transform.position);
-        Debug.Log($"Unit {gameObject.name} located at {transform.position} is at board position {boardPosition}");
-        BoardManager.Instance.RegisterUnitPos(this, boardPosition);
-        BoardManager.Instance.ClaimCell(boardPosition, faction);
+        // Determine logical board cell given current world position
+        BoardManager boardMngr = BoardManager.Instance;
+        boardCellPosition = boardMngr.WorldToBoardCell(transform.position);
+        Debug.Log($"Unit {gameObject.name} located at {transform.position} is on board cell {boardCellPosition}");
+        boardMngr.RegisterUnitInCell(this, boardCellPosition);
+        boardMngr.ClaimCellForFaction(boardCellPosition, faction);
 
-        // Set unit's world position to be the correct one for the given board position
-        this.transform.position = GridHelper.Instance.GridToWorld(boardPosition);
+        // Set unit's world position to be the correct one for the given board cell (ie, right in the middle of the cell)
+        this.transform.position = boardMngr.BoardCellToWorld(boardCellPosition);
 
         currentHealth = maxHealth;
     }
@@ -49,13 +47,13 @@ public class Unit : MonoBehaviour
 
     public Vector2Int GetBoardPosition()
     {
-        return boardPosition;
+        return boardCellPosition;
     }
 
-    public void UpdateBoardPositionAfterMove(Vector2Int newPos)
+    public void UpdateBoardPositionAfterMove(Vector2Int newCell)
     {
-        BoardManager.Instance.UpdateUnitPosRegister(this, boardPosition, newPos);
-        boardPosition = newPos;
+        BoardManager.Instance.UpdateUnitFromOldToNewCell(this, boardCellPosition, newCell);
+        boardCellPosition = newCell;
     }
 
     public void TakeDamage(int dmg)
@@ -70,7 +68,7 @@ public class Unit : MonoBehaviour
     public void Die()
     {
         isAlive = false;
-        BoardManager.Instance.UnregisterUnitPos(this, boardPosition);
+        BoardManager.Instance.UnregisterUnitFromCell(this, boardCellPosition);
         Destroy(gameObject);
     }
 

@@ -47,7 +47,7 @@ public class HyenasSpawnManager : MonoBehaviour
         // Instantiate spawn markers at each location
         foreach (Vector2Int spawnPoint in spawnPoints)
         {
-            SpawnMarker spawnMarker = Instantiate(spawnMarkerPrefab, GridHelper.Instance.GridToWorld(spawnPoint), Quaternion.identity);
+            SpawnMarker spawnMarker = Instantiate(spawnMarkerPrefab, BoardManager.Instance.BoardCellToWorld(spawnPoint), Quaternion.identity);
             spawnMarker.transform.SetParent(transform);
             spawnMarker.SetBoardPosition(spawnPoint);
             spawnMarker.name = "Spawn marker @ " + spawnPoint;
@@ -91,7 +91,7 @@ public class HyenasSpawnManager : MonoBehaviour
         // TODO hadle situation when hyena spawns on a cell occupied by another unit
 
         // Spawns a hyena at the spawn marker location
-        GameObject hyena = Instantiate(hyenaPrefab, GridHelper.Instance.GridToWorld(pos), Quaternion.identity);
+        GameObject hyena = Instantiate(hyenaPrefab, BoardManager.Instance.BoardCellToWorld(pos), Quaternion.identity);
         hyena.transform.SetParent(hyenasManager); // Unit's logical board position is registered in BoardManager by Unit.Start()
         hyena.name = "Hyena #" + nextHyenaId++;
     }
