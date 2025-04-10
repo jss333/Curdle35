@@ -11,14 +11,14 @@ public class DayNightIndicator : MonoBehaviour
         GameManager.Instance.OnGameStateChanged += HandleGameStateChanged;
     }
 
-    public void HandleGameStateChanged(GameState state)
+    public void HandleGameStateChanged(GameState newState)
     {
-        if(state == GameState.DayToNightAnimation)
+        if(newState == GameState.DayToNightAnimation)
         {
             animator.SetTrigger("Play Day-to-night");
         }
 
-        if (state == GameState.NightToDayAnimation)
+        if (newState == GameState.NightToDayAnimation)
         {
             animator.SetTrigger("Play Night-to-day");
         }

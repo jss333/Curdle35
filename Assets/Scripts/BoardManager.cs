@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -240,6 +241,22 @@ public class BoardManager : MonoBehaviour
     {
         return cell.x >= 0 && cell.x < width &&
                cell.y >= 0 && cell.y < height;
+    }
+
+    public int GetResourceTotalOfCellsOwnedBy(Faction faction)
+    {
+        int resourceTotal = 0;
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (board[x, y].owner == faction)
+                {
+                    resourceTotal += board[x, y].resourceValue;
+                }
+            }
+        }
+        return resourceTotal;
     }
 
     #endregion

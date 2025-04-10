@@ -68,8 +68,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        SetState(GameState.PlayerHarvesting);
-        Simulate("Player harvesting", 1f, OnPlayerFinishesHarvesting);
+        SetState(GameState.PlayerHarvesting); // ResourcesManager object observes this state change
     }
 
     public void OnPlayerFinishesHarvesting()
@@ -113,8 +112,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        SetState(GameState.HyenasHarvesting);
-        Simulate("Hyenas harvesting", 1f, OnHyenasFinishHarvesting);
+        SetState(GameState.HyenasHarvesting); // ResourcesManager object observes this state change
     }
 
     public void OnHyenasFinishHarvesting()

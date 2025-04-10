@@ -24,6 +24,11 @@ public class ResourcesManager : MonoBehaviour
         hyenasResources = initialHyenasResources;
     }
 
+    private void Start()
+    {
+        GameManager.Instance.OnGameStateChanged += HandleGameStateChanged;
+    }
+
     public int PlayerResources
     {
         get => playerResources;
@@ -41,6 +46,31 @@ public class ResourcesManager : MonoBehaviour
         {
             hyenasResources = value;
             OnHyenasResourcesChanged?.Invoke(hyenasResources);
+        }
+    }
+
+    public void HandleGameStateChanged(GameState newState)
+    {
+        if (newState == GameState.PlayerHarvesting)
+        {
+            int resourcesHarvested = BoardManager.Instance.GetResourceTotalOfCellsOwnedBy(Faction.Cats);
+            // TODO animate resource collection and only update + transition game state after animation ends
+            PlayerResources += resourcesHarvested;
+
+            //TODO check player victory conditions (if resources >= X, win!)
+
+            GameManager.Instance.OnPlayerFinishesHarvesting();
+        }
+
+        if (newState == GameState.HyenasHarvesting)
+        {
+            int resourcesHarvested = BoardManager.Instance.GetResourceTotalOfCellsOwnedBy(Faction.Hyenas);
+            // TODO animate resource collection and only update + transition game state after animation ends
+            HyenasResources += resourcesHarvested;
+
+            // TODO check hyenas spawn rate uprade conditions (if resource >= X, spend them to increase rate)
+
+            GameManager.Instance.OnHyenasFinishHarvesting();
         }
     }
 }
