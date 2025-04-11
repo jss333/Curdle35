@@ -31,13 +31,27 @@ public class UnitSelectionManager : MonoBehaviour
     {
         if (!GameManager.Instance.IsPlayerInputState()) return;
 
-        if (Input.GetMouseButtonDown(0)) // Left-click
+        // Handle left click
+        if (Input.GetMouseButtonDown(0))
         {
             if (EventSystem.current.IsPointerOverGameObject()) return;
 
             if (TryHandleMoveInput()) return;
 
             HandleSelection();
+        }
+
+        // Handle ESC key
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(currentCommand != UnitCommandMode.None)
+            {
+                ClearCommand();
+            }
+            else
+            {
+                DeselectCurrentUnitIfAny();
+            }
         }
     }
 
