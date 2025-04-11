@@ -6,6 +6,7 @@ using System;
 public class UIController : MonoBehaviour
 {
     [Header("Config - Refs to UI components")]
+    [SerializeField] private Button moveButton;
     [SerializeField] private Button endTurnButton;
     [SerializeField] private TextMeshProUGUI gameStateText;
     [SerializeField] private TextMeshProUGUI playerResourcesTxt;
@@ -45,13 +46,17 @@ public class UIController : MonoBehaviour
 
     public void OnEndTurnClicked()
     {
+        UnitSelectionManager.Instance.DeselectCurrentUnitIfAny();
         GameManager.Instance.OnPlayerEndsTurn();
     }
 
     public void HandleGameStateChanged(GameState state)
     {
-        endTurnButton.interactable = (state == GameState.PlayerInput);
         gameStateText.text = state.ToString();
+
+        bool isPlayerInputState = (state == GameState.PlayerInput);
+        moveButton.interactable = isPlayerInputState;
+        endTurnButton.interactable = isPlayerInputState;
     }
 
     public void UpdatePlayerResourcesUI(int newResources)

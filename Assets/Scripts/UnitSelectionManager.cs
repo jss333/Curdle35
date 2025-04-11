@@ -3,6 +3,13 @@ using DG.Tweening;
 using System.Collections.Generic;
 using System;
 using static UnityEngine.UI.Image;
+using UnityEngine.EventSystems;
+
+public enum UnitCommandMode
+{
+    None,
+    Move
+}
 
 public class UnitSelectionManager : MonoBehaviour
 {
@@ -13,6 +20,7 @@ public class UnitSelectionManager : MonoBehaviour
 
     [Header("State")]
     [SerializeField] private SelectableUnit currentlySelectedUnit;
+    [SerializeField] private UnitCommandMode currentCommand = UnitCommandMode.None;
 
     void Awake()
     {
@@ -25,7 +33,10 @@ public class UnitSelectionManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0)) // Left-click
         {
+            if (EventSystem.current.IsPointerOverGameObject()) return;
+
             if (TryHandleMoveInput()) return;
+
             HandleSelection();
         }
     }
@@ -60,7 +71,7 @@ public class UnitSelectionManager : MonoBehaviour
         return null;
     }
 
-    private void DeselectCurrentUnitIfAny()
+    public void DeselectCurrentUnitIfAny()
     {
         if (currentlySelectedUnit != null)
         {
@@ -69,7 +80,7 @@ public class UnitSelectionManager : MonoBehaviour
             currentlySelectedUnit = null;
             OnUnitDeselected?.Invoke(previouslySelectedUnit);
 
-            BoardManager.Instance.ClearMovementRange();
+            ClearCommand();
         }
     }
 
@@ -82,6 +93,50 @@ public class UnitSelectionManager : MonoBehaviour
         currentlySelectedUnit = newlySelectedUnit;
         currentlySelectedUnit.DoUnitSelection();
         OnUnitSelected?.Invoke(currentlySelectedUnit);
+    }
+
+    private bool TryHandleMoveInput()
+    {
+        if (currentlySelectedUnit == null) return false;
+
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2Int clickedCell = BoardManager.Instance.WorldToBoardCell(mouseWorld);
+
+        switch (currentCommand)
+        {
+            case UnitCommandMode.Move:
+                return TryExecuteMove(clickedCell);
+            default:
+                return false;
+        }
+    }
+
+    private bool TryExecuteMove(Vector2Int clickedCell)
+    {
+        var moveRange = currentlySelectedUnit.GetComponent<MovementRange>();
+        var movableUnit = currentlySelectedUnit.GetComponent<MovableUnit>();
+
+        if (moveRange == null || movableUnit == null) return false;
+
+        if (moveRange.IsCellInMovementRange(clickedCell))
+        {
+            IEnumerable<Vector2Int> path = moveRange.BuildPathToOrthogonalOrDiagonalDestination(clickedCell);
+
+            GameManager.Instance.OnPlayerUnitStartsMoving();
+            movableUnit.MoveAlongPath(path, GameManager.Instance.OnPlayerUnitFinishesMoving);
+            ClearCommand();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public void OnMoveCommandSelected()
+    {
+        if (currentlySelectedUnit == null) return;
+
+        currentCommand = UnitCommandMode.Move;
 
         MovementRange mvmtRange = currentlySelectedUnit.GetComponent<MovementRange>();
         if (mvmtRange != null)
@@ -90,29 +145,10 @@ public class UnitSelectionManager : MonoBehaviour
         }
     }
 
-    private bool TryHandleMoveInput()
+    private void ClearCommand()
     {
-        if (currentlySelectedUnit == null) return false;
+        currentCommand = UnitCommandMode.None;
 
-        var moveRange = currentlySelectedUnit.GetComponent<MovementRange>();
-        var movableUnit = currentlySelectedUnit.GetComponent<MovableUnit>();
-
-        if(moveRange == null || movableUnit == null) return false;
-
-        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2Int clickedCell = BoardManager.Instance.WorldToBoardCell(mouseWorld);
-
-        if (moveRange.IsCellInMovementRange(clickedCell))
-        {
-            IEnumerable<Vector2Int> path = moveRange.BuildPathToOrthogonalOrDiagonalDestination(clickedCell);
-
-            GameManager.Instance.OnPlayerUnitStartsMoving();
-            movableUnit.MoveAlongPath(path, GameManager.Instance.OnPlayerUnitFinishesMoving);
-            DeselectCurrentUnitIfAny();
-
-            return true;
-        }
-        
-        return false;
+        BoardManager.Instance.ClearMovementRange();
     }
 }
