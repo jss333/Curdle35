@@ -9,7 +9,9 @@ public class UIController : MonoBehaviour
     [SerializeField] private Button endTurnButton;
     [SerializeField] private TextMeshProUGUI gameStateText;
     [SerializeField] private TextMeshProUGUI playerResourcesTxt;
+    [SerializeField] private TextMeshProUGUI playerNextHarvestTxt;
     [SerializeField] private TextMeshProUGUI hyenasResourcesTxt;
+    [SerializeField] private TextMeshProUGUI hyenasNextHarvestTxt;
     [SerializeField] private TextMeshProUGUI hyenasNextSpawnRateIncreaseTxt;
     [SerializeField] private TextMeshProUGUI hyenasSpawnRateTxt;
 
@@ -24,8 +26,14 @@ public class UIController : MonoBehaviour
         resourceMngr.OnPlayerResourcesChanged += UpdatePlayerResourcesUI;
         UpdatePlayerResourcesUI(resourceMngr.PlayerResources);
 
+        resourceMngr.OnPlayerNextHarvesChanged += UpdatePlayerNextHarvestUI;
+        UpdatePlayerNextHarvestUI(resourceMngr.PlayerNextHarvest);
+
         resourceMngr.OnHyenasResourcesChanged += UpdateHyenasResourcesUI;
         UpdateHyenasResourcesUI(resourceMngr.HyenasResources);
+
+        resourceMngr.OnHyenasNextHarvesChanged += UpdateHyenasNextHarvestUI;
+        UpdateHyenasNextHarvestUI(resourceMngr.HyenasNextHarvest);
 
         HyenasSpawnManager hyenasSpawnMngr = HyenasSpawnManager.Instance;
         hyenasSpawnMngr.OnSpawnRateChanged += UpdateHyenasSpawnRateUI;
@@ -52,10 +60,22 @@ public class UIController : MonoBehaviour
         playerResourcesTxt.text = newResources.ToString("D3");
     }
 
+    public void UpdatePlayerNextHarvestUI(int newNextHarvest)
+    {
+        Debug.Log("Updating player next harvest UI: " + newNextHarvest);
+        playerNextHarvestTxt.text = $"(+{newNextHarvest})";
+    }
+
     public void UpdateHyenasResourcesUI(int newResources)
     {
         Debug.Log("Updating hyenas resources UI: " + newResources);
         hyenasResourcesTxt.text = newResources.ToString("D3");
+    }
+
+    public void UpdateHyenasNextHarvestUI(int newNextHarvest)
+    {
+        Debug.Log("Updating hyenas next harvest UI: " + newNextHarvest);
+        hyenasNextHarvestTxt.text = $"(+{newNextHarvest})";
     }
 
     private void UpdateHyenasNextSpawnRateIncreaseUI(int nextSpawnRateUpgradeCost)

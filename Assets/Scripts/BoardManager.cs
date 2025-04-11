@@ -7,6 +7,8 @@ public class BoardManager : MonoBehaviour
 {
     public static BoardManager Instance { get; private set; }
 
+    public event Action<CellData, Faction, Faction> OnCellOwnershipChanged;
+
     [Header("Config")]
     [SerializeField] private bool usePrePaintedMap = false;
     [SerializeField] private Grid grid;
@@ -350,12 +352,14 @@ public class BoardManager : MonoBehaviour
 
     #endregion
 
-    public void ClaimCellForFaction(Vector2Int cell, Faction faction)
+    public void ClaimCellForFaction(Vector2Int cell, Faction newFaction)
     {
         if (IsValidCellForUnitMovement(cell))
         {
-            board[cell.x, cell.y].owner = faction;
-            terrainTilemap.SetTile(BoardCellToGridmapCell(cell), GetTerrainTileForFaction(faction));
+            Faction prevFaction = board[cell.x, cell.y].owner;
+            board[cell.x, cell.y].owner = newFaction;
+            terrainTilemap.SetTile(BoardCellToGridmapCell(cell), GetTerrainTileForFaction(newFaction));
+            OnCellOwnershipChanged?.Invoke(board[cell.x, cell.y], prevFaction, newFaction);
         }
     }
 }
