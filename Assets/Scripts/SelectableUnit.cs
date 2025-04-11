@@ -1,5 +1,3 @@
-#nullable enable
-
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -9,6 +7,7 @@ public class SelectableUnit : MonoBehaviour
 
     [Header("Config")]
     [SerializeField] private Color highlightColor = Color.yellow;
+    [SerializeField] private Sprite unitPortrait;
 
     [Header("State")]
     [SerializeField] private Color originalColor;
@@ -42,5 +41,10 @@ public class SelectableUnit : MonoBehaviour
     public MovementRange? GetMovementRange()
     {
         return GetComponent<MovementRange>();
+    }
+
+    public Sprite GetUnitPortrait()
+    {
+        return unitPortrait;
     }
 }

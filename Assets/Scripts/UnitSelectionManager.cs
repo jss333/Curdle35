@@ -1,5 +1,3 @@
-#nullable enable
-
 using UnityEngine;
 using DG.Tweening;
 using System.Collections.Generic;
@@ -8,8 +6,18 @@ using static UnityEngine.UI.Image;
 
 public class UnitSelectionManager : MonoBehaviour
 {
+    public static UnitSelectionManager Instance { get; private set; }
+
+    public event Action<SelectableUnit> OnUnitSelected;
+    public event Action<SelectableUnit> OnUnitDeselected;
+
     [Header("State")]
-    [SerializeField] private SelectableUnit? currentlySelectedUnit;
+    [SerializeField] private SelectableUnit currentlySelectedUnit;
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Update()
     {
@@ -24,25 +32,25 @@ public class UnitSelectionManager : MonoBehaviour
 
     private void HandleSelection()
     {
-        SelectableUnit? selectableUnit = RaycastToFindUnitAt(Input.mousePosition);
+        SelectableUnit selectableUnit = RaycastToFindUnitAt(Input.mousePosition);
 
-        if (selectableUnit != null)
-        {
-            SelectUnit(selectableUnit);
-        }
-        else
+        if (selectableUnit == null)
         {
             DeselectCurrentUnitIfAny();
         }
+        else
+        {
+            SelectUnit(selectableUnit);
+        }
     }
 
-    private SelectableUnit? RaycastToFindUnitAt(Vector3 position)
+    private SelectableUnit RaycastToFindUnitAt(Vector3 position)
     {
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(position), Vector2.zero); //direction of 0 means just check under the point
 
         if (hit.collider != null)
         {
-            SelectableUnit? selectableUnit = hit.collider.GetComponent<SelectableUnit>();
+            SelectableUnit selectableUnit = hit.collider.GetComponent<SelectableUnit>();
             if(selectableUnit != null && selectableUnit.enabled)
             {
                 return selectableUnit;
@@ -52,21 +60,26 @@ public class UnitSelectionManager : MonoBehaviour
         return null;
     }
 
-    private void SelectUnit(SelectableUnit newlySelectedUnit)
-    {
-        DeselectCurrentUnitIfAny();
-        
-        currentlySelectedUnit = newlySelectedUnit;
-        currentlySelectedUnit.DoUnitSelection();
-    }
-
     private void DeselectCurrentUnitIfAny()
     {
         if (currentlySelectedUnit != null)
         {
+            SelectableUnit previouslySelectedUnit = currentlySelectedUnit;
             currentlySelectedUnit.DoUnitDeselection();
             currentlySelectedUnit = null;
+            OnUnitDeselected?.Invoke(previouslySelectedUnit);
         }
+    }
+
+    private void SelectUnit(SelectableUnit newlySelectedUnit)
+    {
+        if (newlySelectedUnit == currentlySelectedUnit) return;
+
+        DeselectCurrentUnitIfAny();
+        
+        currentlySelectedUnit = newlySelectedUnit;
+        currentlySelectedUnit.DoUnitSelection();
+        OnUnitSelected?.Invoke(currentlySelectedUnit);
     }
 
     private bool TryHandleMoveInput()

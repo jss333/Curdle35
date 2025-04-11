@@ -126,7 +126,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Jaguar Portrait_0
+      name: Jaguar 1 Portrait_0
       rect:
         serializedVersion: 2
         x: 0
@@ -139,10 +139,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 4092e56e861b96aa0800000000000000
-      internalID: -6167203150607537916
+      spriteID: 4c6547b79c8a1064d85bb052cd0cca66
+      internalID: -419798568
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 87189a0c329d1b048b52933b81a648f4
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Jaguar Portrait_0: -6167203150607537916
+      Jaguar 1 Portrait_0: -419798568
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
