@@ -46,7 +46,7 @@ public class UIController : MonoBehaviour
 
     public void OnEndTurnClicked()
     {
-        UnitSelectionManager.Instance.DeselectCurrentUnitIfAny();
+        UnitSelectionManager.Instance.ClearCommand();
         GameManager.Instance.OnPlayerEndsTurn();
     }
 
@@ -61,37 +61,31 @@ public class UIController : MonoBehaviour
 
     public void UpdatePlayerResourcesUI(int newResources)
     {
-        Debug.Log("Updating player resources UI: " + newResources);
         playerResourcesTxt.text = newResources.ToString("D3");
     }
 
     public void UpdatePlayerNextHarvestUI(int newNextHarvest)
     {
-        Debug.Log("Updating player next harvest UI: " + newNextHarvest);
         playerNextHarvestTxt.text = $"(+{newNextHarvest})";
     }
 
     public void UpdateHyenasResourcesUI(int newResources)
     {
-        Debug.Log("Updating hyenas resources UI: " + newResources);
         hyenasResourcesTxt.text = newResources.ToString("D3");
     }
 
     public void UpdateHyenasNextHarvestUI(int newNextHarvest)
     {
-        Debug.Log("Updating hyenas next harvest UI: " + newNextHarvest);
         hyenasNextHarvestTxt.text = $"(+{newNextHarvest})";
     }
 
     private void UpdateHyenasNextSpawnRateIncreaseUI(int nextSpawnRateUpgradeCost)
     {
-        Debug.Log("Updating hyenas next spawn rate upgrade cost UI: " + nextSpawnRateUpgradeCost);
         hyenasNextSpawnRateIncreaseTxt.text = nextSpawnRateUpgradeCost.ToString();
     }
 
     private void UpdateHyenasSpawnRateUI(int spawnRate)
     {
-        Debug.Log("Updating hyenas spawn rate UI: " + spawnRate);
         hyenasSpawnRateTxt.text = spawnRate.ToString();
     }
 }

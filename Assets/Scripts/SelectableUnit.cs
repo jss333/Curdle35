@@ -18,12 +18,12 @@ public class SelectableUnit : MonoBehaviour
         originalColor = spriteRenderer.color;
     }
 
-    public void DoUnitSelection()
+    public void ShowSelectedEffect()
     {
         spriteRenderer.color = highlightColor;
     }
 
-    public void DoUnitDeselection()
+    public void RemoveSelectedEffect()
     {
         spriteRenderer.color = originalColor;
     }

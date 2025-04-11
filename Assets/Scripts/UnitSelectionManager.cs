@@ -17,6 +17,8 @@ public class UnitSelectionManager : MonoBehaviour
 
     public event Action<SelectableUnit> OnUnitSelected;
     public event Action<SelectableUnit> OnUnitDeselected;
+    public event Action<UnitCommandMode> OnCommandSelected;
+    public event Action OnCommandUnselected;
 
     [Header("State")]
     [SerializeField] private SelectableUnit currentlySelectedUnit;
@@ -25,6 +27,11 @@ public class UnitSelectionManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+    }
+
+    void Start()
+    {
+        GameManager.Instance.OnGameStateChanged += HandleGameStateChanged;
     }
 
     void Update()
@@ -36,9 +43,9 @@ public class UnitSelectionManager : MonoBehaviour
         {
             if (EventSystem.current.IsPointerOverGameObject()) return;
 
-            if (TryHandleMoveInput()) return;
+            if (TryExecuteCommand()) return;
 
-            HandleSelection();
+            HandleUnitSelection();
         }
 
         // Handle ESC key
@@ -55,7 +62,9 @@ public class UnitSelectionManager : MonoBehaviour
         }
     }
 
-    private void HandleSelection()
+    #region Unit selection
+
+    private void HandleUnitSelection()
     {
         SelectableUnit selectableUnit = RaycastToFindUnitAt(Input.mousePosition);
 
@@ -90,7 +99,7 @@ public class UnitSelectionManager : MonoBehaviour
         if (currentlySelectedUnit != null)
         {
             SelectableUnit previouslySelectedUnit = currentlySelectedUnit;
-            currentlySelectedUnit.DoUnitDeselection();
+            currentlySelectedUnit.RemoveSelectedEffect();
             currentlySelectedUnit = null;
             OnUnitDeselected?.Invoke(previouslySelectedUnit);
 
@@ -105,27 +114,93 @@ public class UnitSelectionManager : MonoBehaviour
         DeselectCurrentUnitIfAny();
         
         currentlySelectedUnit = newlySelectedUnit;
-        currentlySelectedUnit.DoUnitSelection();
+        currentlySelectedUnit.ShowSelectedEffect();
         OnUnitSelected?.Invoke(currentlySelectedUnit);
     }
 
-    private bool TryHandleMoveInput()
+    public void HandleGameStateChanged(GameState state)
+    {
+        // If we have a unit that's selected, remove the selected effect when not in PlayerInput/UnitPlayerUnitMoving state
+        if (currentlySelectedUnit != null)
+        {
+            if(state == GameState.PlayerInput || state == GameState.PlayerUnitMoving)
+            {
+                currentlySelectedUnit.ShowSelectedEffect();
+            }
+            else
+            {
+                currentlySelectedUnit.RemoveSelectedEffect();
+            }
+        }
+    }
+
+    #endregion
+
+    #region Command selection and execution
+
+    public void SelectCommand(UnitCommandMode command)
+    {
+        currentCommand = command;
+        OnCommandSelected?.Invoke(currentCommand);
+
+        if(command == UnitCommandMode.Move)
+        {
+            DoMoveCommandSelection();
+        }
+    }
+
+    public void ClearCommand()
+    {
+        if(currentCommand == UnitCommandMode.None) return;
+
+        UnitCommandMode previousCommand = currentCommand;
+        currentCommand = UnitCommandMode.None;
+        OnCommandUnselected?.Invoke();
+
+        if(previousCommand == UnitCommandMode.Move)
+        {
+            DoMoveCommandClear();
+        }
+    }
+
+    private bool TryExecuteCommand()
     {
         if (currentlySelectedUnit == null) return false;
 
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2Int clickedCell = BoardManager.Instance.WorldToBoardCell(mouseWorld);
 
-        switch (currentCommand)
+        if(currentCommand == UnitCommandMode.Move)
         {
-            case UnitCommandMode.Move:
-                return TryExecuteMove(clickedCell);
-            default:
-                return false;
+            return TryExecuteMoveCommand(clickedCell);
+        }
+        else
+        {
+            return false;
         }
     }
 
-    private bool TryExecuteMove(Vector2Int clickedCell)
+    #endregion
+
+    #region Move command
+
+    private void DoMoveCommandSelection()
+    {
+        if (currentlySelectedUnit == null) return;
+
+        MovementRange mvmtRange = currentlySelectedUnit.GetComponent<MovementRange>();
+        if (mvmtRange != null)
+        {
+            BoardManager.Instance.ShowMovementRange(mvmtRange);
+        }
+    }
+
+    private static void DoMoveCommandClear()
+    {
+        BoardManager.Instance.ClearMovementRange();
+    }
+
+    private bool TryExecuteMoveCommand(Vector2Int clickedCell)
     {
         var moveRange = currentlySelectedUnit.GetComponent<MovementRange>();
         var movableUnit = currentlySelectedUnit.GetComponent<MovableUnit>();
@@ -146,23 +221,5 @@ public class UnitSelectionManager : MonoBehaviour
         return false;
     }
 
-    public void OnMoveCommandSelected()
-    {
-        if (currentlySelectedUnit == null) return;
-
-        currentCommand = UnitCommandMode.Move;
-
-        MovementRange mvmtRange = currentlySelectedUnit.GetComponent<MovementRange>();
-        if (mvmtRange != null)
-        {
-            BoardManager.Instance.ShowMovementRange(mvmtRange);
-        }
-    }
-
-    private void ClearCommand()
-    {
-        currentCommand = UnitCommandMode.None;
-
-        BoardManager.Instance.ClearMovementRange();
-    }
+    #endregion
 }
