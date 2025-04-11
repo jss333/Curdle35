@@ -68,6 +68,8 @@ public class UnitSelectionManager : MonoBehaviour
             currentlySelectedUnit.DoUnitDeselection();
             currentlySelectedUnit = null;
             OnUnitDeselected?.Invoke(previouslySelectedUnit);
+
+            BoardManager.Instance.ClearMovementRange();
         }
     }
 
@@ -80,13 +82,19 @@ public class UnitSelectionManager : MonoBehaviour
         currentlySelectedUnit = newlySelectedUnit;
         currentlySelectedUnit.DoUnitSelection();
         OnUnitSelected?.Invoke(currentlySelectedUnit);
+
+        MovementRange mvmtRange = currentlySelectedUnit.GetComponent<MovementRange>();
+        if (mvmtRange != null)
+        {
+            BoardManager.Instance.ShowMovementRange(mvmtRange);
+        }
     }
 
     private bool TryHandleMoveInput()
     {
         if (currentlySelectedUnit == null) return false;
 
-        var moveRange = currentlySelectedUnit.GetMovementRange();
+        var moveRange = currentlySelectedUnit.GetComponent<MovementRange>();
         var movableUnit = currentlySelectedUnit.GetComponent<MovableUnit>();
 
         if(moveRange == null || movableUnit == null) return false;

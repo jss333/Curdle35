@@ -21,26 +21,11 @@ public class SelectableUnit : MonoBehaviour
     public void DoUnitSelection()
     {
         spriteRenderer.color = highlightColor;
-
-        // TODO use notification?
-        MovementRange? mvmtRange = GetMovementRange();
-        if (mvmtRange != null)
-        {
-            BoardManager.Instance.ShowMovementRange(mvmtRange);
-        }
     }
 
     public void DoUnitDeselection()
     {
         spriteRenderer.color = originalColor;
-
-        // TODO use notification?
-        BoardManager.Instance.ClearMovementRange();
-    }
-
-    public MovementRange? GetMovementRange()
-    {
-        return GetComponent<MovementRange>();
     }
 
     public Sprite GetUnitPortrait()
