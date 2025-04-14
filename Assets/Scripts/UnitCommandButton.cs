@@ -24,7 +24,7 @@ public class UnitCommandButton : MonoBehaviour
         HideButton();
     }
 
-    void Start()
+    protected virtual void Start()
     {
         UnitSelectionManager.Instance.OnUnitSelected += HandleUnitSelected;
         UnitSelectionManager.Instance.OnUnitDeselected += HandleUnitDeselected;
@@ -75,7 +75,17 @@ public class UnitCommandButton : MonoBehaviour
 
     private void HandleGameStateChanged(GameState state)
     {
-        button.interactable = state == GameState.PlayerInput;
+        RefreshButtonInteractability();
+    }
+
+    protected void RefreshButtonInteractability()
+    {
+        button.interactable = (GameManager.Instance.CurrentState == GameState.PlayerInput) && CalculateInteractabilityDuringPlayerInput();
+    }
+
+    protected virtual bool CalculateInteractabilityDuringPlayerInput()
+    {
+        return true;
     }
 
     public void OnButtonClicked()
