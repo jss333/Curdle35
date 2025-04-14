@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2836539895970918373}
   - component: {fileID: 4099226329757227954}
   m_Layer: 0
-  m_Name: HQ Tower
+  m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 1595681471
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 5863430937827172395, guid: 894d10d4024efcb458d51677ee97df41, type: 3}
+  m_Sprite: {fileID: 6738480177456192941, guid: b75d12e415f6fb94fac2e34a01410da5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -102,7 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   faction: 1
   isStructure: 1
-  maxHealth: 3
+  maxHealth: 2
   boardCellPosition: {x: 0, y: 0}
   currentHealth: 0
   isAlive: 1

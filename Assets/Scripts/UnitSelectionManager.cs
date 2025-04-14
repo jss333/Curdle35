@@ -274,7 +274,7 @@ public class UnitSelectionManager : MonoBehaviour
 
         if (buildRange.IsCellInsideRange(clickedCell))
         {
-            Debug.Log($"Building at {clickedCell}");
+            TurretsManager.Instance.BuildTurretAt(clickedCell);
             ClearCommand();
 
             return true;
