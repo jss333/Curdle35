@@ -25,9 +25,9 @@ public class BoardManager : MonoBehaviour
     [SerializeField] private Tilemap resourceTilemap;
     [SerializeField] private TileBase[] resourceTiles;
 
-    [Header("Config - Movement range tilemap and tile references")]
-    [SerializeField] private Tilemap movementRangeTilemap;
-    [SerializeField] private TileBase movementRangeTile;
+    [Header("Config - Range tilemap and tile references")]
+    [SerializeField] private Tilemap rangeTilemap;
+    [SerializeField] private TileBase rangeTile;
 
     [Header("State")]
     [SerializeField] private int width;
@@ -334,20 +334,28 @@ public class BoardManager : MonoBehaviour
 
     #endregion
 
-    #region Movement range tilemap
+    #region Range tilemap
     public void ShowMovementRange(MovementRange mvmtRange)
     {
         foreach (var cell in mvmtRange.GetValidCells())
         {
-            movementRangeTilemap.SetTile(BoardCellToGridmapCell(cell), movementRangeTile);
+            rangeTilemap.SetTile(BoardCellToGridmapCell(cell), rangeTile);
         }
         // Also highlight the cell the unit is standing on
-        movementRangeTilemap.SetTile(BoardCellToGridmapCell(mvmtRange.GetUnitBoardPosition()), movementRangeTile);
+        rangeTilemap.SetTile(BoardCellToGridmapCell(mvmtRange.GetUnitBoardPosition()), rangeTile);
     }
 
-    public void ClearMovementRange()
+    public void ShowBuildRange(BuildRange buildRange)
     {
-        movementRangeTilemap.ClearAllTiles();
+        foreach (var cell in buildRange.GetValidCells())
+        {
+            rangeTilemap.SetTile(BoardCellToGridmapCell(cell), rangeTile);
+        }
+    }
+
+    public void ClearAllRanges()
+    {
+        rangeTilemap.ClearAllTiles();
     }
 
     #endregion

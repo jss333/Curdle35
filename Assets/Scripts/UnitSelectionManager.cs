@@ -8,7 +8,8 @@ using UnityEngine.EventSystems;
 public enum UnitCommandMode
 {
     None,
-    Move
+    Move,
+    Build
 }
 
 public class UnitSelectionManager : MonoBehaviour
@@ -140,27 +141,49 @@ public class UnitSelectionManager : MonoBehaviour
 
     public void SelectCommand(UnitCommandMode command)
     {
+        if (currentCommand != UnitCommandMode.None)
+        {
+            if (command == currentCommand)
+            {
+                ClearCommand();
+                return;
+            }
+            else
+            {
+                ClearCommand();
+            }
+        }
+
         currentCommand = command;
         OnCommandSelected?.Invoke(currentCommand);
 
-        if(command == UnitCommandMode.Move)
+        if (command == UnitCommandMode.Move)
         {
             DoMoveCommandSelection();
+        }
+        else if (command == UnitCommandMode.Build)
+        {
+            DoBuildCommandSelection();
         }
     }
 
     public void ClearCommand()
     {
-        if(currentCommand == UnitCommandMode.None) return;
+        if (currentCommand == UnitCommandMode.None) return;
 
         UnitCommandMode previousCommand = currentCommand;
         currentCommand = UnitCommandMode.None;
         OnCommandUnselected?.Invoke();
 
-        if(previousCommand == UnitCommandMode.Move)
+        if (previousCommand == UnitCommandMode.Move)
         {
             DoMoveCommandClear();
         }
+        else if (previousCommand == UnitCommandMode.Build)
+        {
+            DoBuildCommandClear();
+        }
+
     }
 
     private bool TryExecuteCommand()
@@ -173,6 +196,10 @@ public class UnitSelectionManager : MonoBehaviour
         if(currentCommand == UnitCommandMode.Move)
         {
             return TryExecuteMoveCommand(clickedCell);
+        }
+        else if (currentCommand == UnitCommandMode.Build)
+        {
+            return TryExecuteBuildCommand(clickedCell);
         }
         else
         {
@@ -188,8 +215,7 @@ public class UnitSelectionManager : MonoBehaviour
     {
         if (currentlySelectedUnit == null) return;
 
-        MovementRange mvmtRange = currentlySelectedUnit.GetComponent<MovementRange>();
-        if (mvmtRange != null)
+        if (currentlySelectedUnit.TryGetComponent<MovementRange>(out var mvmtRange))
         {
             BoardManager.Instance.ShowMovementRange(mvmtRange);
         }
@@ -197,7 +223,7 @@ public class UnitSelectionManager : MonoBehaviour
 
     private static void DoMoveCommandClear()
     {
-        BoardManager.Instance.ClearMovementRange();
+        BoardManager.Instance.ClearAllRanges();
     }
 
     private bool TryExecuteMoveCommand(Vector2Int clickedCell)
@@ -213,6 +239,42 @@ public class UnitSelectionManager : MonoBehaviour
 
             GameManager.Instance.OnPlayerUnitStartsMoving();
             movableUnit.MoveAlongPath(path, GameManager.Instance.OnPlayerUnitFinishesMoving);
+            ClearCommand();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    #endregion
+
+    #region Build command
+
+    private void DoBuildCommandSelection()
+    {
+        if (currentlySelectedUnit == null) return;
+
+        if (currentlySelectedUnit.TryGetComponent<BuildRange>(out var buildRange))
+        {
+            BoardManager.Instance.ShowBuildRange(buildRange);
+        }
+    }
+
+    private static void DoBuildCommandClear()
+    {
+        BoardManager.Instance.ClearAllRanges();
+    }
+
+    private bool TryExecuteBuildCommand(Vector2Int clickedCell)
+    {
+        var buildRange = currentlySelectedUnit.GetComponent<BuildRange>();
+
+        if (buildRange == null) return false;
+
+        if (buildRange.IsCellInsideRange(clickedCell))
+        {
+            Debug.Log($"Building at {clickedCell}");
             ClearCommand();
 
             return true;
