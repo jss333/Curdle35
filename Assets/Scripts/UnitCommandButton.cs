@@ -3,10 +3,9 @@ using UnityEngine.UI;
 using System.Collections;
 using System;
 
-public class UnitCommandButton : MonoBehaviour
+public abstract class UnitCommandButton : MonoBehaviour
 {
     [Header("Config")]
-    [SerializeField] private UnitCommandMode associatedCommand;
     [SerializeField] private Color normalColor = Color.white;
     [SerializeField] private Color highlightedColor = Color.yellow;
 
@@ -56,9 +55,9 @@ public class UnitCommandButton : MonoBehaviour
         canvasGroup.interactable = false;
     }
 
-    private void HandleCommandSelected(UnitCommandMode selectedCommand)
+    private void HandleCommandSelected(UnitCommandButton selectedCommand)
     {
-        if (selectedCommand == associatedCommand)
+        if (selectedCommand == this)
         {
             buttonImage.color = highlightedColor;
         }
@@ -90,6 +89,12 @@ public class UnitCommandButton : MonoBehaviour
 
     public void OnButtonClicked()
     {
-        UnitSelectionManager.Instance.SelectCommand(associatedCommand);
+        UnitSelectionManager.Instance.SelectCommand(this);
     }
+
+    public abstract void DoCommandSelection(SelectableUnit selectedUnit);
+
+    public abstract void DoCommandClear();
+
+    public abstract bool TryExecuteCommand(SelectableUnit selectedUnit, Vector2Int clickedCell);
 }

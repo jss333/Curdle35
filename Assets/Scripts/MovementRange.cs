@@ -66,7 +66,7 @@ public class MovementRange : MonoBehaviour
         return targetCells;
     }
 
-    public bool IsCellInMovementRange(Vector2Int pos)
+    public bool IsCellInsideRange(Vector2Int pos)
     {
         return GetValidCells().Contains(pos);
     }

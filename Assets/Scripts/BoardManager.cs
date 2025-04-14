@@ -335,14 +335,15 @@ public class BoardManager : MonoBehaviour
     #endregion
 
     #region Range tilemap
-    public void ShowMovementRange(MovementRange mvmtRange)
+
+    public void ShowMovementRange(MovementRange moveRange)
     {
-        foreach (var cell in mvmtRange.GetValidCells())
+        foreach (var cell in moveRange.GetValidCells())
         {
             rangeTilemap.SetTile(BoardCellToGridmapCell(cell), rangeTile);
         }
         // Also highlight the cell the unit is standing on
-        rangeTilemap.SetTile(BoardCellToGridmapCell(mvmtRange.GetUnitBoardPosition()), rangeTile);
+        rangeTilemap.SetTile(BoardCellToGridmapCell(moveRange.GetUnitBoardPosition()), rangeTile);
     }
 
     public void ShowBuildRange(BuildRange buildRange)
