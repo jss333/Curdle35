@@ -106,10 +106,12 @@ public class TurretsManager : MonoBehaviour
             DOTween.Sequence()
                 //.AppendCallback(PanCameraToTurret)
                 //.AppendInterval(cameraPanTime)
+                .AppendCallback(() => BoardManager.Instance.ShowShootingRange(turret))
                 .AppendCallback(() => InstantiateReticle(hyena.GetBoardPosition()))
                 .AppendInterval(reticleDisplayTime)
                 .AppendCallback(() => DamageHyenaAndRemoveReticle(hyena))
                 .AppendInterval(delayBetweenTurretShots)
+                .AppendCallback(BoardManager.Instance.ClearAllRanges)
                 .AppendCallback(() => NextTurretShoots(allHyenas));
         }
         else

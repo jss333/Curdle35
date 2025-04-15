@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6e5677749388c048b93820c2cc2e741, type: 3}
+  m_Name: ShootRange_Tile
+  m_EditorClassIdentifier: 
+  m_Sprites:
+  - {fileID: 1376815375, guid: 753535afed8aa2d45961eb4ac73afb33, type: 3}
+  - {fileID: 2056406741, guid: 753535afed8aa2d45961eb4ac73afb33, type: 3}
+  - {fileID: 1218800886, guid: 753535afed8aa2d45961eb4ac73afb33, type: 3}
+  - {fileID: 429991603, guid: 753535afed8aa2d45961eb4ac73afb33, type: 3}
+  - {fileID: 1659001841, guid: 753535afed8aa2d45961eb4ac73afb33, type: 3}
+  - {fileID: -628275310, guid: 753535afed8aa2d45961eb4ac73afb33, type: 3}
+  - {fileID: -375701139, guid: 753535afed8aa2d45961eb4ac73afb33, type: 3}
+  - {fileID: 1969835423, guid: 753535afed8aa2d45961eb4ac73afb33, type: 3}
+  - {fileID: -1674063244, guid: 753535afed8aa2d45961eb4ac73afb33, type: 3}
+  - {fileID: -2112529386, guid: 753535afed8aa2d45961eb4ac73afb33, type: 3}
+  - {fileID: -1717929250, guid: 753535afed8aa2d45961eb4ac73afb33, type: 3}
+  - {fileID: -291885623, guid: 753535afed8aa2d45961eb4ac73afb33, type: 3}
+  - {fileID: 1571078650, guid: 753535afed8aa2d45961eb4ac73afb33, type: 3}
+  - {fileID: 42689375, guid: 753535afed8aa2d45961eb4ac73afb33, type: 3}
+  - {fileID: 2023360517, guid: 753535afed8aa2d45961eb4ac73afb33, type: 3}
+  - {fileID: 2033919201, guid: 753535afed8aa2d45961eb4ac73afb33, type: 3}

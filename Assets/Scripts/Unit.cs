@@ -50,6 +50,17 @@ public class Unit : MonoBehaviour
         return boardCellPosition;
     }
 
+    public int GetOrthogonalDistance(Unit otherUnit)
+    {
+        return GetOrthogonalDistance(otherUnit.GetBoardPosition());
+    }
+
+    public int GetOrthogonalDistance(Vector2Int cell)
+    {
+        Vector2Int diff = cell - GetBoardPosition();
+        return System.Math.Abs(diff.x) + System.Math.Abs(diff.y);
+    }
+
     public void UpdateBoardPositionAfterMove(Vector2Int newCell)
     {
         BoardManager.Instance.UpdateUnitFromOldToNewCell(this, boardCellPosition, newCell);

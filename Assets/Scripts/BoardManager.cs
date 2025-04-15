@@ -28,6 +28,7 @@ public class BoardManager : MonoBehaviour
     [Header("Config - Range tilemap and tile references")]
     [SerializeField] private Tilemap rangeTilemap;
     [SerializeField] private TileBase rangeTile;
+    [SerializeField] private TileBase shootingRangeTile;
 
     [Header("State")]
     [SerializeField] private int width;
@@ -351,6 +352,14 @@ public class BoardManager : MonoBehaviour
         foreach (var cell in buildRange.GetValidCells())
         {
             rangeTilemap.SetTile(BoardCellToGridmapCell(cell), rangeTile);
+        }
+    }
+
+    public void ShowShootingRange(CellRange range)
+    {
+        foreach (var cell in range.GetCellsInRange())
+        {
+            rangeTilemap.SetTile(BoardCellToGridmapCell(cell), shootingRangeTile);
         }
     }
 
