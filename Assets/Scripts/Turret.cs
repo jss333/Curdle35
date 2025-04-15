@@ -64,7 +64,12 @@ public class Turret : MonoBehaviour, CellRange
             for (int y = -yRange; y <= yRange; y++)
             {
                 if(x == 0 && y == 0) continue; // Skip the turret's own position
-                cellsInRange.Add(turretPos + new Vector2Int(x, y));
+
+                Vector2Int candidate = turretPos + new Vector2Int(x, y);
+                if(BoardManager.Instance.IsValidCellForUnitMovement(candidate))
+                {
+                    cellsInRange.Add(candidate);
+                }
             }
         }
 
