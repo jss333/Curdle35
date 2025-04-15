@@ -4,6 +4,7 @@ using UnityEngine;
 public class SelectableUnit : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer = null!;
+    private Turret turret = null;
 
     [Header("Config")]
     [SerializeField] private Color highlightColor = Color.yellow;
@@ -16,16 +17,28 @@ public class SelectableUnit : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
+
+        TryGetComponent<Turret>(out turret);
     }
 
     public void ShowSelectedEffect()
     {
         spriteRenderer.color = highlightColor;
+
+        if (turret != null)
+        {
+            BoardManager.Instance.ShowShootingRange(turret);
+        }
     }
 
     public void RemoveSelectedEffect()
     {
         spriteRenderer.color = originalColor;
+
+        if (turret != null)
+        {
+            BoardManager.Instance.ClearAllRanges();
+        }
     }
 
     public Sprite GetUnitPortrait()

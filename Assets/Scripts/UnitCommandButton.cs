@@ -35,12 +35,18 @@ public abstract class UnitCommandButton : MonoBehaviour
 
     private void HandleUnitSelected(SelectableUnit unit)
     {
-        ShowButton();
+        if (!unit.GetComponent<Unit>().IsStructure())
+        {
+            ShowButton();
+        }
     }
 
     private void HandleUnitDeselected(SelectableUnit unit)
     {
-        HideButton();
+        if (!unit.GetComponent<Unit>().IsStructure())
+        {
+            HideButton();
+        }
     }
 
     private void ShowButton()
