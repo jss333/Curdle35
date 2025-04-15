@@ -109,14 +109,17 @@ public class HyenasManager : MonoBehaviour
 
     public List<Unit> GetAllHyenas()
     {
-        List<Unit> hyenas = new List<Unit>();
-        foreach (Transform child in transform)
-        {
-            if(child.gameObject.activeInHierarchy && child.TryGetComponent<Unit>(out Unit hyena))
-            {
-                hyenas.Add(hyena);
-            }
-        }
+        List<Unit> hyenas = transform
+            .Cast<Transform>()
+            .Where(child => child.gameObject.activeInHierarchy)
+            .Select(child => child.GetComponent<Unit>())
+            .Where(unit => unit != null)
+            .Where(unit => unit.GetFaction() == Faction.Hyenas)
+            .ToList();
+
+        LogUtils.LogEnumerable("HyenasManager.GetAllHyenas", hyenas);
+        Debug.Log($"allHyenas isNull={hyenas == null} count={hyenas.Count}");
+
         return hyenas;
     }
 }

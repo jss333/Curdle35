@@ -1,30 +1,61 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+
+public struct HyenaDist
+{
+    public Unit hyena;
+    public int distanceToTurret;
+
+    public HyenaDist(Unit hyena, int distanceToTurret)
+    {
+        this.hyena = hyena;
+        this.distanceToTurret = distanceToTurret;
+    }
+}
 
 public class Turret : MonoBehaviour
 {
     [Header("Config")]
     [SerializeField] int shootingRange = 2;
 
-    public bool TryAcquireTarget(out Unit hyena)
-    {
-        hyena = HyenasManager.Instance.GetAllHyenas()
-            //.Where(h => h.IsAlive)
-            //.Where(h => h.Faction == Faction.Hyenas)
-            //.Where(h => Vector2Int.Distance(h.BoardPosition, BoardPosition) <= shootingRange)
-            //.OrderBy(h => Vector2Int.Distance(h.BoardPosition, BoardPosition))
-            .FirstOrDefault();
+    private Unit unit;
 
-        if (hyena == null)
+    private void Start()
+    {
+        unit = GetComponent<Unit>();
+    }
+
+    public bool TryAcquireTarget(List<Unit> allHyenas, out Unit hyena)
+    {
+        var closestHyenas = allHyenas
+            .Where(h => h.IsAlive()) // Some hyenas may have already been killed by other towers
+            .Select(h => new HyenaDist(h, OrthogonalDistanceToHyena(h)))
+            .Where(hd => hd.distanceToTurret <= shootingRange)
+            .GroupBy(hd => hd.distanceToTurret)
+            .OrderBy(g => g.Key) // `g.Key` is the distance
+            .FirstOrDefault()   // Closest group
+            ?.Select(hd => hd.hyena) // Select hyenas in that group, if any
+            .ToList() ?? new List<Unit>(); // Default to empty list
+
+        if (closestHyenas.Count > 0)
         {
-            Debug.Log($"Turret {name} could not acquire target.");
-            return false;
+            hyena = closestHyenas[UnityEngine.Random.Range(0, closestHyenas.Count)];
+            Debug.Log($"{name} acquired {hyena.name} at {hyena.GetBoardPosition()} as target.");
+            return true;
         }
         else
         {
-            Debug.Log($"Turret {name} acquired {hyena.name} at {hyena.GetBoardPosition()} as target.");
-            return true;
+            hyena = null;
+            Debug.Log($"No target in range for {name}.");
+            return false;
         }
+    }
+
+    private int OrthogonalDistanceToHyena(Unit hyena)
+    {
+        Vector2Int diff = hyena.GetBoardPosition() - this.unit.GetBoardPosition();
+        return Math.Abs(diff.x) + Math.Abs(diff.y);
     }
 }

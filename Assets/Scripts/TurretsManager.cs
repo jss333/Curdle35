@@ -2,12 +2,13 @@ using DG.Tweening;
 using UnityEngine;
 using DG;
 using System.Collections.Generic;
+using System.Linq;
 
 public class TurretsManager : MonoBehaviour
 {
     public static TurretsManager Instance { get; private set; }
 
-    [Header("Config")]
+    [Header("Config - Turret")]
     [SerializeField] private GameObject turretPrefab;
     [SerializeField] private int turretBuildCost = 15;
     [SerializeField] private float delayBetweenTurretShots = 0.5f;
@@ -24,7 +25,7 @@ public class TurretsManager : MonoBehaviour
     [Header("State")]
     [SerializeField] private int nextTurretId = 0;
     [SerializeField] private int currentTurretIndex;
-    [SerializeField] private List<Turret> turretsToShoot;
+    [SerializeField] private List<Turret> turrets;
     [SerializeField] private GameObject lastReticleCreated;
 
     void Awake()
@@ -71,54 +72,54 @@ public class TurretsManager : MonoBehaviour
     {
         if (newState != GameState.PlayerTurretShooting) return;
 
-        turretsToShoot = new List<Turret>();
-        foreach (var turret in GetComponentsInChildren<Turret>())
-        {
-            turretsToShoot.Add(turret);
-        }
+        turrets = transform
+            .Cast<Transform>()
+            .Where(child => child.gameObject.activeInHierarchy)
+            .Select(child => child.GetComponent<Turret>())
+            .Where(unit => unit != null)
+            .ToList();
         currentTurretIndex = 0;
 
-        NextTurretShoot();
+        List<Unit> allHyenas = HyenasManager.Instance.GetAllHyenas();
+
+        NextTurretShoots(allHyenas);
     }
 
-    private void NextTurretShoot()
+    private void NextTurretShoots(List<Unit> allHyenas)
     {
-        if (currentTurretIndex >= turretsToShoot.Count)
+        if (currentTurretIndex >= turrets.Count)
         {
             GameManager.Instance.OnPlayerTurretsFinishShooting();
             return;
         }
 
-        var turret = turretsToShoot[currentTurretIndex];
+        var turret = turrets[currentTurretIndex];
         currentTurretIndex++;
 
-        PanToTurretAndShootHyenaIfTargetAvailable(turret);
+        PanToTurretAndShootHyenaIfTargetAvailable(turret, allHyenas);
     }
 
-    private void PanToTurretAndShootHyenaIfTargetAvailable(Turret turret)
+    private void PanToTurretAndShootHyenaIfTargetAvailable(Turret turret, List<Unit> allHyenas)
     {
-        if (turret.TryAcquireTarget(out Unit hyena))
+        if (turret.TryAcquireTarget(allHyenas, out Unit hyena))
         {
-            var cell = hyena.GetBoardPosition();
-
             DOTween.Sequence()
                 //.AppendCallback(PanCameraToTurret)
                 //.AppendInterval(cameraPanTime)
-                .AppendCallback(() => { InstantiateReticle(cell); })
+                .AppendCallback(() => InstantiateReticle(hyena.GetBoardPosition()))
                 .AppendInterval(reticleDisplayTime)
-                .AppendCallback(() => { DamageHyenaAndRemoveReticle(hyena); })
+                .AppendCallback(() => DamageHyenaAndRemoveReticle(hyena))
                 .AppendInterval(delayBetweenTurretShots)
-                .AppendCallback(NextTurretShoot);
+                .AppendCallback(() => NextTurretShoots(allHyenas));
         }
         else
         {
-            NextTurretShoot();
+            NextTurretShoots(allHyenas);
         }
     }
 
     private void PanCameraToTurret()
     {
-
     }
 
     private void InstantiateReticle(Vector2Int cell)
