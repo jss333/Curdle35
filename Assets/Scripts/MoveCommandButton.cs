@@ -20,7 +20,7 @@ public class MoveCommandButton : UnitCommandButton
     {
         if(UnitHasMoveRangeAndIsMoveable(selectedUnit, out var moveRange, out var movableUnit))
         {
-            if (moveRange.IsCellInsideRange(clickedCell))
+            if (moveRange.IsCellInRange(clickedCell))
             {
                 IEnumerable<Vector2Int> path = moveRange.BuildPathToOrthogonalOrDiagonalDestination(clickedCell);
 

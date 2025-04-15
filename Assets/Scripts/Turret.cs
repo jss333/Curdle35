@@ -53,7 +53,7 @@ public class Turret : MonoBehaviour, CellRange
         }
     }
 
-    public IEnumerable<Vector2Int> GetCellsInRange()
+    public List<Vector2Int> GetCellsInRange()
     {
         Vector2Int turretPos = unit.GetBoardPosition();
         List<Vector2Int> cellsInRange = new();

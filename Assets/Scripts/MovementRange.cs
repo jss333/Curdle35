@@ -3,7 +3,7 @@ using UnityEngine;
 using System;
 
 [RequireComponent(typeof(Unit))]
-public class MovementRange : MonoBehaviour
+public class MovementRange : MonoBehaviour, CellRange
 {
     [Header("Config")]
     [SerializeField] private int movementRange = 2;
@@ -31,7 +31,7 @@ public class MovementRange : MonoBehaviour
         unit = GetComponent<Unit>();
     }
 
-    public List<Vector2Int> GetValidCells()
+    public List<Vector2Int> GetCellsInRange()
     {
         List<Vector2Int> targetCells = new();
 
@@ -66,9 +66,9 @@ public class MovementRange : MonoBehaviour
         return targetCells;
     }
 
-    public bool IsCellInsideRange(Vector2Int pos)
+    public bool IsCellInRange(Vector2Int pos)
     {
-        return GetValidCells().Contains(pos);
+        return GetCellsInRange().Contains(pos);
     }
 
     public Vector2Int GetUnitBoardPosition()

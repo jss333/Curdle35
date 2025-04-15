@@ -44,7 +44,7 @@ public class BuildCommandButton : UnitCommandButton
     {
         if(UnitHasBuildRange(selectedUnit, out var buildRange))
         {
-            if (buildRange.IsCellInsideRange(clickedCell))
+            if (buildRange.IsCellInRange(clickedCell))
             {
                 TurretsManager.Instance.BuildTurretAt(clickedCell);
                 UnitSelectionManager.Instance.ClearCommand();

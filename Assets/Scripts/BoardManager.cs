@@ -339,27 +339,27 @@ public class BoardManager : MonoBehaviour
 
     public void ShowMovementRange(MovementRange moveRange)
     {
-        foreach (var cell in moveRange.GetValidCells())
-        {
-            rangeTilemap.SetTile(BoardCellToGridmapCell(cell), rangeTile);
-        }
+        ShowRange(moveRange, rangeTile);
+
         // Also highlight the cell the unit is standing on
         rangeTilemap.SetTile(BoardCellToGridmapCell(moveRange.GetUnitBoardPosition()), rangeTile);
     }
 
-    public void ShowBuildRange(BuildRange buildRange)
+    public void ShowBuildRange(CellRange buildRange)
     {
-        foreach (var cell in buildRange.GetValidCells())
-        {
-            rangeTilemap.SetTile(BoardCellToGridmapCell(cell), rangeTile);
-        }
+        ShowRange(buildRange, rangeTile);
     }
 
     public void ShowShootingRange(CellRange range)
     {
+        ShowRange(range, shootingRangeTile);
+    }
+
+    private void ShowRange(CellRange range, TileBase tile)
+    {
         foreach (var cell in range.GetCellsInRange())
         {
-            rangeTilemap.SetTile(BoardCellToGridmapCell(cell), shootingRangeTile);
+            rangeTilemap.SetTile(BoardCellToGridmapCell(cell), tile);
         }
     }
 

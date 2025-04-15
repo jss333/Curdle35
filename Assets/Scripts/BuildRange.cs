@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 [RequireComponent(typeof(Unit))]
-public class BuildRange : MonoBehaviour
+public class BuildRange : MonoBehaviour, CellRange
 {
     private static List<Vector2Int> dirs = new();
-
-    private Unit unit;
 
     static BuildRange()
     {
@@ -22,33 +21,26 @@ public class BuildRange : MonoBehaviour
         }
     }
 
+    private Unit unit;
+
     public void Start()
     {
         unit = GetComponent<Unit>();
     }
 
-    public List<Vector2Int> GetValidCells()
+    public List<Vector2Int> GetCellsInRange()
     {
         BoardManager boardMngr = BoardManager.Instance;
 
-        List<Vector2Int> targetCells = new();
-
-        foreach (var dir in dirs)
-        {
-            Vector2Int candidatePos = unit.GetBoardPosition() + dir;
-
-            // Ignore cells already occupied by a unit
-            if (boardMngr.IsValidCellForUnitMovement(candidatePos) && !boardMngr.CellHasUnit(candidatePos))
-            {
-                targetCells.Add(candidatePos);
-            }
-        }
-
-        return targetCells;
+        return dirs
+            .Select(dir => dir + unit.GetBoardPosition())
+            .Where(candidate => boardMngr.IsValidCellForUnitMovement(candidate))
+            .Where(candidate => !boardMngr.CellHasUnit(candidate))
+            .ToList();
     }
 
-    public bool IsCellInsideRange(Vector2Int pos)
+    public bool IsCellInRange(Vector2Int pos)
     {
-        return GetValidCells().Contains(pos);
+        return GetCellsInRange().Contains(pos);
     }
 }
