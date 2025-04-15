@@ -103,15 +103,17 @@ public class TurretsManager : MonoBehaviour
     {
         if (turret.TryAcquireTarget(allHyenas, out Unit hyena))
         {
+            SelectableTurret selectableTurret = turret.GetComponent<SelectableTurret>();
+
             DOTween.Sequence()
                 //.AppendCallback(PanCameraToTurret)
                 //.AppendInterval(cameraPanTime)
-                .AppendCallback(() => BoardManager.Instance.ShowShootingRange(turret))
+                .AppendCallback(selectableTurret.ShowSelectedEffect)
                 .AppendCallback(() => InstantiateReticle(hyena.GetBoardPosition()))
                 .AppendInterval(reticleDisplayTime)
                 .AppendCallback(() => DamageHyenaAndRemoveReticle(hyena))
                 .AppendInterval(delayBetweenTurretShots)
-                .AppendCallback(BoardManager.Instance.ClearAllRanges)
+                .AppendCallback(selectableTurret.RemoveSelectedEffect)
                 .AppendCallback(() => NextTurretShoots(allHyenas));
         }
         else
