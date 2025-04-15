@@ -18,6 +18,8 @@ public struct HyenaMoveOrder
 
 public class HyenasManager : MonoBehaviour
 {
+    public static HyenasManager Instance { get; private set; }
+
     [Header("Config")]
     [SerializeField] private float delayBetweenMoves = 0.3f;
 
@@ -26,6 +28,11 @@ public class HyenasManager : MonoBehaviour
     [SerializeField] private List<HyenaMoveOrder> moveOrders;
 
     private static HyenaMovementAI MovementAI = new HyenaMovementAI();
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
@@ -98,5 +105,18 @@ public class HyenasManager : MonoBehaviour
                 .AppendCallback(() => { moveOrder.hyena.MoveAlongPath(moveOrder.movePath, MoveNextHyena); })
                 .Play();
         }
+    }
+
+    public List<Unit> GetAllHyenas()
+    {
+        List<Unit> hyenas = new List<Unit>();
+        foreach (Transform child in transform)
+        {
+            if(child.gameObject.activeInHierarchy && child.TryGetComponent<Unit>(out Unit hyena))
+            {
+                hyenas.Add(hyena);
+            }
+        }
+        return hyenas;
     }
 }

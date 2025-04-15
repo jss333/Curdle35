@@ -56,8 +56,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        SetState(GameState.PlayerTurretShooting);
-        Simulate("Turrets shooting", 1f, OnPlayerTurretsFinishShooting);
+        SetState(GameState.PlayerTurretShooting); // TurretsManager object observes this state change
     }
 
     public void OnPlayerTurretsFinishShooting()

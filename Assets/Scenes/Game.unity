@@ -271,7 +271,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcbfe3cb53b20b440a6d41f76e224464, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  associatedCommand: 1
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   highlightedColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &226446290
@@ -2849,7 +2848,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentlySelectedUnit: {fileID: 0}
-  currentCommand: 0
+  currentCommand: {fileID: 0}
 --- !u!4 &1258754734
 Transform:
   m_ObjectHideFlags: 0
@@ -3907,7 +3906,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turretPrefab: {fileID: 3793743974413202263}
   turretBuildCost: 15
+  delayBetweenTurretShots: 0.5
+  cameraPanTime: 0.4
+  reticlePrefab: {fileID: 1036481340122705675, guid: 52f6582874fc8924caaaca86790b644f, type: 3}
+  reticleStartingScale: 5
+  reticleDisplayTime: 0.4
+  reticleScaleDownEaseType: 12
   nextTurretId: 1
+  currentTurretIndex: 0
+  turretsToShoot: []
+  lastReticleCreated: {fileID: 0}
 --- !u!4 &1531934878
 Transform:
   m_ObjectHideFlags: 0
@@ -4329,7 +4337,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9efad6da75bfcac4c85823c4b83f7e66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  associatedCommand: 2
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   highlightedColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &1777349613
@@ -4982,11 +4989,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.52
+      value: 13.5
       objectReference: {fileID: 0}
     - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.6
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 5101156703358229909, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5026,7 +5033,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5224848648760891206, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
