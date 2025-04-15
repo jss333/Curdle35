@@ -185,6 +185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   unitPortrait: {fileID: 0}
+  availableCommands: 0000000001000000
   originalColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &5680186288665232822
 MonoBehaviour:

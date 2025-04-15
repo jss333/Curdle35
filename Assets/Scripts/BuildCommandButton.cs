@@ -27,6 +27,11 @@ public class BuildCommandButton : UnitCommandButton
         return ResourcesManager.Instance.PlayerResources >= TurretsManager.Instance.GetTurretBuildCost();
     }
 
+    public override CommandType GetCommandType()
+    {
+        return CommandType.Build;
+    }
+
     public override void DoCommandSelection(SelectableUnit selectedUnit)
     {
         if(UnitHasBuildRange(selectedUnit, out var buildRange))

@@ -1,44 +1,38 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class SelectableUnit : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer = null!;
-    private Turret turret = null;
 
     [Header("Config")]
     [SerializeField] private Color highlightColor = Color.yellow;
     [SerializeField] private Sprite unitPortrait;
+    [SerializeField] private CommandType[] availableCommands;
 
     [Header("State")]
     [SerializeField] private Color originalColor;
 
-    void Start()
+    public virtual void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
-
-        TryGetComponent<Turret>(out turret);
     }
 
-    public void ShowSelectedEffect()
+    public HashSet<CommandType> GetAvailableCommands()
+    {
+        return new HashSet<CommandType>(availableCommands);
+    }
+
+    public virtual void ShowSelectedEffect()
     {
         spriteRenderer.color = highlightColor;
-
-        if (turret != null)
-        {
-            BoardManager.Instance.ShowShootingRange(turret);
-        }
     }
 
-    public void RemoveSelectedEffect()
+    public virtual void RemoveSelectedEffect()
     {
         spriteRenderer.color = originalColor;
-
-        if (turret != null)
-        {
-            BoardManager.Instance.ClearAllRanges();
-        }
     }
 
     public Sprite GetUnitPortrait()

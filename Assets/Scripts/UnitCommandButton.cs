@@ -3,6 +3,12 @@ using UnityEngine.UI;
 using System.Collections;
 using System;
 
+public enum CommandType
+{
+    Move,
+    Build
+}
+
 public abstract class UnitCommandButton : MonoBehaviour
 {
     [Header("Config")]
@@ -35,7 +41,7 @@ public abstract class UnitCommandButton : MonoBehaviour
 
     private void HandleUnitSelected(SelectableUnit unit)
     {
-        if (!unit.GetComponent<Unit>().IsStructure())
+        if (unit.GetAvailableCommands().Contains(this.GetCommandType()))
         {
             ShowButton();
         }
@@ -43,10 +49,7 @@ public abstract class UnitCommandButton : MonoBehaviour
 
     private void HandleUnitDeselected(SelectableUnit unit)
     {
-        if (!unit.GetComponent<Unit>().IsStructure())
-        {
-            HideButton();
-        }
+        HideButton();
     }
 
     private void ShowButton()
@@ -97,6 +100,8 @@ public abstract class UnitCommandButton : MonoBehaviour
     {
         UnitSelectionManager.Instance.SelectCommand(this);
     }
+
+    public abstract CommandType GetCommandType();
 
     public abstract void DoCommandSelection(SelectableUnit selectedUnit);
 

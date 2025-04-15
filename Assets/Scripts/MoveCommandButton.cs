@@ -3,6 +3,11 @@ using System.Collections.Generic;
 
 public class MoveCommandButton : UnitCommandButton
 {
+    public override CommandType GetCommandType()
+    {
+        return CommandType.Move;
+    }
+
     public override void DoCommandSelection(SelectableUnit selectedUnit)
     {
         if(UnitHasMoveRange(selectedUnit, out var moveRange))
