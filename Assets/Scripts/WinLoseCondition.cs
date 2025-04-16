@@ -41,6 +41,8 @@ public class WinLoseCondition : MonoBehaviour
             victoryDefeatBannerImg.sprite = state == GameState.Victory ? victoryBannerSprite : defeatBannerSprite;
             panel.SetActive(true);
             canvasGroup.DOFade(1f, fadeDuration);
+
+            // TODO play victory/defeat BGM (Victory_BGM_2 / Defeat_BGM_2)
         }
     }
 

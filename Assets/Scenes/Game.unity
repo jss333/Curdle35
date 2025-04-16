@@ -529,7 +529,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5224848648760891206, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1401,6 +1401,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delayBetweenMoves: 0.3
   currentMoveOrderIndex: 0
+  haltAllRemainingMoves: 0
 --- !u!1 &649936302
 GameObject:
   m_ObjectHideFlags: 0
