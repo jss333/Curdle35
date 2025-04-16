@@ -59,10 +59,6 @@ public class HyenaMovementAI
 
     private Vector2Int? RandomlyPickCellAroundUnit(Vector2Int origin, HashSet<Vector2Int> newlyOccupiedCells, HashSet<Vector2Int> newlyFreeCells)
     {
-        Debug.Log($"Randomly picking cell around {origin}");
-        LogUtils.LogEnumerable("--- newlyOccupiedCells", newlyOccupiedCells);
-        LogUtils.LogEnumerable("--- newlyFreeCells", newlyFreeCells);
-
         List<Vector2Int> candidateCells = new();
 
         foreach (var dir in ALL_DIRS)
@@ -80,8 +76,6 @@ public class HyenaMovementAI
             }
         }
 
-        LogUtils.LogEnumerable($"Candidate cells from origin {origin}: ", candidateCells);
-
         if(candidateCells.Count == 0)
         {
             return null;
@@ -94,8 +88,6 @@ public class HyenaMovementAI
         newlyFreeCells.Add(origin);
 
         Debug.Log($"Picked the following cell: {pickedCell}");
-        LogUtils.LogEnumerable("--- newlyOccupiedCells", newlyOccupiedCells);
-        LogUtils.LogEnumerable("--- newlyFreeCells", newlyFreeCells);
 
         return pickedCell;
     }

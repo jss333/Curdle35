@@ -2,17 +2,20 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    private Animator animator;
+    public event System.Action<Unit> OnUnitDeath;
 
     [Header("Config")]
     [SerializeField] private Faction faction;
     [SerializeField] private bool isStructure;
     [SerializeField] private int maxHealth = 1;
+    [SerializeField] private bool notifyDeath = false;
 
     [Header("State")]
     [SerializeField] private Vector2Int boardCellPosition;
     [SerializeField] private int currentHealth;
     [SerializeField] private bool isAlive = true;
+
+    private Animator animator;
 
     void Start()
     {
@@ -79,6 +82,12 @@ public class Unit : MonoBehaviour
     public void Die()
     {
         isAlive = false;
+
+        if (notifyDeath)
+        {
+            OnUnitDeath?.Invoke(this);
+        }
+
         BoardManager.Instance.UnregisterUnitFromCell(this, boardCellPosition);
         Destroy(gameObject);
     }

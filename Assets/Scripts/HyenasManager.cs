@@ -26,6 +26,7 @@ public class HyenasManager : MonoBehaviour
     [Header("State")]
     [SerializeField] private int currentMoveOrderIndex = 0;
     [SerializeField] private List<HyenaMoveOrder> moveOrders;
+    [SerializeField] private bool haltAllRemainingMoves = false;
 
     private static HyenaMovementAI MovementAI = new HyenaMovementAI();
 
@@ -51,6 +52,7 @@ public class HyenasManager : MonoBehaviour
         // Ask the AI component to calculate move orders
         moveOrders = MovementAI.CalculateMovementPathForHyenas(hyenasToMove);
         currentMoveOrderIndex = 0;
+        haltAllRemainingMoves = false;
 
         MoveNextHyena();
     }
@@ -78,33 +80,40 @@ public class HyenasManager : MonoBehaviour
 
     private void MoveNextHyena()
     {
-        Debug.Log($"*** moving next hyena {currentMoveOrderIndex}/{moveOrders.Count()}...");
+        if (haltAllRemainingMoves)
+        {
+            Debug.Log($"Halting {moveOrders.Count() - currentMoveOrderIndex} remaining hyena moves. GameManager will not be notified.");
+            return;
+        }
 
         if (currentMoveOrderIndex >= moveOrders.Count())
         {
-            Debug.Log($"*** calling OnHyenasFinishMoving()...");
+            Debug.Log($"All {moveOrders.Count()} movement orders have completed.");
             GameManager.Instance.OnHyenasFinishMoving();
             return;
         }
+
+        Debug.Log($"*** moving hyena {currentMoveOrderIndex + 1}/{moveOrders.Count()}...");
 
         var moveOrder = moveOrders[currentMoveOrderIndex];
         currentMoveOrderIndex++;
 
         if(moveOrder.movePath.Count() == 0)
         {
-            Debug.Log($"*** hyena {moveOrder.hyena.name} has no place to move to / currentHyenaIndex has been updated to {currentMoveOrderIndex}.");
-
             MoveNextHyena();
         }
         else
         {
-            Debug.Log($"*** moving hyena {moveOrder.hyena.name} to {moveOrder.movePath.Last()} / currentHyenaIndex has been updated to {currentMoveOrderIndex}.");
-
             DOTween.Sequence()
                 .AppendInterval(delayBetweenMoves)
                 .AppendCallback(() => { moveOrder.hyena.MoveAlongPath(moveOrder.movePath, MoveNextHyena); })
                 .Play();
         }
+    }
+
+    public void HaltAllRemainingHyenaMovesAndDoNotNotifyGameManager()
+    {
+        haltAllRemainingMoves = true;
     }
 
     public List<Unit> GetAllHyenas()
@@ -116,9 +125,6 @@ public class HyenasManager : MonoBehaviour
             .Where(unit => unit != null)
             .Where(unit => unit.GetFaction() == Faction.Hyenas)
             .ToList();
-
-        LogUtils.LogEnumerable("HyenasManager.GetAllHyenas", hyenas);
-        Debug.Log($"allHyenas isNull={hyenas == null} count={hyenas.Count}");
 
         return hyenas;
     }

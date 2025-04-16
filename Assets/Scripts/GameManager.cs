@@ -147,9 +147,14 @@ public class GameManager : MonoBehaviour
         SetState(GameState.PlayerInput);
     }
 
-    public void OnVictoryAchieved()
+    public void OnPlayerVictory()
     {
         SetState(GameState.Victory);
+    }
+
+    public void OnPlayerDefeat()
+    {
+        SetState(GameState.Defeat);
     }
 
     private static void Simulate(string msg, float duration, System.Action completionCallback)

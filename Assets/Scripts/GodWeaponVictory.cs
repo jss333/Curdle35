@@ -89,6 +89,6 @@ public class GodWeaponVictory : MonoBehaviour
         }
 
         ResourcesManager.Instance.PlayerResources -= resourcesToUnlock;
-        GameManager.Instance.OnVictoryAchieved();
+        GameManager.Instance.OnPlayerVictory();
     }
 }
