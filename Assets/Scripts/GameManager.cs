@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        // TODO fade in the night music around here? Night_BGM_2
+        SoundsManager.Instance.UpdateCurrentMusic(SoundsManager.MusicType.Night);
 
         SetState(GameState.DayToNightAnimation); // Day Night Indicator object observes this state change to play the animation
     }
@@ -90,8 +90,6 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("Cannot end day-to-night animation, not in DayToNightAnimation state.");
             return;
         }
-
-        // TODO fade in the night music around here? Night_BGM_2
 
         SetState(GameState.HyenasSpawning); // HyenasSpawnManager object observes this state change
     }
@@ -126,7 +124,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        // TODO fade out night music and play horn (Horns_Intro_2) followed by roar (Lion_Roaring_Intro_2) followed by morning music (Morning_BGM_2)
+        SoundsManager.Instance.UpdateCurrentMusic(SoundsManager.MusicType.Day);
 
         SetState(GameState.HyenasGenerateNewSpawnMarkers); // HyenasSpawnManager object observes this state change
     }
