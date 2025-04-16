@@ -82,6 +82,13 @@ public class GodWeaponVictory : MonoBehaviour
 
     private void OnGodWeaponClicked()
     {
-        Debug.Log("///////  God Weapon Deployed!  ///////");
+        if (ResourcesManager.Instance.PlayerResources < resourcesToUnlock)
+        {
+            Debug.LogError("Not enough resources to deploy God Weapon.");
+            return;
+        }
+
+        ResourcesManager.Instance.PlayerResources -= resourcesToUnlock;
+        GameManager.Instance.OnVictoryAchieved();
     }
 }

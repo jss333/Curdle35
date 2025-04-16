@@ -11,5 +11,6 @@ public enum GameState
     HyenasMoving,
     HyenasHarvesting,
     HyenasGenerateNewSpawnMarkers,
-    NightToDayAnimation
+    NightToDayAnimation,
+    Victory
 }

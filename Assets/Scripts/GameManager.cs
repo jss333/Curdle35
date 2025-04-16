@@ -147,6 +147,11 @@ public class GameManager : MonoBehaviour
         SetState(GameState.PlayerInput);
     }
 
+    public void OnVictoryAchieved()
+    {
+        SetState(GameState.Victory);
+    }
+
     private static void Simulate(string msg, float duration, System.Action completionCallback)
     {
         DOTween.Sequence()
