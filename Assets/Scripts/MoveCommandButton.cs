@@ -7,7 +7,7 @@ public class MoveCommandButton : UnitCommandButton
     [SerializeField] private string canMoveLabel = "Move";
     [SerializeField] private string cannotMoveLabel = "Moved";
 
-    public override CommandType GetCommandType()
+    protected override CommandType GetCommandType()
     {
         return CommandType.Move;
     }

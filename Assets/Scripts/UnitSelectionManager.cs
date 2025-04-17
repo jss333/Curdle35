@@ -10,8 +10,6 @@ public class UnitSelectionManager : MonoBehaviour
 
     public event Action<SelectableUnit> OnUnitSelected;
     public event Action<SelectableUnit> OnUnitDeselected;
-    public event Action<UnitCommandButton> OnCommandSelected;
-    public event Action OnCommandUnselected;
 
     [Header("State")]
     [SerializeField] private SelectableUnit currentlySelectedUnit;
@@ -136,7 +134,7 @@ public class UnitSelectionManager : MonoBehaviour
 
     #region Command selection and execution
 
-    public void SelectCommand(UnitCommandButton command)
+    public void ClickCommand(UnitCommandButton command)
     {
         if (currentCommand != null)
         {
@@ -152,17 +150,15 @@ public class UnitSelectionManager : MonoBehaviour
         }
 
         currentCommand = command;
-        OnCommandSelected?.Invoke(currentCommand);
-        currentCommand.DoCommandSelection(currentlySelectedUnit);
+        currentCommand.SelectCommand(currentCommand, currentlySelectedUnit);
     }
 
     public void ClearCommand()
     {
         if (currentCommand == null) return;
 
-        currentCommand.DoCommandClear();
+        currentCommand.ClearCommand();
         currentCommand = null;
-        OnCommandUnselected?.Invoke();
     }
 
     private bool TryExecuteCommand()

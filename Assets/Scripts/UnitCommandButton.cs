@@ -21,29 +21,26 @@ public abstract class UnitCommandButton : MonoBehaviour
 
     private Button button;
     private Image buttonImage;
-    private CanvasGroup canvasGroup;
     private TextMeshProUGUI buttonLabel;
+    private CanvasGroup canvasGroup;
 
-    void Awake()
+    protected virtual void Start()
     {
         button = GetComponent<Button>();
         buttonImage = GetComponent<Image>();
-        canvasGroup = GetComponent<CanvasGroup>();
         buttonLabel = GetComponentInChildren<TextMeshProUGUI>();
+        canvasGroup = GetComponent<CanvasGroup>();
+
+        UnitSelectionManager.Instance.OnUnitSelected += HandleUnitSelected;
+        UnitSelectionManager.Instance.OnUnitDeselected += HandleUnitDeselected;
+
+        GameManager.Instance.OnGameStateChanged += HandleGameStateChanged;
 
         button.onClick.AddListener(OnButtonClicked);
         HideButton();
     }
 
-    protected virtual void Start()
-    {
-        UnitSelectionManager.Instance.OnUnitSelected += HandleUnitSelected;
-        UnitSelectionManager.Instance.OnUnitDeselected += HandleUnitDeselected;
-        UnitSelectionManager.Instance.OnCommandSelected += HandleCommandSelected;
-        UnitSelectionManager.Instance.OnCommandUnselected += HandleCommandUnselected;
-
-        GameManager.Instance.OnGameStateChanged += HandleGameStateChanged;
-    }
+    #region Command button visibility and interactability
 
     private void HandleUnitSelected(SelectableUnit unit)
     {
@@ -52,6 +49,8 @@ public abstract class UnitCommandButton : MonoBehaviour
             ShowButton();
         }
     }
+
+    protected abstract CommandType GetCommandType();
 
     private void HandleUnitDeselected(SelectableUnit unit)
     {
@@ -73,23 +72,6 @@ public abstract class UnitCommandButton : MonoBehaviour
         visible = false;
     }
 
-    private void HandleCommandSelected(UnitCommandButton selectedCommand)
-    {
-        if (selectedCommand == this)
-        {
-            buttonImage.color = highlightedColor;
-        }
-        else
-        {
-            buttonImage.color = normalColor;
-        }
-    }
-
-    private void HandleCommandUnselected()
-    {
-        buttonImage.color = normalColor;
-    }
-
     private void HandleGameStateChanged(GameState state)
     {
         RefreshButtonInteractabilityAndLabelIfVisible();
@@ -108,16 +90,41 @@ public abstract class UnitCommandButton : MonoBehaviour
 
     protected abstract void CalculateInteractabilityAndLabel(out bool interactableDuringPlayerInput, out string label);
 
+    #endregion
+
+    #region Command button selection and command execution
+
     public void OnButtonClicked()
     {
-        UnitSelectionManager.Instance.SelectCommand(this);
+        UnitSelectionManager.Instance.ClickCommand(this);
     }
 
-    public abstract CommandType GetCommandType();
+    public void SelectCommand(UnitCommandButton selectedCommand, SelectableUnit selectedUnit)
+    {
+        if (selectedCommand == this)
+        {
+            buttonImage.color = highlightedColor;
+        }
+        else
+        {
+            buttonImage.color = normalColor;
+        }
+
+        DoCommandSelection(selectedUnit);
+    }
 
     public abstract void DoCommandSelection(SelectableUnit selectedUnit);
+
+    public void ClearCommand()
+    {
+        DoCommandClear();
+
+        buttonImage.color = normalColor;
+    }
 
     public abstract void DoCommandClear();
 
     public abstract bool TryExecuteCommand(SelectableUnit selectedUnit, Vector2Int clickedCell);
+
+    #endregion
 }

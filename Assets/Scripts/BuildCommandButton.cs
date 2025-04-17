@@ -22,15 +22,15 @@ public class BuildCommandButton : UnitCommandButton
         RefreshButtonInteractabilityAndLabelIfVisible();
     }
 
+    protected override CommandType GetCommandType()
+    {
+        return CommandType.Build;
+    }
+
     protected override void CalculateInteractabilityAndLabel(out bool interactableDuringPlayerInput, out string label)
     {
         interactableDuringPlayerInput = ResourcesManager.Instance.PlayerResources >= TurretsManager.Instance.GetTurretBuildCost();
         label = calculatedLabel;
-    }
-
-    public override CommandType GetCommandType()
-    {
-        return CommandType.Build;
     }
 
     public override void DoCommandSelection(SelectableUnit selectedUnit)
