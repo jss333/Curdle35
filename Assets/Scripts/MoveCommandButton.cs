@@ -7,9 +7,9 @@ public class MoveCommandButton : UnitCommandButton
     [SerializeField] private string canMoveLabel = "Move";
     [SerializeField] private string cannotMoveLabel = "Moved";
 
-    protected override CommandType GetCommandType()
+    protected override bool CommandIsAvailableToUnit(SelectableUnit unit)
     {
-        return CommandType.Move;
+        return unit.TryGetComponent<Mover>(out Mover mover) && mover.enabled;
     }
 
     protected override void CalculateInteractabilityAndLabel(out bool interactableDuringPlayerInput, out string label)

@@ -4,12 +4,6 @@ using System.Collections;
 using System;
 using TMPro;
 
-public enum CommandType
-{
-    Move,
-    Build
-}
-
 public abstract class UnitCommandButton : MonoBehaviour
 {
     [Header("Config")]
@@ -44,13 +38,13 @@ public abstract class UnitCommandButton : MonoBehaviour
 
     private void HandleUnitSelected(SelectableUnit unit)
     {
-        if (unit.GetAvailableCommands().Contains(this.GetCommandType()))
+        if (CommandIsAvailableToUnit(unit))
         {
             ShowButton();
         }
     }
 
-    protected abstract CommandType GetCommandType();
+    protected abstract bool CommandIsAvailableToUnit(SelectableUnit unit);
 
     private void HandleUnitDeselected(SelectableUnit unit)
     {

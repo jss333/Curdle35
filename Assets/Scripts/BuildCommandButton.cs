@@ -22,9 +22,9 @@ public class BuildCommandButton : UnitCommandButton
         RefreshButtonInteractabilityAndLabelIfVisible();
     }
 
-    protected override CommandType GetCommandType()
+    protected override bool CommandIsAvailableToUnit(SelectableUnit unit)
     {
-        return CommandType.Build;
+        return unit.TryGetComponent<Builder>(out Builder builder) && builder.enabled;
     }
 
     protected override void CalculateInteractabilityAndLabel(out bool interactableDuringPlayerInput, out string label)

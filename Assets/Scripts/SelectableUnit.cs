@@ -9,7 +9,6 @@ public class SelectableUnit : MonoBehaviour
     [Header("Config")]
     [SerializeField] private Color highlightColor = Color.yellow;
     [SerializeField] private Sprite unitPortrait;
-    [SerializeField] private CommandType[] availableCommands;
 
     [Header("State")]
     [SerializeField] private Color originalColor;
@@ -18,11 +17,6 @@ public class SelectableUnit : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
-    }
-
-    public HashSet<CommandType> GetAvailableCommands()
-    {
-        return new HashSet<CommandType>(availableCommands);
     }
 
     public virtual void ShowSelectedEffect()

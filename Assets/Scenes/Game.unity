@@ -279,6 +279,8 @@ MonoBehaviour:
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   highlightedColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   visible: 0
+  canMoveLabel: Move
+  cannotMoveLabel: Moved
 --- !u!1 &226446290
 GameObject:
   m_ObjectHideFlags: 0
@@ -4432,6 +4434,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 36833c1a913a7a94d976b16386cb062a, type: 2}
+    - target: {fileID: 4408867389605123359, guid: 4891c1fd72459464f9c19898f77dab93, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4917228721399858718, guid: 4891c1fd72459464f9c19898f77dab93, type: 3}
       propertyPath: m_Size.x
       value: 1
@@ -5071,6 +5077,7 @@ MonoBehaviour:
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   highlightedColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   visible: 0
+  buildLabel: Build ($COST)
 --- !u!1 &1777349613
 GameObject:
   m_ObjectHideFlags: 0
