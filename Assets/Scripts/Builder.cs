@@ -4,11 +4,11 @@ using System;
 using System.Linq;
 
 [RequireComponent(typeof(Unit))]
-public class BuildRange : MonoBehaviour, CellRange
+public class Builder : MonoBehaviour, CellRange
 {
     private static List<Vector2Int> dirs = new();
 
-    static BuildRange()
+    static Builder()
     {
         for (int x = -1; x <= 1; x++)
         {

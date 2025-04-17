@@ -35,9 +35,9 @@ public class BuildCommandButton : UnitCommandButton
 
     public override void DoCommandSelection(SelectableUnit selectedUnit)
     {
-        if(UnitHasBuildRange(selectedUnit, out var buildRange))
+        if(UnitIsBuilder(selectedUnit, out Builder builder))
         {
-            BoardManager.Instance.ShowBuildRange(buildRange);
+            BoardManager.Instance.ShowBuildRange(builder);
         }
     }
 
@@ -48,9 +48,9 @@ public class BuildCommandButton : UnitCommandButton
 
     public override bool TryExecuteCommand(SelectableUnit selectedUnit, Vector2Int clickedCell)
     {
-        if(UnitHasBuildRange(selectedUnit, out var buildRange))
+        if(UnitIsBuilder(selectedUnit, out Builder builder))
         {
-            if (buildRange.IsCellInRange(clickedCell))
+            if (builder.IsCellInRange(clickedCell))
             {
                 TurretsManager.Instance.BuildTurretAt(clickedCell);
                 UnitSelectionManager.Instance.ClearCommand();
@@ -62,18 +62,18 @@ public class BuildCommandButton : UnitCommandButton
         return false;
     }
 
-    private bool UnitHasBuildRange(SelectableUnit selectedUnit, out BuildRange buildRange)
+    private bool UnitIsBuilder(SelectableUnit selectedUnit, out Builder builder)
     {
         if (selectedUnit == null)
         {
             Debug.LogError($"No selected unit for Build command.");
-            buildRange = null;
+            builder = null;
             return false;
         }
 
-        if (!selectedUnit.TryGetComponent<BuildRange>(out buildRange))
+        if (!selectedUnit.TryGetComponent<Builder>(out builder))
         {
-            Debug.LogError($"Selected unit {selectedUnit.name} does not have a MovementRange component.");
+            Debug.LogError($"Selected unit {selectedUnit.name} does not have a Builder component.");
             return false;
         }
 

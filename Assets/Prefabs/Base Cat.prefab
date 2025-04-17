@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 2535350318648084459}
   - component: {fileID: 4372751507755794473}
   - component: {fileID: 5718867230797424493}
+  - component: {fileID: 4378499478943888294}
   - component: {fileID: 7929002686415522403}
   - component: {fileID: 5680186288665232822}
-  - component: {fileID: 4378499478943888294}
   - component: {fileID: 4408867389605123359}
   m_Layer: 0
   m_Name: Base Cat
@@ -168,9 +168,27 @@ MonoBehaviour:
   faction: 1
   isStructure: 0
   maxHealth: 2
+  notifyDeath: 0
   boardCellPosition: {x: 0, y: 0}
   currentHealth: 0
   isAlive: 1
+--- !u!114 &4378499478943888294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5224848648760891206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9474c490a22cf6b47890790de95dad8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialFacingRight: 1
+  moveSpeed: 3
+  stepEaseType: 1
+  pathEaseType: 1
+  facingRight: 0
 --- !u!114 &7929002686415522403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,23 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementRange: 3
---- !u!114 &4378499478943888294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5224848648760891206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9474c490a22cf6b47890790de95dad8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialFacingRight: 1
-  moveSpeed: 3
-  stepEaseType: 1
-  pathEaseType: 1
-  facingRight: 0
+  hasMovedThisTurn: 0
 --- !u!114 &4408867389605123359
 MonoBehaviour:
   m_ObjectHideFlags: 0

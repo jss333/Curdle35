@@ -3,7 +3,7 @@ using UnityEngine;
 using System;
 
 [RequireComponent(typeof(Unit))]
-public class MovementRange : MonoBehaviour, CellRange
+public class Mover : MonoBehaviour, CellRange
 {
     [Header("Config")]
     [SerializeField] private int movementRange = 2;

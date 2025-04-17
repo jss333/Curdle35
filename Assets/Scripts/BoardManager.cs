@@ -337,7 +337,7 @@ public class BoardManager : MonoBehaviour
 
     #region Range tilemap
 
-    public void ShowMovementRange(MovementRange moveRange)
+    public void ShowMovementRange(Mover moveRange)
     {
         ShowRange(moveRange, rangeTile);
 

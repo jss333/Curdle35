@@ -14,10 +14,10 @@ public class MoveCommandButton : UnitCommandButton
 
     protected override void CalculateInteractabilityAndLabel(out bool interactableDuringPlayerInput, out string label)
     {
-        if (UnitHasMoveRange(UnitSelectionManager.Instance.GetCurrentlySelectedUnit(), out var moveRange))
+        if (UnitIsMover(UnitSelectionManager.Instance.GetCurrentlySelectedUnit(), out Mover mover))
         {
-            interactableDuringPlayerInput = moveRange.CanMoveThisTurn();
-            label = moveRange.CanMoveThisTurn() ? canMoveLabel : cannotMoveLabel;
+            interactableDuringPlayerInput = mover.CanMoveThisTurn();
+            label = mover.CanMoveThisTurn() ? canMoveLabel : cannotMoveLabel;
         }
         else
         {
@@ -28,9 +28,9 @@ public class MoveCommandButton : UnitCommandButton
 
     public override void DoCommandSelection(SelectableUnit selectedUnit)
     {
-        if(UnitHasMoveRange(selectedUnit, out var moveRange))
+        if(UnitIsMover(selectedUnit, out Mover mover))
         {
-            BoardManager.Instance.ShowMovementRange(moveRange);
+            BoardManager.Instance.ShowMovementRange(mover);
         }
     }
 
@@ -41,20 +41,20 @@ public class MoveCommandButton : UnitCommandButton
 
     public override bool TryExecuteCommand(SelectableUnit selectedUnit, Vector2Int clickedCell)
     {
-        if(UnitHasMoveRangeAndIsMoveable(selectedUnit, out var moveRange, out var movableUnit))
+        if(UnitIsMoverAndMovable(selectedUnit, out Mover mover, out MovableUnit movableUnit))
         {
-            if (!moveRange.CanMoveThisTurn())
+            if (!mover.CanMoveThisTurn())
             {
-                Debug.LogError($"Unit {movableUnit.name} has already moved this turn.");
+                Debug.LogError($"Unit {mover.name} has already moved this turn.");
                 return false;
             }
 
-            if (moveRange.IsCellInRange(clickedCell))
+            if (mover.IsCellInRange(clickedCell))
             {
-                IEnumerable<Vector2Int> path = moveRange.BuildPathToOrthogonalOrDiagonalDestination(clickedCell);
+                IEnumerable<Vector2Int> path = mover.BuildPathToOrthogonalOrDiagonalDestination(clickedCell);
 
                 GameManager.Instance.OnPlayerUnitStartsMoving();
-                movableUnit.MoveAlongPath(path, () => { moveRange.MarkAsMovedThisTurn(); GameManager.Instance.OnPlayerUnitFinishesMoving(); });
+                movableUnit.MoveAlongPath(path, () => { mover.MarkAsMovedThisTurn(); GameManager.Instance.OnPlayerUnitFinishesMoving(); });
                 UnitSelectionManager.Instance.ClearCommand();
 
                 return true;
@@ -64,35 +64,35 @@ public class MoveCommandButton : UnitCommandButton
         return false;
     }
 
-    private bool UnitHasMoveRange(SelectableUnit selectedUnit, out MovementRange moveRange)
+    private bool UnitIsMoverAndMovable(SelectableUnit selectedUnit, out Mover mover, out MovableUnit movableUnit)
     {
-        if (selectedUnit == null)
+        if (!UnitIsMover(selectedUnit, out mover))
         {
-            Debug.LogError($"No selected unit for Move command.");
-            moveRange = null;
+            movableUnit = null;
             return false;
         }
 
-        if (!selectedUnit.TryGetComponent<MovementRange>(out moveRange))
+        if (!selectedUnit.TryGetComponent<MovableUnit>(out movableUnit))
         {
-            Debug.LogError($"Selected unit {selectedUnit.name} does not have a MovementRange component.");
+            Debug.LogError($"Selected unit {selectedUnit.name} does not have a MovableUnit component.");
             return false;
         }
 
         return true;
     }
 
-    private bool UnitHasMoveRangeAndIsMoveable(SelectableUnit selectedUnit, out MovementRange moveRange, out MovableUnit movableUnit)
+    private bool UnitIsMover(SelectableUnit selectedUnit, out Mover mover)
     {
-        if(!UnitHasMoveRange(selectedUnit, out moveRange))
+        if (selectedUnit == null)
         {
-            movableUnit = null;
+            Debug.LogError($"No selected unit for Move command.");
+            mover = null;
             return false;
         }
 
-        if(!selectedUnit.TryGetComponent<MovableUnit>(out movableUnit))
+        if (!selectedUnit.TryGetComponent<Mover>(out mover))
         {
-            Debug.LogError($"Selected unit {selectedUnit.name} does not have a MovableUnit component.");
+            Debug.LogError($"Selected unit {selectedUnit.name} does not have a Mover component.");
             return false;
         }
 

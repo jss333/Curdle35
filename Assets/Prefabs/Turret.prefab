@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2194256321430733797}
   - component: {fileID: 2836539895970918373}
-  - component: {fileID: 4099226329757227954}
-  - component: {fileID: 4673810219184055591}
   - component: {fileID: 4002562589467072684}
+  - component: {fileID: 4099226329757227954}
   - component: {fileID: 6193194519882756188}
+  - component: {fileID: 4673810219184055591}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Untagged
@@ -91,37 +91,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4099226329757227954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1865324923301607503}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51527edc4ba57754e937e03389ffd9cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  faction: 1
-  isStructure: 1
-  maxHealth: 2
-  boardCellPosition: {x: 0, y: 0}
-  currentHealth: 0
-  isAlive: 1
---- !u!114 &4673810219184055591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1865324923301607503}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7c05a5b9f5f4654788856fa968d0cef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootingRange: 2
 --- !u!70 &4002562589467072684
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -159,6 +128,25 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.18621093}
   m_Size: {x: 0.390625, y: 0.88671875}
   m_Direction: 0
+--- !u!114 &4099226329757227954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1865324923301607503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51527edc4ba57754e937e03389ffd9cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faction: 1
+  isStructure: 1
+  maxHealth: 2
+  notifyDeath: 0
+  boardCellPosition: {x: 0, y: 0}
+  currentHealth: 0
+  isAlive: 1
 --- !u!114 &6193194519882756188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,3 +163,16 @@ MonoBehaviour:
   unitPortrait: {fileID: -643769872, guid: 61c51cf9f803be24e9eaf6b865d848cb, type: 3}
   availableCommands: 
   originalColor: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &4673810219184055591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1865324923301607503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c05a5b9f5f4654788856fa968d0cef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootingRange: 2
