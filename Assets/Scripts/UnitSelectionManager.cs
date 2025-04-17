@@ -29,7 +29,7 @@ public class UnitSelectionManager : MonoBehaviour
 
     void Update()
     {
-        if (!GameManager.Instance.IsPlayerInputState()) return;
+        if (GameManager.Instance.CurrentState != GameState.PlayerInput) return;
 
         // Handle left click
         if (Input.GetMouseButtonDown(0))
@@ -109,6 +109,11 @@ public class UnitSelectionManager : MonoBehaviour
         currentlySelectedUnit = newlySelectedUnit;
         currentlySelectedUnit.ShowSelectedEffect();
         OnUnitSelected?.Invoke(currentlySelectedUnit);
+    }
+
+    public SelectableUnit GetCurrentlySelectedUnit()
+    {
+        return currentlySelectedUnit;
     }
 
     public void HandleGameStateChanged(GameState state)

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System;
+using TMPro;
 
 public enum CommandType
 {
@@ -15,15 +16,20 @@ public abstract class UnitCommandButton : MonoBehaviour
     [SerializeField] private Color normalColor = Color.white;
     [SerializeField] private Color highlightedColor = Color.yellow;
 
+    [Header("State")]
+    [SerializeField] private bool visible;
+
     private Button button;
     private Image buttonImage;
     private CanvasGroup canvasGroup;
+    private TextMeshProUGUI buttonLabel;
 
     void Awake()
     {
         button = GetComponent<Button>();
         buttonImage = GetComponent<Image>();
         canvasGroup = GetComponent<CanvasGroup>();
+        buttonLabel = GetComponentInChildren<TextMeshProUGUI>();
 
         button.onClick.AddListener(OnButtonClicked);
         HideButton();
@@ -56,12 +62,15 @@ public abstract class UnitCommandButton : MonoBehaviour
     {
         canvasGroup.alpha = 1f;
         canvasGroup.interactable = true;
+        visible = true;
+        RefreshButtonInteractabilityAndLabelIfVisible();
     }
 
     private void HideButton()
     {
         canvasGroup.alpha = 0f;
         canvasGroup.interactable = false;
+        visible = false;
     }
 
     private void HandleCommandSelected(UnitCommandButton selectedCommand)
@@ -83,18 +92,21 @@ public abstract class UnitCommandButton : MonoBehaviour
 
     private void HandleGameStateChanged(GameState state)
     {
-        RefreshButtonInteractability();
+        RefreshButtonInteractabilityAndLabelIfVisible();
     }
 
-    protected void RefreshButtonInteractability()
+    public void RefreshButtonInteractabilityAndLabelIfVisible()
     {
-        button.interactable = (GameManager.Instance.CurrentState == GameState.PlayerInput) && CalculateInteractabilityDuringPlayerInput();
+        if (visible)
+        {
+            button.interactable = (GameManager.Instance.CurrentState == GameState.PlayerInput) && CalculateInteractabilityDuringPlayerInput();
+            buttonLabel.text = CalculateLabel();
+        }
     }
 
-    protected virtual bool CalculateInteractabilityDuringPlayerInput()
-    {
-        return true;
-    }
+    protected abstract bool CalculateInteractabilityDuringPlayerInput();
+
+    protected abstract string CalculateLabel();
 
     public void OnButtonClicked()
     {

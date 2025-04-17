@@ -3,28 +3,29 @@ using TMPro;
 
 public class BuildCommandButton : UnitCommandButton
 {
+    [Header("Config - Label")]
+    [SerializeField] private string buildLabel = "Build ($COST)";
+
     protected override void Start()
     {
         base.Start();
 
         ResourcesManager.Instance.OnPlayerResourcesChanged += HandlePlayerResourcesChanged;
-        RefreshButtonInteractability();
-
-        TextMeshProUGUI label = gameObject.GetComponentInChildren<TextMeshProUGUI>();
-        if (label != null)
-        {
-            label.text = $"Build ({TurretsManager.Instance.GetTurretBuildCost()})";
-        }
     }
 
     private void HandlePlayerResourcesChanged(int newResources)
     {
-        RefreshButtonInteractability();
+        RefreshButtonInteractabilityAndLabelIfVisible();
     }
 
     protected override bool CalculateInteractabilityDuringPlayerInput()
     {
         return ResourcesManager.Instance.PlayerResources >= TurretsManager.Instance.GetTurretBuildCost();
+    }
+
+    protected override string CalculateLabel()
+    {
+        return buildLabel.Replace("$COST", TurretsManager.Instance.GetTurretBuildCost().ToString());
     }
 
     public override CommandType GetCommandType()

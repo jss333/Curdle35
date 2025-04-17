@@ -8,6 +8,9 @@ public class MovementRange : MonoBehaviour, CellRange
     [Header("Config")]
     [SerializeField] private int movementRange = 2;
 
+    [Header("State")]
+    [SerializeField] private bool hasMovedThisTurn = false;
+
     private Unit unit;
 
     private static readonly List<Vector2Int> orthogonalDirs = new()
@@ -29,6 +32,23 @@ public class MovementRange : MonoBehaviour, CellRange
     public void Start()
     {
         unit = GetComponent<Unit>();
+
+        GameManager.Instance.OnNewPlayerTurnStarted += ResetMovementOnNewPlayerTurn;
+    }
+
+    public bool CanMoveThisTurn()
+    {
+        return !hasMovedThisTurn;
+    }
+
+    public void MarkAsMovedThisTurn()
+    {
+        hasMovedThisTurn = true;
+    }
+
+    private void ResetMovementOnNewPlayerTurn()
+    {
+        hasMovedThisTurn = false;
     }
 
     public List<Vector2Int> GetCellsInRange()

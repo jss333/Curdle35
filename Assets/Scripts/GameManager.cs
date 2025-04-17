@@ -6,13 +6,19 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    public event System.Action OnNewPlayerTurnStarted;
     public event System.Action<GameState> OnGameStateChanged;
 
-    public GameState CurrentState { get; private set; } = GameState.PlayerInput;
+    public GameState CurrentState { get; private set; }
 
     void Awake()
     {
         Instance = this;
+    }
+
+    void Start()
+    {
+        StartNewPlayerTurnAndSetGameStateToPlayerInput();
     }
 
     private void SetState(GameState newState)
@@ -21,9 +27,12 @@ public class GameManager : MonoBehaviour
         OnGameStateChanged?.Invoke(CurrentState);
     }
 
-    public bool IsPlayerInputState()
+    private void StartNewPlayerTurnAndSetGameStateToPlayerInput()
     {
-        return CurrentState == GameState.PlayerInput;
+        // This marks the begining of a new player turn so we send out the appropriate event BEFORE changing the game state
+        Debug.Log("New player turn has started");
+        OnNewPlayerTurnStarted?.Invoke();
+        SetState(GameState.PlayerInput);
     }
 
     public void OnPlayerUnitStartsMoving()
@@ -150,7 +159,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        SetState(GameState.PlayerInput);
+        StartNewPlayerTurnAndSetGameStateToPlayerInput();
     }
 
     public void OnPlayerVictory()
@@ -161,15 +170,5 @@ public class GameManager : MonoBehaviour
     public void OnPlayerDefeat()
     {
         SetState(GameState.Defeat);
-    }
-
-    private static void Simulate(string msg, float duration, System.Action completionCallback)
-    {
-        DOTween.Sequence()
-            .OnStart(() => Debug.Log(msg + " start..."))
-            .AppendInterval(duration)
-            .AppendCallback(() => Debug.Log(msg + " end."))
-            .OnComplete(() => completionCallback?.Invoke())
-            .Play();
     }
 }

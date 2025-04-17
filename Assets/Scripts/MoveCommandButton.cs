@@ -3,9 +3,33 @@ using System.Collections.Generic;
 
 public class MoveCommandButton : UnitCommandButton
 {
+    [Header("Config - Label")]
+    [SerializeField] private string canMoveLabel = "Move";
+    [SerializeField] private string cannotMoveLabel = "Moved";
+
     public override CommandType GetCommandType()
     {
         return CommandType.Move;
+    }
+
+    protected override bool CalculateInteractabilityDuringPlayerInput()
+    {
+        if (UnitHasMoveRange(UnitSelectionManager.Instance.GetCurrentlySelectedUnit(), out var moveRange))
+        {
+            return moveRange.CanMoveThisTurn();
+        }
+
+        return false;
+    }
+
+    protected override string CalculateLabel()
+    {
+        if (UnitHasMoveRange(UnitSelectionManager.Instance.GetCurrentlySelectedUnit(), out var moveRange))
+        {
+            return moveRange.CanMoveThisTurn() ? canMoveLabel : cannotMoveLabel;
+        }
+
+        return canMoveLabel;
     }
 
     public override void DoCommandSelection(SelectableUnit selectedUnit)
@@ -25,12 +49,18 @@ public class MoveCommandButton : UnitCommandButton
     {
         if(UnitHasMoveRangeAndIsMoveable(selectedUnit, out var moveRange, out var movableUnit))
         {
+            if (!moveRange.CanMoveThisTurn())
+            {
+                Debug.LogError($"Unit {movableUnit.name} has already moved this turn.");
+                return false;
+            }
+
             if (moveRange.IsCellInRange(clickedCell))
             {
                 IEnumerable<Vector2Int> path = moveRange.BuildPathToOrthogonalOrDiagonalDestination(clickedCell);
 
                 GameManager.Instance.OnPlayerUnitStartsMoving();
-                movableUnit.MoveAlongPath(path, GameManager.Instance.OnPlayerUnitFinishesMoving);
+                movableUnit.MoveAlongPath(path, () => { moveRange.MarkAsMovedThisTurn(); GameManager.Instance.OnPlayerUnitFinishesMoving(); });
                 UnitSelectionManager.Instance.ClearCommand();
 
                 return true;
