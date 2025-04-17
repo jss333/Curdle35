@@ -12,24 +12,18 @@ public class MoveCommandButton : UnitCommandButton
         return CommandType.Move;
     }
 
-    protected override bool CalculateInteractabilityDuringPlayerInput()
+    protected override void CalculateInteractabilityAndLabel(out bool interactableDuringPlayerInput, out string label)
     {
         if (UnitHasMoveRange(UnitSelectionManager.Instance.GetCurrentlySelectedUnit(), out var moveRange))
         {
-            return moveRange.CanMoveThisTurn();
+            interactableDuringPlayerInput = moveRange.CanMoveThisTurn();
+            label = moveRange.CanMoveThisTurn() ? canMoveLabel : cannotMoveLabel;
         }
-
-        return false;
-    }
-
-    protected override string CalculateLabel()
-    {
-        if (UnitHasMoveRange(UnitSelectionManager.Instance.GetCurrentlySelectedUnit(), out var moveRange))
+        else
         {
-            return moveRange.CanMoveThisTurn() ? canMoveLabel : cannotMoveLabel;
+            interactableDuringPlayerInput = false;
+            label = canMoveLabel;
         }
-
-        return canMoveLabel;
     }
 
     public override void DoCommandSelection(SelectableUnit selectedUnit)

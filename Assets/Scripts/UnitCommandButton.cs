@@ -99,14 +99,14 @@ public abstract class UnitCommandButton : MonoBehaviour
     {
         if (visible)
         {
-            button.interactable = (GameManager.Instance.CurrentState == GameState.PlayerInput) && CalculateInteractabilityDuringPlayerInput();
-            buttonLabel.text = CalculateLabel();
+            CalculateInteractabilityAndLabel(out bool buttonInteractableDuringPlayerInput, out string buttonLabel);
+
+            button.interactable = (GameManager.Instance.CurrentState == GameState.PlayerInput) & buttonInteractableDuringPlayerInput;
+            this.buttonLabel.text = buttonLabel;
         }
     }
 
-    protected abstract bool CalculateInteractabilityDuringPlayerInput();
-
-    protected abstract string CalculateLabel();
+    protected abstract void CalculateInteractabilityAndLabel(out bool interactableDuringPlayerInput, out string label);
 
     public void OnButtonClicked()
     {

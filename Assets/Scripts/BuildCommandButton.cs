@@ -6,11 +6,15 @@ public class BuildCommandButton : UnitCommandButton
     [Header("Config - Label")]
     [SerializeField] private string buildLabel = "Build ($COST)";
 
+    private string calculatedLabel;
+
     protected override void Start()
     {
         base.Start();
 
         ResourcesManager.Instance.OnPlayerResourcesChanged += HandlePlayerResourcesChanged;
+
+        calculatedLabel = buildLabel.Replace("$COST", TurretsManager.Instance.GetTurretBuildCost().ToString());
     }
 
     private void HandlePlayerResourcesChanged(int newResources)
@@ -18,14 +22,10 @@ public class BuildCommandButton : UnitCommandButton
         RefreshButtonInteractabilityAndLabelIfVisible();
     }
 
-    protected override bool CalculateInteractabilityDuringPlayerInput()
+    protected override void CalculateInteractabilityAndLabel(out bool interactableDuringPlayerInput, out string label)
     {
-        return ResourcesManager.Instance.PlayerResources >= TurretsManager.Instance.GetTurretBuildCost();
-    }
-
-    protected override string CalculateLabel()
-    {
-        return buildLabel.Replace("$COST", TurretsManager.Instance.GetTurretBuildCost().ToString());
+        interactableDuringPlayerInput = ResourcesManager.Instance.PlayerResources >= TurretsManager.Instance.GetTurretBuildCost();
+        label = calculatedLabel;
     }
 
     public override CommandType GetCommandType()
