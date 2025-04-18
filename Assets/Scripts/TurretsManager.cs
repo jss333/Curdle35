@@ -8,8 +8,10 @@ public class TurretsManager : MonoBehaviour
 {
     public static TurretsManager Instance { get; private set; }
 
+    public event System.Action<Turret> OnNewTurretInstantiation;
+
     [Header("Config - Turret")]
-    [SerializeField] private GameObject turretPrefab;
+    [SerializeField] private Turret turretPrefab;
     [SerializeField] private int turretBuildCost = 15;
     [SerializeField] private float delayBetweenTurretShots = 0.5f;
 
@@ -61,11 +63,25 @@ public class TurretsManager : MonoBehaviour
         }
 
         Vector3 worldPos = boardMngr.BoardCellToWorld(cell);
-        GameObject turret = Instantiate(turretPrefab, worldPos, Quaternion.identity); // Unit's logical board position is registered in BoardManager by Unit.Start()
+        Turret turret = Instantiate(turretPrefab, worldPos, Quaternion.identity); // Unit's logical board position is registered in BoardManager by Unit.Start()
         turret.transform.SetParent(this.transform);
         turret.name = $"Turret #{nextTurretId++} @ {cell}";
 
         resourceMngr.PlayerResources -= turretBuildCost;
+
+        OnNewTurretInstantiation?.Invoke(turret);
+    }
+
+    public List<Turret> GetAllTurrets()
+    {
+        List<Turret> turrets = transform
+            .Cast<Transform>()
+            .Where(child => child.gameObject.activeInHierarchy)
+            .Select(child => child.GetComponent<Turret>())
+            .Where(turret => turret != null)
+            .ToList();
+
+        return turrets;
     }
 
     public void HandleGameStateChanged(GameState newState)
@@ -76,7 +92,7 @@ public class TurretsManager : MonoBehaviour
             .Cast<Transform>()
             .Where(child => child.gameObject.activeInHierarchy)
             .Select(child => child.GetComponent<Turret>())
-            .Where(unit => unit != null)
+            .Where(turret => turret != null)
             .ToList();
         currentTurretIndex = 0;
 

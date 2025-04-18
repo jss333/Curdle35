@@ -1118,7 +1118,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5224848648760891206, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3282,6 +3282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc61f267402915a40bbd6b8c53d6b9e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerUnitParent: {fileID: 1492787351}
   currentlySelectedUnit: {fileID: 0}
   currentCommand: {fileID: 0}
 --- !u!4 &1258754734
@@ -4389,7 +4390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dedd0eede6670a48bb74d904ed49f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turretPrefab: {fileID: 1865324923301607503, guid: 24e3979ff00fd52498c67941c2b76a9f, type: 3}
+  turretPrefab: {fileID: 4673810219184055591, guid: 24e3979ff00fd52498c67941c2b76a9f, type: 3}
   turretBuildCost: 15
   delayBetweenTurretShots: 0.5
   reticlePrefab: {fileID: 1036481340122705675, guid: 52f6582874fc8924caaaca86790b644f, type: 3}

@@ -143,7 +143,7 @@ MonoBehaviour:
   faction: 1
   isStructure: 1
   maxHealth: 2
-  notifyDeath: 0
+  notifyDeath: 1
   boardCellPosition: {x: 0, y: 0}
   currentHealth: 0
   isAlive: 1
@@ -161,7 +161,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   unitPortrait: {fileID: -643769872, guid: 61c51cf9f803be24e9eaf6b865d848cb, type: 3}
-  availableCommands: 
   originalColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &4673810219184055591
 MonoBehaviour:
@@ -176,3 +175,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootingRange: 2
+  preventShooting: 0

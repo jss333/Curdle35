@@ -15,20 +15,34 @@ public struct HyenaDist
     }
 }
 
+[RequireComponent(typeof(Unit))]
 public class Turret : MonoBehaviour, CellRange
 {
     [Header("Config")]
     [SerializeField] int shootingRange = 2;
+    [SerializeField] bool preventShooting = false;
 
     private Unit unit;
 
-    private void Start()
+    private void Awake()
     {
         unit = GetComponent<Unit>();
     }
 
+    public Unit GetUnit()
+    {
+        return unit;
+    }
+
     public bool TryAcquireTarget(List<Unit> allHyenas, out Unit hyena)
     {
+        if (preventShooting)
+        {
+            Debug.LogError($"{name} is not allowed to shoot. Will return false.");
+            hyena = null;
+            return false;
+        }
+
         var closestHyenas = allHyenas
             .Where(h => h.IsAlive()) // Some hyenas may have already been killed by other towers
             .Select(h => new HyenaDist(h, unit.GetOrthogonalDistance(h)))

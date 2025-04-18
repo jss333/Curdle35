@@ -11,6 +11,9 @@ public class UnitSelectionManager : MonoBehaviour
     public event Action<SelectableUnit> OnUnitSelected;
     public event Action<SelectableUnit> OnUnitDeselected;
 
+    [Header("Config")]
+    [SerializeField] GameObject playerUnitParent;
+
     [Header("State")]
     [SerializeField] private SelectableUnit currentlySelectedUnit;
     [SerializeField] private UnitCommandButton currentCommand;
@@ -23,6 +26,20 @@ public class UnitSelectionManager : MonoBehaviour
     void Start()
     {
         GameManager.Instance.OnGameStateChanged += HandleGameStateChanged;
+
+        // Watch for when units die so we can deselect them if they are the currently selected unit
+        foreach (Unit unit in playerUnitParent.GetComponentsInChildren<Unit>())
+        {
+            unit.OnUnitDeath += HandleUnitDeath;
+        }
+
+        foreach (Turret turret in TurretsManager.Instance.GetAllTurrets())
+        {
+            turret.GetUnit().OnUnitDeath += HandleUnitDeath;
+        }
+
+        // Also watch for when new turrets are instantiated so we can add the death listener
+        TurretsManager.Instance.OnNewTurretInstantiation += (Turret newTurret) => newTurret.GetUnit().OnUnitDeath += HandleUnitDeath;
     }
 
     void Update()
@@ -126,6 +143,17 @@ public class UnitSelectionManager : MonoBehaviour
             else
             {
                 currentlySelectedUnit.RemoveSelectedEffect();
+            }
+        }
+    }
+
+    public void HandleUnitDeath(Unit deadUnit)
+    {
+        if (deadUnit.TryGetComponent<SelectableUnit>(out SelectableUnit selectableUnit))
+        {
+            if (selectableUnit == currentlySelectedUnit)
+            {
+                DeselectCurrentUnitIfAny();
             }
         }
     }
