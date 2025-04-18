@@ -14,7 +14,7 @@ public class HardCodedHyenaSpawnStrategy : MonoBehaviour, IHyenaSpawnStrategy
         new Vector2Int(4, 5)
     };
 
-    public List<Vector2Int> GetSpawnPoints(int numSpawnPoints)
+    public List<Vector2Int> GetSpawnCells(int numSpawnPoints)
     {
         Debug.Log("HardCodedHyenaSpawnStrategy: Generating spawn points.");
 

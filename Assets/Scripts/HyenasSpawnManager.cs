@@ -103,7 +103,7 @@ public class HyenasSpawnManager : MonoBehaviour
             return new List<Vector2Int>();
         }
 
-        List<Vector2Int> spawnPoints = strategy.GetSpawnPoints(numSpawnPoints);
+        List<Vector2Int> spawnPoints = strategy.GetSpawnCells(numSpawnPoints);
 
         if (spawnPoints == null)
         {

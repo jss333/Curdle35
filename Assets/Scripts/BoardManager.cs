@@ -220,6 +220,11 @@ public class BoardManager : MonoBehaviour
 
     #region Board and cell inspection
 
+    public CellData[,] GetBoard()
+    {
+        return board;
+    }
+
     public int GetBoardWidth()
     {
         return width;
@@ -244,6 +249,11 @@ public class BoardManager : MonoBehaviour
     {
         return cell.x >= 0 && cell.x < width &&
                cell.y >= 0 && cell.y < height;
+    }
+
+    public bool IsOwnedBy(Vector2Int cell, Faction faction)
+    {
+        return IsWithinBoardBounds(cell) && board[cell.x, cell.y].owner == faction;
     }
 
     public int GetResourceTotalOfCellsOwnedBy(Faction faction)

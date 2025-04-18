@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class RandomHyenaSpawnStrategy : MonoBehaviour, IHyenaSpawnStrategy
 {
-    public List<Vector2Int> GetSpawnPoints(int numSpawnPoints)
+    public List<Vector2Int> GetSpawnCells(int numSpawnPoints)
     {
         Debug.Log("RandomHyenaSpawnStrategy: Generating spawn points.");
 
