@@ -14,8 +14,11 @@ public class HyenasSpawnManager : MonoBehaviour
     [SerializeField] private int spawnRateUpgradeCostConstant = 5;
     [SerializeField] private int spawnRateUpgradeCostStageMultiplier = 5;
 
-    [Header("Config - Spawn markers")]
+    [Header("Config - Spawn strategy and markers")]
+    [Tooltip("Assign a MonoBehaviour that implements IHyenaSpawnStrategy.")]
+    [SerializeField] private MonoBehaviour spawnStrategy;
     [SerializeField] private SpawnMarker spawnMarkerPrefab;
+    [SerializeField] private Transform spawnMarkersParent;
 
     [Header("Config - Hyenas")]
     [SerializeField] private GameObject hyenaPrefab;
@@ -48,8 +51,6 @@ public class HyenasSpawnManager : MonoBehaviour
         }
     }
 
-    private static readonly HyenasSpawnAI HyenasSpawnAI = new();
-
     void Awake()
     {
         Instance = this;
@@ -61,6 +62,8 @@ public class HyenasSpawnManager : MonoBehaviour
 
         CurrentSpawnRate = startSpawnRate;
         NextSpawnRateUpgradeCost = GetNextSpawnRateUpgradeCostBasedOnCurrentStage();
+
+        GetSpawnStrategy(); // Validate the spawn strategy
     }
 
     private void HandleGameStateChanged(GameState newState)
@@ -79,18 +82,64 @@ public class HyenasSpawnManager : MonoBehaviour
     private void InstantiateSpawnMarkers()
     {
         // Determine where hyenas will spawn next
-        List<Vector2Int> spawnPoints = HyenasSpawnAI.GetSpawnPoints(currentSpawnRate);
-
+        List<Vector2Int> spawnPoints = GetSpawnPointsFromStrategyAndValidate(currentSpawnRate);
+        
         // Instantiate spawn markers at each location
         foreach (Vector2Int spawnPoint in spawnPoints)
         {
-            SpawnMarker spawnMarker = Instantiate(spawnMarkerPrefab, BoardManager.Instance.BoardCellToWorld(spawnPoint), Quaternion.identity);
-            spawnMarker.transform.SetParent(transform);
+            SpawnMarker spawnMarker = Instantiate(spawnMarkerPrefab, BoardManager.Instance.BoardCellToWorld(spawnPoint), Quaternion.identity, spawnMarkersParent);
             spawnMarker.SetBoardCell(spawnPoint);
             spawnMarker.name = "Spawn marker @ " + spawnPoint;
         }
 
         GameManager.Instance.OnHyenasFinishGeneratingNewSpawnMarkers();
+    }
+
+    private List<Vector2Int> GetSpawnPointsFromStrategyAndValidate(int numSpawnPoints)
+    {
+        IHyenaSpawnStrategy strategy = GetSpawnStrategy();
+        if (strategy == null)
+        {
+            return new List<Vector2Int>();
+        }
+
+        List<Vector2Int> spawnPoints = strategy.GetSpawnPoints(numSpawnPoints);
+
+        if (spawnPoints == null)
+        {
+            Debug.LogError($"Requested {numSpawnPoints} spawn points from {spawnStrategy.name} but null was returned.");
+            return new List<Vector2Int>();
+        }
+        else if (spawnPoints.Count < numSpawnPoints)
+        {
+            Debug.LogWarning($"Requested {numSpawnPoints} spawn points from {spawnStrategy.name} but only {spawnPoints.Count} were generated: {string.Join(", ", spawnPoints)}.");
+        }
+        else if (spawnPoints.Count > numSpawnPoints)
+        {
+            Debug.LogWarning($"Requested {numSpawnPoints} spawn points from {spawnStrategy.name} but {spawnPoints.Count} were generated: {string.Join(", ", spawnPoints)}. Will ignore the extra ones.");
+            spawnPoints.RemoveRange(numSpawnPoints, spawnPoints.Count - numSpawnPoints);
+        }
+        else
+        {
+            Debug.Log($"Strategy {spawnStrategy.name} generated {spawnPoints.Count} points: {string.Join(", ", spawnPoints)}.");
+        }
+
+        return spawnPoints;
+    }
+
+    private IHyenaSpawnStrategy GetSpawnStrategy()
+    {
+        if (spawnStrategy == null)
+        {
+            Debug.LogError("Property spawnStrategy is not assigned");
+            return null;
+        }
+        IHyenaSpawnStrategy strategy = spawnStrategy as IHyenaSpawnStrategy;
+        if (strategy == null)
+        {
+            Debug.LogError($"Object {spawnStrategy.name} is assigned as spawnStrategy, does not implement IHyenaSpawnStrategy");
+        }
+        return strategy;
     }
 
     private void SpawnHyenasFromMarkers()
@@ -99,7 +148,7 @@ public class HyenasSpawnManager : MonoBehaviour
 
         Sequence allSpawnSeq = DOTween.Sequence();
 
-        foreach (Transform child in transform)
+        foreach (Transform child in spawnMarkersParent)
         {
             if (child.TryGetComponent<SpawnMarker>(out var spawnMarker))
             {
