@@ -38,6 +38,8 @@ public class HyenasManager : MonoBehaviour
     void Start()
     {
         GameManager.Instance.OnGameStateChanged += HandleGameStateChanged;
+
+        Debug.Log("=== HyenasManager initialized and listeners set up. ===");
     }
 
     public void HandleGameStateChanged(GameState state)

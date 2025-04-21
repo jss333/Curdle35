@@ -17,17 +17,17 @@ public class ResourcesManager : MonoBehaviour
     [SerializeField] private HyenasSpawnManager hyenasSpawnManager;
 
     [Header("State")]
-    [SerializeField] private int playerResources;
-    [SerializeField] private int playerNextHarvest;
-    [SerializeField] private int hyenasResources;
-    [SerializeField] private int hyenasNextHarvest;
+    [SerializeField] private int playerResourcesField;
+    [SerializeField] private int playerNextHarvestField;
+    [SerializeField] private int hyenasResourcesField;
+    [SerializeField] private int hyenasNextHarvestField;
 
     void Awake()
     {
         Instance = this;
 
-        playerResources = initialPlayerResources;
-        hyenasResources = initialHyenasResources;
+        playerResourcesField = initialPlayerResources;
+        hyenasResourcesField = initialHyenasResources;
     }
 
     void Start()
@@ -36,48 +36,50 @@ public class ResourcesManager : MonoBehaviour
 
         BoardManager boardMngr = BoardManager.Instance;
         PlayerNextHarvest = boardMngr.GetResourceTotalOfCellsOwnedBy(Faction.Cats);
-        hyenasNextHarvest = boardMngr.GetResourceTotalOfCellsOwnedBy(Faction.Hyenas);
+        HyenasNextHarvest = boardMngr.GetResourceTotalOfCellsOwnedBy(Faction.Hyenas);
 
         boardMngr.OnCellOwnershipChanged += HandleCellOwnershipChanged;
+
+        Debug.Log("=== ResourcesManager initialized and listeners set up. ===");
     }
 
     public int PlayerResources
     {
-        get => playerResources;
+        get => playerResourcesField;
         set
         {
-            playerResources = value;
-            OnPlayerResourcesChanged?.Invoke(playerResources);
+            playerResourcesField = value;
+            OnPlayerResourcesChanged?.Invoke(playerResourcesField);
         }
     }
 
     public int PlayerNextHarvest
     {
-        get => playerNextHarvest;
+        get => playerNextHarvestField;
         set
         {
-            playerNextHarvest = value;
-            OnPlayerNextHarvesChanged?.Invoke(playerNextHarvest);
+            playerNextHarvestField = value;
+            OnPlayerNextHarvesChanged?.Invoke(playerNextHarvestField);
         }
     }
 
     public int HyenasResources
     {
-        get => hyenasResources;
+        get => hyenasResourcesField;
         set
         {
-            hyenasResources = value;
-            OnHyenasResourcesChanged?.Invoke(hyenasResources);
+            hyenasResourcesField = value;
+            OnHyenasResourcesChanged?.Invoke(hyenasResourcesField);
         }
     }
 
     public int HyenasNextHarvest
     {
-        get => hyenasNextHarvest;
+        get => hyenasNextHarvestField;
         set
         {
-            hyenasNextHarvest = value;
-            OnHyenasNextHarvesChanged?.Invoke(hyenasNextHarvest);
+            hyenasNextHarvestField = value;
+            OnHyenasNextHarvesChanged?.Invoke(hyenasNextHarvestField);
         }
     }
 
@@ -101,7 +103,7 @@ public class ResourcesManager : MonoBehaviour
             HyenasResources += resourcesHarvested;
 
             //Handle upgrading of spawn rate
-            if (hyenasSpawnManager.IsEnoughResourcesToUpgradeSpawnRate(hyenasResources))
+            if (hyenasSpawnManager.IsEnoughResourcesToUpgradeSpawnRate(hyenasResourcesField))
             {
                 HyenasResources -= hyenasSpawnManager.UpgradeSpawnRateAndReturnTotalCost();
             }

@@ -64,6 +64,8 @@ public class HyenasSpawnManager : MonoBehaviour
         NextSpawnRateUpgradeCost = GetNextSpawnRateUpgradeCostBasedOnCurrentStage();
 
         GetSpawnStrategy(); // Validate the spawn strategy
+
+        Debug.Log("=== HyenasSpawnManager initialized and listeners set up. ===");
     }
 
     private void HandleGameStateChanged(GameState newState)

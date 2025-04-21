@@ -38,6 +38,8 @@ public class TurretsManager : MonoBehaviour
     void Start()
     {
         GameManager.Instance.OnGameStateChanged += HandleGameStateChanged;
+
+        Debug.Log("=== TurretsManager initialized and listeners set up. ===");
     }
 
     public int GetTurretBuildCost()

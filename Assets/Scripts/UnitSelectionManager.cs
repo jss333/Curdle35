@@ -40,6 +40,8 @@ public class UnitSelectionManager : MonoBehaviour
 
         // Also watch for when new turrets are instantiated so we can add the death listener
         TurretsManager.Instance.OnNewTurretInstantiation += (Turret newTurret) => newTurret.GetUnit().OnUnitDeath += HandleUnitDeath;
+
+        Debug.Log("=== UnitSelectionManager initialized and listeners set up. ===");
     }
 
     void Update()

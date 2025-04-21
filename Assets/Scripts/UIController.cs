@@ -41,6 +41,8 @@ public class UIController : MonoBehaviour
 
         hyenasSpawnMngr.OnUpgradeCostChanged += UpdateHyenasNextSpawnRateIncreaseUI;
         UpdateHyenasNextSpawnRateIncreaseUI(hyenasSpawnMngr.NextSpawnRateUpgradeCost);
+
+        Debug.Log("=== UIController initialized and listeners set up. ===");
     }
 
     public void OnEndTurnClicked()
