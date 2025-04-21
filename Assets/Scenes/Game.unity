@@ -1162,7 +1162,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5224848648760891206, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1447,6 +1447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delayBetweenMoves: 0.3
+  moveHyenasSimultaneously: 1
   currentMoveOrderIndex: 0
   haltAllRemainingMoves: 0
 --- !u!1 &649936302
@@ -3383,7 +3384,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5224848648760891206, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3510,10 +3511,10 @@ MonoBehaviour:
   initialPlayerResources: 30
   initialHyenasResources: 0
   hyenasSpawnManager: {fileID: 1369951112}
-  playerResources: 0
-  playerNextHarvest: 0
-  hyenasResources: 0
-  hyenasNextHarvest: 0
+  playerResourcesField: 0
+  playerNextHarvestField: 0
+  hyenasResourcesField: 0
+  hyenasNextHarvestField: 0
 --- !u!4 &1338962617
 Transform:
   m_ObjectHideFlags: 0
@@ -6254,7 +6255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5224848648760891206, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

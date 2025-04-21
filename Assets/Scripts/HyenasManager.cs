@@ -22,6 +22,7 @@ public class HyenasManager : MonoBehaviour
 
     [Header("Config")]
     [SerializeField] private float delayBetweenMoves = 0.3f;
+    [SerializeField] private bool moveHyenasSimultaneously = false;
 
     [Header("State")]
     [SerializeField] private int currentMoveOrderIndex = 0;
@@ -56,7 +57,14 @@ public class HyenasManager : MonoBehaviour
         currentMoveOrderIndex = 0;
         haltAllRemainingMoves = false;
 
-        MoveNextHyena();
+        if (moveHyenasSimultaneously)
+        {
+            MoveAllHyenasAtOnce();
+        }
+        else
+        {
+            MoveNextHyena();
+        }
     }
 
     private List<Unit> GetValidHyenasToMove()
@@ -78,6 +86,55 @@ public class HyenasManager : MonoBehaviour
             validHyenas.Add(unit);
         }
         return validHyenas;
+    }
+
+    private void MoveAllHyenasAtOnce()
+    {
+        if (moveOrders.Count == 0)
+        {
+            GameManager.Instance.OnHyenasFinishMoving();
+            return;
+        }
+
+        Sequence allMovesSeq = DOTween.Sequence();
+
+        int numMoveOrdersCompleted = 0;
+
+        foreach (var moveOrder in moveOrders)
+        {
+            if (moveOrder.movePath.Any())
+            {
+                Sequence moveSeq = DOTween.Sequence();
+                moveSeq
+                    //.AppendInterval(Random.Range(0, 0.3f)) // TODO this cannot be enabled until we are able to handle out-of-order completion of hyena moves re: unit (de)registration in the board manager
+                    .AppendCallback(() =>
+                    {
+                        moveOrder.hyena.MoveAlongPath(moveOrder.movePath, () =>
+                        {
+                            numMoveOrdersCompleted++;
+
+                            if (numMoveOrdersCompleted >= moveOrders.Count)
+                            {
+                                GameManager.Instance.OnHyenasFinishMoving();
+                            }
+                        });
+                    });
+                allMovesSeq.Join(moveSeq);
+            }
+            else
+            {
+                numMoveOrdersCompleted++; // No movement = auto-complete
+            }
+        }
+
+        if (numMoveOrdersCompleted >= moveOrders.Count)
+        {
+            GameManager.Instance.OnHyenasFinishMoving();
+        }
+        else
+        {
+            allMovesSeq.Play();
+        }
     }
 
     private void MoveNextHyena()
