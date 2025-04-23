@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System.Linq;
 using System.Collections.Generic;
-using static SoundsManager.MusicType;
 
 public class WinLoseCondition : MonoBehaviour
 {
@@ -43,7 +42,7 @@ public class WinLoseCondition : MonoBehaviour
             panel.SetActive(true);
             canvasGroup.DOFade(1f, fadeDuration);
 
-            SoundsManager.Instance.PlayMusic(state == GameState.Victory ? Victory : Defeat);
+            SoundsManager.Instance.PlayMusic(state == GameState.Victory ? BGM.Victory : BGM.Defeat, false);
         }
     }
 
