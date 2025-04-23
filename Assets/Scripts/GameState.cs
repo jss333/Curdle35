@@ -2,6 +2,7 @@ using UnityEngine;
 
 public enum GameState
 {
+    GameInitializing,
     PlayerInput,
     PlayerUnitMoving,
     PlayerTurretShooting,

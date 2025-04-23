@@ -60,11 +60,11 @@ public class MovableUnit : MonoBehaviour
             moveSequence.Append(transform.DOMove(targetWorld, timePerSegment).SetEase(stepEaseType)); 
             moveSequence.AppendCallback(() =>
             {
-                Debug.Log($"--Done with step for {unit.name} at {cell}");
+                //Debug.Log($"--Done with step for {unit.name} at {cell}");
                 HandlePotentialInteractionsInCell(cell, cell == path.Last());
                 if (!unit.IsAlive())
                 {
-                    Debug.Log($"--Unit not alive so will Kill sequence... ");
+                    //Debug.Log($"--Unit not alive so will Kill sequence... ");
                     // Interrupt the sequence if the unit is dead (the sequence completion callback below will still be invoked)
                     moveSequence.Kill(true);
                 }
@@ -75,13 +75,13 @@ public class MovableUnit : MonoBehaviour
         moveSequence.OnComplete(() =>
         {
             // After the sequence is done, update the unit's board position to the last cell
-            Debug.Log($"--Done with total movement for {unit.name}");
+            //Debug.Log($"--Done with total movement for {unit.name}");
             if(unit.IsAlive())
             {
-                Debug.Log($"--Unit is alive so will update board position");
+                //Debug.Log($"--Unit is alive so will update board position");
                 unit.UpdateBoardPositionAfterMove(path.Last());
             }
-            Debug.Log($"--Will (also) invoke the callback");
+            //Debug.Log($"--Will (also) invoke the callback");
             moveDoneCallback?.Invoke();
         });
 

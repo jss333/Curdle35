@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using DG.Tweening;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,16 +10,18 @@ public class GameManager : MonoBehaviour
     public event System.Action OnNewPlayerTurnStarted;
     public event System.Action<GameState> OnGameStateChanged;
 
-    public GameState CurrentState { get; private set; }
+    [Header("State")]
+    [SerializeField] private GameState _currentState = GameState.GameInitializing;
+    [SerializeField] private bool firstTurn = true;
 
-    void Awake()
+    public GameState CurrentState
     {
-        Instance = this;
-    }
-
-    void Start()
-    {
-        StartNewPlayerTurnAndSetGameStateToPlayerInput();
+        get => _currentState;
+        private set
+        {
+            _currentState = value;
+            Debug.Log($"Game state changed to: {value}");
+        }
     }
 
     private void SetState(GameState newState)
@@ -27,19 +30,44 @@ public class GameManager : MonoBehaviour
         OnGameStateChanged?.Invoke(CurrentState);
     }
 
-    private void StartNewPlayerTurnAndSetGameStateToPlayerInput()
+    void Awake()
+    {
+        Instance = this;
+    }
+
+    void Update()
+    {
+        if (firstTurn)
+        {
+            firstTurn = false;
+            StartNewPlayerTurnAndSetGameStateToPlayerInput(false);
+        }
+    }
+
+    private void StartNewPlayerTurnAndSetGameStateToPlayerInput(bool playSFX = false)
     {
         // This marks the begining of a new player turn so we send out the appropriate event BEFORE changing the game state
-        Debug.Log("New player turn has started");
+        Debug.Log("New player turn has started, firing OnNewPlayerTurnStarted event now");
         OnNewPlayerTurnStarted?.Invoke();
-        SetState(GameState.PlayerInput);
+
+        SoundsManager.Instance.PlayMusic(BGM.Day, false);
+
+        if (playSFX)
+        {
+            void callback() => SetState(GameState.PlayerInput); // Change the state only after the SFX finishes playing
+            SoundsManager.Instance.PlaySFXSequence(callback, SFX.Horns);
+        }
+        else
+        {
+            SetState(GameState.PlayerInput);
+        }
     }
 
     public void OnPlayerUnitStartsMoving()
     {
         if (CurrentState != GameState.PlayerInput)
         {
-            Debug.LogWarning("Cannot start moving, not in PlayerInput state.");
+            Debug.LogWarning($"Cannot start moving, current state is {CurrentState} not in PlayerInput state.");
             return;
         }
 
@@ -50,7 +78,7 @@ public class GameManager : MonoBehaviour
     {
         if (CurrentState != GameState.PlayerUnitMoving)
         {
-            Debug.LogWarning("Cannot finish moving, not in PlayerUnitIsMoving state.");
+            Debug.LogWarning($"Cannot finish moving, current state is {CurrentState} not in PlayerUnitIsMoving state.");
             return;
         }
 
@@ -61,7 +89,7 @@ public class GameManager : MonoBehaviour
     {
         if (CurrentState != GameState.PlayerInput)
         {
-            Debug.LogWarning("Cannot end turn, not in PlayerInput state.");
+            Debug.LogWarning($"Cannot end turn, current state is {CurrentState} not in PlayerInput state.");
             return;
         }
 
@@ -72,7 +100,7 @@ public class GameManager : MonoBehaviour
     {
         if (CurrentState != GameState.PlayerTurretShooting)
         {
-            Debug.LogWarning("Cannot finish turret shooting, not in PlayerTurretShooting state.");
+            Debug.LogWarning($"Cannot finish turret shooting, current state is {CurrentState} not in PlayerTurretShooting state.");
             return;
         }
 
@@ -83,11 +111,11 @@ public class GameManager : MonoBehaviour
     {
         if (CurrentState != GameState.PlayerHarvesting)
         {
-            Debug.LogWarning("Cannot finish player harvesting, not in PlayerHarvesting state.");
+            Debug.LogWarning($"Cannot finish player harvesting, current state is {CurrentState} not in PlayerHarvesting state.");
             return;
         }
 
-        SoundsManager.Instance.PlayMusic(SoundsManager.MusicType.Night);
+        SoundsManager.Instance.PlayMusic(BGM.Night, false);
 
         SetState(GameState.DayToNightAnimation); // Day Night Indicator object observes this state change to play the animation
     }
@@ -96,7 +124,7 @@ public class GameManager : MonoBehaviour
     {
         if (CurrentState != GameState.DayToNightAnimation)
         {
-            Debug.LogWarning("Cannot end day-to-night animation, not in DayToNightAnimation state.");
+            Debug.LogWarning($"Cannot end day-to-night animation, current state is {CurrentState} not in DayToNightAnimation state.");
             return;
         }
 
@@ -107,7 +135,7 @@ public class GameManager : MonoBehaviour
     {
         if (CurrentState != GameState.HyenasSpawning)
         {
-            Debug.LogWarning("Cannot finish hyenas spawning, not in HyenasSpawning state.");
+            Debug.LogWarning($"Cannot finish hyenas spawning, current state is {CurrentState} not in HyenasSpawning state.");
             return;
         }
 
@@ -118,7 +146,7 @@ public class GameManager : MonoBehaviour
     {
         if (CurrentState != GameState.HyenasMoving)
         {
-            Debug.LogWarning("Cannot finish hyenas moving, not in HyenasAreMoving state.");
+            Debug.LogWarning($"Cannot finish hyenas moving, current state is {CurrentState} not in HyenasAreMoving state.");
             return;
         }
 
@@ -129,11 +157,9 @@ public class GameManager : MonoBehaviour
     {
         if (CurrentState != GameState.HyenasHarvesting)
         {
-            Debug.LogWarning("Cannot finish hyenas harvesting, not in HyenasHarvesting state.");
+            Debug.LogWarning($"Cannot finish hyenas harvesting, current state is {CurrentState} not in HyenasHarvesting state.");
             return;
         }
-
-        SoundsManager.Instance.PlayMusic(SoundsManager.MusicType.Day);
 
         SetState(GameState.HyenasGenerateNewSpawnMarkers); // HyenasSpawnManager object observes this state change
     }
@@ -142,7 +168,7 @@ public class GameManager : MonoBehaviour
     {
         if (CurrentState != GameState.HyenasGenerateNewSpawnMarkers)
         {
-            Debug.LogWarning("Cannot finish generating spawn markers, not in HyenasGenerateNewSpawnMarkers state.");
+            Debug.LogWarning($"Cannot finish generating spawn markers, current state is {CurrentState} not in HyenasGenerateNewSpawnMarkers state.");
             return;
         }
 
@@ -153,11 +179,11 @@ public class GameManager : MonoBehaviour
     {
         if (CurrentState != GameState.NightToDayAnimation)
         {
-            Debug.LogWarning("Cannot end night-to-day animation, not in NightToDayAnimation state.");
+            Debug.LogWarning($"Cannot end night-to-day animation, current state is {CurrentState} not in NightToDayAnimation state.");
             return;
         }
 
-        StartNewPlayerTurnAndSetGameStateToPlayerInput();
+        StartNewPlayerTurnAndSetGameStateToPlayerInput(true);
     }
 
     public void OnPlayerVictory()
