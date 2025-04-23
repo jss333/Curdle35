@@ -35,53 +35,35 @@ public class SoundsManager : MonoBehaviour
     [Header("Settings")]
     public float fadeDuration = 2.0f; // Time to raise or lower volume gradually
 
-    [Header("Selected Music Type")]
-    public MusicType selectedMusic; // Current selected music type
-
-    private Coroutine currentMusicCoroutine; // To track the currently running coroutine
     private AudioSource currentMusic; // The currently playing music AudioSource
     private AudioSource lastSelectedMusic; // The Last playing music AudioSource
 
     private void Start()
     {
-        UpdateMusicType();
+        PlayMusic(MusicType.Day);
     }
 
-
-    public void UpdateMusicType()
+    public void PlayMusic(MusicType selectedMusic)
     {
-        if (currentMusicCoroutine != null)
-        {
-            StopCoroutine(currentMusicCoroutine);
-        }
-        
         switch (selectedMusic)
         {
             case MusicType.Victory:
-                currentMusicCoroutine = StartCoroutine(SwitchMusic(victoryMusic));
+                StartCoroutine(SwitchMusic(victoryMusic));
                 break;
 
             case MusicType.Defeat:
-                currentMusicCoroutine = StartCoroutine(SwitchMusic(defeatMusic));
+                StartCoroutine(SwitchMusic(defeatMusic));
                 break;
 
             case MusicType.Day:
-                currentMusicCoroutine = StartCoroutine(PlayDaySequence());
+                StartCoroutine(PlayDaySequence());
                 break;
 
             case MusicType.Night:
-                currentMusicCoroutine = StartCoroutine(SwitchMusic(nightMusic));
+                StartCoroutine(SwitchMusic(nightMusic));
                 break;
         }
     }
-
-    public void UpdateCurrentMusic(MusicType music)
-    {
-        selectedMusic = music;
-
-        UpdateMusicType();
-    }
-
     
     // Coroutine to Switch Music (fade out previous and fade in new)
     private IEnumerator SwitchMusic(AudioSource newMusic)
