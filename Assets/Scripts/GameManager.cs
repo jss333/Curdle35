@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        SoundsManager.Instance.UpdateCurrentMusic(SoundsManager.MusicType.Night);
+        SoundsManager.Instance.PlayMusic(SoundsManager.MusicType.Night);
 
         SetState(GameState.DayToNightAnimation); // Day Night Indicator object observes this state change to play the animation
     }
@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        SoundsManager.Instance.UpdateCurrentMusic(SoundsManager.MusicType.Day);
+        SoundsManager.Instance.PlayMusic(SoundsManager.MusicType.Day);
 
         SetState(GameState.HyenasGenerateNewSpawnMarkers); // HyenasSpawnManager object observes this state change
     }
