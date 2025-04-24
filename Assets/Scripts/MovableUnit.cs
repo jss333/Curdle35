@@ -110,7 +110,7 @@ public class MovableUnit : MonoBehaviour
             if(myFaction == Faction.Cats && otherFaction == Faction.Hyenas)
             {
                 Debug.Log($"{unit.name} killed {otherUnit.name} at {cell}");
-                SoundsManager.Instance.PlaySFX(SFX.Player_Unit_Hit_Hyena);
+                SoundsManager.Instance.PlaySFX(SFX.Player_Unit_Hits_Hyena);
                 otherUnit.Die();
             }
 

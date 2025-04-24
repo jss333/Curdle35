@@ -185,4 +185,5 @@ MonoBehaviour:
   moveSpeed: 3
   stepEaseType: 1
   pathEaseType: 1
+  moveSFX: 18
   facingRight: 1
