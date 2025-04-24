@@ -52,6 +52,8 @@ public class BuildCommandButton : UnitCommandButton
         {
             if (builder.IsCellInRange(clickedCell))
             {
+                SoundsManager.Instance.PlaySFX(SFX.Build_Confirm);
+
                 TurretsManager.Instance.BuildTurretAt(clickedCell);
                 UnitSelectionManager.Instance.ClearCommand();
 

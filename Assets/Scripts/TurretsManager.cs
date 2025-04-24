@@ -151,6 +151,7 @@ public class TurretsManager : MonoBehaviour
 
     private void DamageHyenaAndRemoveReticle(Unit hyena)
     {
+        SoundsManager.Instance.PlaySFX(SFX.Turret_Shoot);
         hyena.Die();
         Destroy(lastReticleCreated);
     }

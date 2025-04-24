@@ -13,6 +13,7 @@ public class MovableUnit : MonoBehaviour
     [SerializeField] private float moveSpeed = 4f;
     [SerializeField] private Ease stepEaseType = Ease.Linear;
     [SerializeField] private Ease pathEaseType = Ease.Linear;
+    [SerializeField] private SFX moveSFX = SFX.NONE;
 
     [Header("State")]
     [SerializeField] private bool facingRight;
@@ -57,6 +58,7 @@ public class MovableUnit : MonoBehaviour
         foreach (var cell in path)
         {
             Vector3 targetWorld = BoardManager.Instance.BoardCellToWorld(cell);
+            moveSequence.AppendCallback(() => SoundsManager.Instance.PlaySFX(moveSFX));
             moveSequence.Append(transform.DOMove(targetWorld, timePerSegment).SetEase(stepEaseType)); 
             moveSequence.AppendCallback(() =>
             {
@@ -108,6 +110,7 @@ public class MovableUnit : MonoBehaviour
             if(myFaction == Faction.Cats && otherFaction == Faction.Hyenas)
             {
                 Debug.Log($"{unit.name} killed {otherUnit.name} at {cell}");
+                SoundsManager.Instance.PlaySFX(SFX.Player_Unit_Hit_Hyena);
                 otherUnit.Die();
             }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using System;
-using UnityEngine.InputSystem;
+using TMPro;
 
 public enum BGM
 {
@@ -16,8 +16,28 @@ public enum BGM
 
 public enum SFX
 {
-    Horns,
-    Roar
+    Horns_DO_NOT_USE,
+    Roar_DO_NOT_USE,
+    Day_Begins,
+    Unit_Select,
+    Unit_Deselect,
+    Command_Select,
+    Command_Deselect,
+    Move_Confirm,
+    Player_Unit_Move,
+    Player_Unit_Hit_Hyena,
+    Build_Confirm,
+    End_Of_Turn_Confirm,
+    Turret_Shoot,
+    Player_Harvest,
+    Night_Begins,
+    Hyena_Spawn,
+    Hyena_Move,
+    Hyena_Destroy_Tower,
+    Hyena_Harvest,
+    Hyena_Spawn_Upgrade,
+    Hyena_Generate_Spawn_Marker,
+    NONE
 }
 
 interface IEnumAudioSourcePair<TEnum>
@@ -56,6 +76,7 @@ public class SoundsManager : MonoBehaviour
 
     [Header("Config")]
     [SerializeField] private float fadeDuration = 1f;
+    [SerializeField] private bool muteAllBGM = false;
 
     [Header("State")]
     [SerializeField] private AudioSource lastPlayedBGMAudioSrc; // Used to check if tehre are any coroutines still running
@@ -102,6 +123,8 @@ public class SoundsManager : MonoBehaviour
 
     public void PlayMusic(BGM bgm, bool pausePrev = false)
     {
+        if (muteAllBGM) return;
+
         if (bgmLookup.TryGetValue(bgm, out var bgmAudioSrc))
         {
             SwitchMusic(bgmAudioSrc, pausePrev);
@@ -182,6 +205,8 @@ public class SoundsManager : MonoBehaviour
 
     public void PlaySFX(SFX sfx)
     {
+        if (sfx == SFX.NONE) return;
+
         if (sfxLookup.TryGetValue(sfx, out var audioSrc))
         {
             audioSrc.Play();

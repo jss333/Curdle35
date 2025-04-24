@@ -51,8 +51,9 @@ public class MoveCommandButton : UnitCommandButton
 
             if (mover.IsCellInRange(clickedCell))
             {
-                IEnumerable<Vector2Int> path = mover.BuildPathToOrthogonalOrDiagonalDestination(clickedCell);
+                SoundsManager.Instance.PlaySFX(SFX.Move_Confirm);
 
+                IEnumerable<Vector2Int> path = mover.BuildPathToOrthogonalOrDiagonalDestination(clickedCell);
                 GameManager.Instance.OnPlayerUnitStartsMoving();
                 movableUnit.MoveAlongPath(path, () => { mover.MarkAsMovedThisTurn(); GameManager.Instance.OnPlayerUnitFinishesMoving(); });
                 UnitSelectionManager.Instance.ClearCommand();

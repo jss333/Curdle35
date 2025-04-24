@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         if (playSFX)
         {
             void callback() => SetState(GameState.PlayerInput); // Change the state only after the SFX finishes playing
-            SoundsManager.Instance.PlaySFXSequence(callback, SFX.Horns);
+            SoundsManager.Instance.PlaySFXSequence(callback, SFX.Day_Begins);
         }
         else
         {
@@ -115,6 +115,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        SoundsManager.Instance.PlaySFX(SFX.Night_Begins);
         SoundsManager.Instance.PlayMusic(BGM.Night, false);
 
         SetState(GameState.DayToNightAnimation); // Day Night Indicator object observes this state change to play the animation
