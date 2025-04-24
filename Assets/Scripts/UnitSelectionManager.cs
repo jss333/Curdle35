@@ -64,10 +64,12 @@ public class UnitSelectionManager : MonoBehaviour
             if(currentCommand != null)
             {
                 ClearCommand();
+                SoundsManager.Instance.PlaySFX(SFX.Command_Deselect);
             }
             else
             {
                 DeselectCurrentUnitIfAny();
+                SoundsManager.Instance.PlaySFX(SFX.Unit_Deselect);
             }
         }
     }
@@ -81,6 +83,7 @@ public class UnitSelectionManager : MonoBehaviour
         if (selectableUnit == null)
         {
             DeselectCurrentUnitIfAny();
+            SoundsManager.Instance.PlaySFX(SFX.Unit_Deselect);
         }
         else
         {
@@ -125,6 +128,7 @@ public class UnitSelectionManager : MonoBehaviour
         
         currentlySelectedUnit = newlySelectedUnit;
         currentlySelectedUnit.ShowSelectedEffect();
+        SoundsManager.Instance.PlaySFX(SFX.Unit_Select);
         OnUnitSelected?.Invoke(currentlySelectedUnit);
     }
 
@@ -171,6 +175,7 @@ public class UnitSelectionManager : MonoBehaviour
             if (command == currentCommand)
             {
                 ClearCommand();
+                SoundsManager.Instance.PlaySFX(SFX.Command_Deselect);
                 return;
             }
             else
@@ -181,6 +186,7 @@ public class UnitSelectionManager : MonoBehaviour
 
         currentCommand = command;
         currentCommand.SelectCommand(currentCommand, currentlySelectedUnit);
+        SoundsManager.Instance.PlaySFX(SFX.Command_Select);
     }
 
     public void ClearCommand()

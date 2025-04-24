@@ -85,7 +85,9 @@ public class HyenasSpawnManager : MonoBehaviour
     {
         // Determine where hyenas will spawn next
         List<Vector2Int> spawnPoints = GetSpawnPointsFromStrategyAndValidate(currentSpawnRate);
-        
+
+        SoundsManager.Instance.PlaySFX(SFX.Hyena_Generate_Spawn_Marker);
+
         // Instantiate spawn markers at each location
         foreach (Vector2Int spawnPoint in spawnPoints)
         {
@@ -165,6 +167,7 @@ public class HyenasSpawnManager : MonoBehaviour
         }
 
         allSpawnSeq.onComplete = GameManager.Instance.OnHyenasFinishSpawningFromMarkers;
+        SoundsManager.Instance.PlaySFX(SFX.Hyena_Spawn);
         allSpawnSeq.Play();
     }
 
@@ -211,6 +214,7 @@ public class HyenasSpawnManager : MonoBehaviour
     public int UpgradeSpawnRateAndReturnTotalCost()
     {
         // TODO animate and return only when animation ends
+        SoundsManager.Instance.PlaySFX(SFX.Hyena_Spawn_Upgrade);
 
         int prevSpawnRateUpgradeCost = nextSpawnRateUpgradeCost;
         CurrentSpawnRate++;

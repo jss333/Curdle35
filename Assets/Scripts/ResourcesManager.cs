@@ -89,6 +89,7 @@ public class ResourcesManager : MonoBehaviour
         {
             int resourcesHarvested = BoardManager.Instance.GetResourceTotalOfCellsOwnedBy(Faction.Cats);
             // TODO animate resource collection and only update + transition game state after animation ends
+            SoundsManager.Instance.PlaySFX(SFX.Player_Harvest);
             PlayerResources += resourcesHarvested;
 
             //TODO check player victory conditions (if resources >= X, win!)
@@ -100,6 +101,7 @@ public class ResourcesManager : MonoBehaviour
         {
             int resourcesHarvested = BoardManager.Instance.GetResourceTotalOfCellsOwnedBy(Faction.Hyenas);
             // TODO animate resource collection and only update + transition game state after animation ends
+            SoundsManager.Instance.PlaySFX(SFX.Hyena_Harvest);
             HyenasResources += resourcesHarvested;
 
             //Handle upgrading of spawn rate
