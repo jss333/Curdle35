@@ -6,6 +6,12 @@ using DG.Tweening;
 using System;
 using TMPro;
 
+public interface IPlayableSFX
+{
+    void Play();
+    float GetClipLength();
+}
+
 public enum BGM
 {
     Day,
@@ -16,118 +22,136 @@ public enum BGM
 
 public enum SFX
 {
-    Horns_DO_NOT_USE,
-    Roar_DO_NOT_USE,
     Day_Begins,
-    Unit_Select,
-    Unit_Deselect,
-    Command_Select,
-    Command_Deselect,
-    Move_Confirm,
-    Player_Unit_Move,
-    Player_Unit_Hit_Hyena,
-    Build_Confirm,
-    End_Of_Turn_Confirm,
-    Turret_Shoot,
-    Player_Harvest,
+    Player_Selects_Unit,
+    Player_Deselects_Unit,
+    Player_Selects_Command,
+    Player_Deselects_Command,
+    Player_Confirms_Move,
+    Player_Unit_Moves,
+    Player_Unit_Hits_Hyena,
+    Player_Unit_Is_Hit,
+    Player_Unit_Dies,
+    Player_Confirms_Build,
+    Player_Confirms_End_Of_Turn,
+    Turret_Shoots_Hyena,
+    Turret_Is_Hit,
+    Turret_Is_Destroyed,
+    Player_Harvests,
     Night_Begins,
-    Hyena_Spawn,
-    Hyena_Move,
-    Hyena_Destroy_Tower,
-    Hyena_Harvest,
-    Hyena_Spawn_Upgrade,
-    Hyena_Generate_Spawn_Marker,
+    Hyenas_Spawn,
+    Hyena_Moves,
+    Hyena_Hits_Player_Unit,
+    Hyena_Hits_Turret,
+    Hyena_Dies,
+    Hyenas_Harvest,
+    Hyenas_Upgrade_Spawn_Rate,
+    Hyenas_Generate_Spawn_Marker,
     NONE
-}
-
-interface IEnumAudioSourcePair<TEnum>
-{
-    public TEnum GetKey();
-    public AudioSource GetValue();
-}
-
-[Serializable]
-public struct BGMAudioSourcePair: IEnumAudioSourcePair<BGM>
-{
-    public BGM key;
-    public AudioSource value;
-    public BGM GetKey() { return key; }
-    public AudioSource GetValue() { return value; }
-}
-
-[Serializable]
-public struct SFXAudioSourcePair : IEnumAudioSourcePair<SFX>
-{
-    public SFX key;
-    public AudioSource value;
-    public SFX GetKey() { return key; }
-    public AudioSource GetValue() { return value; }
 }
 
 public class SoundsManager : MonoBehaviour
 {
     public static SoundsManager Instance { get; private set; }
-    
-    [Header("Config - Music mappings")]
-    [SerializeField] private List<BGMAudioSourcePair> bgmMappings = new();
-
-    [Header("Config - SFX mappings")]
-    [SerializeField] private List<SFXAudioSourcePair> sfxMappings = new();
 
     [Header("Config")]
+    [SerializeField] private Transform allBGMRoot;
+    [SerializeField] private Transform allSFXRoot;
+    [SerializeField] private AudioSource oneShotAudioSource;
+
+    [Header("Config - All BGMs")]
     [SerializeField] private float fadeDuration = 1f;
     [SerializeField] private bool muteAllBGM = false;
 
-    [Header("State")]
+    private Dictionary<BGM, BGMAudioSource> bgmAudioSources = new();
+    private readonly Dictionary<AudioSource, Coroutine> bgmAudioSrcCoroutines = new();
     [SerializeField] private AudioSource lastPlayedBGMAudioSrc; // Used to check if tehre are any coroutines still running
 
-    private readonly Dictionary<AudioSource, Coroutine> bgmAudioSrcCoroutines = new();
-    private Dictionary<BGM, AudioSource> bgmLookup;
-    private Dictionary<SFX, AudioSource> sfxLookup;
+    private Dictionary<SFX, SFXAudioSource> sfxAudioSources = new();
+    private Dictionary<SFX, SFXOneShot> sfxOneShots = new();
 
     void Awake()
     {
         Instance = this;
-        bgmLookup = LoadMappings<BGMAudioSourcePair, BGM>(bgmMappings);
-        sfxLookup = LoadMappings<SFXAudioSourcePair, SFX>(sfxMappings);
+        InitializeSFXLookup();
+        InitializeBGMLookup();
     }
 
-    private static Dictionary<TEnum, AudioSource> LoadMappings<TPair, TEnum>(List<TPair> mappings) where TPair: IEnumAudioSourcePair<TEnum>
+    private void InitializeBGMLookup()
     {
-        Dictionary<TEnum, AudioSource> lookup = new();
-
-        foreach (TPair mapping in mappings)
+        foreach (Transform child in allBGMRoot)
         {
-            TEnum key = mapping.GetKey();
-            AudioSource value = mapping.GetValue();
-
-            if (!lookup.ContainsKey(key))
+            if (!TryParseBGMEnum(child.name, out BGM bgm))
             {
-                if (value != null && value.clip != null)
-                {
-                    lookup.Add(key, value);
-                }
-                else
-                {
-                    Debug.LogWarning($"No AudioSource or no Clip assigned to BGM/SFX key: {key}");
-                }
+                Debug.LogWarning($"[SoundsManager] Failed to map BGM enum for object: {child.name}");
+                continue;
+            }
+
+            if (child.TryGetComponent(out BGMAudioSource source))
+            {
+                bgmAudioSources[bgm] = source;
             }
             else
             {
-                Debug.LogWarning($"Duplicate BGM/SFX key found: {key}");
+                Debug.LogWarning($"[SoundsManager] No BGMAudioSource found on: {child.name}");
             }
         }
-
-        return lookup;
     }
+
+    private void InitializeSFXLookup()
+    {
+        foreach (Transform child in allSFXRoot)
+        {
+            if (!TryParseSFXEnum(child.name, out SFX sfx))
+            {
+                Debug.LogWarning($"[SoundsManager] Failed to map SFX enum for object: {child.name}");
+                continue;
+            }
+
+            if (child.TryGetComponent(out SFXAudioSource audioSource))
+            {
+                sfxAudioSources[sfx] = audioSource;
+            }
+            else if (child.TryGetComponent(out SFXOneShot oneShot))
+            {
+                sfxOneShots[sfx] = oneShot;
+            }
+            else
+            {
+                Debug.LogWarning($"[SoundsManager] No SFXAudioSource or SFXOneShot found on: {child.name}");
+            }
+        }
+    }
+
+    private bool TryParseBGMEnum(string objName, out BGM result)
+    {
+        string expectedPrefix = "BGM ";
+        result = default;
+        if (!objName.StartsWith(expectedPrefix)) return false;
+
+        string enumName = objName.Substring(expectedPrefix.Length).Trim();
+        return System.Enum.TryParse(enumName, out result);
+    }
+
+    private bool TryParseSFXEnum(string objName, out SFX result)
+    {
+        string expectedPrefix = "SFX ";
+        result = default;
+        if (!objName.StartsWith(expectedPrefix)) return false;
+
+        string enumName = objName.Substring(expectedPrefix.Length).Trim();
+        return System.Enum.TryParse(enumName, out result);
+    }
+
+    #region BGM Playback
 
     public void PlayMusic(BGM bgm, bool pausePrev = false)
     {
         if (muteAllBGM) return;
 
-        if (bgmLookup.TryGetValue(bgm, out var bgmAudioSrc))
+        if (bgmAudioSources.TryGetValue(bgm, out var bgmAudioSrc))
         {
-            SwitchMusic(bgmAudioSrc, pausePrev);
+            SwitchMusic(bgmAudioSrc.GetAudioSource(), pausePrev);
         }
         else
         {
@@ -203,17 +227,42 @@ public class SoundsManager : MonoBehaviour
         }
     }
 
-    public void PlaySFX(SFX sfx)
-    {
-        if (sfx == SFX.NONE) return;
+    #endregion
 
-        if (sfxLookup.TryGetValue(sfx, out var audioSrc))
+    #region SFX Playback
+
+    public AudioSource GetOneShotAudioSource()
+    {
+        return oneShotAudioSource;
+    }
+
+    private IPlayableSFX GetPlayableSFX(SFX sfx)
+    {
+        if (sfx == SFX.NONE)
         {
-            audioSrc.Play();
+            return null;
+        }
+        else if (sfxAudioSources.TryGetValue(sfx, out var audioSrc))
+        {
+            return audioSrc;
+        }
+        else if (sfxOneShots.TryGetValue(sfx, out var oneShot))
+        {
+            return oneShot;
         }
         else
         {
-            Debug.LogWarning($"No AudioSource mapped for SFX: {sfx}");
+            Debug.Log($"[SoundsManager] No SFX mapping for: {sfx}");
+            return null;
+        }
+    }
+
+    public void PlaySFX(SFX sfx)
+    {
+        IPlayableSFX playable = GetPlayableSFX(sfx);
+        if (playable != null)
+        {
+            playable.Play();
         }
     }
 
@@ -226,22 +275,16 @@ public class SoundsManager : MonoBehaviour
             return;
         }
 
-        foreach (var sfx in sfxInOrder.Where(sfx => !sfxLookup.ContainsKey(sfx)))
-        {
-            Debug.LogWarning($"No AudioSource mapped for SFX: {sfx}");
-        }
-
-        List<AudioSource> audioSrcs = sfxInOrder
-            .Where(sfxLookup.ContainsKey)
-            .Select(sfx => sfxLookup[sfx])
+        List<IPlayableSFX> playableSFXs = sfxInOrder
+            .Select(GetPlayableSFX)
+            .Where(playable => playable != null)
             .ToList();
 
         Sequence sequence = DOTween.Sequence();
-        foreach (var audioSrc in audioSrcs)
+        foreach (var playableSFX in playableSFXs)
         {
-            sequence.AppendCallback(() => audioSrc.Play());
-            sequence.AppendInterval(audioSrc.clip.length);
-            Debug.Log($"The SFX clip is {audioSrc.clip.length} long");
+            sequence.AppendCallback(() => playableSFX.Play());
+            sequence.AppendInterval(playableSFX.GetClipLength());
         }
         if (callback != null)
         {
@@ -249,4 +292,6 @@ public class SoundsManager : MonoBehaviour
         }
         sequence.Play();
     }
+
+    #endregion
 }

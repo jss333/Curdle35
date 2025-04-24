@@ -188,7 +188,7 @@ MonoBehaviour:
   moveSpeed: 3
   stepEaseType: 1
   pathEaseType: 1
-  moveSFX: 8
+  moveSFX: 6
   facingRight: 0
 --- !u!114 &7929002686415522403
 MonoBehaviour:

@@ -64,12 +64,12 @@ public class UnitSelectionManager : MonoBehaviour
             if(currentCommand != null)
             {
                 ClearCommand();
-                SoundsManager.Instance.PlaySFX(SFX.Command_Deselect);
+                SoundsManager.Instance.PlaySFX(SFX.Player_Deselects_Command);
             }
             else
             {
                 DeselectCurrentUnitIfAny();
-                SoundsManager.Instance.PlaySFX(SFX.Unit_Deselect);
+                SoundsManager.Instance.PlaySFX(SFX.Player_Deselects_Unit);
             }
         }
     }
@@ -83,7 +83,7 @@ public class UnitSelectionManager : MonoBehaviour
         if (selectableUnit == null)
         {
             DeselectCurrentUnitIfAny();
-            SoundsManager.Instance.PlaySFX(SFX.Unit_Deselect);
+            SoundsManager.Instance.PlaySFX(SFX.Player_Deselects_Unit);
         }
         else
         {
@@ -128,7 +128,7 @@ public class UnitSelectionManager : MonoBehaviour
         
         currentlySelectedUnit = newlySelectedUnit;
         currentlySelectedUnit.ShowSelectedEffect();
-        SoundsManager.Instance.PlaySFX(SFX.Unit_Select);
+        SoundsManager.Instance.PlaySFX(SFX.Player_Selects_Unit);
         OnUnitSelected?.Invoke(currentlySelectedUnit);
     }
 
@@ -175,7 +175,7 @@ public class UnitSelectionManager : MonoBehaviour
             if (command == currentCommand)
             {
                 ClearCommand();
-                SoundsManager.Instance.PlaySFX(SFX.Command_Deselect);
+                SoundsManager.Instance.PlaySFX(SFX.Player_Deselects_Command);
                 return;
             }
             else
@@ -186,7 +186,7 @@ public class UnitSelectionManager : MonoBehaviour
 
         currentCommand = command;
         currentCommand.SelectCommand(currentCommand, currentlySelectedUnit);
-        SoundsManager.Instance.PlaySFX(SFX.Command_Select);
+        SoundsManager.Instance.PlaySFX(SFX.Player_Selects_Command);
     }
 
     public void ClearCommand()
