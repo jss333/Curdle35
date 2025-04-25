@@ -147,6 +147,8 @@ MonoBehaviour:
   boardCellPosition: {x: 0, y: 0}
   currentHealth: 0
   isAlive: 1
+  getsHitSFX: 0
+  dieSFX: 0
 --- !u!114 &6193194519882756188
 MonoBehaviour:
   m_ObjectHideFlags: 0

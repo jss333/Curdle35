@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 44532146}
   - component: {fileID: 44532147}
   m_Layer: 0
-  m_Name: SFX Hyena_Hits_Player_Unit
+  m_Name: SFX Hyena_Attacks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4330,7 +4330,6 @@ Transform:
   - {fileID: 2040661926}
   - {fileID: 31845567}
   - {fileID: 44532146}
-  - {fileID: 2144223352}
   - {fileID: 133151751}
   - {fileID: 239079464}
   - {fileID: 1047923284}
@@ -5096,7 +5095,7 @@ GameObject:
   - component: {fileID: 1327403380}
   - component: {fileID: 1327403381}
   m_Layer: 0
-  m_Name: SFX Player_Unit_Hits_Hyena
+  m_Name: SFX Player_Unit_Attacks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5471,7 +5470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62621ae26c9887b4486323c180b9c8c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 7f39f402dd95c874188c6ac17bdab7c3, type: 3}
   pitchRandomization: 0
 --- !u!1 &1455409758
 GameObject:
@@ -5581,7 +5580,7 @@ GameObject:
   - component: {fileID: 1474939429}
   - component: {fileID: 1474939430}
   m_Layer: 0
-  m_Name: SFX Turret_Shoots_Hyena
+  m_Name: SFX Turret_Shoots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7390,7 +7389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62621ae26c9887b4486323c180b9c8c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: f80e9479702f7d74c8c67219d0da6a38, type: 3}
+  clip: {fileID: 8300000, guid: b5483a406f0798b4da8d5bb85e81c6e8, type: 3}
   pitchRandomization: 0
 --- !u!4 &1805884214 stripped
 Transform:
@@ -9041,52 +9040,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
---- !u!1 &2144223351
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2144223352}
-  - component: {fileID: 2144223353}
-  m_Layer: 0
-  m_Name: SFX Hyena_Hits_Turret
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2144223352
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2144223351}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1173407632}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2144223353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2144223351}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62621ae26c9887b4486323c180b9c8c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 7a961b72bdd52db4abcd1cf74224a681, type: 3}
-  pitchRandomization: 0
 --- !u!1001 &1952307617411803395
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9162,10 +9115,6 @@ PrefabInstance:
     - target: {fileID: 5224848648760891206, guid: 4891c1fd72459464f9c19898f77dab93, type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5680186288665232822, guid: 4891c1fd72459464f9c19898f77dab93, type: 3}
-      propertyPath: movementRange
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7929002686415522403, guid: 4891c1fd72459464f9c19898f77dab93, type: 3}
       propertyPath: unitPortrait
@@ -9257,10 +9206,6 @@ PrefabInstance:
     - target: {fileID: 1865324923301607503, guid: 6619a1029bd09d647975d03caa706b67, type: 3}
       propertyPath: m_Name
       value: HQ Tower
-      objectReference: {fileID: 0}
-    - target: {fileID: 1865324923301607503, guid: 6619a1029bd09d647975d03caa706b67, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2194256321430733797, guid: 6619a1029bd09d647975d03caa706b67, type: 3}
       propertyPath: m_LocalPosition.x

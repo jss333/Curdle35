@@ -172,6 +172,8 @@ MonoBehaviour:
   boardCellPosition: {x: 0, y: 0}
   currentHealth: 0
   isAlive: 1
+  getsHitSFX: 0
+  dieSFX: 0
 --- !u!114 &4378499478943888294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,8 +190,8 @@ MonoBehaviour:
   moveSpeed: 3
   stepEaseType: 1
   pathEaseType: 1
-  moveSFX: 6
   facingRight: 0
+  moveSFX: 0
 --- !u!114 &7929002686415522403
 MonoBehaviour:
   m_ObjectHideFlags: 0

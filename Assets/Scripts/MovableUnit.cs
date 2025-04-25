@@ -13,10 +13,10 @@ public class MovableUnit : MonoBehaviour
     [SerializeField] private float moveSpeed = 4f;
     [SerializeField] private Ease stepEaseType = Ease.Linear;
     [SerializeField] private Ease pathEaseType = Ease.Linear;
-    [SerializeField] private SFX moveSFX = SFX.NONE;
 
     [Header("State")]
     [SerializeField] private bool facingRight;
+    [SerializeField] private SFX moveSFX = SFX.NONE;
 
     private Unit unit;
     private SpriteRenderer spriteRenderer;
@@ -27,6 +27,8 @@ public class MovableUnit : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         facingRight = initialFacingRight;
+
+        moveSFX = unit.GetFaction() == Faction.Cats ? SFX.Player_Unit_Moves : SFX.Hyena_Moves;
     }
 
     public void MoveAlongPath(IEnumerable<Vector2Int> path, Action moveDoneCallback)
@@ -110,7 +112,7 @@ public class MovableUnit : MonoBehaviour
             if(myFaction == Faction.Cats && otherFaction == Faction.Hyenas)
             {
                 Debug.Log($"{unit.name} killed {otherUnit.name} at {cell}");
-                SoundsManager.Instance.PlaySFX(SFX.Player_Unit_Hits_Hyena);
+                SoundsManager.Instance.PlaySFX(SFX.Player_Unit_Attacks);
                 otherUnit.Die();
             }
 
@@ -118,6 +120,7 @@ public class MovableUnit : MonoBehaviour
             if (myFaction == Faction.Hyenas && otherFaction == Faction.Cats)
             {
                 Debug.Log($"{unit.name} damaged {otherUnit.name} at {cell}, and then died");
+                SoundsManager.Instance.PlaySFX(SFX.Hyena_Attacks);
                 otherUnit.TakeDamage(1);
                 unit.Die();
             }

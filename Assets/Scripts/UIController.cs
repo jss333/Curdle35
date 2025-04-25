@@ -48,6 +48,7 @@ public class UIController : MonoBehaviour
     public void OnEndTurnClicked()
     {
         UnitSelectionManager.Instance.ClearCommand();
+        SoundsManager.Instance.PlaySFX(SFX.Player_Confirms_End_Of_Turn);
         GameManager.Instance.OnPlayerEndsTurn();
     }
 
