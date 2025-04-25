@@ -15,6 +15,10 @@ public class Unit : MonoBehaviour
     [SerializeField] private int currentHealth;
     [SerializeField] private bool isAlive = true;
 
+    [Header("State SFX - set via code at startup")]
+    [SerializeField] private SFX getsHitSFX = SFX.NONE;
+    [SerializeField] private SFX dieSFX = SFX.NONE;
+
     private Animator animator;
 
     void Start()
@@ -36,6 +40,23 @@ public class Unit : MonoBehaviour
         this.transform.position = boardMngr.BoardCellToWorld(boardCellPosition);
 
         currentHealth = maxHealth;
+
+        // Figure out the SFX based on Faction
+        if (faction == Faction.Cats && !isStructure)
+        {
+            getsHitSFX = SFX.Player_Unit_Is_Hit;
+            dieSFX = SFX.Player_Unit_Dies;
+        }
+        else if (faction == Faction.Cats && isStructure)
+        {
+            getsHitSFX = SFX.Turret_Is_Hit;
+            dieSFX = SFX.Turret_Is_Destroyed;
+        }
+        else if (faction == Faction.Hyenas)
+        {
+            getsHitSFX = SFX.NONE;
+            dieSFX = SFX.Hyena_Dies;
+        }
     }
 
     public Faction GetFaction()
@@ -77,11 +98,17 @@ public class Unit : MonoBehaviour
         {
             Die();
         }
+        else
+        {
+            SoundsManager.Instance.PlaySFX(getsHitSFX);
+        }
     }
 
     public void Die()
     {
         isAlive = false;
+
+        SoundsManager.Instance.PlaySFX(dieSFX);
 
         if (notifyDeath)
         {

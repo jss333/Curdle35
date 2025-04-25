@@ -22,6 +22,7 @@ public enum BGM
 
 public enum SFX
 {
+    NONE,
     Day_Begins,
     Player_Selects_Unit,
     Player_Deselects_Unit,
@@ -29,25 +30,24 @@ public enum SFX
     Player_Deselects_Command,
     Player_Confirms_Move,
     Player_Unit_Moves,
-    Player_Unit_Hits_Hyena,
+    Player_Unit_Attacks,
     Player_Unit_Is_Hit,
     Player_Unit_Dies,
     Player_Confirms_Build,
     Player_Confirms_End_Of_Turn,
-    Turret_Shoots_Hyena,
+    Turret_Shoots,
     Turret_Is_Hit,
     Turret_Is_Destroyed,
     Player_Harvests,
     Night_Begins,
     Hyenas_Spawn,
     Hyena_Moves,
-    Hyena_Hits_Player_Unit,
-    Hyena_Hits_Turret,
+    Hyena_Attacks,
+    NOT_USED_Hyena_Hits_Turret,
     Hyena_Dies,
     Hyenas_Harvest,
     Hyenas_Upgrade_Spawn_Rate,
-    Hyenas_Generate_Spawn_Marker,
-    NONE
+    Hyenas_Generate_Spawn_Marker
 }
 
 public class SoundsManager : MonoBehaviour
