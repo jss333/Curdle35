@@ -43,7 +43,6 @@ public enum SFX
     Hyenas_Spawn,
     Hyena_Moves,
     Hyena_Attacks,
-    NOT_USED_Hyena_Hits_Turret,
     Hyena_Dies,
     Hyenas_Harvest,
     Hyenas_Upgrade_Spawn_Rate,
@@ -79,6 +78,8 @@ public class SoundsManager : MonoBehaviour
 
     private void InitializeBGMLookup()
     {
+        HashSet<BGM> allFoundBGM = new();
+
         foreach (Transform child in allBGMRoot)
         {
             if (!TryParseBGMEnum(child.name, out BGM bgm))
@@ -90,16 +91,29 @@ public class SoundsManager : MonoBehaviour
             if (child.TryGetComponent(out BGMAudioSource source))
             {
                 bgmAudioSources[bgm] = source;
+                allFoundBGM.Add(bgm);
             }
             else
             {
                 Debug.LogWarning($"[SoundsManager] No BGMAudioSource found on: {child.name}");
             }
         }
+
+        List<BGM> bgmWithNoMapping = Enum.GetValues(typeof(BGM))
+            .Cast<BGM>()
+            .Where(sfx => !allFoundBGM.Contains(sfx))
+            .ToList();
+
+        foreach (BGM bgm in bgmWithNoMapping)
+        {
+            Debug.LogWarning($"[SoundsManager] No BGMAudioSource object mapped to BGM {bgm}");
+        }
     }
 
     private void InitializeSFXLookup()
     {
+        HashSet<SFX> allFoundSFX = new();
+
         foreach (Transform child in allSFXRoot)
         {
             if (!TryParseSFXEnum(child.name, out SFX sfx))
@@ -111,15 +125,28 @@ public class SoundsManager : MonoBehaviour
             if (child.TryGetComponent(out SFXAudioSource audioSource))
             {
                 sfxAudioSources[sfx] = audioSource;
+                allFoundSFX.Add(sfx);
             }
             else if (child.TryGetComponent(out SFXOneShot oneShot))
             {
                 sfxOneShots[sfx] = oneShot;
+                allFoundSFX.Add(sfx);
             }
             else
             {
                 Debug.LogWarning($"[SoundsManager] No SFXAudioSource or SFXOneShot found on: {child.name}");
             }
+        }
+
+        List<SFX> sfxWithNoMapping = Enum.GetValues(typeof(SFX))
+            .Cast<SFX>()
+            .Where(sfx => sfx != SFX.NONE)
+            .Where(sfx => !allFoundSFX.Contains(sfx))
+            .ToList();
+
+        foreach (SFX sfx in sfxWithNoMapping)
+        {
+            Debug.LogWarning($"[SoundsManager] No SFXAudioSource or SFXOneShot object mapped to SFX {sfx}");
         }
     }
 
