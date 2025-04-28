@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class UIController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI hyenasNextHarvestTxt;
     [SerializeField] private TextMeshProUGUI hyenasNextSpawnRateIncreaseTxt;
     [SerializeField] private TextMeshProUGUI hyenasSpawnRateTxt;
+    [SerializeField] private Button helpConfigButton;
+    [SerializeField] private GameObject helpConfigPanel;
 
     void Start()
     {
@@ -41,6 +44,9 @@ public class UIController : MonoBehaviour
 
         hyenasSpawnMngr.OnUpgradeCostChanged += UpdateHyenasNextSpawnRateIncreaseUI;
         UpdateHyenasNextSpawnRateIncreaseUI(hyenasSpawnMngr.NextSpawnRateUpgradeCost);
+
+        helpConfigButton.onClick.AddListener(ShowHideHelpConfigPanel);
+        helpConfigPanel.SetActive(false);
 
         Debug.Log("=== UIController initialized and listeners set up. ===");
     }
@@ -88,5 +94,15 @@ public class UIController : MonoBehaviour
     private void UpdateHyenasSpawnRateUI(int spawnRate)
     {
         hyenasSpawnRateTxt.text = spawnRate.ToString();
+    }
+
+    public void ShowHideHelpConfigPanel()
+    {
+        helpConfigPanel.SetActive(!helpConfigPanel.activeSelf);
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadSceneAsync(0);
     }
 }
