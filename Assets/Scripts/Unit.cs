@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class Unit : MonoBehaviour
 {
@@ -9,26 +10,34 @@ public class Unit : MonoBehaviour
     [SerializeField] private bool isStructure;
     [SerializeField] private int maxHealth = 1;
     [SerializeField] private bool notifyDeath = false;
+    [SerializeField] private bool initialFacingRight = true;
 
     [Header("State")]
-    [SerializeField] private Vector2Int boardCellPosition;
+    [SerializeField] protected Vector2Int boardCellPosition;
     [SerializeField] private int currentHealth;
     [SerializeField] private bool isAlive = true;
+    [SerializeField] private bool facingRight;
 
     [Header("State SFX - set via code at startup")]
     [SerializeField] private SFX getsHitSFX = SFX.NONE;
     [SerializeField] private SFX dieSFX = SFX.NONE;
 
     private Animator animator;
+    private SpriteRenderer spriteRenderer;
 
-    void Start()
+    private void Awake()
     {
-        if(TryGetComponent<Animator>(out animator))
+        if (TryGetComponent<Animator>(out animator))
         {
-            animator.Play("Idle", 0, Random.Range(0f, 1f));
-            animator.speed = Random.Range(0.95f, 1.05f);
+            animator.Play("Idle", 0, UnityEngine.Random.Range(0f, 1f));
+            animator.speed = UnityEngine.Random.Range(0.95f, 1.05f);
         }
 
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    protected virtual void Start()
+    {
         // Determine logical board cell given current world position
         BoardManager boardMngr = BoardManager.Instance;
         boardCellPosition = boardMngr.WorldToBoardCell(transform.position);
@@ -38,6 +47,8 @@ public class Unit : MonoBehaviour
 
         // Set unit's world position to be the correct one for the given board cell (ie, right in the middle of the cell)
         this.transform.position = boardMngr.BoardCellToWorld(boardCellPosition);
+
+        facingRight = initialFacingRight;
 
         currentHealth = maxHealth;
 
@@ -72,6 +83,18 @@ public class Unit : MonoBehaviour
     public Vector2Int GetBoardPosition()
     {
         return boardCellPosition;
+    }
+
+    public void FaceTowards(Vector2Int destination)
+    {
+        int horizontalDirection = Math.Sign(destination.x - boardCellPosition.x);
+        bool shouldFlipSprite = (horizontalDirection > 0 && !facingRight) || (horizontalDirection < 0 && facingRight);
+        Debug.Log($"Unit {gameObject.name} facing towards {destination} from {boardCellPosition}. Should flip sprite: {shouldFlipSprite}");
+        if (shouldFlipSprite)
+        {
+            spriteRenderer.flipX = !spriteRenderer.flipX;
+            facingRight = !facingRight;
+        }
     }
 
     public int GetOrthogonalDistance(Unit otherUnit)

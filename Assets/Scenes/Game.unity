@@ -2783,7 +2783,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5224848648760891206, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7324,7 +7324,7 @@ MonoBehaviour:
   spawnStrategy: {fileID: 719262567}
   spawnMarkerPrefab: {fileID: 3560328111906031903, guid: 63c7a06c4de387d4f9b001c9572db8b5, type: 3}
   spawnMarkersParent: {fileID: 1383714182}
-  hyenaPrefab: {fileID: 5224848648760891206, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+  hyenaPrefab: {fileID: 1795830811668478941, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
   hyenasManager: {fileID: 632487794}
   maxDelayBeforeSpawning: 0.3
   currentSpawnRate: 0
@@ -12711,10 +12711,6 @@ PrefabInstance:
     - target: {fileID: 5224848648760891206, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
       propertyPath: m_Name
       value: Hyena #A
-      objectReference: {fileID: 0}
-    - target: {fileID: 5224848648760891206, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

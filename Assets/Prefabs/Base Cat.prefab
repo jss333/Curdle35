@@ -169,7 +169,9 @@ MonoBehaviour:
   isStructure: 0
   maxHealth: 2
   notifyDeath: 1
+  initialFacingRight: 1
   boardCellPosition: {x: 0, y: 0}
+  facingRight: 1
   currentHealth: 0
   isAlive: 1
   getsHitSFX: 0
@@ -186,11 +188,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9474c490a22cf6b47890790de95dad8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialFacingRight: 1
   moveSpeed: 3
   stepEaseType: 1
   pathEaseType: 1
-  facingRight: 0
   moveSFX: 0
 --- !u!114 &7929002686415522403
 MonoBehaviour:

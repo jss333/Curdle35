@@ -235,6 +235,11 @@ public class BoardManager : MonoBehaviour
         return height;
     }
 
+    public Vector2Int GetCenterCell()
+    {
+        return new Vector2Int(width / 2, height / 2);
+    }
+
     public bool IsValidCellForUnitMovement(Vector2Int cell)
     {
         return IsWithinBoardBounds(cell) && !IsVoidCell(cell);

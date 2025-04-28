@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4917228721399858718}
   - component: {fileID: 2535350318648084459}
   - component: {fileID: 4372751507755794473}
-  - component: {fileID: 5718867230797424493}
+  - component: {fileID: 1795830811668478941}
   - component: {fileID: 4378499478943888294}
   m_Layer: 0
   m_Name: Hyena
@@ -150,7 +150,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0.018565893, y: -0.03977567}
   m_Size: {x: 0.70992136, y: 0.70992136}
   m_Direction: 0
---- !u!114 &5718867230797424493
+--- !u!114 &1795830811668478941
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,14 +159,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 5224848648760891206}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51527edc4ba57754e937e03389ffd9cc, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c1c205f1ce208a4cabc3c851321357f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   faction: 2
   isStructure: 0
   maxHealth: 1
   notifyDeath: 0
+  initialFacingRight: 1
   boardCellPosition: {x: 0, y: 0}
+  facingRight: 1
   currentHealth: 0
   isAlive: 1
   getsHitSFX: 0
@@ -183,9 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9474c490a22cf6b47890790de95dad8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialFacingRight: 1
   moveSpeed: 3
   stepEaseType: 1
   pathEaseType: 1
-  facingRight: 1
   moveSFX: 0

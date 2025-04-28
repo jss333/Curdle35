@@ -21,7 +21,7 @@ public class HyenasSpawnManager : MonoBehaviour
     [SerializeField] private Transform spawnMarkersParent;
 
     [Header("Config - Hyenas")]
-    [SerializeField] private GameObject hyenaPrefab;
+    [SerializeField] private HyenaUnit hyenaPrefab;
     [SerializeField] private Transform hyenasManager;
     [SerializeField] private float maxDelayBeforeSpawning = 0.5f;
 
@@ -198,7 +198,7 @@ public class HyenasSpawnManager : MonoBehaviour
         else
         {
             // Spawns a hyena at the spawn marker location
-            GameObject hyena = Instantiate(hyenaPrefab, worldPos, Quaternion.identity);
+            HyenaUnit hyena = Instantiate(hyenaPrefab, worldPos, Quaternion.identity);
             hyena.transform.SetParent(hyenasManager); // Unit's logical board position is registered in BoardManager by Unit.Start()
             hyena.name = "Hyena #" + nextHyenaId++;
         }
