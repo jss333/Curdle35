@@ -68,8 +68,10 @@ public class UnitSelectionManager : MonoBehaviour
             }
             else
             {
-                DeselectCurrentUnitIfAny();
-                SoundsManager.Instance.PlaySFX(SFX.Player_Deselects_Unit);
+                if (TryDeselectCurrentUnit())
+                {
+                    SoundsManager.Instance.PlaySFX(SFX.Player_Deselects_Unit);
+                }
             }
         }
     }
@@ -82,8 +84,10 @@ public class UnitSelectionManager : MonoBehaviour
 
         if (selectableUnit == null)
         {
-            DeselectCurrentUnitIfAny();
-            SoundsManager.Instance.PlaySFX(SFX.Player_Deselects_Unit);
+            if (TryDeselectCurrentUnit())
+            {
+                SoundsManager.Instance.PlaySFX(SFX.Player_Deselects_Unit);
+            }
         }
         else
         {
@@ -107,7 +111,7 @@ public class UnitSelectionManager : MonoBehaviour
         return null;
     }
 
-    public void DeselectCurrentUnitIfAny()
+    public bool TryDeselectCurrentUnit()
     {
         if (currentlySelectedUnit != null)
         {
@@ -117,14 +121,17 @@ public class UnitSelectionManager : MonoBehaviour
             OnUnitDeselected?.Invoke(previouslySelectedUnit);
 
             ClearCommand();
+            return true;
         }
+
+        return false;
     }
 
     private void SelectUnit(SelectableUnit newlySelectedUnit)
     {
         if (newlySelectedUnit == currentlySelectedUnit) return;
 
-        DeselectCurrentUnitIfAny();
+        TryDeselectCurrentUnit();
         
         currentlySelectedUnit = newlySelectedUnit;
         currentlySelectedUnit.ShowSelectedEffect();
@@ -159,7 +166,7 @@ public class UnitSelectionManager : MonoBehaviour
         {
             if (selectableUnit == currentlySelectedUnit)
             {
-                DeselectCurrentUnitIfAny();
+                TryDeselectCurrentUnit();
             }
         }
     }
