@@ -17,6 +17,8 @@ public class UIController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI hyenasSpawnRateTxt;
     [SerializeField] private Button helpConfigButton;
     [SerializeField] private GameObject helpConfigPanel;
+    [SerializeField] private TextMeshProUGUI masterBGMVolumeValueTxt;
+    [SerializeField] private TextMeshProUGUI masterSFXVolumeValueTxt;
 
     void Start()
     {
@@ -104,5 +106,20 @@ public class UIController : MonoBehaviour
     public void LoadMainMenu()
     {
         SceneManager.LoadSceneAsync(0);
+    }
+
+    public void OnMasterBGMVolumeChanged(float newVolume)
+    {
+        masterBGMVolumeValueTxt.text = FormatAsPercent(newVolume);
+    }
+
+    public void OnMasterSFXVolumeChanged(float newVolume)
+    {
+        masterSFXVolumeValueTxt.text = FormatAsPercent(newVolume);
+    }
+
+    private string FormatAsPercent(float value)
+    {
+        return ((int)(value * 100)).ToString("D1") + "%";
     }
 }

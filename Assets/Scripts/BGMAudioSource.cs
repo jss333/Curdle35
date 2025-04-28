@@ -3,13 +3,27 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class BGMAudioSource : MonoBehaviour
 {
-    private AudioSource source;
+    [Header("Config")]
+
+    [Header("State")]
+    [SerializeField] private float originalVolume;
+    [SerializeField] private bool initialized = false;
+    [SerializeField] private AudioSource source;
 
     void Awake()
+    {
+        if (!initialized)
+        {
+            Initialize();
+        }
+    }
+
+    private void Initialize()
     {
         if (TryGetComponent<AudioSource>(out var source))
         {
             this.source = source;
+            originalVolume = source.volume;
         }
         else
         {
@@ -20,6 +34,8 @@ public class BGMAudioSource : MonoBehaviour
         {
             Debug.LogWarning($"No AudioClip configured for BGMAudioSource {name} - play requests will be ignored");
         }
+
+        initialized = true;
     }
 
     public void Play()
@@ -29,5 +45,21 @@ public class BGMAudioSource : MonoBehaviour
         source.Play();
     }
 
-    public AudioSource GetAudioSource() => source;
+    public AudioSource GetAudioSource()
+    {
+        if (!initialized)
+        {
+            Initialize();
+        }
+        return this.source;
+    }
+
+    public float GetOriginalVolume()
+    {
+        if (!initialized)
+        {
+            Initialize();
+        }
+        return originalVolume;
+    }
 }

@@ -53,21 +53,26 @@ public class SoundsManager : MonoBehaviour
 {
     public static SoundsManager Instance { get; private set; }
 
-    [Header("Config")]
+    [Header("BGM - Config")]
     [SerializeField] private Transform allBGMRoot;
+    [SerializeField] private float fadeDuration = 1f;
+
+    [Header("BGM - State")]
+    [SerializeField] private float masterBGMVolume = 1f;
+    [SerializeField] private BGMAudioSource lastPlayedBGMAudioSrc;
+    private Dictionary<BGM, BGMAudioSource> bgmAudioSources = new();
+    private readonly Dictionary<AudioSource, Coroutine> bgmAudioSrcCoroutines = new();
+
+
+    [Header("SFX - Config")]
     [SerializeField] private Transform allSFXRoot;
     [SerializeField] private AudioSource oneShotAudioSource;
 
-    [Header("Config - All BGMs")]
-    [SerializeField] private float fadeDuration = 1f;
-    [SerializeField] private bool muteAllBGM = false;
-
-    private Dictionary<BGM, BGMAudioSource> bgmAudioSources = new();
-    private readonly Dictionary<AudioSource, Coroutine> bgmAudioSrcCoroutines = new();
-    [SerializeField] private AudioSource lastPlayedBGMAudioSrc; // Used to check if tehre are any coroutines still running
-
+    [Header("SFX - State")]
+    [SerializeField] private float masterSFXVolume = 1f;
     private Dictionary<SFX, SFXAudioSource> sfxAudioSources = new();
     private Dictionary<SFX, SFXOneShot> sfxOneShots = new();
+
 
     void Awake()
     {
@@ -174,11 +179,9 @@ public class SoundsManager : MonoBehaviour
 
     public void PlayMusic(BGM bgm, bool pausePrev = false)
     {
-        if (muteAllBGM) return;
-
         if (bgmAudioSources.TryGetValue(bgm, out var bgmAudioSrc))
         {
-            SwitchMusic(bgmAudioSrc.GetAudioSource(), pausePrev);
+            SwitchMusic(bgmAudioSrc, pausePrev);
         }
         else
         {
@@ -186,13 +189,13 @@ public class SoundsManager : MonoBehaviour
         }
     }
 
-    private void SwitchMusic(AudioSource newBGM, bool pausePrev)
+    private void SwitchMusic(BGMAudioSource newBGM, bool pausePrev)
     {
         PauseOrStopMusicIfAny(pausePrev);
 
         if (newBGM != null)
         {
-            KillPreviousAndStartNewFadingCoroutine(newBGM, 0, 1, fadeDuration, pausePrev);
+            KillPreviousAndStartNewFadingCoroutine(newBGM.GetAudioSource(), 0, newBGM.GetOriginalVolume() * masterBGMVolume, fadeDuration, pausePrev);
             lastPlayedBGMAudioSrc = newBGM;
         }
     }
@@ -201,7 +204,8 @@ public class SoundsManager : MonoBehaviour
     {
         if (lastPlayedBGMAudioSrc != null)
         {
-            KillPreviousAndStartNewFadingCoroutine(lastPlayedBGMAudioSrc, 1, 0, fadeDuration, pauseInsteadOfStop);
+            AudioSource lastAudioSrc = lastPlayedBGMAudioSrc.GetAudioSource();
+            KillPreviousAndStartNewFadingCoroutine(lastAudioSrc, lastAudioSrc.volume, 0, fadeDuration, pauseInsteadOfStop);
             lastPlayedBGMAudioSrc = null;
         }
     }
@@ -251,6 +255,15 @@ public class SoundsManager : MonoBehaviour
             {
                 audioSource.Stop();
             }
+        }
+    }
+
+    public void SetMasterBGMVolume(float newVolume)
+    {
+        masterBGMVolume = Mathf.Clamp01(newVolume);
+        if (lastPlayedBGMAudioSrc != null)
+        {
+            lastPlayedBGMAudioSrc.GetAudioSource().volume = lastPlayedBGMAudioSrc.GetOriginalVolume() * masterBGMVolume;
         }
     }
 
@@ -318,6 +331,20 @@ public class SoundsManager : MonoBehaviour
             sequence.AppendCallback(() => callback.Invoke());
         }
         sequence.Play();
+    }
+
+    public float GetMasterSFXVolume()
+    {
+        return masterSFXVolume;
+    }
+
+    public void SetMasterSFXVolume(float newVolume)
+    {
+        masterSFXVolume = Mathf.Clamp01(newVolume);
+        if (lastPlayedBGMAudioSrc != null)
+        {
+            lastPlayedBGMAudioSrc.GetAudioSource().volume = lastPlayedBGMAudioSrc.GetOriginalVolume() * masterBGMVolume;
+        }
     }
 
     #endregion

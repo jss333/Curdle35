@@ -8,6 +8,7 @@ public class SFXAudioSource : MonoBehaviour, IPlayableSFX
 
     [Header("State")]
     [SerializeField] private float originalPitch;
+    [SerializeField] private float originalVolume;
 
     private AudioSource source;
 
@@ -28,6 +29,7 @@ public class SFXAudioSource : MonoBehaviour, IPlayableSFX
         }
         
         originalPitch = source.pitch;
+        originalVolume = source.volume;
     }
 
     public void Play()
@@ -35,6 +37,7 @@ public class SFXAudioSource : MonoBehaviour, IPlayableSFX
         if (source == null || source.clip == null) return;
 
         source.pitch = originalPitch + Random.Range(-pitchRandomization, pitchRandomization);
+        source.volume = SoundsManager.Instance.GetMasterSFXVolume() * originalVolume;
         source.Play();
     }
 
