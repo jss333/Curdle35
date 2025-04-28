@@ -33,6 +33,14 @@ public class MovableUnit : MonoBehaviour
 
     public void MoveAlongPath(IEnumerable<Vector2Int> path, Action moveDoneCallback)
     {
+        if (path == null || !path.Any())
+        {
+            string pathType = (path == null) ? "Null" : "Empty";
+            Debug.Log($"{pathType} path provided for {unit.name} to move along.");
+            moveDoneCallback?.Invoke();
+            return;
+        }
+
         Vector2Int origin = unit.GetBoardPosition();
 
         EnsureSpriteIsFacingDirectionOfDestination(origin, path.Last());

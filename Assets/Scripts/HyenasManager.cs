@@ -157,7 +157,7 @@ public class HyenasManager : MonoBehaviour
         var moveOrder = moveOrders[currentMoveOrderIndex];
         currentMoveOrderIndex++;
 
-        if(moveOrder.movePath.Count() == 0)
+        if(moveOrder.movePath.Any())
         {
             MoveNextHyena();
         }

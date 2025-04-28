@@ -42,8 +42,8 @@ public class HyenaMovementAI
 
         if(debug)
         {
-            path.Add(origin + new Vector2Int(1, 0));
-            path.Add(origin + new Vector2Int(2, 0));
+            //path.Add(origin + new Vector2Int(1, 0));
+            //path.Add(origin + new Vector2Int(2, 0));
         }
         else
         {
