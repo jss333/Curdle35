@@ -215,12 +215,16 @@ public class SoundsManager : MonoBehaviour
         // Check if we have a coroutine that is operating on the same AudioSource, and stop it
         if (bgmAudioSrcCoroutines.ContainsKey(audioSrc))
         {
-            StopCoroutine(bgmAudioSrcCoroutines[audioSrc]);
+            Coroutine oldCoroutine = bgmAudioSrcCoroutines[audioSrc];
+            if (oldCoroutine != null) // I think coroutines become null after they end
+            {
+                StopCoroutine(oldCoroutine);
+            }
             bgmAudioSrcCoroutines.Remove(audioSrc);
         }
 
-        Coroutine co = StartCoroutine(FadeAudio(audioSrc, startVolume, endVolume, duration, pauseInsteadOfStopPrevMusic));
-        bgmAudioSrcCoroutines.Add(audioSrc, co);
+        Coroutine newCoroutine = StartCoroutine(FadeAudio(audioSrc, startVolume, endVolume, duration, pauseInsteadOfStopPrevMusic));
+        bgmAudioSrcCoroutines.Add(audioSrc, newCoroutine);
     }
 
     private IEnumerator FadeAudio(AudioSource audioSource, float startVolume, float targetVolume, float duration, bool pauseInsteadOfStopPrevMusic)
