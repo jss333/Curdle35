@@ -50,17 +50,14 @@ public class GameManager : MonoBehaviour
         Debug.Log("New player turn has started, firing OnNewPlayerTurnStarted event now");
         OnNewPlayerTurnStarted?.Invoke();
 
-        SoundsManager.Instance.PlayMusic(BGM.Day, false);
+        SoundsManager.Instance.PlayMusic(BGM.Day);
 
         if (playSFX)
         {
-            void callback() => SetState(GameState.PlayerInput); // Change the state only after the SFX finishes playing
-            SoundsManager.Instance.PlaySFXSequence(callback, SFX.Day_Begins);
+            SoundsManager.Instance.PlaySFX(SFX.Day_Begins);
         }
-        else
-        {
-            SetState(GameState.PlayerInput);
-        }
+
+        SetState(GameState.PlayerInput);
     }
 
     public void OnPlayerUnitStartsMoving()
@@ -116,7 +113,7 @@ public class GameManager : MonoBehaviour
         }
 
         SoundsManager.Instance.PlaySFX(SFX.Night_Begins);
-        SoundsManager.Instance.PlayMusic(BGM.Night, false);
+        SoundsManager.Instance.PlayMusic(BGM.Night);
 
         SetState(GameState.DayToNightAnimation); // Day Night Indicator object observes this state change to play the animation
     }

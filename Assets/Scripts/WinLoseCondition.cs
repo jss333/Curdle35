@@ -42,7 +42,7 @@ public class WinLoseCondition : MonoBehaviour
             panel.SetActive(true);
             canvasGroup.DOFade(1f, fadeDuration);
 
-            SoundsManager.Instance.PlayMusic(state == GameState.Victory ? BGM.Victory : BGM.Defeat, false);
+            SoundsManager.Instance.PlayMusic(state == GameState.Victory ? BGM.Victory : BGM.Defeat);
         }
     }
 

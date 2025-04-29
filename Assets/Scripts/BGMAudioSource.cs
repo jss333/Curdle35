@@ -4,6 +4,7 @@ using UnityEngine;
 public class BGMAudioSource : MonoBehaviour
 {
     [Header("Config")]
+    [SerializeField] public bool pauseInsteadOfStop = false;
 
     [Header("State")]
     [SerializeField] private float originalVolume;

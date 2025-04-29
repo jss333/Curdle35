@@ -177,11 +177,11 @@ public class SoundsManager : MonoBehaviour
 
     #region BGM Playback
 
-    public void PlayMusic(BGM bgm, bool pausePrev = false)
+    public void PlayMusic(BGM bgm)
     {
         if (bgmAudioSources.TryGetValue(bgm, out var bgmAudioSrc))
         {
-            SwitchMusic(bgmAudioSrc, pausePrev);
+            SwitchMusic(bgmAudioSrc);
         }
         else
         {
@@ -189,28 +189,28 @@ public class SoundsManager : MonoBehaviour
         }
     }
 
-    private void SwitchMusic(BGMAudioSource newBGM, bool pausePrev)
+    private void SwitchMusic(BGMAudioSource newBGM)
     {
-        PauseOrStopMusicIfAny(pausePrev);
+        PauseOrStopMusicIfAny();
 
         if (newBGM != null)
         {
-            KillPreviousAndStartNewFadingCoroutine(newBGM.GetAudioSource(), 0, newBGM.GetOriginalVolume() * masterBGMVolume, fadeDuration, pausePrev);
+            KillPreviousAndStartNewFadingCoroutine(newBGM.GetAudioSource(), 0, newBGM.GetOriginalVolume() * masterBGMVolume, fadeDuration);
             lastPlayedBGMAudioSrc = newBGM;
         }
     }
 
-    public void PauseOrStopMusicIfAny(bool pauseInsteadOfStop)
+    public void PauseOrStopMusicIfAny()
     {
         if (lastPlayedBGMAudioSrc != null)
         {
             AudioSource lastAudioSrc = lastPlayedBGMAudioSrc.GetAudioSource();
-            KillPreviousAndStartNewFadingCoroutine(lastAudioSrc, lastAudioSrc.volume, 0, fadeDuration, pauseInsteadOfStop);
+            KillPreviousAndStartNewFadingCoroutine(lastAudioSrc, lastAudioSrc.volume, 0, fadeDuration, lastPlayedBGMAudioSrc.pauseInsteadOfStop);
             lastPlayedBGMAudioSrc = null;
         }
     }
 
-    private void KillPreviousAndStartNewFadingCoroutine(AudioSource audioSrc, float startVolume, float endVolume, float duration, bool pauseInsteadOfStopPrevMusic)
+    private void KillPreviousAndStartNewFadingCoroutine(AudioSource audioSrc, float startVolume, float endVolume, float duration, bool pauseInsteadOfStopWhenFadingOut = false)
     {
         // Check if we have a coroutine that is operating on the same AudioSource, and stop it
         if (bgmAudioSrcCoroutines.ContainsKey(audioSrc))
@@ -223,11 +223,11 @@ public class SoundsManager : MonoBehaviour
             bgmAudioSrcCoroutines.Remove(audioSrc);
         }
 
-        Coroutine newCoroutine = StartCoroutine(FadeAudio(audioSrc, startVolume, endVolume, duration, pauseInsteadOfStopPrevMusic));
+        Coroutine newCoroutine = StartCoroutine(FadeAudio(audioSrc, startVolume, endVolume, duration, pauseInsteadOfStopWhenFadingOut));
         bgmAudioSrcCoroutines.Add(audioSrc, newCoroutine);
     }
 
-    private IEnumerator FadeAudio(AudioSource audioSource, float startVolume, float targetVolume, float duration, bool pauseInsteadOfStopPrevMusic)
+    private IEnumerator FadeAudio(AudioSource audioSource, float startVolume, float targetVolume, float duration, bool pauseInsteadOfStopWhenFadingOut)
     {
         if (audioSource == null) yield break;
 
@@ -248,10 +248,10 @@ public class SoundsManager : MonoBehaviour
 
         audioSource.volume = targetVolume;
 
-        // Auto-stop if volume was faded out to 0
+        // Pause/stop if volume was faded out to 0
         if (Mathf.Approximately(targetVolume, 0f))
         {
-            if (pauseInsteadOfStopPrevMusic)
+            if (pauseInsteadOfStopWhenFadingOut)
             {
                 audioSource.Pause();
             }
