@@ -288,11 +288,19 @@ public class SoundsManager : MonoBehaviour
         }
         else if (sfxAudioSources.TryGetValue(sfx, out var audioSrc))
         {
-            return audioSrc;
+            if (audioSrc.gameObject.activeInHierarchy)
+            {
+                return audioSrc;
+            }
+            return null;
         }
         else if (sfxOneShots.TryGetValue(sfx, out var oneShot))
         {
-            return oneShot;
+            if (oneShot.gameObject.activeInHierarchy)
+            {
+                return oneShot;
+            }
+            return null;
         }
         else
         {
