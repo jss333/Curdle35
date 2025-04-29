@@ -5,7 +5,7 @@ using System.Linq;
 public class InnerOuterHyenaSpawnStrategy : MonoBehaviour, IHyenaSpawnStrategy
 {
     [Header("Config")]
-    [SerializeField] private Unit hqUnit;
+    [SerializeField] private HQUnit hqUnit;
     [SerializeField] private int minDistFromHQ = 2;
     [SerializeField] private int minDistBetweenOuterCells = 3;
     [SerializeField] private bool prioritizeInnerCellsOwnedByCats = true;
@@ -14,14 +14,6 @@ public class InnerOuterHyenaSpawnStrategy : MonoBehaviour, IHyenaSpawnStrategy
     [SerializeField] bool cellsCalculated = false;
     [SerializeField] List<Vector2Int> innerCells;
     [SerializeField] List<Vector2Int> outerCells;
-
-    void Start()
-    {
-        if (hqUnit == null)
-        {
-            Debug.LogError("HQ Unit is not assigned in InnerOuterHyenaSpawnStrategy.");
-        }
-    }
 
     public List<Vector2Int> GetSpawnCells(int numSpawnCells)
     {
@@ -43,11 +35,29 @@ public class InnerOuterHyenaSpawnStrategy : MonoBehaviour, IHyenaSpawnStrategy
     {
         if (cellsCalculated) return;
 
-        BoardOuterInnerCellsCalculator innerOuterCellCalc = new BoardOuterInnerCellsCalculator(hqUnit.GetBoardPosition(), minDistFromHQ);
+        BoardOuterInnerCellsCalculator innerOuterCellCalc = new BoardOuterInnerCellsCalculator(ResolveHQUnitCell(), minDistFromHQ);
         innerCells = innerOuterCellCalc.GetInnerCellsAwayFromHQ();
         outerCells = innerOuterCellCalc.GetOuterCellsAwayFromHQ();
 
         cellsCalculated = true;
+    }
+
+    private Vector2Int ResolveHQUnitCell()
+    {
+        HQUnit hqUnit = FindAnyObjectByType<HQUnit>();
+
+        if (hqUnit == null)
+        {
+            Vector2Int centerCell = BoardManager.Instance.GetCenterCell();
+            Debug.LogWarning($"[InnerOuterHyenaSpawnStrategy] Initializing strategy. No HQUnit found in scene, so will use board center cell at {centerCell}.");
+            return centerCell;
+        }
+        else
+        {
+            Vector2Int hqCell = hqUnit.GetBoardPosition();
+            Debug.Log($"[InnerOuterHyenaSpawnStrategy] Initializing strategy. HQUnit found on cell {hqCell}.");
+            return hqCell;
+        }
     }
 
     private HashSet<Vector2Int> PickRandomOuterSpawnCells(int numCellsToPick)

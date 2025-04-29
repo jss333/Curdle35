@@ -8,7 +8,7 @@ public class WinLoseCondition : MonoBehaviour
 {
     [Header("Config - Key player units")]
     [SerializeField] private Unit[] playerCharacterUnits;
-    [SerializeField] private Unit playerHQ;
+    [SerializeField] private HQUnit playerHQ;
 
     [Header("Config - Victory/Defeat panel")]
     [SerializeField] private GameObject panel;
@@ -28,6 +28,8 @@ public class WinLoseCondition : MonoBehaviour
         playerHQ.OnUnitDeath += HandleHQDeath;
 
         panel.SetActive(false);
+
+        Debug.Log("=== WinLoseCondition initialized and listeners set up. ===");
     }
 
     private void HandleGameStateChanged(GameState state)

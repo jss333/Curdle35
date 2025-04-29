@@ -11,6 +11,7 @@ public class CellData
 {
     public int resourceValue;         // -1 for void
     public Faction owner = Faction.None;
+    public int minDistToHQ = int.MaxValue;
 
     public CellData(int resourceValue)
     {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -62,6 +63,7 @@ public class BoardManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+    
         if(usePrePaintedMap)
         {
             InitializeBoardFromPaintedTilemap();
@@ -72,6 +74,20 @@ public class BoardManager : MonoBehaviour
         }
 
         Debug.Log($"Board initialized ===== width: {width}  height: {height}  boardCellToGridmapCellOffset: {boardCellToGridmapCellOffset}");
+    }
+
+    private void Start()
+    {
+        // Check if there is an active HQUnit in the scene, if so, we'll let it call this method when it's finished Starting()
+        if (FindAnyObjectByType<HQUnit>() != null)
+        {
+            Debug.Log("[BoardManager] HQUnit found in scene so will let it trigger minDistToHQ computation.");
+            return;
+        }
+
+        Vector2Int centerCell = GetCenterCell();
+        Debug.LogWarning($"[BoardManager] HQUnit not found in scene. Using center cell at {centerCell} as reference instead.");
+        ComputeMinDistToHQ(centerCell);
     }
 
     private void InitializeBoardFromPaintedTilemap()
@@ -189,6 +205,38 @@ public class BoardManager : MonoBehaviour
             Debug.LogError($"Unknown terrain tile at {pos}");
             return 1;
         }
+    }
+
+    public void ComputeMinDistToHQ(Vector2Int hqPos)
+    {
+        Debug.Log($"[BoardManager] Computing minDistToHQ for all board cells with {hqPos} as reference...");
+
+        Queue<Vector2Int> frontier = new Queue<Vector2Int>();
+        frontier.Enqueue(hqPos);
+
+        board[hqPos.x, hqPos.y].minDistToHQ = 0; // HQ has distance 0 to itself
+
+        Vector2Int[] directions = new Vector2Int[] {Vector2Int.up, Vector2Int.right, Vector2Int.down, Vector2Int.left};
+
+        // Standard BFS
+        while (frontier.Count > 0)
+        {
+            Vector2Int current = frontier.Dequeue();
+            int currentDist = board[current.x, current.y].minDistToHQ;
+
+            foreach (Vector2Int dir in directions)
+            {
+                Vector2Int neighbor = current + dir;
+
+                if (IsValidCellForUnitMovement(neighbor) && board[neighbor.x, neighbor.y].minDistToHQ == int.MaxValue)
+                {
+                    board[neighbor.x, neighbor.y].minDistToHQ = currentDist + 1;
+                    frontier.Enqueue(neighbor);
+                }
+            }
+        }
+
+        Debug.Log("[BoardManager] Finished computing minDistToHQ for all board cells.");
     }
 
     #endregion
@@ -393,6 +441,26 @@ public class BoardManager : MonoBehaviour
             board[cell.x, cell.y].owner = newFaction;
             terrainTilemap.SetTile(BoardCellToGridmapCell(cell), GetTerrainTileForFaction(newFaction));
             OnCellOwnershipChanged?.Invoke(board[cell.x, cell.y], prevFaction, newFaction);
+        }
+    }
+
+    // For easier debugging of hyena movement algorithm
+    private void OnDrawGizmos()
+    {
+        if (board == null)
+            return;
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                var cell = board[x, y];
+                if (cell == null || cell.IsVoidCell())
+                    continue;
+
+                Vector3 worldPos = BoardCellToWorld(new Vector2Int(x, y));
+                Handles.Label(worldPos, cell.minDistToHQ.ToString());
+            }
         }
     }
 }
