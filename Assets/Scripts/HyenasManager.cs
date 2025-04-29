@@ -21,15 +21,16 @@ public class HyenasManager : MonoBehaviour
     public static HyenasManager Instance { get; private set; }
 
     [Header("Config")]
+    [SerializeField] private Transform hyenasParent;
     [SerializeField] private float delayBetweenMoves = 0.3f;
     [SerializeField] private bool moveHyenasSimultaneously = false;
+    [Tooltip("Assign a MonoBehaviour that implements IHyenaMoveStrategy.")]
+    [SerializeField] private MonoBehaviour moveStrategy;
 
     [Header("State")]
     [SerializeField] private int currentMoveOrderIndex = 0;
     [SerializeField] private List<HyenaMoveOrder> moveOrders;
     [SerializeField] private bool haltAllRemainingMoves = false;
-
-    private static HyenaMovementAI MovementAI = new HyenaMovementAI();
 
     void Awake()
     {
@@ -47,13 +48,20 @@ public class HyenasManager : MonoBehaviour
     {
         if (state != GameState.HyenasMoving) return;
 
-        Debug.Log("Starting to move hyenas");
+        IHyenaMoveStrategy strategy = GetMoveStrategy();
+        if (strategy == null)
+        {
+            GameManager.Instance.OnHyenasFinishMoving();
+            return;
+        }
+
+        Debug.Log("[HyenasManager] Starting to move hyenas");
 
         // Iterate over all child hyenas and filter out any that are disabled or missing Unit or MovableUnit components
-        List<Unit> hyenasToMove = GetValidHyenasToMove();
+        List<HyenaUnit> hyenasToMove = GetValidHyenasToMove();
 
         // Ask the AI component to calculate move orders
-        moveOrders = MovementAI.CalculateMovementPathForHyenas(hyenasToMove);
+        moveOrders = strategy.CalculateMovementPathForHyenas(hyenasToMove);
         currentMoveOrderIndex = 0;
         haltAllRemainingMoves = false;
 
@@ -67,19 +75,34 @@ public class HyenasManager : MonoBehaviour
         }
     }
 
-    private List<Unit> GetValidHyenasToMove()
+    private IHyenaMoveStrategy GetMoveStrategy()
     {
-        List<Unit> validHyenas = new List<Unit>();
-        foreach (Transform child in transform)
+        if (moveStrategy == null)
+        {
+            Debug.LogError("[HyenasManager] Property moveStrategy is not assigned. Hyenas will not move.");
+            return null;
+        }
+        IHyenaMoveStrategy strategy = moveStrategy as IHyenaMoveStrategy;
+        if (strategy == null)
+        {
+            Debug.LogError($"[HyenasManager] Object {moveStrategy.name} is assigned as moveStrategy, but does not implement IHyenaMoveStrategy. Hyenas will not move.");
+        }
+        return strategy;
+    }
+
+    private List<HyenaUnit> GetValidHyenasToMove()
+    {
+        List<HyenaUnit> validHyenas = new List<HyenaUnit>();
+        foreach (Transform child in hyenasParent.transform)
         {
             if (child.gameObject.activeInHierarchy == false) continue;
 
-            var unit = child.GetComponent<Unit>();
+            var unit = child.GetComponent<HyenaUnit>();
             var hyena = child.GetComponent<MovableUnit>();
 
             if (unit == null || hyena == null)
             {
-                Debug.LogWarning($"Hyena {child.name} is missing an Unit or MovableUnit component.");
+                Debug.LogWarning($"[HyenasManager] Hyena {child.name} is missing a HyenaUnit or MovableUnit component.");
                 continue;
             }
 
@@ -141,13 +164,13 @@ public class HyenasManager : MonoBehaviour
     {
         if (haltAllRemainingMoves)
         {
-            Debug.Log($"Halting {moveOrders.Count() - currentMoveOrderIndex} remaining hyena moves. GameManager will not be notified.");
+            Debug.Log($"[HyenasManager] Halting {moveOrders.Count() - currentMoveOrderIndex} remaining hyena moves. GameManager will not be notified.");
             return;
         }
 
         if (currentMoveOrderIndex >= moveOrders.Count())
         {
-            Debug.Log($"All {moveOrders.Count()} movement orders have completed.");
+            Debug.Log($"[HyenasManager] All {moveOrders.Count()} movement orders have completed.");
             GameManager.Instance.OnHyenasFinishMoving();
             return;
         }
@@ -175,12 +198,12 @@ public class HyenasManager : MonoBehaviour
         haltAllRemainingMoves = true;
     }
 
-    public List<Unit> GetAllHyenas()
+    public List<HyenaUnit> GetAllHyenas()
     {
-        List<Unit> hyenas = transform
+        List<HyenaUnit> hyenas = hyenasParent.transform
             .Cast<Transform>()
             .Where(child => child.gameObject.activeInHierarchy)
-            .Select(child => child.GetComponent<Unit>())
+            .Select(child => child.GetComponent<HyenaUnit>())
             .Where(unit => unit != null)
             .Where(unit => unit.GetFaction() == Faction.Hyenas)
             .ToList();

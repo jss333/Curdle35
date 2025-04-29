@@ -2,12 +2,12 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
-public class HyenaMovementAI
+public class RandomHyenaMoveStrategy : MonoBehaviour, IHyenaMoveStrategy
 {
     private static readonly List<Vector2Int> ALL_DIRS = new();
     private static readonly bool debug = false;
 
-    public HyenaMovementAI()
+    void Awake()
     {
         for(int x = -1; x <= 1; x++)
         {
@@ -19,7 +19,7 @@ public class HyenaMovementAI
         }
     }
 
-    public List<HyenaMoveOrder> CalculateMovementPathForHyenas(List<Unit> hyenas)
+    public List<HyenaMoveOrder> CalculateMovementPathForHyenas(List<HyenaUnit> hyenas)
     {
         List<HyenaMoveOrder> moveOrders = new();
 

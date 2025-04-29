@@ -98,12 +98,12 @@ public class TurretsManager : MonoBehaviour
             .ToList();
         currentTurretIndex = 0;
 
-        List<Unit> allHyenas = HyenasManager.Instance.GetAllHyenas();
+        List<HyenaUnit> allHyenas = HyenasManager.Instance.GetAllHyenas();
 
         NextTurretShoots(allHyenas);
     }
 
-    private void NextTurretShoots(List<Unit> allHyenas)
+    private void NextTurretShoots(List<HyenaUnit> allHyenas)
     {
         if (currentTurretIndex >= turrets.Count)
         {
@@ -117,9 +117,9 @@ public class TurretsManager : MonoBehaviour
         PanToTurretAndShootHyenaIfTargetAvailable(turret, allHyenas);
     }
 
-    private void PanToTurretAndShootHyenaIfTargetAvailable(Turret turret, List<Unit> allHyenas)
+    private void PanToTurretAndShootHyenaIfTargetAvailable(Turret turret, List<HyenaUnit> allHyenas)
     {
-        if (turret.TryAcquireTarget(allHyenas, out Unit hyena))
+        if (turret.TryAcquireTarget(allHyenas, out HyenaUnit hyena))
         {
             SelectableTurret selectableTurret = turret.GetComponent<SelectableTurret>();
 

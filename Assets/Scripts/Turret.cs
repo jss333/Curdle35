@@ -5,10 +5,10 @@ using System;
 
 public struct HyenaDist
 {
-    public Unit hyena;
+    public HyenaUnit hyena;
     public int distanceToTurret;
 
-    public HyenaDist(Unit hyena, int distanceToTurret)
+    public HyenaDist(HyenaUnit hyena, int distanceToTurret)
     {
         this.hyena = hyena;
         this.distanceToTurret = distanceToTurret;
@@ -34,7 +34,7 @@ public class Turret : MonoBehaviour, CellRange
         return unit;
     }
 
-    public bool TryAcquireTarget(List<Unit> allHyenas, out Unit hyena)
+    public bool TryAcquireTarget(List<HyenaUnit> allHyenas, out HyenaUnit hyena)
     {
         if (preventShooting)
         {
@@ -51,7 +51,7 @@ public class Turret : MonoBehaviour, CellRange
             .OrderBy(g => g.Key) // `g.Key` is the distance
             .FirstOrDefault()   // Closest group
             ?.Select(hd => hd.hyena) // Select hyenas in that group, if any
-            .ToList() ?? new List<Unit>(); // Default to empty list
+            .ToList() ?? new List<HyenaUnit>(); // Default to empty list
 
         if (closestHyenas.Count > 0)
         {
