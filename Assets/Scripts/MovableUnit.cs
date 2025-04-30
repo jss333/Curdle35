@@ -26,6 +26,11 @@ public class MovableUnit : MonoBehaviour
         moveSFX = unit.GetFaction() == Faction.Cats ? SFX.Player_Unit_Moves : SFX.Hyena_Moves;
     }
 
+    public void PrepareForMove()
+    {
+        unit.UpdateBoardPositionBeforeMove();
+    }
+
     public void MoveAlongPath(IEnumerable<Vector2Int> path, Action moveDoneCallback)
     {
         if (path == null || !path.Any())

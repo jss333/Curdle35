@@ -55,6 +55,7 @@ public class MoveCommandButton : UnitCommandButton
 
                 IEnumerable<Vector2Int> path = mover.BuildPathToOrthogonalOrDiagonalDestination(clickedCell);
                 GameManager.Instance.OnPlayerUnitStartsMoving();
+                movableUnit.PrepareForMove();
                 movableUnit.MoveAlongPath(path, () => { mover.MarkAsMovedThisTurn(); GameManager.Instance.OnPlayerUnitFinishesMoving(); });
                 UnitSelectionManager.Instance.ClearCommand();
 

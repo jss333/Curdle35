@@ -129,6 +129,7 @@ public class HyenasManager : MonoBehaviour
             return;
         }
 
+        Sequence allPrepareSeq = DOTween.Sequence();
         Sequence allMovesSeq = DOTween.Sequence();
 
         int numMoveOrdersCompleted = 0;
@@ -137,9 +138,11 @@ public class HyenasManager : MonoBehaviour
         {
             if (moveOrder.movePath.Any())
             {
+                allPrepareSeq.AppendCallback(() => { moveOrder.hyena.PrepareForMove(); });
+
                 Sequence moveSeq = DOTween.Sequence();
                 moveSeq
-                    //.AppendInterval(Random.Range(0, 0.3f)) // TODO this cannot be enabled until we are able to handle out-of-order completion of hyena moves re: unit (de)registration in the board manager
+                    //.AppendInterval(Random.Range(0, 0.3f))
                     .AppendCallback(() =>
                     {
                         moveOrder.hyena.MoveAlongPath(moveOrder.movePath, () =>
@@ -166,6 +169,7 @@ public class HyenasManager : MonoBehaviour
         }
         else
         {
+            allMovesSeq.Prepend(allPrepareSeq); //When moving multiple hyenas at once, we need to prepare all of them before starting the moves (ie, unregister from board position)
             allMovesSeq.Play();
         }
     }
@@ -190,7 +194,7 @@ public class HyenasManager : MonoBehaviour
         var moveOrder = moveOrders[currentMoveOrderIndex];
         currentMoveOrderIndex++;
 
-        if (moveOrder.movePath.Any())
+        if (!moveOrder.movePath.Any())
         {
             MoveNextHyena();
         }
@@ -198,6 +202,7 @@ public class HyenasManager : MonoBehaviour
         {
             DOTween.Sequence()
                 .AppendInterval(delayBetweenMoves)
+                .AppendCallback(() => { moveOrder.hyena.PrepareForMove(); })
                 .AppendCallback(() => { moveOrder.hyena.MoveAlongPath(moveOrder.movePath, MoveNextHyena); })
                 .Play();
         }

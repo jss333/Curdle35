@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using UnityEditor.Timeline;
 
 public class Unit : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class Unit : MonoBehaviour
 
     [Header("State")]
     [SerializeField] protected Vector2Int boardCellPosition;
+    [SerializeField] bool traveling = false;
     [SerializeField] private int currentHealth;
     [SerializeField] private bool isAlive = true;
     [SerializeField] private bool facingRight;
@@ -82,6 +84,11 @@ public class Unit : MonoBehaviour
 
     public Vector2Int GetBoardPosition()
     {
+        if (traveling)
+        {
+            Debug.LogWarning($"Unit {gameObject.name} is currently traveling, returning its last known board position: {boardCellPosition}");
+        }
+
         return boardCellPosition;
     }
 
@@ -108,10 +115,17 @@ public class Unit : MonoBehaviour
         return System.Math.Abs(diff.x) + System.Math.Abs(diff.y);
     }
 
+    public void UpdateBoardPositionBeforeMove()
+    {
+        BoardManager.Instance.UnregisterUnitFromCell(this, boardCellPosition);
+        traveling = true;
+    }
+
     public void UpdateBoardPositionAfterMove(Vector2Int newCell)
     {
-        BoardManager.Instance.UpdateUnitFromOldToNewCell(this, boardCellPosition, newCell);
+        BoardManager.Instance.RegisterUnitInCell(this, newCell);
         boardCellPosition = newCell;
+        traveling = false;
     }
 
     public void TakeDamage(int dmg)
@@ -138,7 +152,12 @@ public class Unit : MonoBehaviour
             OnUnitDeath?.Invoke(this);
         }
 
-        BoardManager.Instance.UnregisterUnitFromCell(this, boardCellPosition);
+        if (!traveling)
+        {
+            BoardManager.Instance.UnregisterUnitFromCell(this, boardCellPosition);
+        }
+        traveling = false;
+        
         Destroy(gameObject);
     }
 
