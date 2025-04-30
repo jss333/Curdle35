@@ -95,7 +95,7 @@ public class AggressiveHyenaMoveStrategy : MonoBehaviour, IHyenaMoveStrategy
                 newlyOccupiedCells.Add(targetCell.cell);
                 newlyFreeCells.Add(hyenaPos);
 
-                moveOrders.Add(new HyenaMoveOrder(hyena.GetComponent<MovableUnit>(), targetCell.pathToCell));
+                moveOrders.Add(new HyenaMoveOrder(hyena.GetComponent<MovableUnit>(), hyena.GetBoardPosition(), targetCell.pathToCell));
             }
             else
             {
@@ -112,7 +112,7 @@ public class AggressiveHyenaMoveStrategy : MonoBehaviour, IHyenaMoveStrategy
                 newlyOccupiedCells.Add(targetCell.cell);
                 newlyFreeCells.Add(hyenaPos);
 
-                moveOrders.Add(new HyenaMoveOrder(hyena.GetComponent<MovableUnit>(), targetCell.pathToCell));
+                moveOrders.Add(new HyenaMoveOrder(hyena.GetComponent<MovableUnit>(), hyena.GetBoardPosition(),targetCell.pathToCell));
             }
         }
 

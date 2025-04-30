@@ -459,6 +459,8 @@ public class BoardManager : MonoBehaviour
         }
     }
 
+    #region Debug
+
     // For easier debugging of hyena movement algorithm
     private void OnDrawGizmos()
     {
@@ -469,13 +471,19 @@ public class BoardManager : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                var cell = board[x, y];
-                if (cell == null || cell.IsVoidCell())
+                var cellInfo = board[x, y];
+                if (cellInfo == null || cellInfo.IsVoidCell())
                     continue;
 
-                Vector3 worldPos = BoardCellToWorld(new Vector2Int(x, y));
-                Handles.Label(worldPos, cell.minDistToHQ.ToString());
+                Vector2Int cell = new Vector2Int(x, y);
+                Vector3 cellLabelOffset = new Vector3(0.20f, -0.3f, 0);
+                Vector3 worldPos = BoardCellToWorld(cell);
+
+                Handles.Label(worldPos + cellLabelOffset, cell.ToString());
+                Handles.Label(worldPos, cellInfo.minDistToHQ.ToString());
             }
         }
     }
+
+    #endregion
 }

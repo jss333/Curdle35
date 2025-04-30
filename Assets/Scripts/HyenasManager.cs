@@ -7,17 +7,19 @@ using System.Collections;
 public struct HyenaMoveOrder
 {
     public MovableUnit hyena;
+    public Vector2Int origin;
     public IEnumerable<Vector2Int> movePath;
 
-    public HyenaMoveOrder(MovableUnit hyena, IEnumerable<Vector2Int> movePath)
+    public HyenaMoveOrder(MovableUnit hyena, Vector2Int origin, IEnumerable<Vector2Int> movePath)
     {
         this.hyena = hyena;
+        this.origin = origin;
         this.movePath = movePath;
     }
 
     public override string ToString()
     {
-        return $"HyenaMoveOrder(hyena:{hyena.name}, path:[{string.Join(",", movePath)}])";
+        return $"HyenaMoveOrder(hyena:{hyena.name} at {origin}, path:[{string.Join(",", movePath)}])";
     }
 }
 
@@ -35,6 +37,7 @@ public class HyenasManager : MonoBehaviour
     [Header("State")]
     [SerializeField] private int currentMoveOrderIndex = 0;
     [SerializeField] private List<HyenaMoveOrder> moveOrders;
+    [SerializeField] private Dictionary<MovableUnit, HyenaMoveOrder> moveOrdersByHyena;
     [SerializeField] private bool haltAllRemainingMoves = false;
 
     void Awake()
@@ -65,8 +68,10 @@ public class HyenasManager : MonoBehaviour
         // Iterate over all child hyenas and filter out any that are disabled or missing Unit or MovableUnit components
         List<HyenaUnit> hyenasToMove = GetValidHyenasToMove();
 
-        // Ask the AI component to calculate move orders
+        // Ask the stratgey to calculate move orders
         moveOrders = strategy.CalculateMovementPathForHyenas(hyenasToMove);
+        moveOrdersByHyena = moveOrders.ToDictionary(order => order.hyena, order => order);
+
         currentMoveOrderIndex = 0;
         haltAllRemainingMoves = false;
 
@@ -185,7 +190,7 @@ public class HyenasManager : MonoBehaviour
         var moveOrder = moveOrders[currentMoveOrderIndex];
         currentMoveOrderIndex++;
 
-        if(moveOrder.movePath.Any())
+        if (moveOrder.movePath.Any())
         {
             MoveNextHyena();
         }
@@ -215,4 +220,58 @@ public class HyenasManager : MonoBehaviour
 
         return hyenas;
     }
+
+    #region Debug
+
+    public Dictionary<MovableUnit, HyenaMoveOrder> GetLastMoveOrders()
+    {
+        return moveOrdersByHyena;
+    }
+
+    private Dictionary<MovableUnit, Color> gizmoLineColors = new();
+    private Dictionary<MovableUnit, Vector3> gizmoOffsets = new();
+
+    private void OnDrawGizmos()
+    {
+        // iterate over all move orders and for each draw a line connecting the points in movePath
+        if (moveOrders == null || moveOrders.Count == 0) return;
+        Gizmos.color = Color.red;
+        foreach (var moveOrder in moveOrders)
+        {
+            if (moveOrder.movePath == null || !moveOrder.movePath.Any()) continue;
+
+            if (!gizmoLineColors.ContainsKey(moveOrder.hyena))
+            {
+                gizmoLineColors[moveOrder.hyena] = RandomColor();
+                gizmoOffsets[moveOrder.hyena] = RandomOffset();
+            }
+
+            Gizmos.color = gizmoLineColors[moveOrder.hyena];
+
+            Vector3 previousPoint = BoardManager.Instance.BoardCellToWorld(moveOrder.origin);
+            foreach (var cell in moveOrder.movePath)
+            {
+                Vector3 currentPoint = BoardManager.Instance.BoardCellToWorld(cell);
+                Vector3 offset = gizmoOffsets[moveOrder.hyena];
+                Gizmos.DrawLine(previousPoint + offset, currentPoint + offset);
+                previousPoint = currentPoint;
+                if (cell == moveOrder.movePath.Last())
+                {
+                    Gizmos.DrawCube(currentPoint + offset, new Vector3(0.1f, 0.1f, 0.1f));
+                }
+            }
+        }
+    }
+
+    private Color RandomColor()
+    {
+        return new Color(Random.value, Random.value, Random.value, 1f);
+    }
+
+    private Vector3 RandomOffset()
+    {
+        return new Vector3(Random.Range(-0.3f, 0.3f), Random.Range(-0.3f, 0.3f), 0f);
+    }
+
+    #endregion
 }
