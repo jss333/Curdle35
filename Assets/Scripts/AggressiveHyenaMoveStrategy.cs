@@ -99,15 +99,24 @@ public class AggressiveHyenaMoveStrategy : MonoBehaviour, IHyenaMoveStrategy
             }
             else
             {
+                // remove reachable cells that are further away from hq than the current one
+                reachableCells.RemoveWhere(cell => cell.distToHQ >= boardMngr.GetCellDataAt(hyenaPos).minDistToHQ);
+
+                if (!reachableCells.Any())
+                {
+                    Debug.Log($"Hyena {hyena.name} at {hyenaPos} has no reachable cells after removing those that are further from HQ. It will not move.");
+                    continue;
+                }
+
                 // pick a subset of the reachable cells that have the lowest distance to HQ
-                List<ReachableCell> closestToHQ = reachableCells
+                List <ReachableCell> closestToHQ = reachableCells
                     .Where(cell => cell.distToHQ == reachableCells.Min(c => c.distToHQ))
                     .ToList();
                 LogUtils.LogEnumerable($"Hyena {hyena.name} will choose one of those closest to HQ", closestToHQ);
 
                 // pick one at random to move the hyena there
                 ReachableCell targetCell = closestToHQ.ElementAt(Random.Range(0, closestToHQ.Count));
-                Debug.Log($"Hyena {hyena.name} will move to {targetCell}");
+                Debug.Log($"Hyena {hyena.name} at {hyenaPos} will move to {targetCell}");
 
                 newlyOccupiedCells.Add(targetCell.cell);
                 newlyFreeCells.Add(hyenaPos);
@@ -126,9 +135,10 @@ public class AggressiveHyenaMoveStrategy : MonoBehaviour, IHyenaMoveStrategy
         Dictionary<Vector2Int, ReachableCell> reachable = new Dictionary<Vector2Int, ReachableCell>();
         reachable.Add(origin, new ReachableCell(origin, new List<Vector2Int>(), null, 0));
 
-        HashSet<Vector2Int> frontier = new HashSet<Vector2Int>();
+        HashSet<Vector2Int> frontier = new();
         frontier.Add(origin);
-        HashSet<Vector2Int> nextFrontier = new HashSet<Vector2Int>();
+
+        HashSet<Vector2Int> nextFrontier = new();
 
         for (int i = 0; i < orthogonalDistance; i++)
         {
