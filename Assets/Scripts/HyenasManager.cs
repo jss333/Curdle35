@@ -14,6 +14,11 @@ public struct HyenaMoveOrder
         this.hyena = hyena;
         this.movePath = movePath;
     }
+
+    public override string ToString()
+    {
+        return $"HyenaMoveOrder(hyena:{hyena.name}, path:[{string.Join(",", movePath)}])";
+    }
 }
 
 public class HyenasManager : MonoBehaviour

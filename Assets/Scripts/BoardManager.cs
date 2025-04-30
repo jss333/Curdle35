@@ -288,6 +288,21 @@ public class BoardManager : MonoBehaviour
         return new Vector2Int(width / 2, height / 2);
     }
 
+    public CellData GetCellDataOccupiedByUnit(Unit unit)
+    {
+        if (unit == null)
+        {
+            return null;
+        }
+
+        return GetCellDataAt(unit.GetBoardPosition());
+    }
+
+    public CellData GetCellDataAt(Vector2Int cell)
+    {
+        return IsWithinBoardBounds(cell) ? board[cell.x, cell.y] : null;
+    }
+
     public bool IsValidCellForUnitMovement(Vector2Int cell)
     {
         return IsWithinBoardBounds(cell) && !IsVoidCell(cell);

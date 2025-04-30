@@ -13,6 +13,7 @@ public class HyenasSpawnManager : MonoBehaviour
     [SerializeField] private int startSpawnRate = 1;
     [SerializeField] private int spawnRateUpgradeCostConstant = 5;
     [SerializeField] private int spawnRateUpgradeCostStageMultiplier = 5;
+    [SerializeField] private bool haltSpawning = false; // Used for testing purposes, to stop spawning hyenas
 
     [Header("Config - Spawn strategy and markers")]
     [Tooltip("Assign a MonoBehaviour that implements IHyenaSpawnStrategy.")]
@@ -83,6 +84,12 @@ public class HyenasSpawnManager : MonoBehaviour
 
     private void InstantiateSpawnMarkers()
     {
+        if (haltSpawning)
+        {
+            GameManager.Instance.OnHyenasFinishGeneratingNewSpawnMarkers();
+            return;
+        }
+
         // Determine where hyenas will spawn next
         List<Vector2Int> spawnPoints = GetSpawnPointsFromStrategyAndValidate(currentSpawnRate);
 
