@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Linq;
 
 public class BoardManager : MonoBehaviour
 {
@@ -367,6 +368,13 @@ public class BoardManager : MonoBehaviour
         }
         unit = null;
         return false;
+    }
+
+    public List<Unit> GetAllUnits(Faction faction)
+    {
+        return cellToUnitMap.Values
+            .Where(unit => unit.GetFaction() == faction)
+            .ToList();
     }
 
     public void RegisterUnitInCell(Unit unit, Vector2Int cell)

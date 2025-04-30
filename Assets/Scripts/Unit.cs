@@ -128,6 +128,11 @@ public class Unit : MonoBehaviour
         traveling = false;
     }
 
+    public int GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
     public void TakeDamage(int dmg)
     {
         currentHealth = System.Math.Max(0, currentHealth - dmg);

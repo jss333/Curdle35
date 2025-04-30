@@ -22,6 +22,11 @@ public struct ReachableCell
         return originalOccupier != null && originalOccupier.GetFaction() == faction;
     }
 
+    public bool HasAliveCatUnit(Dictionary<Unit, int> futureCatUnitHP)
+    {
+        return HasFaction(Faction.Cats) && futureCatUnitHP.TryGetValue(originalOccupier, out int hp) && hp > 0;
+    }
+
     public override string ToString()
     {
         return $"ReachableCell(cell:{cell}, path:[{string.Join(",", pathToCell)}], occupier:{originalOccupier?.name ?? "None"}, distToHQ:{distToHQ})";
@@ -53,6 +58,7 @@ public class AggressiveHyenaMoveStrategy : MonoBehaviour, IHyenaMoveStrategy
         // define sets to track future free and future occupied cells
         HashSet<Vector2Int> newlyOccupiedCells = new(); // Cells that a hyena will move to
         HashSet<Vector2Int> newlyFreeCells = new(); // Cells that will be vacated by a moving hyena
+        Dictionary<Unit, int> futureCatUnitsHP = FindAllCatFactionUnitsAndTheirHP(); // Track future HP of units that will be attacked by hyenas
 
         BoardManager boardMngr = BoardManager.Instance;
 
@@ -81,19 +87,27 @@ public class AggressiveHyenaMoveStrategy : MonoBehaviour, IHyenaMoveStrategy
 
             // get a subset of all the reachable cells that are occupied by a unit of the Cats faction
             List<ReachableCell> occupiedByCatFaction = reachableCells
-                .Where(cell => cell.HasFaction(Faction.Cats))
+                .Where(cell => cell.HasAliveCatUnit(futureCatUnitsHP))
                 .ToList();
             LogUtils.LogEnumerable($"Of those cells, these are occupied by Cats faction", occupiedByCatFaction);
 
             if (occupiedByCatFaction.Any())
             {
+                // leave only the cells whose occupying unit are orthogonally closest to the hyena using Unit.GetOrthogonalDistance
+                int minOrthogonalDistance = occupiedByCatFaction.Min(cell => cell.originalOccupier.GetOrthogonalDistance(hyenaPos));
+                occupiedByCatFaction = occupiedByCatFaction.Where(cell => cell.originalOccupier.GetOrthogonalDistance(hyenaPos) == minOrthogonalDistance).ToList();
+                LogUtils.LogEnumerable($"Hyena {hyena.name} will only consider the closest cats", occupiedByCatFaction);
+
                 // if there are any occupied cells, pick one at random to move the hyena there
                 ReachableCell targetCell = occupiedByCatFaction.ElementAt(Random.Range(0, occupiedByCatFaction.Count));
-                Debug.Log($"Hyena {hyena.name} will attack at {targetCell}");
+                int futureHP = futureCatUnitsHP[targetCell.originalOccupier];
+                Debug.Log($"Hyena {hyena.name} will attack at {targetCell} which will have {futureHP} before the attack");
 
-                // TODO handle case when unit in targetCell will die and thus the cell will become free
-                newlyOccupiedCells.Add(targetCell.cell);
+                futureCatUnitsHP[targetCell.originalOccupier] = futureHP - 1;
+                Debug.Log($"After {hyena.name} attacks the hp will be {futureCatUnitsHP[targetCell.originalOccupier]}");
+
                 newlyFreeCells.Add(hyenaPos);
+                // Hyenas always die in combat so we don't mark the target cell as newly occupied by the hyena
 
                 moveOrders.Add(new HyenaMoveOrder(hyena.GetComponent<MovableUnit>(), hyena.GetBoardPosition(), targetCell.pathToCell));
             }
@@ -126,6 +140,14 @@ public class AggressiveHyenaMoveStrategy : MonoBehaviour, IHyenaMoveStrategy
         }
 
         return moveOrders;
+    }
+
+    private Dictionary<Unit, int> FindAllCatFactionUnitsAndTheirHP()
+    {
+        return BoardManager.Instance.GetAllUnits(Faction.Cats).ToDictionary(
+            unit => unit,
+            unit => unit.GetCurrentHealth()
+        );
     }
 
     private static HashSet<ReachableCell> GetOrthogonallyReachableCells(Vector2Int origin, int orthogonalDistance)
