@@ -37,7 +37,7 @@ public class SFXAudioSource : MonoBehaviour, IPlayableSFX
         if (source == null || source.clip == null) return;
 
         source.pitch = originalPitch + Random.Range(-pitchRandomization, pitchRandomization);
-        source.volume = SoundsManager.Instance.GetMasterSFXVolume() * originalVolume;
+        source.volume = SoundsManager.Instance.MasterSFXVolume * originalVolume;
         source.Play();
     }
 

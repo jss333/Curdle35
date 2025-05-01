@@ -168,9 +168,10 @@ MonoBehaviour:
   notifyDeath: 0
   initialFacingRight: 1
   boardCellPosition: {x: 0, y: 0}
-  facingRight: 1
+  traveling: 0
   currentHealth: 0
   isAlive: 1
+  facingRight: 1
   getsHitSFX: 0
   dieSFX: 0
 --- !u!114 &4378499478943888294
@@ -185,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9474c490a22cf6b47890790de95dad8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 4
   stepEaseType: 1
   pathEaseType: 1
   moveSFX: 0

@@ -20,7 +20,7 @@ public class SFXOneShot : MonoBehaviour, IPlayableSFX
 
         AudioSource source = SoundsManager.Instance.GetOneShotAudioSource();
 
-        source.volume = SoundsManager.Instance.GetMasterSFXVolume();
+        source.volume = SoundsManager.Instance.MasterSFXVolume;
         source.pitch = 1f + Random.Range(-pitchRandomization, pitchRandomization);
         source.PlayOneShot(clip);
     }
