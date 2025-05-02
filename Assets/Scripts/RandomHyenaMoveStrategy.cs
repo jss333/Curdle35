@@ -30,7 +30,7 @@ public class RandomHyenaMoveStrategy : MonoBehaviour, IHyenaMoveStrategy
         {
             Debug.Log($"Calculating movement path for {unit.name} at {unit.GetBoardPosition()}");
             IEnumerable<Vector2Int> path = CalculateMovementPath(unit.GetBoardPosition(), newlyOccupiedCells, newlyFreeCells);
-            moveOrders.Add(new HyenaMoveOrder(unit.GetComponent<MovableUnit>(), unit.GetBoardPosition(), path));
+            moveOrders.Add(new HyenaMoveOrder(unit, path));
         }
 
         return moveOrders;

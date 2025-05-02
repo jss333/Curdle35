@@ -484,7 +484,7 @@ public class BoardManager : MonoBehaviour
                     continue;
 
                 Vector2Int cell = new Vector2Int(x, y);
-                Vector3 cellLabelOffset = new Vector3(0.20f, -0.3f, 0);
+                Vector3 cellLabelOffset = new Vector3(0, -0.3f, 0);
                 Vector3 worldPos = BoardCellToWorld(cell);
 
                 Handles.Label(worldPos + cellLabelOffset, cell.ToString());

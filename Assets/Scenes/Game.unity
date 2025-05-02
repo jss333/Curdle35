@@ -270,7 +270,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5224848648760891206, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3414,8 +3414,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hyenasParent: {fileID: 840509511}
   delayBetweenMoves: 0.3
-  moveHyenasSimultaneously: 0
+  moveHyenasSimultaneously: 1
   moveStrategy: {fileID: 116259920}
+  hyenaMoveDistance: 2
   currentMoveOrderIndex: 0
   haltAllRemainingMoves: 0
 --- !u!1 &641690424
@@ -4217,6 +4218,7 @@ MonoBehaviour:
   initialized: 0
   skipPlay: 1
   audioSrc: {fileID: 0}
+  lastFadingCoroutineIsRunning: 0
 --- !u!114 &780124653 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5718867230797424493, guid: 4891c1fd72459464f9c19898f77dab93, type: 3}
@@ -4424,6 +4426,7 @@ MonoBehaviour:
   initialized: 0
   skipPlay: 0
   audioSrc: {fileID: 0}
+  lastFadingCoroutineIsRunning: 0
 --- !u!1 &829780104
 GameObject:
   m_ObjectHideFlags: 0
@@ -7749,11 +7752,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5101156703358229909, guid: 4891c1fd72459464f9c19898f77dab93, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.57
+      value: 15.5
       objectReference: {fileID: 0}
     - target: {fileID: 5101156703358229909, guid: 4891c1fd72459464f9c19898f77dab93, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.620001
+      value: 15.6
       objectReference: {fileID: 0}
     - target: {fileID: 5101156703358229909, guid: 4891c1fd72459464f9c19898f77dab93, type: 3}
       propertyPath: m_LocalPosition.z
@@ -12220,6 +12223,7 @@ MonoBehaviour:
   initialized: 0
   skipPlay: 0
   audioSrc: {fileID: 0}
+  lastFadingCoroutineIsRunning: 0
 --- !u!1 &1920371782
 GameObject:
   m_ObjectHideFlags: 0
@@ -13237,6 +13241,7 @@ MonoBehaviour:
   initialized: 0
   skipPlay: 1
   audioSrc: {fileID: 0}
+  lastFadingCoroutineIsRunning: 0
 --- !u!1 &2073916821
 GameObject:
   m_ObjectHideFlags: 0
@@ -13429,6 +13434,10 @@ PrefabInstance:
     - target: {fileID: 5224848648760891206, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
       propertyPath: m_Name
       value: Hyena #A
+      objectReference: {fileID: 0}
+    - target: {fileID: 5224848648760891206, guid: 734f1b649e3cb3b4282cba10faca270a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13724,11 +13733,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5101156703358229909, guid: 4891c1fd72459464f9c19898f77dab93, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.58
+      value: 14.52
       objectReference: {fileID: 0}
     - target: {fileID: 5101156703358229909, guid: 4891c1fd72459464f9c19898f77dab93, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.6
+      value: 15.56
       objectReference: {fileID: 0}
     - target: {fileID: 5101156703358229909, guid: 4891c1fd72459464f9c19898f77dab93, type: 3}
       propertyPath: m_LocalPosition.z

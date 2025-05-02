@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using static LinqExtensions;
 
 public struct ReachableCell
 {
@@ -55,87 +56,83 @@ public class AggressiveHyenaMoveStrategy : MonoBehaviour, IHyenaMoveStrategy
     {
         List<HyenaMoveOrder> moveOrders = new();
 
-        // define sets to track future free and future occupied cells
         HashSet<Vector2Int> newlyOccupiedCells = new(); // Cells that a hyena will move to
         HashSet<Vector2Int> newlyFreeCells = new(); // Cells that will be vacated by a moving hyena
         Dictionary<Unit, int> futureCatUnitsHP = FindAllCatFactionUnitsAndTheirHP(); // Track future HP of units that will be attacked by hyenas
 
         BoardManager boardMngr = BoardManager.Instance;
 
-        // sort hyenas by distance to hq
-        hyenas.Sort((a, b) => boardMngr.GetCellDataOccupiedByUnit(a).minDistToHQ - boardMngr.GetCellDataOccupiedByUnit(b).minDistToHQ);
+        int SortByDistToHQ(HyenaUnit a, HyenaUnit b)
+        {
+            return boardMngr.GetCellDataOccupiedByUnit(a).minDistToHQ - boardMngr.GetCellDataOccupiedByUnit(b).minDistToHQ;
+        }
+        hyenas.Sort(SortByDistToHQ);
         LogUtils.LogEnumerable("sorted hyenas by distance to HQ", hyenas);
 
         foreach (var hyena in hyenas)
         {
-            // find all cells reachable by this hyena within orthogonal distance 2
+            // Find all cells reachable by this hyena within some orthogonal distance
             Vector2Int hyenaPos = hyena.GetBoardPosition();
-            HashSet<ReachableCell> reachableCells = GetOrthogonallyReachableCells(hyenaPos, 2);
+            HashSet<ReachableCell> reachableCells = GetOrthogonallyReachableCells(hyenaPos, HyenasManager.Instance.HyenaMoveDistance);
 
-            // remove from reachableCells any cells that are already occupied by a hyena or are present in newlyOccupiedCells
+            // Remove from reachableCells any cells that are (or will be) already occupied by a hyena
             reachableCells.RemoveWhere(cell =>
                 (cell.HasFaction(Faction.Hyenas) && !newlyFreeCells.Contains(cell.cell)) 
                 || newlyOccupiedCells.Contains(cell.cell));
-
-            LogUtils.LogEnumerable($"{hyena.name} at {hyenaPos} can reach", reachableCells);
+            //LogUtils.LogEnumerable($"{hyena.name} at {hyenaPos} can reach", reachableCells);
 
             if (!reachableCells.Any())
             {
-                Debug.Log($"Hyena {hyena.name} at {hyenaPos} has no reachable cells. It will not move.");
+                //Debug.Log($"Hyena {hyena.name} at {hyenaPos} has no reachable cells. No move order will generated for it.");
                 continue;
             }
 
-            // get a subset of all the reachable cells that are occupied by a unit of the Cats faction
+            // Get a subset of all the reachable cells that are occupied by a unit of the Cats faction
             List<ReachableCell> occupiedByCatFaction = reachableCells
                 .Where(cell => cell.HasAliveCatUnit(futureCatUnitsHP))
                 .ToList();
-            LogUtils.LogEnumerable($"Of those cells, these are occupied by Cats faction", occupiedByCatFaction);
+            //LogUtils.LogEnumerable($"Of those cells, these are occupied by Cats faction", occupiedByCatFaction);
 
             if (occupiedByCatFaction.Any())
             {
-                // leave only the cells whose occupying unit are orthogonally closest to the hyena using Unit.GetOrthogonalDistance
-                int minOrthogonalDistance = occupiedByCatFaction.Min(cell => cell.originalOccupier.GetOrthogonalDistance(hyenaPos));
-                occupiedByCatFaction = occupiedByCatFaction.Where(cell => cell.originalOccupier.GetOrthogonalDistance(hyenaPos) == minOrthogonalDistance).ToList();
-                LogUtils.LogEnumerable($"Hyena {hyena.name} will only consider the closest cats", occupiedByCatFaction);
+                // Randomly pick between the closest cats/structures to attack
+                ReachableCell targetCell = occupiedByCatFaction
+                    .WhereMin(cell => cell.originalOccupier.GetOrthogonalDistance(hyenaPos))
+                    .TakeRandom();
 
-                // if there are any occupied cells, pick one at random to move the hyena there
-                ReachableCell targetCell = occupiedByCatFaction.ElementAt(Random.Range(0, occupiedByCatFaction.Count));
                 int futureHP = futureCatUnitsHP[targetCell.originalOccupier];
-                Debug.Log($"Hyena {hyena.name} will attack at {targetCell} which will have {futureHP} before the attack");
+                //Debug.Log($"Hyena {hyena.name} will attack at {targetCell} which will have {futureHP} before the attack");
 
                 futureCatUnitsHP[targetCell.originalOccupier] = futureHP - 1;
-                Debug.Log($"After {hyena.name} attacks the hp will be {futureCatUnitsHP[targetCell.originalOccupier]}");
+                //Debug.Log($"After {hyena.name} attacks the hp will be {futureCatUnitsHP[targetCell.originalOccupier]}");
 
                 newlyFreeCells.Add(hyenaPos);
                 // Hyenas always die in combat so we don't mark the target cell as newly occupied by the hyena
 
-                moveOrders.Add(new HyenaMoveOrder(hyena.GetComponent<MovableUnit>(), hyena.GetBoardPosition(), targetCell.pathToCell));
+                moveOrders.Add(new HyenaMoveOrder(hyena, targetCell.pathToCell));
             }
             else
             {
-                // remove reachable cells that are further away from hq than the current one
+                // Remove reachable cells that are further away from HQ than the current one
                 reachableCells.RemoveWhere(cell => cell.distToHQ >= boardMngr.GetCellDataAt(hyenaPos).minDistToHQ);
 
                 if (!reachableCells.Any())
                 {
-                    Debug.Log($"Hyena {hyena.name} at {hyenaPos} has no reachable cells after removing those that are further from HQ. It will not move.");
+                    //Debug.Log($"Hyena {hyena.name} at {hyenaPos} has no reachable cells after removing those that are further from HQ. It will not move.");
                     continue;
                 }
 
-                // pick a subset of the reachable cells that have the lowest distance to HQ
-                List <ReachableCell> closestToHQ = reachableCells
-                    .Where(cell => cell.distToHQ == reachableCells.Min(c => c.distToHQ))
-                    .ToList();
-                LogUtils.LogEnumerable($"Hyena {hyena.name} will choose one of those closest to HQ", closestToHQ);
+                // Randomly pick a subset of the reachable cells that have the lowest distance to HQ
+                ReachableCell targetCell = reachableCells
+                    .WhereMin(cell => cell.distToHQ)
+                    .TakeRandom();
 
-                // pick one at random to move the hyena there
-                ReachableCell targetCell = closestToHQ.ElementAt(Random.Range(0, closestToHQ.Count));
-                Debug.Log($"Hyena {hyena.name} at {hyenaPos} will move to {targetCell}");
+                //Debug.Log($"Hyena {hyena.name} at {hyenaPos} will move to {targetCell}");
 
                 newlyOccupiedCells.Add(targetCell.cell);
                 newlyFreeCells.Add(hyenaPos);
 
-                moveOrders.Add(new HyenaMoveOrder(hyena.GetComponent<MovableUnit>(), hyena.GetBoardPosition(),targetCell.pathToCell));
+                moveOrders.Add(new HyenaMoveOrder(hyena, targetCell.pathToCell));
             }
         }
 

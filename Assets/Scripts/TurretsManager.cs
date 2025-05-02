@@ -98,7 +98,7 @@ public class TurretsManager : MonoBehaviour
             .ToList();
         currentTurretIndex = 0;
 
-        List<HyenaUnit> allHyenas = HyenasManager.Instance.GetAllHyenas();
+        List<HyenaUnit> allHyenas = HyenasManager.Instance.GetAllActiveHyenas();
 
         NextTurretShoots(allHyenas);
     }
