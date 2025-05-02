@@ -34,6 +34,7 @@ public class HyenasManager : MonoBehaviour
     [SerializeField] private Transform hyenasParent;
     [SerializeField] private float delayBetweenMoves = 0.3f;
     [SerializeField] private bool moveHyenasSimultaneously = false;
+    [SerializeField] private int numHyenaGroupingsToMove = 6;
     [Tooltip("Assign a MonoBehaviour that implements IHyenaMoveStrategy.")]
     [SerializeField] private MonoBehaviour moveStrategy;
     [SerializeField] private int hyenaMoveDistance;
@@ -93,11 +94,12 @@ public class HyenasManager : MonoBehaviour
 
         if (moveHyenasSimultaneously)
         {
-            MoveAllHyenasAtOnce();
+            MoveAllHyenasAtOnce(numHyenaGroupingsToMove);
         }
         else
         {
-            MoveNextHyena();
+            MoveAllHyenasAtOnce(moveOrders.Count);
+            //MoveNextHyena();
         }
     }
 
@@ -121,13 +123,11 @@ public class HyenasManager : MonoBehaviour
         return true;
     }
 
-    private void MoveAllHyenasAtOnce()
+    private void MoveAllHyenasAtOnce(int numGroupings)
     {
-        Sequence allPrepareSeq = DOTween.Sequence();
-        Sequence allMovesSeq = DOTween.Sequence();
+        List<List<HyenaMoveOrder>> partitionedOrders = PartitionOrders(numGroupings);
 
         int numMoveOrdersCompleted = 0;
-
         void MoveCompleteCallback()
         {
             numMoveOrdersCompleted++;
@@ -137,19 +137,74 @@ public class HyenasManager : MonoBehaviour
             }
         }
 
-        foreach (var moveOrder in moveOrders)
-        {
-            allPrepareSeq.AppendCallback(moveOrder.hyena.PrepareForMove);
+        Sequence allPrepareSeq = DOTween.Sequence();
+        Sequence allMovesSeq = DOTween.Sequence();
 
-            Sequence moveSeq = DOTween.Sequence();
-            moveSeq
-                .AppendInterval(Random.Range(0, 0.3f))
-                .AppendCallback(() => moveOrder.hyena.MoveAlongPath(moveOrder.movePath, MoveCompleteCallback));
-            allMovesSeq.Join(moveSeq);
+        foreach (var partition in partitionedOrders)
+        {
+            Sequence partitionMoveSeq = DOTween.Sequence();
+
+            foreach (var moveOrder in partition)
+            {
+                allPrepareSeq.AppendCallback(moveOrder.hyena.PrepareForMove);
+
+                Sequence hyenaMoveSeq = DOTween.Sequence();
+                hyenaMoveSeq
+                    .AppendInterval(Random.Range(0, 0.2f))
+                    .AppendCallback(() => moveOrder.hyena.MoveAlongPath(moveOrder.movePath, MoveCompleteCallback));
+                partitionMoveSeq.Join(hyenaMoveSeq);
+            }
+
+            allMovesSeq.Append(partitionMoveSeq);
+            allMovesSeq.AppendInterval(delayBetweenMoves);
         }
 
-        allMovesSeq.Prepend(allPrepareSeq); //When moving multiple hyenas at once, we need to prepare all of them before starting the moves (ie, unregister from board position)
+        allMovesSeq.Prepend(allPrepareSeq);
         allMovesSeq.Play();
+
+        //foreach (var moveOrder in moveOrders)
+        //{
+        //    allPrepareSeq.AppendCallback(moveOrder.hyena.PrepareForMove);
+
+        //    Sequence moveSeq = DOTween.Sequence();
+        //    moveSeq
+        //        .AppendInterval(Random.Range(0, 0.3f))
+        //        .AppendCallback(() => moveOrder.hyena.MoveAlongPath(moveOrder.movePath, MoveCompleteCallback));
+        //    allMovesSeq.Join(moveSeq);
+        //}
+
+        //allMovesSeq.Prepend(allPrepareSeq); //When moving multiple hyenas at once, we need to prepare all of them before starting the moves (ie, unregister from board position)
+        //allMovesSeq.Play();
+    }
+
+    private List<List<HyenaMoveOrder>> PartitionOrders(int numGroupings)
+    {
+        List<List<HyenaMoveOrder>> partitionedOrders = new();
+
+        int a = moveOrders.Count / numGroupings;
+        int b = a + 1;
+        int y = moveOrders.Count % numGroupings;
+        int x = numGroupings - y;
+
+        Debug.Log($"CALCS: {moveOrders.Count} = ({a} * {x})  +  ({b} * {y})");
+
+        for (int i = 0; i < x; i++)
+        {
+            partitionedOrders.Add(moveOrders.GetRange(i * a, a));
+        }
+        for (int i = 0; i < y; i++)
+        {
+            Debug.Log($"[HyenasManager] i={i} Range({(x * a) + (i * b)} , {b})");
+
+            partitionedOrders.Add(moveOrders.GetRange((x * a) + (i * b), b));
+        }
+
+        foreach (var partition in partitionedOrders)
+        {
+            LogUtils.LogEnumerable("[HyenasManager] Partitioned move order", partition);
+        }
+
+        return partitionedOrders;
     }
 
     private void MoveNextHyena()
