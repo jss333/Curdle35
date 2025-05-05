@@ -18,6 +18,15 @@ public class BGMAudioSource : MonoBehaviour
     [SerializeField] private Coroutine lastFadingCoroutine;
     [SerializeField] private bool lastFadingCoroutineIsRunning = false;
 
+    private bool SkipPlay
+    {
+        get
+        {
+            return skipPlay || !gameObject.activeInHierarchy;
+        }
+        set => skipPlay = value;
+    }
+
     void Awake()
     {
         if (!initialized)
@@ -50,7 +59,7 @@ public class BGMAudioSource : MonoBehaviour
 
     public void Play()
     {
-        if (skipPlay) return;
+        if (SkipPlay) return;
 
         StopLastFadingCoroutineIfAny();
         lastFadingCoroutineIsRunning = true;
@@ -59,7 +68,7 @@ public class BGMAudioSource : MonoBehaviour
 
     public void StopOrPause()
     {
-        if (skipPlay) return;
+        if (SkipPlay) return;
 
         StopLastFadingCoroutineIfAny();
         lastFadingCoroutineIsRunning = true;
@@ -68,7 +77,7 @@ public class BGMAudioSource : MonoBehaviour
 
     private void StopLastFadingCoroutineIfAny()
     {
-        if (lastFadingCoroutineIsRunning)
+        if (lastFadingCoroutineIsRunning && lastFadingCoroutine != null)
         {
             StopCoroutine(lastFadingCoroutine);
             lastFadingCoroutineIsRunning = false;

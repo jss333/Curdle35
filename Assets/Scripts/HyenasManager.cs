@@ -32,15 +32,15 @@ public class HyenasManager : MonoBehaviour
 
     [Header("Config")]
     [SerializeField] private Transform hyenasParent;
-    [SerializeField] private float delayBetweenMoves = 0.3f;
-    [SerializeField] private bool moveHyenasSimultaneously = false;
-    [SerializeField] private int numHyenaGroupingsToMove = 6;
+    [SerializeField] private float maxRandomDelayBeforeEachHyenaMove = 0.2f;
+    [SerializeField] private float delayBetweenGroupMoves = 0.3f;
+    [SerializeField] private bool moveHyenasInGroups = false;
+    [SerializeField] private int numHyenaGroups = 6;
     [Tooltip("Assign a MonoBehaviour that implements IHyenaMoveStrategy.")]
     [SerializeField] private MonoBehaviour moveStrategy;
     [SerializeField] private int hyenaMoveDistance;
 
     [Header("State")]
-    [SerializeField] private int currentMoveOrderIndex = 0;
     [SerializeField] private List<HyenaMoveOrder> moveOrders;
     [SerializeField] private bool haltAllRemainingMoves = false;
 
@@ -89,17 +89,13 @@ public class HyenasManager : MonoBehaviour
 
         allHistoricalMoveOrders.AddRange(moveOrders); // For drawing debug gizmos
 
-        currentMoveOrderIndex = 0;
-        haltAllRemainingMoves = false;
-
-        if (moveHyenasSimultaneously)
+        if (moveHyenasInGroups)
         {
-            MoveAllHyenasAtOnce(numHyenaGroupingsToMove);
+            MoveHyenasInGroups(numHyenaGroups);
         }
         else
         {
-            MoveAllHyenasAtOnce(moveOrders.Count);
-            //MoveNextHyena();
+            MoveHyenasInGroups(moveOrders.Count); 
         }
     }
 
@@ -123,7 +119,7 @@ public class HyenasManager : MonoBehaviour
         return true;
     }
 
-    private void MoveAllHyenasAtOnce(int numGroupings)
+    private void MoveHyenasInGroups(int numGroupings)
     {
         List<List<HyenaMoveOrder>> partitionedOrders = PartitionOrders(numGroupings);
 
@@ -135,6 +131,16 @@ public class HyenasManager : MonoBehaviour
             {
                 GameManager.Instance.OnHyenasFinishMoving();
             }
+        }
+
+        void ExecuteMoveOrderIfNotHalted(HyenaMoveOrder moveOrder)
+        {
+            if (haltAllRemainingMoves)
+            {
+                Debug.Log($"[HyenasManager] All hyena movement has been halted. Won't move {moveOrder.hyena.name}.");
+                return;
+            }
+            moveOrder.hyena.MoveAlongPath(moveOrder.movePath, MoveCompleteCallback);
         }
 
         Sequence allPrepareSeq = DOTween.Sequence();
@@ -150,35 +156,24 @@ public class HyenasManager : MonoBehaviour
 
                 Sequence hyenaMoveSeq = DOTween.Sequence();
                 hyenaMoveSeq
-                    .AppendInterval(Random.Range(0, 0.2f))
-                    .AppendCallback(() => moveOrder.hyena.MoveAlongPath(moveOrder.movePath, MoveCompleteCallback));
-                partitionMoveSeq.Join(hyenaMoveSeq);
+                    .AppendInterval(Random.Range(0, maxRandomDelayBeforeEachHyenaMove))
+                    .AppendCallback(() => ExecuteMoveOrderIfNotHalted(moveOrder));
+                partitionMoveSeq.Join(hyenaMoveSeq); // Hyenas in the same partition move simultaneously.
             }
 
-            allMovesSeq.Append(partitionMoveSeq);
-            allMovesSeq.AppendInterval(delayBetweenMoves);
+            allMovesSeq.Append(partitionMoveSeq); // Partitions move sequentially.
+            allMovesSeq.AppendInterval(delayBetweenGroupMoves);
         }
 
-        allMovesSeq.Prepend(allPrepareSeq);
+        allMovesSeq.Prepend(allPrepareSeq); // All move preparation actions should happen before any moves start.
         allMovesSeq.Play();
-
-        //foreach (var moveOrder in moveOrders)
-        //{
-        //    allPrepareSeq.AppendCallback(moveOrder.hyena.PrepareForMove);
-
-        //    Sequence moveSeq = DOTween.Sequence();
-        //    moveSeq
-        //        .AppendInterval(Random.Range(0, 0.3f))
-        //        .AppendCallback(() => moveOrder.hyena.MoveAlongPath(moveOrder.movePath, MoveCompleteCallback));
-        //    allMovesSeq.Join(moveSeq);
-        //}
-
-        //allMovesSeq.Prepend(allPrepareSeq); //When moving multiple hyenas at once, we need to prepare all of them before starting the moves (ie, unregister from board position)
-        //allMovesSeq.Play();
     }
 
     private List<List<HyenaMoveOrder>> PartitionOrders(int numGroupings)
     {
+        // Splits moveOrders as evenly as possible into numGroupings partitions, filling the later partitions first.
+        // So 10 move orders partitioned into 3 groupings would yield: 3-3-4
+
         List<List<HyenaMoveOrder>> partitionedOrders = new();
 
         int a = moveOrders.Count / numGroupings;
@@ -205,31 +200,6 @@ public class HyenasManager : MonoBehaviour
         }
 
         return partitionedOrders;
-    }
-
-    private void MoveNextHyena()
-    {
-        if (haltAllRemainingMoves)
-        {
-            Debug.Log($"[HyenasManager] Halting {moveOrders.Count() - currentMoveOrderIndex} remaining hyena moves. GameManager will not be notified.");
-            return;
-        }
-
-        if (currentMoveOrderIndex >= moveOrders.Count())
-        {
-            Debug.Log($"[HyenasManager] All {moveOrders.Count()} movement orders have completed.");
-            GameManager.Instance.OnHyenasFinishMoving();
-            return;
-        }
-
-        var moveOrder = moveOrders[currentMoveOrderIndex];
-        currentMoveOrderIndex++;
-        
-        DOTween.Sequence()
-            .AppendInterval(delayBetweenMoves)
-            .AppendCallback(moveOrder.hyena.PrepareForMove)
-            .AppendCallback(() => moveOrder.hyena.MoveAlongPath(moveOrder.movePath, MoveNextHyena))
-            .Play();
     }
 
     public void HaltAllRemainingHyenaMovesAndDoNotNotifyGameManager()
