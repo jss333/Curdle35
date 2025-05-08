@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6193194519882756188}
   - component: {fileID: 4673810219184055591}
   m_Layer: 0
-  m_Name: Turret
+  m_Name: Turret B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 1595681471
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 6738480177456192941, guid: b75d12e415f6fb94fac2e34a01410da5, type: 3}
+  m_Sprite: {fileID: -618156798686402031, guid: f7e2b6380dbde2f4e9470ca4b241e885, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -144,9 +144,12 @@ MonoBehaviour:
   isStructure: 1
   maxHealth: 2
   notifyDeath: 1
+  initialFacingRight: 1
   boardCellPosition: {x: 0, y: 0}
+  traveling: 0
   currentHealth: 0
   isAlive: 1
+  facingRight: 0
   getsHitSFX: 0
   dieSFX: 0
 --- !u!114 &6193194519882756188
