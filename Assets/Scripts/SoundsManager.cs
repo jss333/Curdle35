@@ -7,6 +7,13 @@ using System;
 using TMPro;
 using System.Collections.ObjectModel;
 
+public interface IPlayableBGM
+{
+    void Play();
+    void StopOrPause();
+    void ScaleVolume(float masterVolume);
+}
+
 public interface IPlayableSFX
 {
     void Play();
@@ -59,8 +66,8 @@ public class SoundsManager : MonoBehaviour
 
     [Header("BGM - State")]
     [SerializeField] private float masterBGMVolume = 1f;
-    [SerializeField] private BGMAudioSource currentBGMAudioSrc;
-    private readonly Dictionary<BGM, BGMAudioSource> bgmAudioSources = new();
+    [SerializeField] private IPlayableBGM currentBGMAudioSrc;
+    private readonly Dictionary<BGM, IPlayableBGM> bgmAudioSources = new();
 
 
     [Header("SFX - Config")]
@@ -92,6 +99,11 @@ public class SoundsManager : MonoBehaviour
                 if (child.TryGetComponent(out BGMAudioSource source))
                 {
                     bgmAudioSources[bgm] = source;
+                    allFoundBGM.Add(bgm);
+                }
+                else if (child.TryGetComponent(out CompositeBGMAudioSource compositeSource))
+                {
+                    bgmAudioSources[bgm] = compositeSource;
                     allFoundBGM.Add(bgm);
                 }
                 else

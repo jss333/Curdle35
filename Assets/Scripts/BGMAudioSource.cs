@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class BGMAudioSource : MonoBehaviour
+public class BGMAudioSource : MonoBehaviour, IPlayableBGM
 {
     [Header("Config")]
     [SerializeField] public bool pauseInsteadOfStop = false;
