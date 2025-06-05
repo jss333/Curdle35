@@ -32,7 +32,7 @@ public class HyenasManager : MonoBehaviour
 
     [Header("Config")]
     [SerializeField] private Transform hyenasParent;
-    [SerializeField] private float maxRandomDelayBeforeEachHyenaMove = 0.2f;
+    [SerializeField] private float delayBeforeEachHyenaMove = 0.2f;
     [SerializeField] private float delayBetweenGroupMoves = 0.3f;
     [SerializeField] private bool moveHyenasInGroups = false;
     [SerializeField] private int numHyenaGroups = 6;
@@ -150,13 +150,15 @@ public class HyenasManager : MonoBehaviour
         {
             Sequence partitionMoveSeq = DOTween.Sequence();
 
-            foreach (var moveOrder in partition)
+            for (int i = 0; i < partition.Count; i++)
             {
+                var moveOrder = partition[i];
+
                 allPrepareSeq.AppendCallback(moveOrder.hyena.PrepareForMove);
 
                 Sequence hyenaMoveSeq = DOTween.Sequence();
                 hyenaMoveSeq
-                    .AppendInterval(Random.Range(0, maxRandomDelayBeforeEachHyenaMove))
+                    .AppendInterval(i * delayBeforeEachHyenaMove) // stagger hyenas start within the partition
                     .AppendCallback(() => ExecuteMoveOrderIfNotHalted(moveOrder));
                 partitionMoveSeq.Join(hyenaMoveSeq); // Hyenas in the same partition move simultaneously.
             }
